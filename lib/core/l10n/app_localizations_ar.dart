@@ -1,0 +1,182 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get app_name => 'منصة';
+
+  @override
+  String get home => 'العودة إلى الرئيسية';
+
+  @override
+  String get horses_platform => 'منصة الخيول';
+
+  @override
+  String get camels_platform => 'منصة الإبل';
+
+  @override
+  String get mass_auctions => 'المزادات الجماعية';
+
+  @override
+  String get mass_horse_auctions => 'مزادات الخيول الجماعية';
+
+  @override
+  String get mass_camel_auctions => 'مزادات الإبل الجماعية';
+
+  @override
+  String get services => 'الخدمات';
+
+  @override
+  String get download_catalog => 'تحميل الكتيب';
+
+  @override
+  String get i_agree_to_the => 'I agree to the';
+
+  @override
+  String get terms_and_conditions => 'terms and conditions';
+
+  @override
+  String get direct_electronic => 'إلكتروني مباشر';
+
+  @override
+  String get dashboard => 'لوحة التحكم';
+
+  @override
+  String get medical_services => 'خدمات طبية';
+
+  @override
+  String get transport_services => 'خدمات نقل';
+
+  @override
+  String get animal_products => 'منتجات';
+
+  @override
+  String get statistics => 'الإحصائيات';
+
+  @override
+  String get contact_us => 'اتصل بنا';
+
+  @override
+  String get offers => 'العروض';
+
+  @override
+  String get auctions => 'المزادات';
+
+  @override
+  String get menu => 'القائمة';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get tap_back_again_to_leave => 'انقر للرجوع مرة أخرى للخروج :)';
+
+  @override
+  String get choose_language => 'اختر اللغة';
+
+  @override
+  String get language_arabic => 'العربية';
+
+  @override
+  String get language_english => 'الإنجليزية';
+
+  @override
+  String get logout_success => ' تم تسجيل الخروج بنجاح';
+
+  @override
+  String get logout_failed => ' فشل تسجيل الخروج من الخادم';
+
+  @override
+  String get logout_error => 'حدث خطأ أثناء تسجيل الخروج';
+
+  @override
+  String get title => 'خطأ في الخادم';
+
+  @override
+  String get stay_logged_in => 'البقاء مسجلاً الدخول';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get success => 'نجاح';
+
+  @override
+  String get continue_as_guest => 'المتابعة كزائر';
+
+  @override
+  String get enter_valid_phone => '⚠️ الرجاء إدخال رقم جوال صحيح.';
+
+  @override
+  String get code_sent => '✅ تم إرسال رمز التحقق إلى رقمك.';
+
+  @override
+  String get send_failed => '❌ فشل إرسال الرمز، حاول مجددًا.';
+
+  @override
+  String get login_success => '🎉 تم تسجيل الدخول بنجاح !';
+
+  @override
+  String get invalid_code => 'رمز التحقق غير صحيح، حاول مجددًا.';
+
+  @override
+  String get verify_failed => '❌ فشل التحقق من الرمز.';
+
+  @override
+  String get resent_info => '🔁 تم إرسال الرمز مجددًا (اختبار فقط).';
+
+  @override
+  String get sending => 'جاري الإرسال';
+
+  @override
+  String get verifying => 'جاري التحقق';
+
+  @override
+  String get fill_all_fields => '⚠️ الرجاء تعبئة جميع الحقول.';
+
+  @override
+  String get profile_saved => '✅ تم حفظ البيانات بنجاح!';
+
+  @override
+  String get profile_save_error => '❌ فشل في حفظ البيانات، حاول مجددًا.';
+
+  @override
+  String get saving => 'جاري الحفظ';
+
+  @override
+  String get phone_number => 'رقم الجوال';
+
+  @override
+  String get enter_phone_number => 'أدخل رقم الجوال';
+
+  @override
+  String get login_required_title => 'تحتاج إلى تسجيل الدخول';
+
+  @override
+  String get login_required_message =>
+      'للوصول إلى هذه الصفحة، يجب عليك تسجيل الدخول أولاً. الرجاء تسجيل الدخول بحسابك للمتابعة.';
+
+  @override
+  String get login_now => 'تسجيل الدخول الآن';
+
+  @override
+  String get back_home => 'العودة إلى الرئيسية';
+
+  @override
+  String get login_required_alt => 'رمز تسجيل الدخول';
+
+  @override
+  String get otp_sent_to => 'أرسلنا رمز التحقق إلى';
+
+  @override
+  String get otp_resend => 'إعادة الإرسال';
+}
