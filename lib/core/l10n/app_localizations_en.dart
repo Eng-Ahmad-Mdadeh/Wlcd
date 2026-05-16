@@ -200,33 +200,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgot_password => 'Forgot Password?';
 
   @override
-  String get choose_password_reset_method =>
-      'Please choose a method to request a password reset.';
-
-  @override
-  String get enter_your_email => 'Enter your email';
-
-  @override
-  String get enter_your_phone_number => 'Enter your phone number';
-
-  @override
-  String get reset_password_email_message =>
-      'Please enter an email address to request a password reset.';
-
-  @override
-  String get reset_password_phone_message =>
-      'Please enter a phone number to request a password reset.';
-
-  @override
-  String get use_another_method => 'Use another method';
-
-  @override
-  String get send_link => 'Send Link';
-
-  @override
-  String get password_reset_link_sent => 'Password reset link sent!';
-
-  @override
   String get sign_in => 'Sign In';
 
   @override
@@ -256,4 +229,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get short_password_validation =>
       'Password must be at least 6 characters';
+
+  @override
+  String get choose_password_reset_method =>
+      'Please choose a method to request a password reset.';
+
+  @override
+  String get enter_your_email => 'Enter your email';
+
+  @override
+  String get enter_your_phone_number => 'Enter your phone number';
+
+  @override
+  String get reset_password_email_message =>
+      'Please enter an email address to request a password reset.';
+
+  @override
+  String get reset_password_phone_message =>
+      'Please enter a phone number to request a password reset.';
+
+  @override
+  String get use_another_method => 'Use another method';
+
+  @override
+  String get send_link => 'Send Link';
+
+  @override
+  String get password_reset_link_sent => 'Password reset link sent!';
 }

@@ -476,54 +476,6 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgot_password;
 
-  /// No description provided for @choose_password_reset_method.
-  ///
-  /// In en, this message translates to:
-  /// **'Please choose a method to request a password reset.'**
-  String get choose_password_reset_method;
-
-  /// No description provided for @enter_your_email.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your email'**
-  String get enter_your_email;
-
-  /// No description provided for @enter_your_phone_number.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your phone number'**
-  String get enter_your_phone_number;
-
-  /// No description provided for @reset_password_email_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter an email address to request a password reset.'**
-  String get reset_password_email_message;
-
-  /// No description provided for @reset_password_phone_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a phone number to request a password reset.'**
-  String get reset_password_phone_message;
-
-  /// No description provided for @use_another_method.
-  ///
-  /// In en, this message translates to:
-  /// **'Use another method'**
-  String get use_another_method;
-
-  /// No description provided for @send_link.
-  ///
-  /// In en, this message translates to:
-  /// **'Send Link'**
-  String get send_link;
-
-  /// No description provided for @password_reset_link_sent.
-  ///
-  /// In en, this message translates to:
-  /// **'Password reset link sent!'**
-  String get password_reset_link_sent;
-
   /// No description provided for @sign_in.
   ///
   /// In en, this message translates to:
@@ -583,6 +535,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password must be at least 6 characters'**
   String get short_password_validation;
+
+  /// No description provided for @choose_password_reset_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a method to request a password reset.'**
+  String get choose_password_reset_method;
+
+  /// No description provided for @enter_your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get enter_your_email;
+
+  /// No description provided for @enter_your_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get enter_your_phone_number;
+
+  /// No description provided for @reset_password_email_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an email address to request a password reset.'**
+  String get reset_password_email_message;
+
+  /// No description provided for @reset_password_phone_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a phone number to request a password reset.'**
+  String get reset_password_phone_message;
+
+  /// No description provided for @use_another_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Use another method'**
+  String get use_another_method;
+
+  /// No description provided for @send_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Link'**
+  String get send_link;
+
+  /// No description provided for @password_reset_link_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset link sent!'**
+  String get password_reset_link_sent;
 }
 
 class _AppLocalizationsDelegate

@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     debugLogDiagnostics: kDebugMode,
     // observers: [FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)],
     initialLocation: SplashRoute().location,
-    redirect: _guard,
+    // redirect: _guard,
   );
 
   @override

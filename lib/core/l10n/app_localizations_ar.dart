@@ -200,34 +200,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get forgot_password => 'نسيت كلمة المرور؟';
 
   @override
-  String get choose_password_reset_method =>
-      'الرجاء اختيار طريقة لطلب إعادة تعيين كلمة المرور.';
-
-  @override
-  String get enter_your_email => 'أدخل بريدك الإلكتروني';
-
-  @override
-  String get enter_your_phone_number => 'أدخل رقم جوالك';
-
-  @override
-  String get reset_password_email_message =>
-      'الرجاء إدخال بريد إلكتروني لطلب إعادة تعيين كلمة المرور.';
-
-  @override
-  String get reset_password_phone_message =>
-      'الرجاء إدخال رقم جوال لطلب إعادة تعيين كلمة المرور.';
-
-  @override
-  String get use_another_method => 'استخدم طريقة أخرى';
-
-  @override
-  String get send_link => 'إرسال الرابط';
-
-  @override
-  String get password_reset_link_sent =>
-      'تم إرسال رابط إعادة تعيين كلمة المرور!';
-
-  @override
   String get sign_in => 'تسجيل الدخول';
 
   @override
@@ -257,4 +229,32 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get short_password_validation =>
       'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get choose_password_reset_method =>
+      'الرجاء اختيار طريقة لطلب إعادة تعيين كلمة المرور.';
+
+  @override
+  String get enter_your_email => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get enter_your_phone_number => 'أدخل رقم جوالك';
+
+  @override
+  String get reset_password_email_message =>
+      'الرجاء إدخال بريد إلكتروني لطلب إعادة تعيين كلمة المرور.';
+
+  @override
+  String get reset_password_phone_message =>
+      'الرجاء إدخال رقم جوال لطلب إعادة تعيين كلمة المرور.';
+
+  @override
+  String get use_another_method => 'استخدم طريقة أخرى';
+
+  @override
+  String get send_link => 'إرسال الرابط';
+
+  @override
+  String get password_reset_link_sent =>
+      'تم إرسال رابط إعادة تعيين كلمة المرور!';
 }
