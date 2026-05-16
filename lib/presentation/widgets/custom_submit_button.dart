@@ -57,7 +57,7 @@ class CustomSubmitButton extends StatelessWidget {
           ? LoadingWidget(
               0,
               color: loadingColor ?? AppColors.primary,
-              size: 30,
+              size: AppSize.s30,
             )
           : SectionTitle(
               text: title,

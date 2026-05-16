@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 
 class LoginTextField extends StatelessWidget {
@@ -28,27 +30,27 @@ class LoginTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       hintText: hintText,
-      fontSize: 15,
-      hintColor: const Color(0xFF9CA6B6),
-      cursorColor: const Color(0xFF232A62),
+      fontSize: AppFontSize.s15,
+      hintColor: AppColors.loginFieldHint,
+      cursorColor: AppColors.loginTabIndicator,
       filled: false,
-      contentPaddingTop: 15,
-      contentPaddingBottom: 15,
+      contentPaddingTop: AppPaddingHeight.p15,
+      contentPaddingBottom: AppPaddingHeight.p15,
       contentPaddingStart: 0,
-      prefixIcon: Icon(icon, size: 15, color: const Color(0xFFA8B0BD)),
+      prefixIcon: Icon(icon, size: AppSize.s15, color: AppColors.loginFieldIcon),
       suffixIcon: suffixIcon == null
           ? null
-          : Icon(suffixIcon, size: 15, color: const Color(0xFFA8B0BD)),
+          : Icon(suffixIcon, size: AppSize.s15, color: AppColors.loginFieldIcon),
       enableInputBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFFEDF0F4)),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
+        borderSide: const BorderSide(color: AppColors.loginFieldBorder),
       ),
       focusedInputBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFF232A62)),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
+        borderSide: const BorderSide(color: AppColors.loginTabIndicator),
       ),
       errorInputBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
         borderSide: const BorderSide(color: AppColors.red),
       ),
     );

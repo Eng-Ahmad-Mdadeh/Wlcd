@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/presentation/widgets/custom_rich_text.dart';
 
@@ -12,14 +13,14 @@ class SignUpPrompt extends StatelessWidget {
         texts: [
           CustomRichTextModel(
             text: 'Don’t have an account? ',
-            color: const Color(0xFF202532),
-            fontSize: 15,
+            color: AppColors.loginSocialText,
+            fontSize: AppFontSize.s15,
             fontWeight: AppFontWeight.regular,
           ),
           CustomRichTextModel(
             text: 'Sign Up',
-            color: const Color(0xFF222A61),
-            fontSize: 15,
+            color: AppColors.loginTabIndicator,
+            fontSize: AppFontSize.s15,
             fontWeight: AppFontWeight.extraBold,
             onTap: () {},
           ),

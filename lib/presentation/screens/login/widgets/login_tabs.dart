@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginTabs extends StatelessWidget {
@@ -8,9 +10,9 @@ class LoginTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 33,
+      height: AppHeight.h33,
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE7E9EF))),
+        border: Border(bottom: BorderSide(color: AppColors.loginFieldBorder)),
       ),
       child: const Row(
         children: [
@@ -35,8 +37,8 @@ class LoginTab extends StatelessWidget {
       children: [
         SectionTitle(
           text: label,
-          color: active ? const Color(0xFF1F285F) : const Color(0xFF6B7280),
-          fontSize: 14,
+          color: active ? AppColors.loginTabActive : AppColors.loginTabInactive,
+          fontSize: AppFontSize.s14,
           fontWeight: active ? AppFontWeight.bold : AppFontWeight.regular,
         ),
         if (active)
@@ -44,7 +46,7 @@ class LoginTab extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(height: 2, color: const Color(0xFF232A62)),
+            child: Container(height: AppHeight.h2, color: AppColors.loginTabIndicator),
           ),
       ],
     );
