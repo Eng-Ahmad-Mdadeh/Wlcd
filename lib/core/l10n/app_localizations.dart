@@ -230,6 +230,72 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login;
 
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get enter_email;
+
+  /// No description provided for @enter_email_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get enter_email_required;
+
+  /// No description provided for @invalid_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get invalid_email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @enter_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get enter_password;
+
+  /// No description provided for @enter_password_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get enter_password_required;
+
+  /// No description provided for @password_min_length.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get password_min_length;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgot_password;
+
+  /// No description provided for @dont_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? '**
+  String get dont_have_account;
+
+  /// No description provided for @sign_up_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up now'**
+  String get sign_up_now;
+
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:

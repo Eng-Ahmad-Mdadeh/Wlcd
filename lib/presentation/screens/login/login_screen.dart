@@ -21,7 +21,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<RememberMeCubit>(create: (context) => RememberMeCubit())],
+      providers: [
+        BlocProvider<RememberMeCubit>(create: (context) => RememberMeCubit()),
+      ],
       child: BodyLoginScreen(),
     );
   }
@@ -51,15 +53,15 @@ class BodyLoginScreen extends StatelessWidget {
                 const LogoSection(),
                 FieldItem(
                   icon: Iconsax.sms_outline,
-                  title: "البريد الإلكتروني",
-                  labelText: "أدخل بريدك الإلكتروني",
+                  title: context.loc.email,
+                  labelText: context.loc.enter_email,
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "أدخل البريد الإلكتروني لو سمحت";
+                      return context.loc.enter_email_required;
                     }
                     if (!value.isValidEmail) {
-                      return "البريد الإلكتروني غير صالح";
+                      return context.loc.invalid_email;
                     }
                     return null;
                   },
@@ -83,29 +85,39 @@ class BodyLoginScreen extends StatelessWidget {
                 SizedBox(height: AppHeight.h20),
                 FieldItem(
                   icon: Iconsax.key_outline,
-                  title: "كلمة المرور",
-                  labelText: "أدخل كلمة المرور",
+                  title: context.loc.password,
+                  labelText: context.loc.enter_password,
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "أدخل كلمة المرور لو سمحت";
+                      return context.loc.enter_password_required;
                     }
                     if (value.length < 6) {
-                      return "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+                      return context.loc.password_min_length;
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: AppHeight.h20),
                 const RememberMeCheckbox(),
-                CustomSubmitButton(title: "تسجبل الدخول", marginTop: AppMarginHeight.m30, onPressed: () {}),
+                CustomSubmitButton(
+                  title: context.loc.login,
+                  marginTop: AppMarginHeight.m30,
+                  onPressed: () {},
+                ),
                 NoteSection(
                   onTap: () {},
-                  title: "نسيت كلمة السر؟",
+                  title: context.loc.forgot_password,
                   richTexts: [
-                    CustomRichTextModel(text: "ليس لديك حساب؟ ", color: AppColors.blackText),
-                    CustomRichTextModel(text: "سجل الأن", color: AppColors.lightPrimary),
+                    CustomRichTextModel(
+                      text: context.loc.dont_have_account,
+                      color: AppColors.blackText,
+                    ),
+                    CustomRichTextModel(
+                      text: context.loc.sign_up_now,
+                      color: AppColors.lightPrimary,
+                    ),
                   ],
                 ),
               ],
