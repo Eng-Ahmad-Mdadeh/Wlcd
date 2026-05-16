@@ -4,6 +4,7 @@ import 'package:wlcd/core/extension/validation_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/screens/login/widgets/forgot_password_bottom_sheet.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -37,7 +38,7 @@ class LoginFormSection extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h10),
           TextButton(
-            onPressed: () {},
+            onPressed: () => showForgotPasswordBottomSheet(context),
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
