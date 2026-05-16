@@ -36,10 +36,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get download_catalog => 'تحميل الكتيب';
 
   @override
-  String get i_agree_to_the => 'I agree to the';
+  String get i_agree_to_the => 'أوافق على';
 
   @override
-  String get terms_and_conditions => 'terms and conditions';
+  String get terms_and_conditions => 'الشروط والأحكام';
 
   @override
   String get direct_electronic => 'إلكتروني مباشر';
@@ -73,6 +73,39 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get login => 'تسجيل الدخول';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get enter_email => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get enter_email_required => 'أدخل البريد الإلكتروني لو سمحت';
+
+  @override
+  String get invalid_email => 'البريد الإلكتروني غير صالح';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get enter_password => 'أدخل كلمة المرور';
+
+  @override
+  String get enter_password_required => 'أدخل كلمة المرور لو سمحت';
+
+  @override
+  String get password_min_length => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get forgot_password => 'نسيت كلمة السر؟';
+
+  @override
+  String get dont_have_account => 'ليس لديك حساب؟ ';
+
+  @override
+  String get sign_up_now => 'سجل الآن';
 
   @override
   String get logout => 'تسجيل الخروج';
