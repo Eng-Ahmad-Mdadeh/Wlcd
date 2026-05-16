@@ -179,4 +179,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get otp_resend => 'Resend';
+  @override
+  String get login_welcome_back => 'Hi! Welcome Back';
+
+  @override
+  String get login_welcome_subtitle =>
+      'We happy to see you again! to use your\naccount, you should sign in first.';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get your_email => 'Your email';
+
+  @override
+  String get your_password => 'Your password';
+
+  @override
+  String get forgot_password => 'Forgot Password?';
+
+  @override
+  String get sign_in => 'Sign In';
+
+  @override
+  String get or_with_email => 'Or with email';
+
+  @override
+  String get apple => 'Apple';
+
+  @override
+  String get google => 'Google';
+
+  @override
+  String get dont_have_account => 'Don’t have an account? ';
+
+  @override
+  String get sign_up => 'Sign Up';
+
+  @override
+  String get enter_email_validation => 'Please enter your email';
+
+  @override
+  String get invalid_email_validation => 'Please enter a valid email';
+
+  @override
+  String get enter_password_validation => 'Please enter your password';
+
+  @override
+  String get short_password_validation =>
+      'Password must be at least 6 characters';
+
 }

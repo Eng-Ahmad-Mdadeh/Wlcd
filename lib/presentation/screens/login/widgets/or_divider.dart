@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -15,7 +16,7 @@ class OrDivider extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppWidth.w10),
           child: SectionTitle(
-            text: 'Or with email',
+            text: context.loc.or_with_email,
             color: AppColors.loginDividerText,
             fontSize: AppFontSize.s13,
             fontWeight: AppFontWeight.regular,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/cubit/remember_me/remember_me_cubit.dart';
@@ -32,7 +33,9 @@ class BodyLoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr,
+      textDirection: context.loc.localeName == 'ar'
+          ? TextDirection.rtl
+          : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: AppColors.loginBackground,
         body: SafeArea(

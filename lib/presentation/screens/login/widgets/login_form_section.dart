@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
@@ -21,18 +22,18 @@ class LoginFormSection extends StatelessWidget {
         children: [
           LoginTextField(
             icon: Icons.email_outlined,
-            hintText: 'Your email',
+            hintText: context.loc.your_email,
             keyboardType: TextInputType.emailAddress,
-            validator: _validateEmail,
+            validator: (value) => _validateEmail(context, value),
           ),
           SizedBox(height: AppHeight.h14),
           LoginTextField(
             icon: Icons.lock,
-            hintText: 'Your password',
+            hintText: context.loc.your_password,
             obscureText: true,
             suffixIcon: Icons.visibility_off_outlined,
             keyboardType: TextInputType.visiblePassword,
-            validator: _validatePassword,
+            validator: (value) => _validatePassword(context, value),
           ),
           SizedBox(height: AppHeight.h1),
           TextButton(
@@ -44,14 +45,14 @@ class LoginFormSection extends StatelessWidget {
               foregroundColor: AppColors.loginTabIndicator,
             ),
             child: SectionTitle(
-              text: 'Forgot Password?',
+              text: context.loc.forgot_password,
               color: AppColors.loginTabIndicator,
               fontSize: AppFontSize.s14,
               fontWeight: AppFontWeight.bold,
             ),
           ),
           CustomSubmitButton(
-            title: 'Sign In',
+            title: context.loc.sign_in,
             marginTop: AppMarginHeight.m29,
             height: AppHeight.h49,
             borderRadius: AppRadius.r24,
@@ -64,22 +65,22 @@ class LoginFormSection extends StatelessWidget {
     );
   }
 
-  String? _validateEmail(String? value) {
+  String? _validateEmail(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your email';
+      return context.loc.enter_email_validation;
     }
     if (!value.isValidEmail) {
-      return 'Please enter a valid email';
+      return context.loc.invalid_email_validation;
     }
     return null;
   }
 
-  String? _validatePassword(String? value) {
+  String? _validatePassword(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your password';
+      return context.loc.enter_password_validation;
     }
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return context.loc.short_password_validation;
     }
     return null;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -13,7 +14,7 @@ class LoginHeaderSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(
-          text: 'Hi! Welcome Back',
+          text: context.loc.login_welcome_back,
           color: AppColors.loginTitle,
           fontSize: AppFontSize.s25,
           fontWeight: AppFontWeight.extraBold,
@@ -21,8 +22,7 @@ class LoginHeaderSection extends StatelessWidget {
         ),
         SizedBox(height: AppHeight.h8),
         SectionTitle(
-          text:
-              'We happy to see you again! to use your\naccount, you should sign in first.',
+          text: context.loc.login_welcome_subtitle,
           color: AppColors.loginSubtitle,
           fontSize: AppFontSize.s15,
           fontWeight: AppFontWeight.regular,

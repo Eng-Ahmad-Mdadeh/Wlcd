@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -14,10 +15,10 @@ class LoginTabs extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.loginFieldBorder)),
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Expanded(child: LoginTab(label: 'Email', active: true)),
-          Expanded(child: LoginTab(label: 'Phone Number')),
+          Expanded(child: LoginTab(label: context.loc.email, active: true)),
+          Expanded(child: LoginTab(label: context.loc.phone_number)),
         ],
       ),
     );

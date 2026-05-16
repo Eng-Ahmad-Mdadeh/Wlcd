@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/login/widgets/or_divider.dart';
 import 'package:wlcd/presentation/screens/login/widgets/sign_up_prompt.dart';
@@ -15,9 +16,9 @@ class LoginSocialSection extends StatelessWidget {
         SizedBox(height: AppHeight.h23),
         Row(
           children: [
-            Expanded(child: SocialButton(icon: Icons.apple, label: 'Apple')),
+            Expanded(child: SocialButton(icon: Icons.apple, label: context.loc.apple)),
             SizedBox(width: AppWidth.w12),
-            Expanded(child: SocialButton(label: 'Google', google: true)),
+            Expanded(child: SocialButton(label: context.loc.google, google: true)),
           ],
         ),
         SizedBox(height: AppHeight.h15),

@@ -439,6 +439,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resend'**
   String get otp_resend;
+  /// No description provided for @login_welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! Welcome Back'**
+  String get login_welcome_back;
+
+  /// No description provided for @login_welcome_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We happy to see you again! to use your\naccount, you should sign in first.'**
+  String get login_welcome_subtitle;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email'**
+  String get your_email;
+
+  /// No description provided for @your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password'**
+  String get your_password;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgot_password;
+
+  /// No description provided for @sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get sign_in;
+
+  /// No description provided for @or_with_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Or with email'**
+  String get or_with_email;
+
+  /// No description provided for @apple.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple'**
+  String get apple;
+
+  /// No description provided for @google.
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get google;
+
+  /// No description provided for @dont_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t have an account? '**
+  String get dont_have_account;
+
+  /// No description provided for @sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get sign_up;
+
+  /// No description provided for @enter_email_validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get enter_email_validation;
+
+  /// No description provided for @invalid_email_validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalid_email_validation;
+
+  /// No description provided for @enter_password_validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get enter_password_validation;
+
+  /// No description provided for @short_password_validation.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get short_password_validation;
+
 }
 
 class _AppLocalizationsDelegate
