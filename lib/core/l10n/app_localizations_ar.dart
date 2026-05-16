@@ -36,10 +36,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get download_catalog => 'تحميل الكتيب';
 
   @override
-  String get i_agree_to_the => 'أوافق على';
+  String get i_agree_to_the => 'I agree to the';
 
   @override
-  String get terms_and_conditions => 'الشروط والأحكام';
+  String get terms_and_conditions => 'terms and conditions';
 
   @override
   String get direct_electronic => 'إلكتروني مباشر';
@@ -73,39 +73,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get login => 'تسجيل الدخول';
-
-  @override
-  String get email => 'البريد الإلكتروني';
-
-  @override
-  String get enter_email => 'أدخل بريدك الإلكتروني';
-
-  @override
-  String get enter_email_required => 'أدخل البريد الإلكتروني لو سمحت';
-
-  @override
-  String get invalid_email => 'البريد الإلكتروني غير صالح';
-
-  @override
-  String get password => 'كلمة المرور';
-
-  @override
-  String get enter_password => 'أدخل كلمة المرور';
-
-  @override
-  String get enter_password_required => 'أدخل كلمة المرور لو سمحت';
-
-  @override
-  String get password_min_length => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-
-  @override
-  String get forgot_password => 'نسيت كلمة السر؟';
-
-  @override
-  String get dont_have_account => 'ليس لديك حساب؟ ';
-
-  @override
-  String get sign_up_now => 'سجل الآن';
 
   @override
   String get logout => 'تسجيل الخروج';
@@ -212,4 +179,54 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get otp_resend => 'إعادة الإرسال';
+
+  @override
+  String get login_welcome_back => 'أهلاً بعودتك!';
+
+  @override
+  String get login_welcome_subtitle =>
+      'يسعدنا رؤيتك مرة أخرى! لاستخدام\nحسابك، يجب تسجيل الدخول أولاً.';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get your_email => 'بريدك الإلكتروني';
+
+  @override
+  String get your_password => 'كلمة المرور';
+
+  @override
+  String get forgot_password => 'نسيت كلمة المرور؟';
+
+  @override
+  String get sign_in => 'تسجيل الدخول';
+
+  @override
+  String get or_with_email => 'أو عبر البريد الإلكتروني';
+
+  @override
+  String get apple => 'Apple';
+
+  @override
+  String get google => 'Google';
+
+  @override
+  String get dont_have_account => 'ليس لديك حساب؟ ';
+
+  @override
+  String get sign_up => 'سجل الآن';
+
+  @override
+  String get enter_email_validation => 'الرجاء إدخال البريد الإلكتروني';
+
+  @override
+  String get invalid_email_validation => 'الرجاء إدخال بريد إلكتروني صالح';
+
+  @override
+  String get enter_password_validation => 'الرجاء إدخال كلمة المرور';
+
+  @override
+  String get short_password_validation =>
+      'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
 }

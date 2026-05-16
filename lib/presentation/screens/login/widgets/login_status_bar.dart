@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginStatusBar extends StatelessWidget {
@@ -7,28 +9,28 @@ class LoginStatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 22,
+    return SizedBox(
+      height: AppHeight.h22,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SectionTitle(
             text: '9:41',
-            color: Color(0xFF111827),
-            fontSize: 14,
+            color: AppColors.loginDarkText,
+            fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.semiBold,
           ),
           Row(
             children: [
               Icon(
                 Icons.signal_cellular_alt,
-                size: 13,
-                color: Color(0xFF111827),
+                size: AppSize.s13,
+                color: AppColors.loginDarkText,
               ),
-              SizedBox(width: 5),
-              Icon(Icons.wifi, size: 13, color: Color(0xFF111827)),
-              SizedBox(width: 5),
-              Icon(Icons.battery_full, size: 13, color: Color(0xFF111827)),
+              SizedBox(width: AppWidth.w5),
+              Icon(Icons.wifi, size: AppSize.s13, color: AppColors.loginDarkText),
+              SizedBox(width: AppWidth.w5),
+              Icon(Icons.battery_full, size: AppSize.s13, color: AppColors.loginDarkText),
             ],
           ),
         ],

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -19,42 +22,42 @@ class LoginFormSection extends StatelessWidget {
         children: [
           LoginTextField(
             icon: Icons.email_outlined,
-            hintText: 'Your email',
+            hintText: context.loc.your_email,
             keyboardType: TextInputType.emailAddress,
-            validator: _validateEmail,
+            validator: (value) => _validateEmail(context, value),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: AppHeight.h14),
           LoginTextField(
             icon: Icons.lock,
-            hintText: 'Your password',
+            hintText: context.loc.your_password,
             obscureText: true,
             suffixIcon: Icons.visibility_off_outlined,
             keyboardType: TextInputType.visiblePassword,
-            validator: _validatePassword,
+            validator: (value) => _validatePassword(context, value),
           ),
-          const SizedBox(height: 1),
+          SizedBox(height: AppHeight.h1),
           TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              foregroundColor: const Color(0xFF222A61),
+              foregroundColor: AppColors.loginTabIndicator,
             ),
-            child: const SectionTitle(
-              text: 'Forgot Password?',
-              color: Color(0xFF222A61),
-              fontSize: 14,
+            child: SectionTitle(
+              text: context.loc.forgot_password,
+              color: AppColors.loginTabIndicator,
+              fontSize: AppFontSize.s14,
               fontWeight: AppFontWeight.bold,
             ),
           ),
           CustomSubmitButton(
-            title: 'Sign In',
-            marginTop: 29,
-            height: 49,
-            borderRadius: 24,
+            title: context.loc.sign_in,
+            marginTop: AppMarginHeight.m29,
+            height: AppHeight.h49,
+            borderRadius: AppRadius.r24,
             elevation: 0,
-            buttonColor: const Color(0xFF252C67),
+            buttonColor: AppColors.loginPrimary,
             onPressed: () => formKey.currentState?.validate(),
           ),
         ],
@@ -62,22 +65,22 @@ class LoginFormSection extends StatelessWidget {
     );
   }
 
-  String? _validateEmail(String? value) {
+  String? _validateEmail(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your email';
+      return context.loc.enter_email_validation;
     }
     if (!value.isValidEmail) {
-      return 'Please enter a valid email';
+      return context.loc.invalid_email_validation;
     }
     return null;
   }
 
-  String? _validatePassword(String? value) {
+  String? _validatePassword(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your password';
+      return context.loc.enter_password_validation;
     }
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return context.loc.short_password_validation;
     }
     return null;
   }

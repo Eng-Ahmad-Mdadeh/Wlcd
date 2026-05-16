@@ -17,6 +17,7 @@ class AppMarginHeight {
   static double m23 = 23.0.h;
   static double m25 = 25.0.h;
   static double m27 = 27.0.h;
+  static double m29 = 29.0.h;
   static double m30 = 30.0.h;
   static double m33 = 33.0.h;
   static double m35 = 35.0.h;
@@ -186,6 +187,7 @@ class AppWidth {
   static double w35 = 35.0.w;
   static double w37 = 37.0.w;
   static double w38 = 38.0.w;
+  static double w39 = 39.0.w;
   static double w40 = 40.0.w;
   static double w45 = 45.0.w;
   static double w48 = 48.0.w;
@@ -210,6 +212,7 @@ class AppWidth {
   static double w115 = 115.0.w;
   static double w120 = 120.0.w;
   static double w123 = 123.0.w;
+  static double w128 = 128.0.w;
   static double w129 = 129.0.w;
   static double w130 = 130.0.w;
   static double w132 = 132.0.w;
@@ -230,6 +233,7 @@ class AppWidth {
   static double w320 = 320.0.w;
   static double w325 = 325.0.w;
   static double w350 = 350.0.w;
+  static double w375 = 375.0.w;
   static double w390 = 390.0.w;
   static double w400 = 400.0.w;
   static double w433 = 433.0.w;
@@ -263,7 +267,9 @@ class AppHeight {
   static double h25 = 25.0.h;
   static double h26 = 26.0.h;
   static double h28 = 28.0.h;
+  static double h29 = 29.0.h;
   static double h30 = 30.0.h;
+  static double h31 = 31.0.h;
   static double h32 = 32.0.h;
   static double h33 = 33.0.h;
   static double h35 = 35.0.h;
@@ -277,6 +283,7 @@ class AppHeight {
   static double h50 = 50.0.h;
   static double h52 = 52.0.h;
   static double h53 = 53.0.h;
+  static double h54 = 54.0.h;
   static double h55 = 55.0.h;
   static double h60 = 60.0.h;
   static double h62 = 62.0.h;
@@ -338,6 +345,7 @@ class AppHeight {
   static double h580 = 580.0.h;
   static double h600 = 600.0.h;
   static double h658 = 658.0.h;
+  static double h812 = 812.0.h;
   static double h890 = 890.0.h;
 }
 
@@ -379,6 +387,7 @@ class AppRadius {
   static double r4 = 4.0.r;
   static double r5 = 5.0.r;
   static double r7 = 7.0.r;
+  static double r8 = 8.0.r;
   static double r9 = 9.0.r;
   static double r10 = 10.0.r;
   static double r13 = 13.0.r;
@@ -390,11 +399,13 @@ class AppRadius {
   static double r18 = 18.0.r;
   static double r20 = 20.0.r;
   static double r22 = 22.0.r;
+  static double r24 = 24.0.r;
   static double r25 = 25.0.r;
   static double r28 = 28.0.r;
   static double r30 = 30.0.r;
   static double r35 = 35.0.r;
   static double r45 = 45.0.r;
+  static double r50 = 50.0.r;
   static double r100 = 100.0.r;
   static double r150 = 150.0.r;
 }
