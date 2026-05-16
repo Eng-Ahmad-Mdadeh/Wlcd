@@ -3,47 +3,34 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginTabs extends StatelessWidget {
   const LoginTabs({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: LoginTab(label: context.loc.email, active: true)),
-        Expanded(child: LoginTab(label: context.loc.phone_number)),
-      ],
-    );
-  }
-}
-
-class LoginTab extends StatelessWidget {
-  const LoginTab({super.key, required this.label, this.active = false});
-
-  final String label;
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        SectionTitle(
-          text: label,
-          color: active ? AppColors.loginTabActive : AppColors.loginTabInactive,
+    return DefaultTabController(
+      length: 2,
+      child: TabBar(
+        indicatorColor: AppColors.loginTabIndicator,
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorWeight: AppHeight.h2,
+        dividerColor: Colors.transparent,
+        labelColor: AppColors.loginTabActive,
+        labelStyle: TextStyle(
           fontSize: AppFontSize.s14,
-          fontWeight: active ? AppFontWeight.bold : AppFontWeight.regular,
+          fontWeight: AppFontWeight.bold,
         ),
-        if (active)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(height: AppHeight.h2, color: AppColors.loginTabIndicator),
-          ),
-      ],
+        unselectedLabelColor: AppColors.loginTabInactive,
+        unselectedLabelStyle: TextStyle(
+          fontSize: AppFontSize.s14,
+          fontWeight: AppFontWeight.regular,
+        ),
+        tabs: [
+          Tab(text: context.loc.email),
+          Tab(text: context.loc.phone_number),
+        ],
+      ),
     );
   }
 }
