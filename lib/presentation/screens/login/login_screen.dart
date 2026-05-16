@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/presentation/cubit/remember_me/remember_me_cubit.dart';
+import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
+import 'package:wlcd/presentation/widgets/custom_rich_text.dart';
+import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
+import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
+import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -34,7 +41,7 @@ class BodyLoginScreen extends StatelessWidget {
               child: Container(
                 width: 375,
                 height: 812,
-                color: Colors.white,
+                color: AppColors.white,
                 padding: const EdgeInsets.fromLTRB(39, 18, 39, 8),
                 child: Form(
                   key: loginFormKey,
@@ -49,31 +56,27 @@ class BodyLoginScreen extends StatelessWidget {
                         color: Color(0xFF1F2937),
                       ),
                       const SizedBox(height: 35),
-                      const Text(
-                        'Hi! Welcome Back',
-                        style: TextStyle(
-                          color: Color(0xFF1F2430),
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.4,
-                          height: 1,
-                        ),
+                      const SectionTitle(
+                        text: 'Hi! Welcome Back',
+                        color: Color(0xFF1F2430),
+                        fontSize: 25,
+                        fontWeight: AppFontWeight.extraBold,
+                        height: 1,
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'We happy to see you again! to use your\naccount, you should sign in first.',
-                        style: TextStyle(
-                          color: Color(0xFF98A4B6),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1,
-                          height: 1.5,
-                        ),
+                      const SectionTitle(
+                        text:
+                            'We happy to see you again! to use your\naccount, you should sign in first.',
+                        color: Color(0xFF98A4B6),
+                        fontSize: 15,
+                        fontWeight: AppFontWeight.regular,
+                        height: 1.5,
+                        maxLines: 2,
                       ),
                       const SizedBox(height: 31),
                       const _LoginTabs(),
                       const SizedBox(height: 27),
-                      _LoginField(
+                      _LoginTextField(
                         icon: Icons.email_outlined,
                         hintText: 'Your email',
                         keyboardType: TextInputType.emailAddress,
@@ -88,7 +91,7 @@ class BodyLoginScreen extends StatelessWidget {
                         },
                       ),
                       const SizedBox(height: 14),
-                      _LoginField(
+                      _LoginTextField(
                         icon: Icons.lock,
                         hintText: 'Your password',
                         obscureText: true,
@@ -113,36 +116,21 @@ class BodyLoginScreen extends StatelessWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           foregroundColor: const Color(0xFF222A61),
                         ),
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        child: const SectionTitle(
+                          text: 'Forgot Password?',
+                          color: Color(0xFF222A61),
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 29),
-                      SizedBox(
-                        width: double.infinity,
+                      CustomSubmitButton(
+                        title: 'Sign In',
+                        marginTop: 29,
                         height: 49,
-                        child: ElevatedButton(
-                          onPressed: () => loginFormKey.currentState?.validate(),
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: const Color(0xFF252C67),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                          ),
-                          child: const Text(
-                            'Sign In',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
+                        borderRadius: 24,
+                        elevation: 0,
+                        buttonColor: const Color(0xFF252C67),
+                        onPressed: () => loginFormKey.currentState?.validate(),
                       ),
                       const SizedBox(height: 54),
                       const _OrDivider(),
@@ -163,23 +151,22 @@ class BodyLoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       Center(
-                        child: RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
-                              color: Color(0xFF202532),
+                        child: CustomRichText(
+                          texts: [
+                            CustomRichTextModel(
+                              text: 'Don’t have an account? ',
+                              color: const Color(0xFF202532),
                               fontSize: 15,
+                              fontWeight: AppFontWeight.regular,
                             ),
-                            children: [
-                              TextSpan(text: 'Don’t have an account? '),
-                              TextSpan(
-                                text: 'Sign Up',
-                                style: TextStyle(
-                                  color: Color(0xFF222A61),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ],
-                          ),
+                            CustomRichTextModel(
+                              text: 'Sign Up',
+                              color: const Color(0xFF222A61),
+                              fontSize: 15,
+                              fontWeight: AppFontWeight.extraBold,
+                              onTap: () {},
+                            ),
+                          ],
                         ),
                       ),
                       const Spacer(),
@@ -215,13 +202,11 @@ class _StatusBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            '9:41',
-            style: TextStyle(
-              color: Color(0xFF111827),
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+          SectionTitle(
+            text: '9:41',
+            color: Color(0xFF111827),
+            fontSize: 14,
+            fontWeight: AppFontWeight.semiBold,
           ),
           Row(
             children: [
@@ -273,13 +258,11 @@ class _LoginTab extends StatelessWidget {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            color: active ? const Color(0xFF1F285F) : const Color(0xFF6B7280),
-            fontSize: 14,
-            fontWeight: active ? FontWeight.w700 : FontWeight.w400,
-          ),
+        SectionTitle(
+          text: label,
+          color: active ? const Color(0xFF1F285F) : const Color(0xFF6B7280),
+          fontSize: 14,
+          fontWeight: active ? AppFontWeight.bold : AppFontWeight.regular,
         ),
         if (active)
           Positioned(
@@ -293,8 +276,8 @@ class _LoginTab extends StatelessWidget {
   }
 }
 
-class _LoginField extends StatelessWidget {
-  const _LoginField({
+class _LoginTextField extends StatelessWidget {
+  const _LoginTextField({
     required this.icon,
     required this.hintText,
     required this.keyboardType,
@@ -312,44 +295,34 @@ class _LoginField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      minHeight: 49,
-      child: TextFormField(
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        validator: validator,
-        style: const TextStyle(color: Color(0xFF1F2937), fontSize: 15),
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Color(0xFF9CA6B6),
-            fontSize: 15,
-            letterSpacing: 0.5,
-          ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 15),
-          prefixIcon: Icon(icon, size: 15),
-          prefixIconConstraints: const BoxConstraints(minWidth: 47),
-          prefixIconColor: const Color(0xFFA8B0BD),
-          suffixIcon: suffixIcon == null ? null : Icon(suffixIcon, size: 15),
-          suffixIconColor: const Color(0xFFA8B0BD),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFFEDF0F4)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFF232A62)),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFFC73030)),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFFC73030)),
-          ),
-        ),
+    return CustomTextFromField(
+      maxLines: 1,
+      textInputType: keyboardType,
+      obscureText: obscureText,
+      validator: validator,
+      hintText: hintText,
+      fontSize: 15,
+      hintColor: const Color(0xFF9CA6B6),
+      cursorColor: const Color(0xFF232A62),
+      filled: false,
+      contentPaddingTop: 15,
+      contentPaddingBottom: 15,
+      contentPaddingStart: 0,
+      prefixIcon: Icon(icon, size: 15, color: const Color(0xFFA8B0BD)),
+      suffixIcon: suffixIcon == null
+          ? null
+          : Icon(suffixIcon, size: 15, color: const Color(0xFFA8B0BD)),
+      enableInputBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: Color(0xFFEDF0F4)),
+      ),
+      focusedInputBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: Color(0xFF232A62)),
+      ),
+      errorInputBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: AppColors.red),
       ),
     );
   }
@@ -365,13 +338,11 @@ class _OrDivider extends StatelessWidget {
         Expanded(child: Divider(color: Color(0xFFF0F1F4), thickness: 1)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            'Or with email',
-            style: TextStyle(
-              color: Color(0xFF99A1AE),
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-            ),
+          child: SectionTitle(
+            text: 'Or with email',
+            color: Color(0xFF99A1AE),
+            fontSize: 13,
+            fontWeight: AppFontWeight.regular,
           ),
         ),
         Expanded(child: Divider(color: Color(0xFFF0F1F4), thickness: 1)),
@@ -389,37 +360,33 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return CustomElevatedButton(
       height: 49,
-      child: OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xFFEDF0F4)),
-          foregroundColor: const Color(0xFF202532),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          padding: EdgeInsets.zero,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (google)
-              const Text(
-                'G',
-                style: TextStyle(
-                  color: Color(0xFF4285F4),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              )
-            else
-              Icon(icon, size: 19, color: const Color(0xFF111827)),
-            const SizedBox(width: 17),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-            ),
-          ],
-        ),
+      elevation: 0,
+      borderRadius: 8,
+      color: AppColors.white,
+      borderSide: const BorderSide(color: Color(0xFFEDF0F4)),
+      onPressed: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (google)
+            const SectionTitle(
+              text: 'G',
+              color: Color(0xFF4285F4),
+              fontSize: 16,
+              fontWeight: AppFontWeight.bold,
+            )
+          else
+            Icon(icon, size: 19, color: const Color(0xFF111827)),
+          const SizedBox(width: 17),
+          SectionTitle(
+            text: label,
+            color: const Color(0xFF202532),
+            fontSize: 15,
+            fontWeight: AppFontWeight.bold,
+          ),
+        ],
       ),
     );
   }
