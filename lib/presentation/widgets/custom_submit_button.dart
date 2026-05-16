@@ -16,6 +16,11 @@ class CustomSubmitButton extends StatelessWidget {
   final bool verification;
   final bool? isLoading;
   final Color? loadingColor;
+  final Color? buttonColor;
+  final Color? textColor;
+  final double? height;
+  final double? borderRadius;
+  final double? elevation;
 
   const CustomSubmitButton({
     super.key,
@@ -28,20 +33,25 @@ class CustomSubmitButton extends StatelessWidget {
     this.verification = true,
     this.isLoading = false,
     this.loadingColor,
+    this.buttonColor,
+    this.textColor,
+    this.height,
+    this.borderRadius,
+    this.elevation,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomElevatedButton(
-      height: AppHeight.h45,
-      elevation: 5,
+      height: height ?? AppHeight.h45,
+      elevation: elevation ?? 5,
       marginBottom: marginBottom,
       marginTop: marginTop,
       marginStart: marginStart,
       marginEnd: marginEnd,
       width: double.infinity,
-      color: verification ? AppColors.primary : AppColors.greyText,
-      borderRadius: AppRadius.r7,
+      color: verification ? (buttonColor ?? AppColors.primary) : AppColors.greyText,
+      borderRadius: borderRadius ?? AppRadius.r7,
       onPressed: verification ? onPressed : () {},
       child: (isLoading ?? false)
           ? LoadingWidget(
@@ -52,7 +62,7 @@ class CustomSubmitButton extends StatelessWidget {
           : SectionTitle(
               text: title,
               fontSize: AppFontSize.s14,
-              color: AppColors.white,
+              color: textColor ?? AppColors.white,
             ),
     );
   }

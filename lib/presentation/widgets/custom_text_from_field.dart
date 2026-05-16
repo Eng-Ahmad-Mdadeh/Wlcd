@@ -115,7 +115,9 @@ class CustomTextFromField extends StatelessWidget {
       cursorColor: cursorColor ?? AppColors.primary,
       keyboardType: textInputType,
       obscureText: obscureText ?? false,
-      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: AppFontSize.s16),
+      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+        fontSize: fontSize ?? AppFontSize.s16,
+      ),
       validator: validator,
 
       autovalidateMode: AutovalidateMode.onUserInteraction,
