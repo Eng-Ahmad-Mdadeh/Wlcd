@@ -33,7 +33,6 @@ class BodyLoginScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF3F4F8),
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
