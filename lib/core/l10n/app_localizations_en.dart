@@ -185,7 +185,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get login_welcome_subtitle =>
-      'We happy to see you again! to use your\naccount, you should sign in first.';
+      'We happy to see you again! to use your account, you should sign in first.';
 
   @override
   String get email => 'Email';

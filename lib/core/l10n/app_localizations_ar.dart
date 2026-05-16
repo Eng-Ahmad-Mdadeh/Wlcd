@@ -185,7 +185,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get login_welcome_subtitle =>
-      'يسعدنا رؤيتك مرة أخرى! لاستخدام\nحسابك، يجب تسجيل الدخول أولاً.';
+      'يسعدنا رؤيتك مرة أخرى! لاستخدام حسابك، يجب تسجيل الدخول أولاً.';
 
   @override
   String get email => 'البريد الإلكتروني';

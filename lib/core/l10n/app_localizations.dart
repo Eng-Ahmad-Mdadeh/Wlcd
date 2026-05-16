@@ -449,7 +449,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_welcome_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'We happy to see you again! to use your\naccount, you should sign in first.'**
+  /// **'We happy to see you again! to use your account, you should sign in first.'**
   String get login_welcome_subtitle;
 
   /// No description provided for @email.

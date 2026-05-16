@@ -35,7 +35,7 @@ class LoginFormSection extends StatelessWidget {
             keyboardType: TextInputType.visiblePassword,
             validator: (value) => _validatePassword(context, value),
           ),
-          SizedBox(height: AppHeight.h1),
+          SizedBox(height: AppHeight.h10),
           TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(
@@ -47,7 +47,7 @@ class LoginFormSection extends StatelessWidget {
             child: SectionTitle(
               text: context.loc.forgot_password,
               color: AppColors.loginTabIndicator,
-              fontSize: AppFontSize.s14,
+              fontSize: AppFontSize.s15,
               fontWeight: AppFontWeight.bold,
             ),
           ),

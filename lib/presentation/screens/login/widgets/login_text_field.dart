@@ -37,13 +37,13 @@ class LoginTextField extends StatelessWidget {
       contentPaddingTop: AppPaddingHeight.p15,
       contentPaddingBottom: AppPaddingHeight.p15,
       contentPaddingStart: 0,
-      prefixIcon: Icon(icon, size: AppSize.s15, color: AppColors.loginFieldIcon),
+      prefixIcon: Icon(icon, size: AppSize.s20, color: AppColors.loginFieldIcon),
       suffixIcon: suffixIcon == null
           ? null
-          : Icon(suffixIcon, size: AppSize.s15, color: AppColors.loginFieldIcon),
+          : Icon(suffixIcon, size: AppSize.s20, color: AppColors.loginFieldIcon),
       enableInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.r8),
-        borderSide: const BorderSide(color: AppColors.loginFieldBorder),
+        borderSide: const BorderSide(color: AppColors.lightGrey),
       ),
       focusedInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.r8),
