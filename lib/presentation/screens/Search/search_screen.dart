@@ -5,23 +5,20 @@ import 'package:wlcd/presentation/screens/Search/widgets/course_card.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/search_header.dart';
+import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.searchScreenBackground,
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
           children: [
             Expanded(
               child: ListView(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppPaddingWidth.p18,
-                  vertical: AppPaddingHeight.p8,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18, vertical: AppPaddingHeight.p8),
                 children: const [
                   SizedBox(height: 8),
                   SearchHeader(),
