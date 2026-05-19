@@ -43,7 +43,7 @@ class CustomSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomElevatedButton(
-      height: height ?? AppHeight.h45,
+      height: height ?? AppHeight.h50,
       elevation: elevation ?? 5,
       marginBottom: marginBottom,
       marginTop: marginTop,

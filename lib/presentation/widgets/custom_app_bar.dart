@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onTapBackButton;
   final String title;
   final Color? backgroundColor;
+  final Color? colorTitle;
   final VoidCallback? onBack;
 
   final List<Widget>? customActions;
@@ -31,6 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = false,
     this.onBack,
     this.title = '',
+    this.colorTitle ,
     this.onTapSkipButton,
     this.onTapBackButton,
     this.customActions, // ✅ إضافة البراميتر
@@ -71,7 +73,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : null,
-      title: SectionTitle(text: title),
+      title: SectionTitle(text: title,color: colorTitle),
 
       actions:
           customActions ??

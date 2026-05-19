@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/section_card.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -43,22 +44,65 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
+      appBar: CustomAppBar(
+        backgroundColor: _HomeColors.primary,
+        title: "WLCD Academy",
+        colorTitle: AppColors.white,
+        centerTitle: true,
+      ),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            pinned: true,
             automaticallyImplyLeading: false,
+            elevation: 0,
+            forceElevated: false,
+            forceMaterialTransparency: true,
             backgroundColor: _HomeColors.primary,
             surfaceTintColor: _HomeColors.primary,
-            elevation: 0,
-            toolbarHeight: AppHeight.h170,
-            flexibleSpace: SafeArea(
-              bottom: false,
-              child: _HomeHeader(
-                searchController: _searchController,
-                onSearchChanged: (value) {},
+            floating: true,
+            snap: true,
+            expandedHeight: 250,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Positioned(
+                    top: 0,
+                    child: _HomeHeader(searchController: _searchController, onSearchChanged: (value) {}),
+                  ),
+                  Positioned(top: AppHeight.h150, child: _ContinueLearningCard()),
+                ],
               ),
+            ),
+            // flexibleSpace: SafeArea(
+            //   bottom: false,
+            //   child: _HomeHeader(
+            //     searchController: _searchController,
+            //     onSearchChanged: (value) {},
+            //   ),
+            // ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.fromLTRB(
+              AppPaddingWidth.p23,
+              AppPaddingHeight.p20,
+              AppPaddingWidth.p23,
+              AppPaddingHeight.p100,
+            ),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                const _SectionHeader(title: 'Continue Learning'),
+                SizedBox(height: AppHeight.h28),
+                _SectionHeader(
+                  title: 'Recently added',
+                  actionText: 'See more',
+                  onActionPressed: _showRecentlyAddedMessage,
+                ),
+                SizedBox(height: AppHeight.h14),
+                _CoursesGrid(courses: _recentCourses),
+              ]),
             ),
           ),
           SliverPadding(
@@ -69,21 +113,17 @@ class _HomeScreenState extends State<HomeScreen> {
               AppPaddingHeight.p100,
             ),
             sliver: SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  const _SectionHeader(title: 'Continue Learning'),
-                  SizedBox(height: AppHeight.h14),
-                  const _ContinueLearningCard(),
-                  SizedBox(height: AppHeight.h28),
-                  _SectionHeader(
-                    title: 'Recently added',
-                    actionText: 'See more',
-                    onActionPressed: _showRecentlyAddedMessage,
-                  ),
-                  SizedBox(height: AppHeight.h14),
-                  _CoursesGrid(courses: _recentCourses),
-                ],
-              ),
+              delegate: SliverChildListDelegate([
+                const _SectionHeader(title: 'Continue Learning'),
+                SizedBox(height: AppHeight.h28),
+                _SectionHeader(
+                  title: 'Recently added',
+                  actionText: 'See more',
+                  onActionPressed: _showRecentlyAddedMessage,
+                ),
+                SizedBox(height: AppHeight.h14),
+                _CoursesGrid(courses: _recentCourses),
+              ]),
             ),
           ),
         ],
@@ -92,47 +132,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showRecentlyAddedMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Opening all recently added courses...')),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Opening all recently added courses...')));
   }
 }
 
 class _HomeHeader extends StatelessWidget {
-  const _HomeHeader({
-    required this.searchController,
-    required this.onSearchChanged,
-  });
+  const _HomeHeader({required this.searchController, required this.onSearchChanged});
 
   final TextEditingController searchController;
   final ValueChanged<String> onSearchChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        AppPaddingWidth.p23,
-        0,
-        AppPaddingWidth.p23,
-        AppPaddingHeight.p23,
-      ),
-      child: Column(
-        children: [
-          SizedBox(height: AppHeight.h15),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Expanded(child: _WelcomeText()),
-              SizedBox(width: AppWidth.w12),
-              const _HeaderActions(),
-            ],
-          ),
-          SizedBox(height: AppHeight.h24),
-          _HomeSearchField(
-            controller: searchController,
-            onChanged: onSearchChanged,
-          ),
-        ],
+    return Container(
+      height: AppHeight.h200,
+      width: AppWidth.w428,
+      color: _HomeColors.primary,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(AppPaddingWidth.p23, 0, AppPaddingWidth.p23, AppPaddingHeight.p23),
+        child: Column(
+          children: [
+            SizedBox(height: AppHeight.h15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Expanded(child: _WelcomeText()),
+                SizedBox(width: AppWidth.w12),
+                const _HeaderActions(),
+              ],
+            ),
+            SizedBox(height: AppHeight.h24),
+            _HomeSearchField(controller: searchController, onChanged: onSearchChanged),
+          ],
+        ),
       ),
     );
   }
@@ -179,22 +211,14 @@ class _HeaderActions extends StatelessWidget {
       children: [
         const _HeaderIconButton(icon: Icons.search, semanticLabel: 'Search'),
         SizedBox(width: AppWidth.w8),
-        const _HeaderIconButton(
-          icon: Icons.notifications_none_outlined,
-          semanticLabel: 'Notifications',
-          showDot: true,
-        ),
+        const _HeaderIconButton(icon: Icons.notifications_none_outlined, semanticLabel: 'Notifications', showDot: true),
       ],
     );
   }
 }
 
 class _HeaderIconButton extends StatelessWidget {
-  const _HeaderIconButton({
-    required this.icon,
-    required this.semanticLabel,
-    this.showDot = false,
-  });
+  const _HeaderIconButton({required this.icon, required this.semanticLabel, this.showDot = false});
 
   final IconData icon;
   final String semanticLabel;
@@ -227,10 +251,7 @@ class _HeaderIconButton extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: _HomeColors.notificationDot,
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: _HomeColors.primary,
-                      width: AppWidth.w1,
-                    ),
+                    border: Border.all(color: _HomeColors.primary, width: AppWidth.w1),
                   ),
                 ),
               ),
@@ -259,22 +280,14 @@ class _HomeSearchField extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p15),
       child: Row(
         children: [
-          Icon(
-            Icons.search,
-            color: AppColors.white.withOpacity(.72),
-            size: AppSize.s18,
-          ),
+          Icon(Icons.search, color: AppColors.white.withOpacity(.72), size: AppSize.s18),
           SizedBox(width: AppWidth.w11),
           Expanded(
             child: TextField(
               controller: controller,
               onChanged: onChanged,
               cursorColor: AppColors.white,
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: AppFontSize.s13,
-                fontFamily: AppFontFamily.rubik,
-              ),
+              style: TextStyle(color: AppColors.white, fontSize: AppFontSize.s13, fontFamily: AppFontFamily.rubik),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
@@ -294,11 +307,7 @@ class _HomeSearchField extends StatelessWidget {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    this.actionText,
-    this.onActionPressed,
-  });
+  const _SectionHeader({required this.title, this.actionText, this.onActionPressed});
 
   final String title;
   final String? actionText;
@@ -341,74 +350,70 @@ class _ContinueLearningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SectionCard(
-      margin: EdgeInsets.zero,
-      padding: EdgeInsets.zero,
-      borderRadius: BorderRadius.circular(AppRadius.r7),
-      backgroundColor: AppColors.white,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.r7),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(AppPaddingWidth.p13),
-              child: Row(
-                children: [
-                  const _ContinueCourseThumb(),
-                  SizedBox(width: AppWidth.w14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BodyTitle(
-                          text: 'Website',
-                          color: _HomeColors.warning,
-                          fontSize: AppFontSize.s10,
-                          fontWeight: AppFontWeight.extraBold,
-                        ),
-                        SizedBox(height: AppHeight.h5),
-                        SectionTitle(
-                          text: 'Fundamentals of HTML & CSS From Scratch',
-                          color: _HomeColors.text,
-                          fontSize: AppFontSize.s13,
-                          fontWeight: AppFontWeight.extraBold,
-                          height: 1.32,
-                          maxLines: 2,
-                        ),
-                      ],
-                    ),
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.r12),
+      ),
+      height: AppHeight.h140,
+      width: AppWidth.w400,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(AppPaddingWidth.p13),
+            child: Row(
+              children: [
+                const _ContinueCourseThumb(),
+                SizedBox(width: AppWidth.w14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BodyTitle(
+                        text: 'Website',
+                        color: _HomeColors.warning,
+                        fontSize: AppFontSize.s10,
+                        fontWeight: AppFontWeight.extraBold,
+                      ),
+                      SizedBox(height: AppHeight.h5),
+                      SectionTitle(
+                        text: 'Fundamentals of HTML & CSS From Scratch',
+                        color: _HomeColors.text,
+                        fontSize: AppFontSize.s13,
+                        fontWeight: AppFontWeight.extraBold,
+                        height: 1.32,
+                        maxLines: 2,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                AppPaddingWidth.p13,
-                0,
-                AppPaddingWidth.p13,
-                AppPaddingHeight.p10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _ProgressText(text: '24 of 33 Lessons'),
-                  _ProgressText(text: '75% completed'),
-                ],
-              ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(AppPaddingWidth.p13, 0, AppPaddingWidth.p13, AppPaddingHeight.p7),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ProgressText(text: '24 of 33 Lessons'),
+                _ProgressText(text: '75% completed'),
+              ],
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(AppRadius.r7),
-              ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.0, left: AppPaddingWidth.p10, right: AppPaddingWidth.p10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.r7),
               child: LinearProgressIndicator(
-                minHeight: AppHeight.h4,
+                minHeight: AppHeight.h10,
                 value: .75,
                 backgroundColor: _HomeColors.progressTrack,
                 valueColor: const AlwaysStoppedAnimation<Color>(_HomeColors.primary),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -427,21 +432,14 @@ class _ContinueCourseThumb extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF9FB6C9),
-            Color(0xFFEEF3F7),
-            Color(0xFF885A47),
-            Color(0xFF3F2F2D),
-          ],
+          colors: [Color(0xFF9FB6C9), Color(0xFFEEF3F7), Color(0xFF885A47), Color(0xFF3F2F2D)],
           stops: [0, .42, .43, 1],
         ),
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
-          Positioned.fill(
-            child: Container(color: const Color(0x33141C41)),
-          ),
+          Positioned.fill(child: Container(color: const Color(0x33141C41))),
           PositionedDirectional(
             top: AppHeight.h7,
             start: AppWidth.w7,
@@ -450,10 +448,7 @@ class _ContinueCourseThumb extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadius.r2),
-                border: Border.all(
-                  color: AppColors.white.withOpacity(.65),
-                  width: AppWidth.w1,
-                ),
+                border: Border.all(color: AppColors.white.withOpacity(.65), width: AppWidth.w1),
               ),
             ),
           ),
@@ -489,12 +484,7 @@ class _ProgressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BodyTitle(
-      text: text,
-      color: _HomeColors.muted,
-      fontSize: AppFontSize.s10,
-      fontWeight: AppFontWeight.bold,
-    );
+    return BodyTitle(text: text, color: _HomeColors.muted, fontSize: AppFontSize.s10, fontWeight: AppFontWeight.bold);
   }
 }
 
@@ -528,7 +518,7 @@ class _CoursesGrid extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: AppWidth.w18,
         mainAxisSpacing: AppHeight.h18,
-        childAspectRatio: .58,
+        childAspectRatio: .75,
       ),
       itemBuilder: (context, index) => _CourseCard(course: courses[index]),
     );
@@ -542,45 +532,61 @@ class _CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _CoursePoster(type: course.posterType),
-        SizedBox(height: AppHeight.h12),
-        BodyTitle(
-          text: course.category,
-          color: _HomeColors.danger,
-          fontSize: AppFontSize.s10,
-          fontWeight: AppFontWeight.extraBold,
-        ),
-        SizedBox(height: AppHeight.h6),
-        SectionTitle(
-          text: course.title,
-          color: _HomeColors.text,
-          fontSize: AppFontSize.s13,
-          height: 1.35,
-          fontWeight: AppFontWeight.extraBold,
-          maxLines: 2,
-        ),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BodyTitle(
-              text: course.price,
-              color: _HomeColors.accent,
-              fontSize: AppFontSize.s13,
-              fontWeight: AppFontWeight.extraBold,
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.r12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _CoursePoster(type: course.posterType),
+          SizedBox(height: AppHeight.h12),
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BodyTitle(
+                  text: course.category,
+                  color: _HomeColors.danger,
+                  fontSize: AppFontSize.s10,
+                  fontWeight: AppFontWeight.extraBold,
+                ),
+                SizedBox(height: AppHeight.h6),
+                SectionTitle(
+                  text: course.title,
+                  color: _HomeColors.text,
+                  fontSize: AppFontSize.s13,
+                  height: 1.35,
+                  fontWeight: AppFontWeight.extraBold,
+                  maxLines: 2,
+                ),
+                // const Spacer(),
+                SizedBox(height: AppHeight.h10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BodyTitle(
+                      text: course.price,
+                      color: _HomeColors.accent,
+                      fontSize: AppFontSize.s13,
+                      fontWeight: AppFontWeight.extraBold,
+                    ),
+                    BodyTitle(
+                      text: course.duration,
+                      color: _HomeColors.muted,
+                      fontSize: AppFontSize.s10,
+                      fontWeight: AppFontWeight.bold,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            BodyTitle(
-              text: course.duration,
-              color: _HomeColors.muted,
-              fontSize: AppFontSize.s10,
-              fontWeight: AppFontWeight.bold,
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -606,9 +612,7 @@ class _CoursePoster extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: type == _CoursePosterType.dark
-          ? const _DarkPosterArt()
-          : const _BookPosterArt(),
+      child: type == _CoursePosterType.dark ? const _DarkPosterArt() : const _BookPosterArt(),
     );
   }
 }
@@ -626,21 +630,13 @@ class _DarkPosterArt extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF030712),
-                  Color(0xFF111827),
-                  Color(0xFF0F172A),
-                ],
+                colors: [Color(0xFF030712), Color(0xFF111827), Color(0xFF0F172A)],
                 stops: [0, .52, 1],
               ),
             ),
           ),
         ),
-        PositionedDirectional(
-          top: AppHeight.h35,
-          start: AppWidth.w25,
-          child: const _CodeBadge(),
-        ),
+        PositionedDirectional(top: AppHeight.h35, start: AppWidth.w25, child: const _CodeBadge()),
         PositionedDirectional(
           top: AppHeight.h32,
           end: AppWidth.w40,
@@ -669,10 +665,7 @@ class _CodeBadge extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.r10),
-          border: Border.all(
-            color: const Color(0xFF2563EB),
-            width: AppWidth.w1 * 2,
-          ),
+          border: Border.all(color: const Color(0xFF2563EB), width: AppWidth.w1 * 2),
           boxShadow: const [BoxShadow(color: Color(0x662563EB), blurRadius: 18)],
         ),
         child: SectionTitle(
@@ -739,10 +732,7 @@ class _BookPosterLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppPaddingWidth.p8,
-        vertical: AppPaddingHeight.p5,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8, vertical: AppPaddingHeight.p5),
       decoration: BoxDecoration(
         color: AppColors.white.withOpacity(.88),
         borderRadius: BorderRadius.circular(AppRadius.r4),

@@ -37,7 +37,7 @@ class LoginFormSection extends StatelessWidget {
             keyboardType: TextInputType.visiblePassword,
             validator: (value) => _validatePassword(context, value),
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h14),
           TextButton(
             onPressed: () => showForgotPasswordBottomSheet(context),
             style: TextButton.styleFrom(
@@ -55,15 +55,13 @@ class LoginFormSection extends StatelessWidget {
           ),
           CustomSubmitButton(
             title: context.loc.sign_in,
-            marginTop: AppMarginHeight.m29,
-            height: AppHeight.h49,
+            marginTop: AppMarginHeight.m30,
             borderRadius: AppRadius.r24,
-            elevation: 0,
             buttonColor: AppColors.loginPrimary,
             onPressed: () {
-              if(formKey.currentState!.validate()) {
+              // if(formKey.currentState!.validate()) {
                 HomeRoute().push(context);
-              }
+              // }
             },
           ),
         ],
