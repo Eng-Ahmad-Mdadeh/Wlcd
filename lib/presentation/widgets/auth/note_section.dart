@@ -45,23 +45,20 @@ class NoteSection extends StatelessWidget {
   Widget _buildContent() {
     final List<Widget> children = [];
 
-    // إضافة العنوان إذا كان موجوداً
     if (title != null) {
       children.add(
         BodyTitle(
           text: title,
           fontSize: AppFontSize.s15,
-          color: AppColors.lightPrimary,
+          color: AppColors.primary,
         ),
       );
     }
 
-    // إضافة المسافة بين العناصر
     if (title != null && (subTitle != null || richTexts != null)) {
       children.add(SizedBox(height: AppHeight.h5));
     }
 
-    // إضافة العنوان الفرعي إذا كان موجوداً
     if (subTitle != null) {
       children.add(
         BodyTitle(
@@ -72,7 +69,6 @@ class NoteSection extends StatelessWidget {
       );
     }
 
-    // إضافة النص المنسق إذا كان موجوداً
     if (richTexts != null) {
       if (subTitle != null && richTexts != null) {
         children.add(SizedBox(height: AppHeight.h5));

@@ -57,11 +57,7 @@ class CustomSearch extends StatelessWidget {
           controller: controller,
           contentPaddingTop: AppPaddingHeight.p17,
           readOnly: readOnly,
-          prefixIcon: Icon(
-            Iconsax.search_normal_outline,
-            color: AppColors.primary,
-            size: AppSize.s27,
-          ),
+          prefixIcon: Icon(Iconsax.search_normal_outline, color: prefixIconColor, size: AppSize.s27),
           hintColor: hintColor,
           onTap: onTap,
           borderRadius: borderRadius ?? AppRadius.r45,

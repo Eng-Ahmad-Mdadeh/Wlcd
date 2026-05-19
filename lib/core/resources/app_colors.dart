@@ -4,10 +4,17 @@ class AppColors {
   AppColors._();
 
   /// Primary
-  static const Color primary = Color(0xFF0F5132);
-  static const Color lightPrimary = Color(0xFF128C7E);
-  static const Color lightPrimary2 = Color(0x33128C7E);
-  static const Color shadowPrimary = Color(0x8E128C7E);
+
+  static const Color primary = Color(0xFF1F275D);
+  static const Color accent = Color(0xFF1665E7);
+  static const Color danger = Color(0xFFF04444);
+  static const Color notificationDot = Color(0xFFFF4D6D);
+  static const Color text = Color(0xFF111827);
+  static const Color muted = Color(0xFF7B8191);
+  static const Color seeMore = Color(0xFF495063);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color progressTrack = Color(0xFFE8EAF5);
+  static const Color navInactive = Color(0xFFA0A7B5);
 
   static const Color darkPrimary = Color.fromARGB(142, 11, 70, 50);
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
+import 'package:wlcd/presentation/widgets/custom_search.dart';
+import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 import 'package:wlcd/presentation/widgets/section_card.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -45,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
-        backgroundColor: _HomeColors.primary,
+        backgroundColor: AppColors.primary,
         title: "WLCD Academy",
         colorTitle: AppColors.white,
         centerTitle: true,
@@ -58,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
             elevation: 0,
             forceElevated: false,
             forceMaterialTransparency: true,
-            backgroundColor: _HomeColors.primary,
-            surfaceTintColor: _HomeColors.primary,
+            backgroundColor: AppColors.primary,
+            surfaceTintColor: AppColors.primary,
             floating: true,
             snap: true,
             expandedHeight: 250,
@@ -147,7 +150,7 @@ class _HomeHeader extends StatelessWidget {
     return Container(
       height: AppHeight.h200,
       width: AppWidth.w428,
-      color: _HomeColors.primary,
+      color: AppColors.primary,
       child: Padding(
         padding: EdgeInsets.fromLTRB(AppPaddingWidth.p23, 0, AppPaddingWidth.p23, AppPaddingHeight.p23),
         child: Column(
@@ -249,9 +252,9 @@ class _HeaderIconButton extends StatelessWidget {
                   width: AppWidth.w6,
                   height: AppHeight.h6,
                   decoration: BoxDecoration(
-                    color: _HomeColors.notificationDot,
+                    color: AppColors.notificationDot,
                     shape: BoxShape.circle,
-                    border: Border.all(color: _HomeColors.primary, width: AppWidth.w1),
+                    border: Border.all(color: AppColors.primary, width: AppWidth.w1),
                   ),
                 ),
               ),
@@ -280,24 +283,17 @@ class _HomeSearchField extends StatelessWidget {
       padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p15),
       child: Row(
         children: [
-          Icon(Icons.search, color: AppColors.white.withOpacity(.72), size: AppSize.s18),
+          Icon(Iconsax.search_normal_outline, color: AppColors.white.withOpacity(.72), size: AppSize.s18),
           SizedBox(width: AppWidth.w11),
           Expanded(
-            child: TextField(
+            child: CustomTextFromField(
               controller: controller,
               onChanged: onChanged,
               cursorColor: AppColors.white,
-              style: TextStyle(color: AppColors.white, fontSize: AppFontSize.s13, fontFamily: AppFontFamily.rubik),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                hintText: 'What do you want to learn?',
-                hintStyle: TextStyle(
-                  color: AppColors.white.withOpacity(.58),
-                  fontSize: AppFontSize.s13,
-                  fontFamily: AppFontFamily.rubik,
-                ),
-              ),
+              readOnly: true,
+              hintText: 'What do you want to learn',
+              color: AppColors.none,
+              fontSize: AppFontSize.s13,
             ),
           ),
         ],
@@ -320,7 +316,7 @@ class _SectionHeader extends StatelessWidget {
       children: [
         SectionTitle(
           text: title,
-          color: _HomeColors.text,
+          color: AppColors.text,
           fontSize: AppFontSize.s15,
           fontWeight: AppFontWeight.extraBold,
         ),
@@ -331,11 +327,11 @@ class _SectionHeader extends StatelessWidget {
               padding: EdgeInsets.zero,
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              foregroundColor: _HomeColors.seeMore,
+              foregroundColor: AppColors.seeMore,
             ),
             child: BodyTitle(
               text: actionText!,
-              color: _HomeColors.seeMore,
+              color: AppColors.seeMore,
               fontSize: AppFontSize.s12,
               fontWeight: AppFontWeight.bold,
             ),
@@ -372,14 +368,14 @@ class _ContinueLearningCard extends StatelessWidget {
                     children: [
                       BodyTitle(
                         text: 'Website',
-                        color: _HomeColors.warning,
+                        color: AppColors.warning,
                         fontSize: AppFontSize.s10,
                         fontWeight: AppFontWeight.extraBold,
                       ),
                       SizedBox(height: AppHeight.h5),
                       SectionTitle(
                         text: 'Fundamentals of HTML & CSS From Scratch',
-                        color: _HomeColors.text,
+                        color: AppColors.text,
                         fontSize: AppFontSize.s13,
                         fontWeight: AppFontWeight.extraBold,
                         height: 1.32,
@@ -408,8 +404,8 @@ class _ContinueLearningCard extends StatelessWidget {
               child: LinearProgressIndicator(
                 minHeight: AppHeight.h10,
                 value: .75,
-                backgroundColor: _HomeColors.progressTrack,
-                valueColor: const AlwaysStoppedAnimation<Color>(_HomeColors.primary),
+                backgroundColor: AppColors.progressTrack,
+                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
               ),
             ),
           ),
@@ -484,7 +480,7 @@ class _ProgressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BodyTitle(text: text, color: _HomeColors.muted, fontSize: AppFontSize.s10, fontWeight: AppFontWeight.bold);
+    return BodyTitle(text: text, color: AppColors.muted, fontSize: AppFontSize.s10, fontWeight: AppFontWeight.bold);
   }
 }
 
@@ -501,7 +497,7 @@ class _CoursesGrid extends StatelessWidget {
         child: Center(
           child: BodyTitle(
             text: 'No courses found',
-            color: _HomeColors.muted,
+            color: AppColors.muted,
             fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.semiBold,
           ),
@@ -550,14 +546,14 @@ class _CourseCard extends StatelessWidget {
               children: [
                 BodyTitle(
                   text: course.category,
-                  color: _HomeColors.danger,
+                  color: AppColors.danger,
                   fontSize: AppFontSize.s10,
                   fontWeight: AppFontWeight.extraBold,
                 ),
                 SizedBox(height: AppHeight.h6),
                 SectionTitle(
                   text: course.title,
-                  color: _HomeColors.text,
+                  color: AppColors.text,
                   fontSize: AppFontSize.s13,
                   height: 1.35,
                   fontWeight: AppFontWeight.extraBold,
@@ -570,13 +566,13 @@ class _CourseCard extends StatelessWidget {
                   children: [
                     BodyTitle(
                       text: course.price,
-                      color: _HomeColors.accent,
+                      color: AppColors.accent,
                       fontSize: AppFontSize.s13,
                       fontWeight: AppFontWeight.extraBold,
                     ),
                     BodyTitle(
                       text: course.duration,
-                      color: _HomeColors.muted,
+                      color: AppColors.muted,
                       fontSize: AppFontSize.s10,
                       fontWeight: AppFontWeight.bold,
                     ),
@@ -601,14 +597,10 @@ class _CoursePoster extends StatelessWidget {
     return Container(
       height: AppHeight.h130,
       decoration: BoxDecoration(
-        color: _HomeColors.text,
+        color: AppColors.text,
         borderRadius: BorderRadius.circular(AppRadius.r7),
         boxShadow: [
-          BoxShadow(
-            color: _HomeColors.text.withOpacity(.11),
-            blurRadius: AppRadius.r18,
-            offset: Offset(0, AppHeight.h7),
-          ),
+          BoxShadow(color: AppColors.text.withOpacity(.11), blurRadius: AppRadius.r18, offset: Offset(0, AppHeight.h7)),
         ],
       ),
       clipBehavior: Clip.antiAlias,
@@ -739,7 +731,7 @@ class _BookPosterLabel extends StatelessWidget {
       ),
       child: SectionTitle(
         text: text,
-        color: _HomeColors.text,
+        color: AppColors.text,
         fontSize: fontSize,
         fontWeight: AppFontWeight.extraBold,
         height: 1.3,
@@ -765,18 +757,3 @@ class _CourseData {
 }
 
 enum _CoursePosterType { dark, book }
-
-class _HomeColors {
-  const _HomeColors._();
-
-  static const Color primary = Color(0xFF1F275D);
-  static const Color accent = Color(0xFF1665E7);
-  static const Color danger = Color(0xFFF04444);
-  static const Color notificationDot = Color(0xFFFF4D6D);
-  static const Color text = Color(0xFF111827);
-  static const Color muted = Color(0xFF7B8191);
-  static const Color seeMore = Color(0xFF495063);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color progressTrack = Color(0xFFE8EAF5);
-  static const Color navInactive = Color(0xFFA0A7B5);
-}

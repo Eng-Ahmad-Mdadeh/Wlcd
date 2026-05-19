@@ -37,7 +37,7 @@ class CustomAnimationDialog {
               fontWeight: AppFontWeight.medium,
             ),
       ),
-      btnOkColor: okColor ?? AppColors.lightPrimary,
+      btnOkColor: okColor ?? AppColors.primary,
       btnCancelColor: cancelColor,
       btnCancelText: cancelText ?? "Cancel",
       btnOkText: okText ?? "Retry",
