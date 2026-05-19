@@ -204,6 +204,7 @@ class AppWidth {
   static double w86 = 86.0.w;
   static double w89 = 89.0.w;
   static double w90 = 90.0.w;
+  static double w92 = 92.0.w;
   static double w93 = 93.0.w;
   static double w98 = 98.0.w;
   static double w100 = 100.0.w;
@@ -296,6 +297,7 @@ class AppHeight {
   static double h85 = 85.0.h;
   static double h87 = 87.0.h;
   static double h90 = 90.0.h;
+  static double h92 = 92.0.h;
   static double h98 = 98.0.h;
   static double h100 = 100.0.h;
   static double h105 = 105.0.h;
@@ -386,6 +388,7 @@ class AppRadius {
   static double r3 = 3.0.r;
   static double r4 = 4.0.r;
   static double r5 = 5.0.r;
+  static double r6 = 6.0.r;
   static double r7 = 7.0.r;
   static double r8 = 8.0.r;
   static double r9 = 9.0.r;
@@ -401,6 +404,7 @@ class AppRadius {
   static double r22 = 22.0.r;
   static double r24 = 24.0.r;
   static double r25 = 25.0.r;
+  static double r27 = 27.0.r;
   static double r28 = 28.0.r;
   static double r30 = 30.0.r;
   static double r35 = 35.0.r;

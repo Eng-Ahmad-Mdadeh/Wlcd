@@ -73,5 +73,30 @@ class AppColors {
   static const Color loginSocialText = Color(0xFF202532);
   static const Color loginGoogleBlue = Color(0xFF4285F4);
 
+
+  /// Search screen
+  static const Color searchScreenBackground = Color(0xFFF8F8F8);
+  static const Color searchIcon = Color(0xFF9AA0AB);
+  static const Color searchHeaderText = Color(0xFF343A46);
+  static const Color searchCloseIcon = Color(0xFF2A2F3A);
+  static const Color searchFilterBorder = Color(0xFFE5E6EA);
+  static const Color searchResultTitle = Color(0xFF4A5261);
+  static const Color searchInactiveView = Color(0xFFB8BDC8);
+  static const Color searchCardBorder = Color(0xFFE9EAEE);
+  static const Color searchThumbBlue = Color(0xFFE8EFFF);
+  static const Color searchThumbBeige = Color(0xFFECE7DF);
+  static const Color searchThumbPaleBlue = Color(0xFFEAEFFA);
+  static const Color searchImageIcon = Color(0xFF9BA2B4);
+  static const Color searchTagBackground = Color(0xFFE8F8ED);
+  static const Color searchTagText = Color(0xFF3CB55F);
+  static const Color searchCardTitle = Color(0xFF1B2232);
+  static const Color searchPrice = Color(0xFF2D65F8);
+  static const Color searchStar = Color(0xFFF9B422);
+  static const Color searchRatingText = Color(0xFF737B8C);
+  static const Color searchBottomBorder = Color(0xFFE7E8ED);
+  static const Color searchBottomShadow = Color(0x331F275D);
+  static const Color searchNavInactiveIcon = Color(0xFF9FA6B4);
+  static const Color searchNavInactiveText = Color(0xFFA8AFBC);
+
   static const Color none = Colors.transparent;
 }
