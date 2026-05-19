@@ -845,6 +845,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  local_hero_transform:
+    dependency: "direct main"
+    description:
+      name: local_hero_transform
+      sha256: ea771fbc36f3de4f4debc66baa0087205be8561022d9d24773221d8752193700
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   logging:
     dependency: transitive
     description:

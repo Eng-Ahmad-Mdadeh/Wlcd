@@ -3,6 +3,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/custom_search.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
@@ -287,6 +288,7 @@ class _HomeSearchField extends StatelessWidget {
           SizedBox(width: AppWidth.w11),
           Expanded(
             child: CustomTextFromField(
+              onTap: () => SearchRoute().push(context),
               controller: controller,
               onChanged: onChanged,
               cursorColor: AppColors.white,

@@ -81,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
   }
 
   Future<void> _openFilterSheet() async {
-    final topic = await CustomBottomSheet.show<String>(
+     await CustomBottomSheet.show(
       context,
       title: 'Filter',
       heightFactor: .8,
