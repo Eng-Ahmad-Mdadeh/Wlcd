@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
@@ -35,8 +36,8 @@ class CourseDetailsScreen extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    const ImageView(
-                      imagePath: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200',
+                    ImageView(
+                      imagePath: AppAssets.buildingImage,
                       height: 220,
                       width: double.infinity,
                       fit: BoxFit.cover,
