@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_drop_down_widget.dart';
-import 'package:wlcd/presentation/widgets/custom_search.dart';
-import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class SearchTopFilters extends StatelessWidget {
   const SearchTopFilters({
@@ -33,43 +31,45 @@ class SearchTopFilters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomSearch(color: AppColors.white, controller: searchController, onChanged: onSearchChanged),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: AppHeight.h50,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(AppRadius.r10),
+                  border: Border.all(color: AppColors.lightGrey),
+                ),
+                child: TextField(
+                  controller: searchController,
+                  onChanged: onSearchChanged,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search, size: 20, color: AppColors.grey),
+                    hintText: 'Search something',
+                  ),
+                ),
+              ),
+            ),
+            IconButton(onPressed: () { searchController.clear(); onSearchChanged(''); }, icon: const Icon(Icons.close, color: AppColors.greyText)),
+          ],
+        ),
         SizedBox(height: AppHeight.h10),
         Row(
           children: [
             Expanded(
               child: OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: AppColors.white,
-                  side: BorderSide(color: AppColors.grey.withAlpha(80)),
-                ),
+                style: OutlinedButton.styleFrom(backgroundColor: AppColors.white, side: BorderSide(color: AppColors.lightGrey), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r8))),
                 onPressed: onOpenFilter,
-                icon: const Icon(Icons.tune, color: AppColors.primary),
-                label: const BodyTitle(text: 'Filter', color: AppColors.primary),
+                icon: const Icon(Icons.tune, size: 14, color: AppColors.greyText),
+                label: const Text('Filter', style: TextStyle(color: AppColors.greyText, fontSize: 12)),
               ),
             ),
             SizedBox(width: AppWidth.w8),
-            Expanded(
-              child: CustomDropDownWidget(
-                onChanged: (value) => onSortChanged(value as String),
-                hintText: 'Sort by',
-                items: sortItems,
-                isStringList: true,
-                initialItem: selectedSort,
-                color: AppColors.white,
-              ),
-            ),
+            Expanded(child: CustomDropDownWidget(onChanged: (v)=>onSortChanged(v as String), hintText: 'Sort by', items: sortItems, isStringList: true, initialItem: selectedSort, color: AppColors.white, height: AppHeight.h38)),
             SizedBox(width: AppWidth.w8),
-            Expanded(
-              child: CustomDropDownWidget(
-                onChanged: (value) => onLevelChanged(value as String),
-                hintText: 'All levels',
-                items: levelItems,
-                isStringList: true,
-                initialItem: selectedLevel,
-                color: AppColors.white,
-              ),
-            ),
+            Expanded(child: CustomDropDownWidget(onChanged: (v)=>onLevelChanged(v as String), hintText: 'All levels', items: levelItems, isStringList: true, initialItem: selectedLevel, color: AppColors.white, height: AppHeight.h38)),
           ],
         ),
       ],

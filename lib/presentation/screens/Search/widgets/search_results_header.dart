@@ -11,18 +11,20 @@ class SearchResultsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isGrid = tabController.index == 0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SectionTitle(text: '$count results', color: AppColors.text),
+        SectionTitle(text: isGrid ? 'Popular Courses' : '10,000 results', color: AppColors.blackText , fontSize: 24),
         SizedBox(
-          width: AppWidth.w110,
+          width: AppWidth.w70,
           child: TabBar(
             controller: tabController,
-            indicatorColor: AppColors.primary,
+            dividerColor: Colors.transparent,
+            indicatorColor: Colors.transparent,
             labelColor: AppColors.primary,
             unselectedLabelColor: AppColors.grey,
-            tabs: const [Tab(icon: Icon(Icons.grid_view_rounded)), Tab(icon: Icon(Icons.view_list_rounded))],
+            tabs: const [Tab(icon: Icon(Icons.grid_view_rounded, size: 18)), Tab(icon: Icon(Icons.view_list_rounded, size: 18))],
           ),
         ),
       ],
