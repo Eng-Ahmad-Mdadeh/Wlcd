@@ -4,7 +4,6 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/course_card.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/result_header.dart';
-import 'package:wlcd/presentation/screens/Search/widgets/search_bottom_bar.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/search_header.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -54,7 +53,6 @@ class SearchScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SearchBottomBar(),
           ],
         ),
       ),

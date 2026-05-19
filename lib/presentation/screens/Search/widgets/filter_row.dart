@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:wlcd/presentation/widgets/custom_filter_chip.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class FilterRow extends StatelessWidget {
   const FilterRow({super.key});
@@ -10,45 +12,69 @@ class FilterRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: CustomFilterChip(
-            text: 'Filter',
-            selected: false,
-            onSelected: (_) {},
-            side: const BorderSide(color: AppColors.searchFilterBorder),
-            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p10),
+          child: _FilterBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  [
+                Icon(Icons.tune, size: AppSize.s16, color: AppColors.grey),
+                Spacer(),
+                BodyTitle(text: 'Filter', fontSize: AppFontSize.s15, color: AppColors.greyText),
+              ],
+            ),
           ),
         ),
-        SizedBox(width: AppWidth.w8),
+        SizedBox(width: AppWidth.w5,),
         Expanded(
-          child: CustomDropDownWidget(
-            onChanged: (_) {},
-            hintText: 'Sort by',
-            items: const ['Sort by', 'Most Popular', 'Newest'],
-            isStringList: true,
-            height: AppHeight.h38,
-            color: AppColors.white,
-            borderRadius: AppRadius.r10,
-            topPadding: AppPaddingHeight.p8,
-            bottomPadding: AppPaddingHeight.p8,
+          child: _FilterBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  [
+                Icon(Icons.keyboard_arrow_down_rounded, size: AppSize.s16, color: AppColors.grey),
+                Spacer(),
+                BodyTitle(text: 'Sort', fontSize: AppFontSize.s15, color: AppColors.greyText),
+              ],
+            ),
           ),
         ),
-        SizedBox(width: AppWidth.w8),
+        SizedBox(width: AppWidth.w5,)
+,
         Expanded(
-          child: CustomDropDownWidget(
-            onChanged: (_) {},
-            hintText: 'All levels',
-            items: const ['All levels', 'Beginner', 'Intermediate', 'Advanced'],
-            isStringList: true,
-            height: AppHeight.h38,
-            color: AppColors.white,
-            borderRadius: AppRadius.r10,
-            topPadding: AppPaddingHeight.p8,
-            bottomPadding: AppPaddingHeight.p8,
+          child: _FilterBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  [
+                Icon(Icons.keyboard_arrow_down_rounded,  size: AppSize.s16, color: AppColors.grey),
+                Spacer(),
+                BodyTitle(text: 'All levels', fontSize: AppFontSize.s15, color: AppColors.greyText),
+              ],
+            ),
           ),
         ),
+
       ],
+    );
+  }
+}
+
+class _FilterBox extends StatelessWidget {
+  const _FilterBox({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: AppHeight.h38,
+      padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p10),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFFE5E6EA)),
+      ),
+      child: child,
     );
   }
 }
