@@ -5,6 +5,7 @@ import 'package:wlcd/presentation/screens/Search/widgets/course_card.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/search_header.dart';
+import 'package:wlcd/presentation/screens/course_details/course_details_screen.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ class SearchScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18, vertical: AppPaddingHeight.p8),
-                children: const [
+                children: [
                   SizedBox(height: 8),
                   SearchHeader(),
                   SizedBox(height: 12),
@@ -28,6 +29,9 @@ class SearchScreen extends StatelessWidget {
                   ResultHeader(),
                   SizedBox(height: 12),
                   CourseCard(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const CourseDetailsScreen()),
+                    ),
                     title: 'User Experience Design\nEssentials: Figma UI UX\nDesign',
                     price: '\$89.00',
                     ratingCount: '(31,882)',
@@ -35,6 +39,9 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const CourseDetailsScreen()),
+                    ),
                     title: 'Master Digital Product\nDesign: UX Research & UI\nDesign',
                     price: '\$69.00',
                     ratingCount: '(7,765)',
@@ -42,6 +49,9 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const CourseDetailsScreen()),
+                    ),
                     title: 'UX Design for Beginners:\nThe Essential of UX\nUsability',
                     price: '\$111.99',
                     ratingCount: '(4,536)',

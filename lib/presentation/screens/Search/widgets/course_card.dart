@@ -13,25 +13,30 @@ class CourseCard extends StatelessWidget {
     required this.price,
     required this.ratingCount,
     required this.thumbnailColor,
+    this.onTap,
   });
 
   final String title;
   final String price;
   final String ratingCount;
   final Color thumbnailColor;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppPaddingWidth.p10),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r14),
-        border: Border.all(color: AppColors.searchCardBorder),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppRadius.r14),
+      child: Container(
+        padding: EdgeInsets.all(AppPaddingWidth.p10),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r14),
+          border: Border.all(color: AppColors.searchCardBorder),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
           ImageView(
             imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
             radius: BorderRadius.circular(AppRadius.r10),
@@ -82,7 +87,8 @@ class CourseCard extends StatelessWidget {
               ],
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
