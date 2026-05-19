@@ -125,7 +125,7 @@ class _SearchFilterBottomSheet extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const BodyTitle(
+                 BodyTitle(
                   text: 'Filter',
                   fontSize: AppFontSize.s20,
                   color: AppColors.black,
@@ -133,7 +133,7 @@ class _SearchFilterBottomSheet extends StatelessWidget {
                 const Spacer(),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const BodyTitle(
+                  child:  BodyTitle(
                     text: 'Cancel',
                     fontSize: AppFontSize.s15,
                     color: AppColors.primary,
@@ -177,7 +177,7 @@ class _SearchFilterBottomSheet extends StatelessWidget {
                 width: double.infinity,
                 color: AppColors.primary,
                 onPressed: () => Navigator.pop(context),
-                child: const BodyTitle(
+                child:  BodyTitle(
                   text: 'Apply Filter',
                   color: AppColors.white,
                   fontSize: AppFontSize.s17,
@@ -251,7 +251,7 @@ class _TopicsBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+           Row(
             children: [
               Icon(Icons.grid_view_rounded, size: AppSize.s18, color: AppColors.black),
               SizedBox(width: 10),
