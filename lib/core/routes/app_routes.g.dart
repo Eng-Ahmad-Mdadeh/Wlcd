@@ -6,7 +6,7 @@ part of 'app_routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$splashRoute, $loginRoute, $appShellRoute];
+List<RouteBase> get $appRoutes => [$splashRoute, $loginRoute, $searchRoute, $appShellRoute];
 
 RouteBase get $splashRoute =>
     GoRouteData.$route(path: '/', factory: $SplashRoute._fromState);
@@ -64,6 +64,30 @@ mixin $CheckCodeRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/login/check_code');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+
+RouteBase get $searchRoute =>
+    GoRouteData.$route(path: '/search', factory: $SearchRoute._fromState);
+
+mixin $SearchRoute on GoRouteData {
+  static SearchRoute _fromState(GoRouterState state) => SearchRoute();
+
+  @override
+  String get location => GoRouteData.$location('/search');
 
   @override
   void go(BuildContext context) => context.go(location);

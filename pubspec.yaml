@@ -47,6 +47,7 @@ dependencies:
   dio: ^5.9.2
   pretty_dio_logger: ^1.4.0
   package_info_plus: ^9.0.1
+  local_hero_transform: ^1.0.6
 
 
 
