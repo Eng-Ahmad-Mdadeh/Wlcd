@@ -9,6 +9,7 @@ import 'package:wlcd/core/utils/enums/enum_utils.dart';
 import 'package:wlcd/presentation/cubit/bottom_bar/bottom_bar_cubit.dart';
 import 'package:wlcd/presentation/screens/Home/home_screen.dart';
 import 'package:wlcd/presentation/screens/check_code/check_code_screen.dart';
+import 'package:wlcd/presentation/screens/course_details/course_details_screen.dart';
 import 'package:wlcd/presentation/screens/login/login_screen.dart';
 import 'package:wlcd/presentation/screens/Search/search_screen.dart';
 import 'package:wlcd/presentation/screens/splash/splash_screen.dart';
@@ -62,6 +63,14 @@ class SearchRoute extends GoRouteData with $SearchRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const SearchScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+@TypedGoRoute<CourseDetailsRoute>(path: '/course-details')
+class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 //#endregion
