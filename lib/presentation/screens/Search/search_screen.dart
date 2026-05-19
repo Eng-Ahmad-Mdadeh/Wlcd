@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
           final cubit = context.read<SearchCubit>();
           final filteredCourses = state.filteredCourses;
           return Scaffold(
-            backgroundColor: AppColors.backGround,
+            backgroundColor: const Color(0xfff3f4f6),
             appBar: const CustomAppBar(title: 'Search Course', showBackButton: true),
             body: SafeArea(
               child: Padding(
@@ -71,6 +71,7 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
                 ),
               ),
             ),
+            bottomNavigationBar: _BottomBarMock(),
           );
         },
       ),
@@ -93,5 +94,63 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
     } else {
       cubit.applyFilter(topic: result.topic, rating: result.rating, level: result.level);
     }
+  }
+}
+
+class _BottomBarMock extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 84,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [BoxShadow(color: Color(0x14000000), blurRadius: 16, offset: Offset(0, -2))],
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                _NavItem(label: 'Home', icon: Icons.home_outlined),
+                _NavItem(label: 'Explore', icon: Icons.explore_outlined, active: true),
+                SizedBox(width: 50),
+                _NavItem(label: 'Wishlist', icon: Icons.bookmark_border),
+                _NavItem(label: 'Profile', icon: Icons.person_outline),
+              ],
+            ),
+          ),
+          Container(
+            width: 120,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 8),
+            decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(99)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  const _NavItem({required this.label, required this.icon, this.active = false});
+  final String label;
+  final IconData icon;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = active ? AppColors.primary : const Color(0xff9ca3af);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 20, color: color),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: TextStyle(fontSize: 11, color: color, fontWeight: active ? FontWeight.w700 : FontWeight.w400),
+        ),
+      ],
+    );
   }
 }
