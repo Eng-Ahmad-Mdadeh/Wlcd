@@ -15,7 +15,7 @@ class SearchResultsHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SectionTitle(text: isGrid ? 'Popular Courses' : '10,000 results', color: AppColors.blackText , fontSize: 24),
+        SectionTitle(text: isGrid ? 'Popular Courses' : '10,000 results', color: AppColors.blackText , fontSize: 20),
         SizedBox(
           width: AppWidth.w70,
           child: TabBar(

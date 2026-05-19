@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_drop_down_widget.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class SearchTopFilters extends StatelessWidget {
   const SearchTopFilters({
@@ -63,7 +64,7 @@ class SearchTopFilters extends StatelessWidget {
                 style: OutlinedButton.styleFrom(backgroundColor: AppColors.white, side: BorderSide(color: AppColors.lightGrey), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r8))),
                 onPressed: onOpenFilter,
                 icon: const Icon(Icons.tune, size: 14, color: AppColors.greyText),
-                label: const Text('Filter', style: TextStyle(color: AppColors.greyText, fontSize: 12)),
+                label: const BodyTitle(text: 'Filter', color: AppColors.greyText, fontSize: 12),
               ),
             ),
             SizedBox(width: AppWidth.w8),
