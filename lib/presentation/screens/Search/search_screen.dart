@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:local_hero_transform/local_hero_transform.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/Search/widgets/search_course_data.dart';
+import 'package:wlcd/presentation/screens/Search/widgets/search_results_header.dart';
+import 'package:wlcd/presentation/screens/Search/widgets/search_results_view.dart';
+import 'package:wlcd/presentation/screens/Search/widgets/search_top_filters.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
-import 'package:wlcd/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:wlcd/presentation/widgets/custom_radio_tile.dart';
-import 'package:wlcd/presentation/widgets/custom_search.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -56,82 +56,22 @@ class _SearchScreenState extends State<SearchScreen> with SingleTickerProviderSt
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomSearch(color: AppColors.white, controller: _searchController, onChanged: (_) => setState(() {})),
-              SizedBox(height: AppHeight.h10),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.white,
-                        side: BorderSide(color: AppColors.grey.withAlpha(80)),
-                      ),
-                      onPressed: _openFilterSheet,
-                      icon: const Icon(Icons.tune, color: AppColors.primary),
-                      label: const BodyTitle(text: 'Filter', color: AppColors.primary),
-                    ),
-                  ),
-                  SizedBox(width: AppWidth.w8),
-                  Expanded(
-                    child: CustomDropDownWidget(
-                      onChanged: (value) => setState(() => _selectedSort = value as String),
-                      hintText: 'Sort by',
-                      items: _sortItems,
-                      isStringList: true,
-                      initialItem: _selectedSort,
-                      color: AppColors.white,
-                    ),
-                  ),
-                  SizedBox(width: AppWidth.w8),
-                  Expanded(
-                    child: CustomDropDownWidget(
-                      onChanged: (value) => setState(() => _selectedLevel = value as String),
-                      hintText: 'All levels',
-                      items: _levelItems,
-                      isStringList: true,
-                      initialItem: _selectedLevel,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ],
+              SearchTopFilters(
+                searchController: _searchController,
+                onSearchChanged: (_) => setState(() {}),
+                onOpenFilter: _openFilterSheet,
+                sortItems: _sortItems,
+                levelItems: _levelItems,
+                selectedSort: _selectedSort,
+                selectedLevel: _selectedLevel,
+                onSortChanged: (value) => setState(() => _selectedSort = value),
+                onLevelChanged: (value) => setState(() => _selectedLevel = value),
               ),
               SizedBox(height: AppHeight.h12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SectionTitle(text: '${filteredCourses.length} results', color: AppColors.text),
-                  SizedBox(
-                    width: AppWidth.w110,
-                    child: TabBar(
-                      controller: _tabController,
-                      indicatorColor: AppColors.primary,
-                      labelColor: AppColors.primary,
-                      unselectedLabelColor: AppColors.grey,
-                      tabs: const [Tab(icon: Icon(Icons.grid_view_rounded)), Tab(icon: Icon(Icons.view_list_rounded))],
-                    ),
-                  ),
-                ],
-              ),
+              SearchResultsHeader(count: filteredCourses.length, tabController: _tabController),
               SizedBox(height: AppHeight.h12),
               Expanded(
-                child: filteredCourses.isEmpty
-                    ? const Center(child: BodyTitle(text: 'No courses found'))
-                    : LocalHeroViews(
-                        tabController: _tabController,
-                        itemCount: filteredCourses.length,
-                        onPressedCard: (_) {},
-                        itemsModel: (index) {
-                          final course = filteredCourses[index];
-                          return ItemsModel(
-                            image: DecorationImage(image: NetworkImage(course.imageUrl), fit: BoxFit.cover),
-                            name: Text(course.category),
-                            title: Text(course.title),
-                            subTitle: Text('${course.rating}  (${course.reviews})'),
-                            subTitleIcon: const Icon(Icons.star, color: Colors.amber),
-                            favoriteIconButton: Text('\$${course.price.toStringAsFixed(0)}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
-                          );
-                        },
-                      ),
+                child: SearchResultsView(courses: filteredCourses, tabController: _tabController),
               ),
             ],
           ),
