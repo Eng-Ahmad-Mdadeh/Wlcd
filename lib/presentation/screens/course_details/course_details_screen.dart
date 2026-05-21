@@ -95,9 +95,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   const Icon(Icons.star, size: 16, color: AppColors.searchStar),
                   SizedBox(width: AppWidth.w5),
                   const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                  SizedBox(
+                    height: AppHeight.h15,
+                    child: VerticalDivider(color: AppColors.grey),
+                  ),
                   const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                  SizedBox(
+                    height: AppHeight.h15,
+                    child: VerticalDivider(color: AppColors.grey),
+                  ),
                   const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
                 ],
               ),
@@ -117,19 +123,21 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
               SizedBox(height: AppHeight.h16),
               Container(
                 padding: EdgeInsets.all(AppPaddingWidth.p4),
-                decoration: BoxDecoration(color: AppColors.lightGrey, borderRadius: BorderRadius.circular(AppRadius.r12)),
+                decoration: BoxDecoration(
+                  color: AppColors.lightGrey,
+                  borderRadius: BorderRadius.circular(AppRadius.r12),
+                ),
                 child: ValueListenableBuilder<int>(
-                      valueListenable: _selectedTabIndex,
-                      builder: (context, selectedIndex, _) {
-                        return Row(
-                          children: [
-                            _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
-                            _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
-                            _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
-                          ],
-                        );
-                      },
-                    ),
+                  valueListenable: _selectedTabIndex,
+                  builder: (context, selectedIndex, _) {
+                    return Row(
+                      children: [
+                        _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
+                        _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
+                        _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
+                      ],
+                    );
+                  },
                 ),
               ),
               SizedBox(height: AppHeight.h18),
@@ -139,11 +147,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   builder: (context, selectedIndex, _) {
                     return IndexedStack(
                       index: selectedIndex,
-                      children: const [
-                        _AboutTab(),
-                        _LessonsTab(),
-                        _ReviewsTab(),
-                      ],
+                      children: const [_AboutTab(), _LessonsTab(), _ReviewsTab()],
                     );
                   },
                 ),
