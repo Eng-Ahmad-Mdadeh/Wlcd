@@ -3,6 +3,7 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -50,59 +51,62 @@ class CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CoursePoster(type: course.posterType),
-          SizedBox(height: AppHeight.h12),
-          Padding(
-            padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BodyTitle(
-                  text: course.category,
-                  color: AppColors.danger,
-                  fontSize: AppFontSize.s10,
-                  fontWeight: AppFontWeight.extraBold,
-                ),
-                SizedBox(height: AppHeight.h6),
-                SectionTitle(
-                  text: course.title,
-                  color: AppColors.text,
-                  fontSize: AppFontSize.s13,
-                  height: 1.35,
-                  fontWeight: AppFontWeight.extraBold,
-                  maxLines: 2,
-                ),
-                SizedBox(height: AppHeight.h10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BodyTitle(
-                      text: course.price,
-                      color: AppColors.accent,
-                      fontSize: AppFontSize.s13,
-                      fontWeight: AppFontWeight.extraBold,
-                    ),
-                    BodyTitle(
-                      text: course.duration,
-                      color: AppColors.muted,
-                      fontSize: AppFontSize.s10,
-                      fontWeight: AppFontWeight.bold,
-                    ),
-                  ],
-                ),
-              ],
+    return InkWell(
+      onTap: () => CourseDetailsRoute().push(context),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CoursePoster(type: course.posterType),
+            SizedBox(height: AppHeight.h12),
+            Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BodyTitle(
+                    text: course.category,
+                    color: AppColors.danger,
+                    fontSize: AppFontSize.s10,
+                    fontWeight: AppFontWeight.extraBold,
+                  ),
+                  SizedBox(height: AppHeight.h6),
+                  SectionTitle(
+                    text: course.title,
+                    color: AppColors.text,
+                    fontSize: AppFontSize.s13,
+                    height: 1.35,
+                    fontWeight: AppFontWeight.extraBold,
+                    maxLines: 2,
+                  ),
+                  SizedBox(height: AppHeight.h10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BodyTitle(
+                        text: course.price,
+                        color: AppColors.accent,
+                        fontSize: AppFontSize.s13,
+                        fontWeight: AppFontWeight.extraBold,
+                      ),
+                      BodyTitle(
+                        text: course.duration,
+                        color: AppColors.muted,
+                        fontSize: AppFontSize.s10,
+                        fontWeight: AppFontWeight.bold,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -150,8 +154,16 @@ class DarkPosterArt extends StatelessWidget {
           ),
         ),
         PositionedDirectional(top: AppHeight.h35, start: AppWidth.w25, child: const CodeBadge()),
-        PositionedDirectional(top: AppHeight.h32, end: AppWidth.w40, child: const PosterDot(color: Color(0xFF3B82F6))),
-        PositionedDirectional(top: AppHeight.h55, start: AppWidth.w60, child: const PosterDot(color: Color(0xFFEF4444))),
+        PositionedDirectional(
+          top: AppHeight.h32,
+          end: AppWidth.w40,
+          child: const PosterDot(color: Color(0xFF3B82F6)),
+        ),
+        PositionedDirectional(
+          top: AppHeight.h55,
+          start: AppWidth.w60,
+          child: const PosterDot(color: Color(0xFFEF4444)),
+        ),
       ],
     );
   }
@@ -173,7 +185,12 @@ class CodeBadge extends StatelessWidget {
           border: Border.all(color: const Color(0xFF2563EB), width: AppWidth.w1 * 2),
           boxShadow: const [BoxShadow(color: Color(0x662563EB), blurRadius: 18)],
         ),
-        child: SectionTitle(text: '</>', color: AppColors.white, fontSize: AppFontSize.s18, fontWeight: AppFontWeight.extraBold),
+        child: SectionTitle(
+          text: '</>',
+          color: AppColors.white,
+          fontSize: AppFontSize.s18,
+          fontWeight: AppFontWeight.extraBold,
+        ),
       ),
     );
   }
@@ -186,7 +203,11 @@ class PosterDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: AppWidth.w5, height: AppHeight.h5, decoration: BoxDecoration(color: color, shape: BoxShape.circle));
+    return Container(
+      width: AppWidth.w5,
+      height: AppHeight.h5,
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+    );
   }
 }
 
@@ -204,8 +225,16 @@ class BookPosterArt extends StatelessWidget {
             Expanded(flex: 30, child: ColoredBox(color: Color(0xFF2DD4BF))),
           ],
         ),
-        PositionedDirectional(top: AppHeight.h18, start: AppWidth.w18, child: const BookPosterLabel(text: 'GUIDE', fontSize: 19)),
-        PositionedDirectional(start: AppWidth.w18, bottom: AppHeight.h18, child: const BookPosterLabel(text: 'HTML CSS JS', fontSize: 14)),
+        PositionedDirectional(
+          top: AppHeight.h18,
+          start: AppWidth.w18,
+          child: const BookPosterLabel(text: 'GUIDE', fontSize: 19),
+        ),
+        PositionedDirectional(
+          start: AppWidth.w18,
+          bottom: AppHeight.h18,
+          child: const BookPosterLabel(text: 'HTML CSS JS', fontSize: 14),
+        ),
       ],
     );
   }
@@ -221,14 +250,29 @@ class BookPosterLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8, vertical: AppPaddingHeight.p5),
-      decoration: BoxDecoration(color: AppColors.white.withOpacity(.88), borderRadius: BorderRadius.circular(AppRadius.r4)),
-      child: SectionTitle(text: text, color: AppColors.text, fontSize: fontSize, fontWeight: AppFontWeight.extraBold, height: 1.3),
+      decoration: BoxDecoration(
+        color: AppColors.white.withOpacity(.88),
+        borderRadius: BorderRadius.circular(AppRadius.r4),
+      ),
+      child: SectionTitle(
+        text: text,
+        color: AppColors.text,
+        fontSize: fontSize,
+        fontWeight: AppFontWeight.extraBold,
+        height: 1.3,
+      ),
     );
   }
 }
 
 class CourseData {
-  const CourseData({required this.category, required this.title, required this.price, required this.duration, required this.posterType});
+  const CourseData({
+    required this.category,
+    required this.title,
+    required this.price,
+    required this.duration,
+    required this.posterType,
+  });
 
   final String category;
   final String title;

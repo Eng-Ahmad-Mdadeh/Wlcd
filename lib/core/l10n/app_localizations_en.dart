@@ -276,7 +276,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_see_more => 'See more';
 
   @override
-  String get home_opening_recently_added => 'Opening all recently added courses...';
+  String get home_opening_recently_added =>
+      'Opening all recently added courses...';
 
   @override
   String get home_no_courses_found => 'No courses found';
@@ -285,9 +286,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_course_category_finance => 'Finance';
 
   @override
-  String get home_course_title_investment_banking => 'The Complete Investment Banking Course 2023';
+  String get home_course_title_investment_banking =>
+      'The Complete Investment Banking Course 2023';
 
   @override
-  String get home_course_title_investment_banking_zero => 'Guide to Investment Banking From Zero';
+  String get home_course_title_investment_banking_zero =>
+      'Guide to Investment Banking From Zero';
 }
-

@@ -3,7 +3,7 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/continue_learning_card.dart';
-import 'package:wlcd/presentation/screens/Home/widgets/courses_grid.dart';
+import 'package:wlcd/presentation/widgets/courses_grid.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/section_header.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
@@ -69,7 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: StackFit.expand,
                 alignment: Alignment.bottomCenter,
                 children: [
-                  Positioned(top: 0, child: HomeHeader(searchController: _searchController, onSearchChanged: (value) {})),
+                  Positioned(
+                    top: 0,
+                    child: HomeHeader(searchController: _searchController, onSearchChanged: (value) {}),
+                  ),
                   Positioned(top: AppHeight.h150, child: const ContinueLearningCard()),
                 ],
               ),
@@ -84,8 +87,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                SectionHeaderRow(title: context.loc.home_continue_learning),
+                SectionHeaderRow(
+                  title: context.loc.home_recently_added,
+                  actionText: context.loc.home_see_more,
+                  onActionPressed: _showRecentlyAddedMessage,
+                ),
+                SizedBox(height: AppHeight.h14),
+                CoursesGrid(courses: recentCourses),
+
                 SizedBox(height: AppHeight.h28),
+                SectionHeaderRow(
+                  title: context.loc.home_continue_learning,
+                  actionText: context.loc.home_see_more,
+                  onActionPressed: _showRecentlyAddedMessage,
+                ),
+                SizedBox(height: AppHeight.h14),
+                CoursesGrid(courses: recentCourses),
+                SizedBox(height: AppHeight.h28),
+
                 SectionHeaderRow(
                   title: context.loc.home_recently_added,
                   actionText: context.loc.home_see_more,

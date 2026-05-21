@@ -584,19 +584,72 @@ abstract class AppLocalizations {
   /// **'Password reset link sent!'**
   String get password_reset_link_sent;
 
+  /// No description provided for @home_welcome_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome, Jason '**
   String get home_welcome_user;
+
+  /// No description provided for @home_upgrade_skill.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade your skill for better futures.'**
   String get home_upgrade_skill;
+
+  /// No description provided for @home_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to learn'**
   String get home_search_hint;
+
+  /// No description provided for @home_continue_learning.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Learning'**
   String get home_continue_learning;
+
+  /// No description provided for @home_recently_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently added'**
   String get home_recently_added;
+
+  /// No description provided for @home_see_more.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
   String get home_see_more;
+
+  /// No description provided for @home_opening_recently_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening all recently added courses...'**
   String get home_opening_recently_added;
+
+  /// No description provided for @home_no_courses_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses found'**
   String get home_no_courses_found;
+
+  /// No description provided for @home_course_category_finance.
+  ///
+  /// In en, this message translates to:
+  /// **'Finance'**
   String get home_course_category_finance;
+
+  /// No description provided for @home_course_title_investment_banking.
+  ///
+  /// In en, this message translates to:
+  /// **'The Complete Investment Banking Course 2023'**
   String get home_course_title_investment_banking;
+
+  /// No description provided for @home_course_title_investment_banking_zero.
+  ///
+  /// In en, this message translates to:
+  /// **'Guide to Investment Banking From Zero'**
   String get home_course_title_investment_banking_zero;
 }
-
 
 class _AppLocalizationsDelegate
     extends LocalizationsDelegate<AppLocalizations> {

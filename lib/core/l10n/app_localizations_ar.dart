@@ -277,7 +277,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_see_more => 'عرض المزيد';
 
   @override
-  String get home_opening_recently_added => 'جارٍ فتح جميع الدورات المضافة حديثًا...';
+  String get home_opening_recently_added =>
+      'جارٍ فتح جميع الدورات المضافة حديثًا...';
 
   @override
   String get home_no_courses_found => 'لا توجد دورات';
@@ -286,9 +287,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_course_category_finance => 'المالية';
 
   @override
-  String get home_course_title_investment_banking => 'الدورة الشاملة في الخدمات المصرفية الاستثمارية 2023';
+  String get home_course_title_investment_banking =>
+      'الدورة الشاملة في الخدمات المصرفية الاستثمارية 2023';
 
   @override
-  String get home_course_title_investment_banking_zero => 'دليل الخدمات المصرفية الاستثمارية من الصفر';
+  String get home_course_title_investment_banking_zero =>
+      'دليل الخدمات المصرفية الاستثمارية من الصفر';
 }
-

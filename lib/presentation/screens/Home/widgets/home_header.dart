@@ -111,8 +111,8 @@ class HeaderIconButton extends StatelessWidget {
       button: true,
       label: semanticLabel,
       child: Container(
-        width: AppWidth.w30,
-        height: AppHeight.h30,
+        width: AppWidth.w37,
+        height: AppHeight.h37,
         decoration: BoxDecoration(
           color: AppColors.white.withOpacity(.08),
           borderRadius: BorderRadius.circular(AppRadius.r15),
@@ -121,14 +121,14 @@ class HeaderIconButton extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Icon(icon, color: AppColors.white, size: AppSize.s17),
+            Icon(icon, color: AppColors.white, size: AppSize.s22),
             if (showDot)
               PositionedDirectional(
-                top: AppHeight.h7,
-                end: AppWidth.w7,
+                top: AppHeight.h12,
+                end: AppWidth.w10,
                 child: Container(
-                  width: AppWidth.w6,
-                  height: AppHeight.h6,
+                  width: AppWidth.w8,
+                  height: AppHeight.h8,
                   decoration: BoxDecoration(
                     color: AppColors.notificationDot,
                     shape: BoxShape.circle,

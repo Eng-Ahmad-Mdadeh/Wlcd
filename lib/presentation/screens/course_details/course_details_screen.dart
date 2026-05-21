@@ -78,13 +78,20 @@ class CourseDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Icon(Icons.star, size: 16, color: AppColors.searchStar),
                   SizedBox(width: AppWidth.w5),
                   const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(width: AppWidth.w10),
+                  SizedBox(
+                    height: AppHeight.h15,
+                    child: VerticalDivider(color: AppColors.grey),
+                  ),
                   const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(width: AppWidth.w10),
+                  SizedBox(
+                    height: AppHeight.h15,
+                    child: VerticalDivider(color: AppColors.grey),
+                  ),
                   const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
                 ],
               ),
@@ -93,7 +100,7 @@ class CourseDetailsScreen extends StatelessWidget {
                 minHeight: 6,
                 value: 0.30,
                 borderRadius: BorderRadius.circular(AppRadius.r50),
-                backgroundColor: AppColors.grey,
+                backgroundColor: AppColors.lightGrey,
                 valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
               ),
               SizedBox(height: AppHeight.h8),
@@ -104,11 +111,17 @@ class CourseDetailsScreen extends StatelessWidget {
               SizedBox(height: AppHeight.h16),
               Container(
                 padding: EdgeInsets.all(AppPaddingWidth.p4),
-                decoration: BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.circular(AppRadius.r12)),
+                decoration: BoxDecoration(
+                  color: AppColors.lightGrey,
+                  borderRadius: BorderRadius.circular(AppRadius.r12),
+                ),
                 child: Row(
-                  children: const [
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                     _TabChip(label: 'About', active: true),
+
                     _TabChip(label: 'Lessons', active: false),
+                   
                     _TabChip(label: 'Reviews', active: false),
                   ],
                 ),
