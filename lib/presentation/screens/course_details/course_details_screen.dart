@@ -89,7 +89,7 @@ class CourseDetailsScreen extends StatelessWidget {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            const ImageView(
+                             ImageView(
                               imagePath:
                                   'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                               height: double.infinity,
