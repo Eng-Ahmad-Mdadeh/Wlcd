@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/about_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/reviews_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/tab_bar_header_delegate.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -89,7 +93,7 @@ class CourseDetailsScreen extends StatelessWidget {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                             ImageView(
+                            ImageView(
                               imagePath:
                                   'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                               height: double.infinity,
@@ -207,7 +211,7 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
                 SliverPersistentHeader(
                   pinned: true,
-                  delegate: _TabBarHeaderDelegate(
+                  delegate: TabBarHeaderDelegate(
                     child: Container(
                       color: AppColors.white,
                       padding: EdgeInsets.fromLTRB(
@@ -241,150 +245,16 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: TabBarView(
+            body: const TabBarView(
               children: [
-                _AboutTab(),
-                _LessonsTab(),
-                _ReviewsTab(),
+                AboutTab(),
+                LessonsTab(),
+                ReviewsTab(),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const _TabBarHeaderDelegate({required this.child});
-
-  final Widget child;
-
-  @override
-  double get minExtent => 64;
-
-  @override
-  double get maxExtent => 64;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => child;
-
-  @override
-  bool shouldRebuild(covariant _TabBarHeaderDelegate oldDelegate) => oldDelegate.child != child;
-}
-
-class _AboutTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      key: const PageStorageKey('about-tab-scroll'),
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
-      children: const [
-        SectionTitle(text: 'Descriptions', fontSize: 18, color: AppColors.searchCardTitle),
-        SizedBox(height: 8),
-        BodyTitle(
-          text:
-              'Hi there! 👋 My name is Olivia Smith and welcome to this course. Digital products are more abstract and complex than any product you\'ve learned before. People are using their products in real-time and fast changing.',
-          fontSize: 13,
-          color: AppColors.searchRatingText,
-          maxLines: 20,
-        ),
-      ],
-    );
-  }
-}
-
-class _LessonsTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    const lessons = [
-      ('Instructor Introduction', '04:00', false),
-      ('Design Shortgage', '03:49', false),
-      ('Make it Pretty', '03:49', true),
-      ('Copy Inspiration', '04:25', true),
-      ('Summary', '02:06', true),
-    ];
-
-    return ListView(
-      key: const PageStorageKey('lessons-tab-scroll'),
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.searchCardBorder),
-            borderRadius: BorderRadius.circular(AppRadius.r14),
-          ),
-          child: ListView.separated(
-            padding: EdgeInsets.zero,
-            itemCount: lessons.length + 1,
-            separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.searchCardBorder),
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: BodyTitle(text: 'Class', fontSize: 16, color: AppColors.searchCardTitle),
-                );
-              }
-
-              final lesson = lessons[index - 1];
-              return ListTile(
-                dense: true,
-                leading: const Icon(Icons.play_circle_fill, size: 18, color: AppColors.searchRatingText),
-                title: BodyTitle(text: lesson.$1, fontSize: 14, color: AppColors.searchCardTitle),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BodyTitle(text: lesson.$2, fontSize: 13, color: AppColors.searchRatingText),
-                    if (lesson.$3) ...[
-                      SizedBox(width: AppWidth.w6),
-                      const Icon(Icons.lock_outline, size: 14, color: AppColors.searchRatingText),
-                    ],
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ReviewsTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      key: const PageStorageKey('reviews-tab-scroll'),
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
-      children: [
-        const SectionTitle(text: 'Ratings', fontSize: 18, color: AppColors.searchCardTitle),
-        SizedBox(height: AppHeight.h12),
-        Container(
-          padding: EdgeInsets.all(AppPaddingWidth.p16),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.searchCardBorder),
-            borderRadius: BorderRadius.circular(AppRadius.r14),
-          ),
-          child: Column(
-            children: [
-              const BodyTitle(text: 'Customer Review', fontSize: 22, color: AppColors.searchCardTitle),
-              SizedBox(height: AppHeight.h8),
-              const BodyTitle(text: '⭐⭐⭐⭐⭐  4.5 out of 5', fontSize: 14, color: AppColors.searchRatingText),
-            ],
-          ),
-        ),
-        SizedBox(height: AppHeight.h18),
-        const SectionTitle(text: 'User reviews', fontSize: 18, color: AppColors.searchCardTitle),
-        SizedBox(height: AppHeight.h10),
-        const BodyTitle(
-          text:
-              'Merrill Kervin\n3 weeks ago\n\nPulvinar nisl blandit cras lacus diam posuere. Varius sem vestibulum egestas ultricies.',
-          fontSize: 13,
-          color: AppColors.searchRatingText,
-        ),
-      ],
     );
   }
 }
