@@ -10,12 +10,12 @@ class SearchHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
+         Expanded(
           child: CustomSearch(
-            color: AppColors.white,
+            color: AppColors.searchColor,
             prefixIconColor: AppColors.searchIcon,
             hintColor: AppColors.searchHeaderText,
-            borderRadius: 12,
+            borderRadius: AppRadius.r12,
           ),
         ),
         SizedBox(width: AppWidth.w12),

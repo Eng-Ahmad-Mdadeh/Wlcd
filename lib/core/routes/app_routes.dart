@@ -57,7 +57,7 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
 }
 //#endregion
 
-//#region Search
+//#region search
 @TypedGoRoute<SearchRoute>(path: '/search')
 class SearchRoute extends GoRouteData with $SearchRoute {
   @override

@@ -6,7 +6,13 @@ part of 'app_routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$splashRoute, $loginRoute, $searchRoute, $appShellRoute];
+List<RouteBase> get $appRoutes => [
+  $splashRoute,
+  $loginRoute,
+  $searchRoute,
+  $courseDetailsRoute,
+  $appShellRoute,
+];
 
 RouteBase get $splashRoute =>
     GoRouteData.$route(path: '/', factory: $SplashRoute._fromState);
@@ -79,7 +85,6 @@ mixin $CheckCodeRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-
 RouteBase get $searchRoute =>
     GoRouteData.$route(path: '/search', factory: $SearchRoute._fromState);
 
@@ -88,6 +93,32 @@ mixin $SearchRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/search');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $courseDetailsRoute => GoRouteData.$route(
+  path: '/course-details',
+  factory: $CourseDetailsRoute._fromState,
+);
+
+mixin $CourseDetailsRoute on GoRouteData {
+  static CourseDetailsRoute _fromState(GoRouterState state) =>
+      CourseDetailsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/course-details');
 
   @override
   void go(BuildContext context) => context.go(location);

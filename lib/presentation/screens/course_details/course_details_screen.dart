@@ -37,7 +37,7 @@ class CourseDetailsScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     ImageView(
-                      imagePath: AppAssets.buildingImage,
+                      imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                       height: 220,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -45,10 +45,7 @@ class CourseDetailsScreen extends StatelessWidget {
                     Container(
                       height: 48,
                       width: 48,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.white.withValues(alpha: .35),
-                      ),
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.white.withValues(alpha: .35)),
                       child: const Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 30),
                     ),
                   ],
@@ -96,7 +93,7 @@ class CourseDetailsScreen extends StatelessWidget {
                 minHeight: 6,
                 value: 0.30,
                 borderRadius: BorderRadius.circular(AppRadius.r50),
-                backgroundColor: AppColors.gray50,
+                backgroundColor: AppColors.grey,
                 valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
               ),
               SizedBox(height: AppHeight.h8),
@@ -107,10 +104,7 @@ class CourseDetailsScreen extends StatelessWidget {
               SizedBox(height: AppHeight.h16),
               Container(
                 padding: EdgeInsets.all(AppPaddingWidth.p4),
-                decoration: BoxDecoration(
-                  color: AppColors.gray50,
-                  borderRadius: BorderRadius.circular(AppRadius.r12),
-                ),
+                decoration: BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.circular(AppRadius.r12)),
                 child: Row(
                   children: const [
                     _TabChip(label: 'About', active: true),
@@ -134,7 +128,6 @@ class CourseDetailsScreen extends StatelessWidget {
                     fontSize: 13,
                     color: AppColors.searchRatingText,
                     maxLines: 6,
-                    height: 1.5,
                   ),
                 ),
               ),

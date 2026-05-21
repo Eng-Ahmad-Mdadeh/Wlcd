@@ -45,7 +45,7 @@ class CourseCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppRadius.r10),
               ),
               child: ImageView(
-                imagePath: AppAssets.buildingImage,
+                imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                 radius: BorderRadius.circular(AppRadius.r10),
                 fit: BoxFit.cover,
                 width: AppWidth.w110,

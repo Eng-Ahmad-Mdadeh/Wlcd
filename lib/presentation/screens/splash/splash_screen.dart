@@ -27,7 +27,7 @@ class _BodySplashScreenState extends State<BodySplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 2000), () => HomeRoute().go(context));
+      Future.delayed(const Duration(milliseconds: 2000), () => LoginRoute().go(context));
     });
     super.initState();
   }

@@ -213,7 +213,7 @@ class _HeaderActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const _HeaderIconButton(icon: Icons.search, semanticLabel: 'Search'),
+        const _HeaderIconButton(icon: Icons.search, semanticLabel: 'search'),
         SizedBox(width: AppWidth.w8),
         const _HeaderIconButton(icon: Icons.notifications_none_outlined, semanticLabel: 'Notifications', showDot: true),
       ],

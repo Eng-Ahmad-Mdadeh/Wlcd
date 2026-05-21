@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/Search/widgets/course_card.dart';
-import 'package:wlcd/presentation/screens/Search/widgets/filter_row.dart';
-import 'package:wlcd/presentation/screens/Search/widgets/result_header.dart';
-import 'package:wlcd/presentation/screens/Search/widgets/search_header.dart';
+import 'package:wlcd/presentation/screens/search/widgets/course_card.dart';
+import 'package:wlcd/presentation/screens/search/widgets/filter_row.dart';
+import 'package:wlcd/presentation/screens/search/widgets/result_header.dart';
+import 'package:wlcd/presentation/screens/search/widgets/search_header.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class SearchScreen extends StatelessWidget {
                   ResultHeader(),
                   SizedBox(height: 12),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().go(context),
+                    onTap: () => CourseDetailsRoute().push(context),
                     title: 'User Experience Design\nEssentials: Figma UI UX\nDesign',
                     price: '\$89.00',
                     ratingCount: '(31,882)',
@@ -37,7 +37,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().go(context),
+                    onTap: () => CourseDetailsRoute().push(context),
                     title: 'Master Digital Product\nDesign: UX Research & UI\nDesign',
                     price: '\$69.00',
                     ratingCount: '(7,765)',
@@ -45,7 +45,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().go(context),
+                    onTap: () => CourseDetailsRoute().push(context),
                     title: 'UX Design for Beginners:\nThe Essential of UX\nUsability',
                     price: '\$111.99',
                     ratingCount: '(4,536)',

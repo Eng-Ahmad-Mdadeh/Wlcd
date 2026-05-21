@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class ResultHeader extends StatelessWidget {
@@ -7,17 +8,10 @@ class ResultHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        SectionTitle(
-          text: '10,000 results',
-          fontSize: 23,
-          fontWeight: FontWeight.w600,
-          color: AppColors.searchResultTitle,
-        ),
+        SectionTitle(text: '10,000 results', fontSize: AppFontSize.s18, color: AppColors.searchResultTitle),
         Spacer(),
-        Icon(Icons.grid_view_rounded, size: 20, color: AppColors.searchInactiveView),
-        SizedBox(width: 10),
         Icon(Icons.view_list_rounded, size: 20, color: AppColors.primary),
       ],
     );
