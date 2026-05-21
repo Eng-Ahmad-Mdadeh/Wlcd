@@ -66,31 +66,36 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  SizedBox(height: AppHeight.h10),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.of(context).maybePop(),
-                        icon: const Icon(Icons.arrow_back, color: AppColors.black),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.ios_share_outlined, color: AppColors.black, size: 20),
-                      SizedBox(width: AppWidth.w8),
-                    ],
+            SliverAppBar(
+              expandedHeight: 290,
+              backgroundColor: AppColors.white,
+              surfaceTintColor: Colors.transparent,
+              pinned: true,
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () => Navigator.of(context).maybePop(),
+                icon: const Icon(Icons.arrow_back, color: AppColors.black),
+              ),
+              actions: const [
+                Icon(Icons.ios_share_outlined, color: AppColors.black, size: 20),
+                SizedBox(width: 12),
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    AppPaddingWidth.p18,
+                    AppPaddingHeight.p56,
+                    AppPaddingWidth.p18,
+                    AppPaddingHeight.p10,
                   ),
-                  SizedBox(height: AppHeight.h10),
-                  ClipRRect(
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.r14),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        ImageView(
+                        const ImageView(
                           imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
-                          height: 220,
+                          height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -103,6 +108,13 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       ],
                     ),
                   ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
                   SizedBox(height: AppHeight.h14),
                   Row(
                     children: [
@@ -158,35 +170,32 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 ]),
               ),
             ),
-            SliverPersistentHeader(
+            SliverAppBar(
               pinned: true,
-              delegate: _TabHeaderDelegate(
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.white,
+              surfaceTintColor: Colors.transparent,
+              toolbarHeight: 64,
+              elevation: 0,
+              flexibleSpace: Padding(
+                padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p12),
                 child: Container(
-                  color: AppColors.white,
-                  padding: EdgeInsets.fromLTRB(
-                    AppPaddingWidth.p18,
-                    0,
-                    AppPaddingWidth.p18,
-                    AppPaddingHeight.p12,
+                  padding: EdgeInsets.all(AppPaddingWidth.p4),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightGrey,
+                    borderRadius: BorderRadius.circular(AppRadius.r12),
                   ),
-                  child: Container(
-                    padding: EdgeInsets.all(AppPaddingWidth.p4),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightGrey,
-                      borderRadius: BorderRadius.circular(AppRadius.r12),
-                    ),
-                    child: ValueListenableBuilder<int>(
-                      valueListenable: _selectedTabIndex,
-                      builder: (context, selectedIndex, _) {
-                        return Row(
-                          children: [
-                            _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
-                            _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
-                            _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
-                          ],
-                        );
-                      },
-                    ),
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: _selectedTabIndex,
+                    builder: (context, selectedIndex, _) {
+                      return Row(
+                        children: [
+                          _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
+                          _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
+                          _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),
@@ -333,24 +342,6 @@ class _ReviewsTab extends StatelessWidget {
       ],
     );
   }
-}
-
-class _TabHeaderDelegate extends SliverPersistentHeaderDelegate {
-  _TabHeaderDelegate({required this.child});
-
-  final Widget child;
-
-  @override
-  double get minExtent => 64;
-
-  @override
-  double get maxExtent => 64;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => child;
-
-  @override
-  bool shouldRebuild(covariant _TabHeaderDelegate oldDelegate) => false;
 }
 
 class _TabChip extends StatelessWidget {
