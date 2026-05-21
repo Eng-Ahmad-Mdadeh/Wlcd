@@ -25,123 +25,180 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SafeArea(
+      bottomNavigationBar: SafeArea(
+        top: false,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
-          child: Column(
+          padding: EdgeInsets.fromLTRB(
+            AppPaddingWidth.p18,
+            AppPaddingHeight.p8,
+            AppPaddingWidth.p18,
+            AppPaddingHeight.p14,
+          ),
+          child: Row(
             children: [
-              SizedBox(height: AppHeight.h10),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
-                    icon: const Icon(Icons.arrow_back, color: AppColors.black),
-                  ),
-                  const Spacer(),
-                  const Icon(Icons.ios_share_outlined, color: AppColors.black, size: 20),
-                  SizedBox(width: AppWidth.w8),
-                ],
-              ),
-              SizedBox(height: AppHeight.h10),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.r14),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ImageView(
-                      imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
-                      height: 220,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    Container(
-                      height: 48,
-                      width: 48,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.white.withValues(alpha: .35)),
-                      child: const Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 30),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: AppHeight.h14),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8, vertical: AppPaddingHeight.p4),
-                    decoration: BoxDecoration(
-                      color: AppColors.searchTagBackground,
-                      borderRadius: BorderRadius.circular(AppRadius.r8),
-                    ),
-                    child: const BodyTitle(text: 'UX Design', fontSize: 10, color: AppColors.searchTagText),
-                  ),
-                  const Spacer(),
-                  const BodyTitle(text: '00', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(width: AppWidth.w8),
-                  const BodyTitle(text: 'All Levels', fontSize: 12, color: AppColors.searchCardTitle),
-                ],
-              ),
-              SizedBox(height: AppHeight.h10),
-              const SectionTitle(
-                text: 'Master Digital Product Design:\nUX Research & UI Design',
-                fontSize: 25,
-                fontWeight: FontWeight.w700,
-                color: AppColors.searchCardTitle,
-                height: 1.3,
-              ),
-              SizedBox(height: AppHeight.h10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Icon(Icons.star, size: 16, color: AppColors.searchStar),
-                  SizedBox(width: AppWidth.w5),
-                  const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(
-                    height: AppHeight.h15,
-                    child: VerticalDivider(color: AppColors.grey),
-                  ),
-                  const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
-                  SizedBox(
-                    height: AppHeight.h15,
-                    child: VerticalDivider(color: AppColors.grey),
-                  ),
-                  const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
-                ],
-              ),
-              SizedBox(height: AppHeight.h14),
-              LinearProgressIndicator(
-                minHeight: 6,
-                value: 0.30,
-                borderRadius: BorderRadius.circular(AppRadius.r50),
-                backgroundColor: AppColors.lightGrey,
-                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
-              ),
-              SizedBox(height: AppHeight.h8),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: BodyTitle(text: '30% from 24 sessions', fontSize: 12, color: AppColors.searchRatingText),
-              ),
-              SizedBox(height: AppHeight.h16),
               Container(
-                padding: EdgeInsets.all(AppPaddingWidth.p4),
+                height: AppHeight.h52,
+                width: AppWidth.w52,
                 decoration: BoxDecoration(
-                  color: AppColors.lightGrey,
-                  borderRadius: BorderRadius.circular(AppRadius.r12),
+                  border: Border.all(color: AppColors.searchCardBorder),
+                  borderRadius: BorderRadius.circular(AppRadius.r14),
                 ),
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _selectedTabIndex,
-                  builder: (context, selectedIndex, _) {
-                    return Row(
-                      children: [
-                        _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
-                        _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
-                        _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
-                      ],
-                    );
-                  },
+                child: const Icon(Icons.favorite_border, color: AppColors.primary),
+              ),
+              SizedBox(width: AppWidth.w12),
+              Expanded(
+                child: SizedBox(
+                  height: AppHeight.h52,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
+                    ),
+                    onPressed: () {},
+                    child: const BodyTitle(text: 'Buy \$69.00', color: AppColors.white, fontSize: 16),
+                  ),
                 ),
               ),
-              SizedBox(height: AppHeight.h18),
-              Expanded(
+            ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  SizedBox(height: AppHeight.h10),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.of(context).maybePop(),
+                        icon: const Icon(Icons.arrow_back, color: AppColors.black),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.ios_share_outlined, color: AppColors.black, size: 20),
+                      SizedBox(width: AppWidth.w8),
+                    ],
+                  ),
+                  SizedBox(height: AppHeight.h10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.r14),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ImageView(
+                          imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
+                          height: 220,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                        Container(
+                          height: 48,
+                          width: 48,
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.white.withValues(alpha: .35)),
+                          child: const Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 30),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: AppHeight.h14),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8, vertical: AppPaddingHeight.p4),
+                        decoration: BoxDecoration(
+                          color: AppColors.searchTagBackground,
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child: const BodyTitle(text: 'UX Design', fontSize: 10, color: AppColors.searchTagText),
+                      ),
+                      const Spacer(),
+                      const BodyTitle(text: '00', fontSize: 12, color: AppColors.searchRatingText),
+                      SizedBox(width: AppWidth.w8),
+                      const BodyTitle(text: 'All Levels', fontSize: 12, color: AppColors.searchCardTitle),
+                    ],
+                  ),
+                  SizedBox(height: AppHeight.h10),
+                  const SectionTitle(
+                    text: 'Master Digital Product Design:\nUX Research & UI Design',
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.searchCardTitle,
+                    height: 1.3,
+                  ),
+                  SizedBox(height: AppHeight.h10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Icon(Icons.star, size: 16, color: AppColors.searchStar),
+                      SizedBox(width: AppWidth.w5),
+                      const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
+                      SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                      const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
+                      SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                      const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
+                    ],
+                  ),
+                  SizedBox(height: AppHeight.h14),
+                  LinearProgressIndicator(
+                    minHeight: 6,
+                    value: 0.30,
+                    borderRadius: BorderRadius.circular(AppRadius.r50),
+                    backgroundColor: AppColors.lightGrey,
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ),
+                  SizedBox(height: AppHeight.h8),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: BodyTitle(text: '30% from 24 sessions', fontSize: 12, color: AppColors.searchRatingText),
+                  ),
+                  SizedBox(height: AppHeight.h16),
+                ]),
+              ),
+            ),
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _TabHeaderDelegate(
+                child: Container(
+                  color: AppColors.white,
+                  padding: EdgeInsets.fromLTRB(
+                    AppPaddingWidth.p18,
+                    0,
+                    AppPaddingWidth.p18,
+                    AppPaddingHeight.p12,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(AppPaddingWidth.p4),
+                    decoration: BoxDecoration(
+                      color: AppColors.lightGrey,
+                      borderRadius: BorderRadius.circular(AppRadius.r12),
+                    ),
+                    child: ValueListenableBuilder<int>(
+                      valueListenable: _selectedTabIndex,
+                      builder: (context, selectedIndex, _) {
+                        return Row(
+                          children: [
+                            _TabChip(label: 'About', active: selectedIndex == 0, onTap: () => _setTab(0)),
+                            _TabChip(label: 'Lessons', active: selectedIndex == 1, onTap: () => _setTab(1)),
+                            _TabChip(label: 'Reviews', active: selectedIndex == 2, onTap: () => _setTab(2)),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(
+                AppPaddingWidth.p18,
+                0,
+                AppPaddingWidth.p18,
+                AppPaddingHeight.p90,
+              ),
+              sliver: SliverToBoxAdapter(
                 child: ValueListenableBuilder<int>(
                   valueListenable: _selectedTabIndex,
                   builder: (context, selectedIndex, _) {
@@ -152,38 +209,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   },
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: AppPaddingHeight.p14),
-                child: Row(
-                  children: [
-                    Container(
-                      height: AppHeight.h52,
-                      width: AppWidth.w52,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.searchCardBorder),
-                        borderRadius: BorderRadius.circular(AppRadius.r14),
-                      ),
-                      child: const Icon(Icons.favorite_border, color: AppColors.primary),
-                    ),
-                    SizedBox(width: AppWidth.w12),
-                    Expanded(
-                      child: SizedBox(
-                        height: AppHeight.h52,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
-                          ),
-                          onPressed: () {},
-                          child: const BodyTitle(text: 'Buy \$69.00', color: AppColors.white, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -229,50 +256,43 @@ class _LessonsTab extends StatelessWidget {
       ('Summary', '02:06', true),
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SectionTitle(text: 'Course lessons', fontSize: 18, color: AppColors.searchCardTitle),
-        SizedBox(height: AppHeight.h12),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.searchCardBorder),
-              borderRadius: BorderRadius.circular(AppRadius.r14),
-            ),
-            child: ListView.separated(
-              padding: EdgeInsets.zero,
-              itemCount: lessons.length + 1,
-              separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.searchCardBorder),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: BodyTitle(text: 'Class', fontSize: 16, color: AppColors.searchCardTitle),
-                  );
-                }
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.searchCardBorder),
+        borderRadius: BorderRadius.circular(AppRadius.r14),
+      ),
+      child: ListView.separated(
+        padding: EdgeInsets.zero,
+        itemCount: lessons.length + 1,
+        separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.searchCardBorder),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return const Padding(
+              padding: EdgeInsets.all(16),
+              child: BodyTitle(text: 'Class', fontSize: 16, color: AppColors.searchCardTitle),
+            );
+          }
 
-                final lesson = lessons[index - 1];
-                return ListTile(
-                  dense: true,
-                  leading: const Icon(Icons.play_circle_fill, size: 18, color: AppColors.searchRatingText),
-                  title: BodyTitle(text: lesson.$1, fontSize: 14, color: AppColors.searchCardTitle),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      BodyTitle(text: lesson.$2, fontSize: 13, color: AppColors.searchRatingText),
-                      if (lesson.$3) ...[
-                        SizedBox(width: AppWidth.w6),
-                        const Icon(Icons.lock_outline, size: 14, color: AppColors.searchRatingText),
-                      ],
-                    ],
-                  ),
-                );
-              },
+          final lesson = lessons[index - 1];
+          return ListTile(
+            dense: true,
+            leading: const Icon(Icons.play_circle_fill, size: 18, color: AppColors.searchRatingText),
+            title: BodyTitle(text: lesson.$1, fontSize: 14, color: AppColors.searchCardTitle),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BodyTitle(text: lesson.$2, fontSize: 13, color: AppColors.searchRatingText),
+                if (lesson.$3) ...[
+                  SizedBox(width: AppWidth.w6),
+                  const Icon(Icons.lock_outline, size: 14, color: AppColors.searchRatingText),
+                ],
+              ],
             ),
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 }
@@ -282,8 +302,8 @@ class _ReviewsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SectionTitle(text: 'Ratings', fontSize: 18, color: AppColors.searchCardTitle),
         SizedBox(height: AppHeight.h12),
@@ -313,6 +333,24 @@ class _ReviewsTab extends StatelessWidget {
       ],
     );
   }
+}
+
+class _TabHeaderDelegate extends SliverPersistentHeaderDelegate {
+  _TabHeaderDelegate({required this.child});
+
+  final Widget child;
+
+  @override
+  double get minExtent => 64;
+
+  @override
+  double get maxExtent => 64;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => child;
+
+  @override
+  bool shouldRebuild(covariant _TabHeaderDelegate oldDelegate) => false;
 }
 
 class _TabChip extends StatelessWidget {
