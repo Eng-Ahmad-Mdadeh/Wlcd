@@ -84,7 +84,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 background: Padding(
                   padding: EdgeInsets.fromLTRB(
                     AppPaddingWidth.p18,
-                    AppPaddingHeight.p56,
+                    AppPaddingHeight.p55,
                     AppPaddingWidth.p18,
                     AppPaddingHeight.p10,
                   ),
@@ -93,7 +93,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        const ImageView(
+                        ImageView(
                           imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                           height: double.infinity,
                           width: double.infinity,
@@ -102,7 +102,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         Container(
                           height: 48,
                           width: 48,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.white.withValues(alpha: .35)),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.white.withValues(alpha: .35),
+                          ),
                           child: const Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 30),
                         ),
                       ],
@@ -147,9 +150,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       const Icon(Icons.star, size: 16, color: AppColors.searchStar),
                       SizedBox(width: AppWidth.w5),
                       const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
-                      SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                      SizedBox(
+                        height: AppHeight.h15,
+                        child: VerticalDivider(color: AppColors.grey),
+                      ),
                       const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
-                      SizedBox(height: AppHeight.h15, child: VerticalDivider(color: AppColors.grey)),
+                      SizedBox(
+                        height: AppHeight.h15,
+                        child: VerticalDivider(color: AppColors.grey),
+                      ),
                       const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
                     ],
                   ),
@@ -201,12 +210,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.fromLTRB(
-                AppPaddingWidth.p18,
-                0,
-                AppPaddingWidth.p18,
-                AppPaddingHeight.p90,
-              ),
+              padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
               sliver: SliverToBoxAdapter(
                 child: ValueListenableBuilder<int>(
                   valueListenable: _selectedTabIndex,
@@ -259,9 +263,20 @@ class _LessonsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     const lessons = [
       ('Instructor Introduction', '04:00', false),
+      ('Instructor Introduction', '04:00', false),
+      ('Design Shortgage', '03:49', false),
+      ('Design Shortgage', '03:49', false),
+      ('Design Shortgage', '03:49', false),
+      ('Design Shortgage', '03:49', false),
       ('Design Shortgage', '03:49', false),
       ('Make it Pretty', '03:49', true),
+      ('Make it Pretty', '03:49', true),
+      ('Make it Pretty', '03:49', true),
+      ('Make it Pretty', '03:49', true),
+      ('Make it Pretty', '03:49', true),
       ('Copy Inspiration', '04:25', true),
+      ('Copy Inspiration', '04:25', true),
+      ('Summary', '02:06', true),
       ('Summary', '02:06', true),
     ];
 
