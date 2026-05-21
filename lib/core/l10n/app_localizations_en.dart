@@ -256,4 +256,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get password_reset_link_sent => 'Password reset link sent!';
+
+  @override
+  String get home_welcome_user => 'Welcome, Jason ';
+
+  @override
+  String get home_upgrade_skill => 'Upgrade your skill for better futures.';
+
+  @override
+  String get home_search_hint => 'What do you want to learn';
+
+  @override
+  String get home_continue_learning => 'Continue Learning';
+
+  @override
+  String get home_recently_added => 'Recently added';
+
+  @override
+  String get home_see_more => 'See more';
+
+  @override
+  String get home_opening_recently_added => 'Opening all recently added courses...';
+
+  @override
+  String get home_no_courses_found => 'No courses found';
+
+  @override
+  String get home_course_category_finance => 'Finance';
+
+  @override
+  String get home_course_title_investment_banking => 'The Complete Investment Banking Course 2023';
+
+  @override
+  String get home_course_title_investment_banking_zero => 'Guide to Investment Banking From Zero';
 }
+

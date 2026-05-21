@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -17,7 +18,7 @@ class CoursesGrid extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p30),
         child: Center(
           child: BodyTitle(
-            text: 'No courses found',
+            text: context.loc.home_no_courses_found,
             color: AppColors.muted,
             fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.semiBold,

@@ -257,4 +257,38 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get password_reset_link_sent =>
       'تم إرسال رابط إعادة تعيين كلمة المرور!';
+
+  @override
+  String get home_welcome_user => 'مرحبًا، جيسون ';
+
+  @override
+  String get home_upgrade_skill => 'طوّر مهاراتك لمستقبل أفضل.';
+
+  @override
+  String get home_search_hint => 'ماذا تريد أن تتعلم؟';
+
+  @override
+  String get home_continue_learning => 'واصل التعلّم';
+
+  @override
+  String get home_recently_added => 'أضيف حديثًا';
+
+  @override
+  String get home_see_more => 'عرض المزيد';
+
+  @override
+  String get home_opening_recently_added => 'جارٍ فتح جميع الدورات المضافة حديثًا...';
+
+  @override
+  String get home_no_courses_found => 'لا توجد دورات';
+
+  @override
+  String get home_course_category_finance => 'المالية';
+
+  @override
+  String get home_course_title_investment_banking => 'الدورة الشاملة في الخدمات المصرفية الاستثمارية 2023';
+
+  @override
+  String get home_course_title_investment_banking_zero => 'دليل الخدمات المصرفية الاستثمارية من الصفر';
 }
+

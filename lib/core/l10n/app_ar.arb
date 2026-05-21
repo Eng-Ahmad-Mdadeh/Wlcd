@@ -78,5 +78,16 @@
   "reset_password_phone_message": "الرجاء إدخال رقم جوال لطلب إعادة تعيين كلمة المرور.",
   "use_another_method": "استخدم طريقة أخرى",
   "send_link": "إرسال الرابط",
-  "password_reset_link_sent": "تم إرسال رابط إعادة تعيين كلمة المرور!"
+  "password_reset_link_sent": "تم إرسال رابط إعادة تعيين كلمة المرور!",
+  "home_welcome_user": "مرحبًا، جيسون ",
+  "home_upgrade_skill": "طوّر مهاراتك لمستقبل أفضل.",
+  "home_search_hint": "ماذا تريد أن تتعلم؟",
+  "home_continue_learning": "واصل التعلّم",
+  "home_recently_added": "أضيف حديثًا",
+  "home_see_more": "عرض المزيد",
+  "home_opening_recently_added": "جارٍ فتح جميع الدورات المضافة حديثًا...",
+  "home_no_courses_found": "لا توجد دورات",
+  "home_course_category_finance": "المالية",
+  "home_course_title_investment_banking": "الدورة الشاملة في الخدمات المصرفية الاستثمارية 2023",
+  "home_course_title_investment_banking_zero": "دليل الخدمات المصرفية الاستثمارية من الصفر"
 }

@@ -3,6 +3,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
@@ -60,7 +61,7 @@ class WelcomeText extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            text: 'Welcome, Jason ',
+            text: context.loc.home_welcome_user,
             style: TextStyle(
               color: AppColors.white,
               fontSize: AppFontSize.s16,
@@ -72,7 +73,7 @@ class WelcomeText extends StatelessWidget {
         ),
         SizedBox(height: AppHeight.h7),
         BodyTitle(
-          text: 'Upgrade your skill for better futures.',
+          text: context.loc.home_upgrade_skill,
           color: AppColors.white.withOpacity(.72),
           fontSize: AppFontSize.s12,
           fontWeight: AppFontWeight.medium,
@@ -169,7 +170,7 @@ class HomeSearchField extends StatelessWidget {
               onChanged: onChanged,
               cursorColor: AppColors.white,
               readOnly: true,
-              hintText: 'What do you want to learn',
+              hintText: context.loc.home_search_hint,
               color: AppColors.none,
               fontSize: AppFontSize.s13,
             ),

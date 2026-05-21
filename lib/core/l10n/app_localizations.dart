@@ -583,7 +583,20 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password reset link sent!'**
   String get password_reset_link_sent;
+
+  String get home_welcome_user;
+  String get home_upgrade_skill;
+  String get home_search_hint;
+  String get home_continue_learning;
+  String get home_recently_added;
+  String get home_see_more;
+  String get home_opening_recently_added;
+  String get home_no_courses_found;
+  String get home_course_category_finance;
+  String get home_course_title_investment_banking;
+  String get home_course_title_investment_banking_zero;
 }
+
 
 class _AppLocalizationsDelegate
     extends LocalizationsDelegate<AppLocalizations> {

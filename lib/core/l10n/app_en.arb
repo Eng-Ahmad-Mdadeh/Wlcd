@@ -79,5 +79,16 @@
   "reset_password_phone_message": "Please enter a phone number to request a password reset.",
   "use_another_method": "Use another method",
   "send_link": "Send Link",
-  "password_reset_link_sent": "Password reset link sent!"
+  "password_reset_link_sent": "Password reset link sent!",
+  "home_welcome_user": "Welcome, Jason ",
+  "home_upgrade_skill": "Upgrade your skill for better futures.",
+  "home_search_hint": "What do you want to learn",
+  "home_continue_learning": "Continue Learning",
+  "home_recently_added": "Recently added",
+  "home_see_more": "See more",
+  "home_opening_recently_added": "Opening all recently added courses...",
+  "home_no_courses_found": "No courses found",
+  "home_course_category_finance": "Finance",
+  "home_course_title_investment_banking": "The Complete Investment Banking Course 2023",
+  "home_course_title_investment_banking_zero": "Guide to Investment Banking From Zero"
 }
