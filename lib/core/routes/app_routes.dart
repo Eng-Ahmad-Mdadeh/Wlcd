@@ -12,6 +12,7 @@ import 'package:wlcd/presentation/screens/check_code/check_code_screen.dart';
 import 'package:wlcd/presentation/screens/course_details/course_details_screen.dart';
 import 'package:wlcd/presentation/screens/login/login_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
+import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
 import 'package:wlcd/presentation/screens/Search/search_screen.dart';
 import 'package:wlcd/presentation/screens/splash/splash_screen.dart';
 import 'package:wlcd/presentation/widgets/bottom_nav_bar/custom_bottom_nav_bar.dart';
@@ -72,6 +73,14 @@ class NotificationsRoute extends GoRouteData with $NotificationsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const NotificationsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+@TypedGoRoute<ProfileRoute>(path: '/profile')
+class ProfileRoute extends GoRouteData with $ProfileRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const ProfileScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 

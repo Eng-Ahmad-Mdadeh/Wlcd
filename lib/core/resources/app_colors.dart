@@ -115,5 +115,11 @@ class AppColors {
   static const Color notificationPromotionDivider = Color(0xFFFFD96E);
   static const Color notificationSuccess = Color(0xFF20C77B);
 
+  /// Profile screen
+  static const Color profileText = Color(0xFF293142);
+  static const Color profileIcon = Color(0xFFA0A8B7);
+  static const Color profileChevron = Color(0xFFA6AFBD);
+  static const Color profileChipBackground = Color(0xFFF1F3F6);
+
   static const Color none = Colors.transparent;
 }
