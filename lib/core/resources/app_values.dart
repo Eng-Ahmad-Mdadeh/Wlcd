@@ -161,6 +161,7 @@ class AppPaddingHeight {
 
 class AppWidth {
   static double w1 = 1.w;
+  static double w2 = 2.w;
   static double w3 = 3.0.w;
   static double w4 = 4.0.w;
   static double w5 = 5.0.w;
@@ -356,6 +357,8 @@ class AppSize {
   static double s2 = 2.0.sp;
   static double s3 = 3.0.sp;
   static double s5 = 5.0.sp;
+  static double s6 = 6.0.sp;
+  static double s8 = 8.0.sp;
   static double s10 = 10.0.sp;
   static double s11 = 11.0.sp;
   static double s12 = 12.0.sp;
@@ -369,6 +372,7 @@ class AppSize {
   static double s20 = 20.0.sp;
   static double s22 = 22.0.sp;
   static double s23 = 23.0.sp;
+  static double s24 = 24.0.sp;
   static double s25 = 25.0.sp;
   static double s27 = 27.0.sp;
   static double s30 = 30.0.sp;
@@ -412,4 +416,10 @@ class AppRadius {
   static double r50 = 50.0.r;
   static double r100 = 100.0.r;
   static double r150 = 150.0.r;
+}
+
+
+class AppLineHeight {
+  static const double notificationTitle = 1.16;
+  static const double notificationBody = 1.45;
 }

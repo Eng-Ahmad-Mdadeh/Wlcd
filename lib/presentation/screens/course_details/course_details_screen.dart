@@ -9,11 +9,14 @@ import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
+import 'widgets/about_tab.dart';
+
 class CourseDetailsScreen extends StatelessWidget {
   const CourseDetailsScreen({super.key});
 
   static const _tabs = [
     Tab(text: 'Lessons'),
+    Tab(text: 'About'),
     Tab(text: 'Announcements'),
     Tab(text: 'Downloaded'),
     Tab(text: 'Resources'),
@@ -21,6 +24,7 @@ class CourseDetailsScreen extends StatelessWidget {
 
   static const _pages = [
     LessonsTab(),
+    AboutTab(),
     AnnouncementsTab(),
     DownloadedTab(),
     ResourcesTab(),
