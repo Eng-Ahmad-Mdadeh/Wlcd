@@ -15,6 +15,7 @@ class BodyTitle extends StatelessWidget {
     this.decorationStyle,
     this.decorationColor,
     this.decorationThickness,
+    this.height,
     this.maxLines,
   });
 
@@ -28,6 +29,7 @@ class BodyTitle extends StatelessWidget {
   final TextDecorationStyle? decorationStyle;
   final Color? decorationColor;
   final double? decorationThickness;
+  final double? height;
   final int? maxLines;
 
   @override
@@ -46,6 +48,7 @@ class BodyTitle extends StatelessWidget {
             decorationStyle: decorationStyle,
             decorationColor: decorationColor,
             decorationThickness: decorationThickness,
+            height: height,
           ),
     );
   }
