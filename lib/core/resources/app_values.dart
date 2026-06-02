@@ -413,3 +413,9 @@ class AppRadius {
   static double r100 = 100.0.r;
   static double r150 = 150.0.r;
 }
+
+
+class AppLineHeight {
+  static const double notificationTitle = 1.16;
+  static const double notificationBody = 1.45;
+}
