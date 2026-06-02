@@ -98,5 +98,22 @@ class AppColors {
   static const Color searchNavInactiveIcon = Color(0xFF9FA6B4);
   static const Color searchNavInactiveText = Color(0xFFA8AFBC);
 
+  /// Notifications screen
+  static const Color notificationBackground = Color(0xFFF8F8F8);
+  static const Color notificationTextPrimary = Color(0xFF111827);
+  static const Color notificationTextSecondary = Color(0xFF6F7787);
+  static const Color notificationTextMuted = Color(0xFF7C8495);
+  static const Color notificationBodyText = Color(0xFF5F6676);
+  static const Color notificationDateText = Color(0xFFA1A9B8);
+  static const Color notificationBorder = Color(0xFFEFF1F5);
+  static const Color notificationSystem = Color(0xFF1684FC);
+  static const Color notificationOthers = Color(0xFF3C7CFF);
+  static const Color notificationGiftTop = Color(0xFFFFC02E);
+  static const Color notificationGiftBody = Color(0xFFFFA800);
+  static const Color notificationGiftRibbon = Color(0xFFFF7A00);
+  static const Color notificationPromotion = Color(0xFFFFC547);
+  static const Color notificationPromotionDivider = Color(0xFFFFD96E);
+  static const Color notificationSuccess = Color(0xFF20C77B);
+
   static const Color none = Colors.transparent;
 }
