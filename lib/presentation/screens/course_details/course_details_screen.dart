@@ -29,7 +29,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   late final PageController _pageController;
   late final ScrollController _sectionsScrollController;
   late final List<GlobalKey> _sectionKeys;
-  int _selectedSectionIndex = _initialSectionIndex;
+  final ValueNotifier<int> _selectedSectionIndexNotifier = ValueNotifier<int>(_initialSectionIndex);
 
   @override
   void initState() {
@@ -46,13 +46,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   @override
   void dispose() {
+    _selectedSectionIndexNotifier.dispose();
     _sectionsScrollController.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
   void _selectSection(int index) {
-    if (_selectedSectionIndex == index) return;
+    if (_selectedSectionIndexNotifier.value == index) return;
 
     _setSelectedSection(index);
     _pageController.animateToPage(
@@ -63,18 +64,18 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 
   void _handlePageChanged(int index) {
-    if (_selectedSectionIndex == index) return;
+    if (_selectedSectionIndexNotifier.value == index) return;
 
     _setSelectedSection(index);
   }
 
   void _setSelectedSection(int index) {
-    setState(() => _selectedSectionIndex = index);
+    _selectedSectionIndexNotifier.value = index;
     _ensureSelectedSectionIsVisible();
   }
 
   void _ensureSelectedSectionIsVisible({bool animated = true}) {
-    final sectionContext = _sectionKeys[_selectedSectionIndex].currentContext;
+    final sectionContext = _sectionKeys[_selectedSectionIndexNotifier.value].currentContext;
     if (sectionContext == null) return;
 
     Scrollable.ensureVisible(
@@ -262,20 +263,25 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         color: AppColors.lightGrey,
                         borderRadius: BorderRadius.circular(AppRadius.r12),
                       ),
-                      child: ListView.separated(
-                        controller: _sectionsScrollController,
-                        padding: EdgeInsets.all(AppPaddingWidth.p4),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _sections.length,
-                        separatorBuilder: (_, __) => SizedBox(width: AppWidth.w6),
-                        itemBuilder: (context, index) {
-                          final isSelected = _selectedSectionIndex == index;
+                      child: ValueListenableBuilder<int>(
+                        valueListenable: _selectedSectionIndexNotifier,
+                        builder: (context, selectedSectionIndex, _) {
+                          return ListView.separated(
+                            controller: _sectionsScrollController,
+                            padding: EdgeInsets.all(AppPaddingWidth.p4),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _sections.length,
+                            separatorBuilder: (_, __) => SizedBox(width: AppWidth.w6),
+                            itemBuilder: (context, index) {
+                              final isSelected = selectedSectionIndex == index;
 
-                          return _CourseSectionTab(
-                            key: _sectionKeys[index],
-                            title: _sections[index].title,
-                            isSelected: isSelected,
-                            onTap: () => _selectSection(index),
+                              return _CourseSectionTab(
+                                key: _sectionKeys[index],
+                                title: _sections[index].title,
+                                isSelected: isSelected,
+                                onTap: () => _selectSection(index),
+                              );
+                            },
                           );
                         },
                       ),
