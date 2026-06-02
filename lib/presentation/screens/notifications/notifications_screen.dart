@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/screens/login/widgets/login_home_indicator.dart';
+import 'package:wlcd/presentation/screens/login/widgets/login_status_bar.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
+import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -44,25 +48,28 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F8),
+      backgroundColor: AppColors.notificationBackground,
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 428.w),
+          constraints: BoxConstraints(maxWidth: AppWidth.w428),
           child: Column(
             children: [
               const _NotificationsHeader(),
               Expanded(
                 child: ListView.separated(
-                  padding: EdgeInsets.fromLTRB(39.w, 17.h, 39.w, 22.h),
+                  padding: EdgeInsets.fromLTRB(AppWidth.w39, AppHeight.h17, AppWidth.w39, AppHeight.h22),
                   physics: const BouncingScrollPhysics(),
                   itemCount: _notifications.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  itemBuilder: (context, index) {
-                    return _NotificationCard(notification: _notifications[index]);
-                  },
+                  separatorBuilder: (context, index) => SizedBox(height: AppHeight.h16),
+                  itemBuilder: (context, index) => _NotificationCard(notification: _notifications[index]),
                 ),
               ),
-              const _HomeIndicator(),
+              Container(
+                height: AppHeight.h23,
+                alignment: Alignment.topCenter,
+                color: AppColors.notificationBackground,
+                child: const LoginHomeIndicator(),
+              ),
             ],
           ),
         ),
@@ -77,13 +84,13 @@ class _NotificationsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 228.h,
+      height: AppHeight.h230,
       color: AppColors.white,
-      padding: EdgeInsets.fromLTRB(38.w, 14.h, 38.w, 0),
+      padding: EdgeInsets.fromLTRB(AppWidth.w38, AppHeight.h14, AppWidth.w38, 0),
       child: Column(
         children: [
-          const _StatusBar(),
-          SizedBox(height: 31.h),
+          const LoginStatusBar(),
+          SizedBox(height: AppHeight.h31),
           _TopBar(
             onBackPressed: () {
               if (context.canPop()) {
@@ -91,45 +98,10 @@ class _NotificationsHeader extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: 33.h),
+          SizedBox(height: AppHeight.h33),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: NotificationsScreen._filters.map((filter) => _FilterButton(filter: filter)).toList(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatusBar extends StatelessWidget {
-  const _StatusBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 18.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '9:41',
-            style: TextStyle(
-              color: const Color(0xFF111827),
-              fontFamily: AppFontFamily.rubik,
-              fontSize: 15.sp,
-              fontWeight: AppFontWeight.medium,
-              height: 1,
-            ),
-          ),
-          Row(
-            children: [
-              Icon(Icons.signal_cellular_alt, color: const Color(0xFF111827), size: 17.r),
-              SizedBox(width: 4.w),
-              Icon(Icons.wifi, color: const Color(0xFF111827), size: 16.r),
-              SizedBox(width: 4.w),
-              Icon(Icons.battery_full, color: const Color(0xFF111827), size: 22.r),
-            ],
           ),
         ],
       ),
@@ -145,7 +117,7 @@ class _TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 24.h,
+      height: AppHeight.h24,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -154,27 +126,23 @@ class _TopBar extends StatelessWidget {
             child: IconButton(
               onPressed: onBackPressed,
               padding: EdgeInsets.zero,
-              constraints: BoxConstraints.tight(Size(28.r, 28.r)),
-              icon: Icon(Icons.arrow_back, color: const Color(0xFF111827), size: 23.r),
+              constraints: BoxConstraints.tight(Size(AppWidth.w28, AppHeight.h28)),
+              icon: Icon(Icons.arrow_back, color: AppColors.notificationTextPrimary, size: AppSize.s23),
             ),
           ),
-          Text(
-            'Notifications',
-            style: TextStyle(
-              color: const Color(0xFF111827),
-              fontFamily: AppFontFamily.rubik,
-              fontSize: 16.sp,
-              fontWeight: AppFontWeight.bold,
-              letterSpacing: -0.2,
-            ),
+          SectionTitle(
+            text: 'Notifications',
+            color: AppColors.notificationTextPrimary,
+            fontSize: AppFontSize.s16,
+            fontWeight: AppFontWeight.bold,
           ),
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: IconButton(
               onPressed: () {},
               padding: EdgeInsets.zero,
-              constraints: BoxConstraints.tight(Size(28.r, 28.r)),
-              icon: Icon(Icons.more_vert, color: const Color(0xFF111827), size: 23.r),
+              constraints: BoxConstraints.tight(Size(AppWidth.w28, AppHeight.h28)),
+              icon: Icon(Icons.more_vert, color: AppColors.notificationTextPrimary, size: AppSize.s23),
             ),
           ),
         ],
@@ -191,31 +159,18 @@ class _FilterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 58.w,
+      width: AppWidth.w60,
       child: Column(
         children: [
-          Container(
-            width: 48.r,
-            height: 48.r,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFEFF1F5), width: 1.w),
-            ),
-            child: Center(child: _NotificationTypeIcon(type: filter.type, size: 24.r)),
-          ),
-          SizedBox(height: 12.h),
-          Text(
-            filter.label,
-            maxLines: 1,
+          _NotificationCircleIcon(type: filter.type, size: AppSize.s24, dimension: AppWidth.w48),
+          SizedBox(height: AppHeight.h12),
+          BodyTitle(
+            text: filter.label,
+            color: AppColors.notificationTextSecondary,
+            fontSize: AppFontSize.s11,
+            fontWeight: AppFontWeight.regular,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color(0xFF6F7787),
-              fontFamily: AppFontFamily.rubik,
-              fontSize: 11.sp,
-              fontWeight: AppFontWeight.regular,
-              height: 1,
-            ),
+            maxLines: 1,
           ),
         ],
       ),
@@ -231,81 +186,82 @@ class _NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(minHeight: 160.h),
-      padding: EdgeInsets.fromLTRB(16.w, 17.h, 17.w, 17.h),
+      constraints: BoxConstraints(minHeight: AppHeight.h160),
+      padding: EdgeInsets.fromLTRB(AppWidth.w16, AppHeight.h17, AppWidth.w17, AppHeight.h17),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(AppRadius.r10),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 38.r,
-            height: 38.r,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFEFF1F5), width: 1.w),
-            ),
-            child: Center(child: _NotificationTypeIcon(type: notification.type, size: 20.r)),
-          ),
-          SizedBox(width: 12.w),
+          _NotificationCircleIcon(type: notification.type, size: AppSize.s20, dimension: AppWidth.w38),
+          SizedBox(width: AppWidth.w12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  notification.title,
+                SectionTitle(
+                  text: notification.title,
+                  color: AppColors.notificationTextPrimary,
+                  fontSize: AppFontSize.s13,
+                  fontWeight: AppFontWeight.bold,
+                  height: 1.16,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: const Color(0xFF111827),
-                    fontFamily: AppFontFamily.rubik,
-                    fontSize: 13.sp,
-                    fontWeight: AppFontWeight.bold,
-                    height: 1.16,
-                  ),
                 ),
-                SizedBox(height: 5.h),
-                Text(
-                  notification.category,
-                  style: TextStyle(
-                    color: const Color(0xFF7C8495),
-                    fontFamily: AppFontFamily.rubik,
-                    fontSize: 11.sp,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1,
-                  ),
+                SizedBox(height: AppHeight.h5),
+                BodyTitle(
+                  text: notification.category,
+                  color: AppColors.notificationTextMuted,
+                  fontSize: AppFontSize.s11,
+                  fontWeight: AppFontWeight.regular,
+                  maxLines: 1,
                 ),
-                SizedBox(height: 15.h),
-                Text(
-                  notification.description,
-                  style: TextStyle(
-                    color: const Color(0xFF5F6676),
-                    fontFamily: AppFontFamily.rubik,
-                    fontSize: 11.sp,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1.45,
-                    letterSpacing: 0.05,
-                  ),
+                SizedBox(height: AppHeight.h15),
+                BodyTitle(
+                  text: notification.description,
+                  color: AppColors.notificationBodyText,
+                  fontSize: AppFontSize.s11,
+                  fontWeight: AppFontWeight.regular,
+                  height: 1.45,
+                  overflow: TextOverflow.visible,
                 ),
-                SizedBox(height: 16.h),
-                Text(
-                  notification.date,
-                  style: TextStyle(
-                    color: const Color(0xFFA1A9B8),
-                    fontFamily: AppFontFamily.rubik,
-                    fontSize: 11.sp,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1,
-                  ),
+                SizedBox(height: AppHeight.h16),
+                BodyTitle(
+                  text: notification.date,
+                  color: AppColors.notificationDateText,
+                  fontSize: AppFontSize.s11,
+                  fontWeight: AppFontWeight.regular,
+                  maxLines: 1,
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NotificationCircleIcon extends StatelessWidget {
+  const _NotificationCircleIcon({required this.type, required this.size, required this.dimension});
+
+  final _NotificationType type;
+  final double size;
+  final double dimension;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: dimension,
+      height: dimension,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.notificationBorder, width: AppWidth.w1),
+      ),
+      child: Center(child: _NotificationTypeIcon(type: type, size: size)),
     );
   }
 }
@@ -344,13 +300,16 @@ class _PromotionsIcon extends StatelessWidget {
         Container(
           width: size * .78,
           height: size * .47,
-          decoration: BoxDecoration(color: const Color(0xFFFFC547), borderRadius: BorderRadius.circular(size * .08)),
+          decoration: BoxDecoration(
+            color: AppColors.notificationPromotion,
+            borderRadius: BorderRadius.circular(AppRadius.r2),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.star, color: AppColors.white, size: size * .22),
-            SizedBox(width: size * .18),
+            SizedBox(width: AppWidth.w4),
             Icon(Icons.star, color: AppColors.white, size: size * .22),
           ],
         ),
@@ -358,7 +317,7 @@ class _PromotionsIcon extends StatelessWidget {
           left: size * .35,
           top: size * .27,
           bottom: size * .22,
-          child: Container(width: size * .05, color: const Color(0xFFFFD96E)),
+          child: Container(width: AppWidth.w1, color: AppColors.notificationPromotionDivider),
         ),
       ],
     );
@@ -372,7 +331,6 @@ class _SystemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blue = const Color(0xFF1684FC);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -381,21 +339,20 @@ class _SystemIcon extends StatelessWidget {
             left: size * .16,
             right: size * .16,
             top: top,
-            child: Container(height: 1.2, color: blue),
+            child: Container(height: AppHeight.h1, color: AppColors.notificationSystem),
           ),
-        Positioned(left: size * .3, top: size * .18, child: _SystemDot(size: size * .16, color: blue)),
-        Positioned(right: size * .25, top: size * .43, child: _SystemDot(size: size * .16, color: blue)),
-        Positioned(left: size * .43, top: size * .68, child: _SystemDot(size: size * .16, color: blue)),
+        Positioned(left: size * .3, top: size * .18, child: _SystemDot(size: size * .16)),
+        Positioned(right: size * .25, top: size * .43, child: _SystemDot(size: size * .16)),
+        Positioned(left: size * .43, top: size * .68, child: _SystemDot(size: size * .16)),
       ],
     );
   }
 }
 
 class _SystemDot extends StatelessWidget {
-  const _SystemDot({required this.size, required this.color});
+  const _SystemDot({required this.size});
 
   final double size;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -405,7 +362,7 @@ class _SystemDot extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         shape: BoxShape.circle,
-        border: Border.all(color: color, width: 1.2),
+        border: Border.all(color: AppColors.notificationSystem, width: AppWidth.w1),
       ),
     );
   }
@@ -429,7 +386,7 @@ class _OrdersIcon extends StatelessWidget {
           child: Container(
             width: size * .32,
             height: size * .32,
-            decoration: const BoxDecoration(color: Color(0xFF20C77B), shape: BoxShape.circle),
+            decoration: const BoxDecoration(color: AppColors.notificationSuccess, shape: BoxShape.circle),
             child: Icon(Icons.check, color: AppColors.white, size: size * .22),
           ),
         ),
@@ -457,7 +414,10 @@ class _GiftBox extends StatelessWidget {
             child: Container(
               width: width * .85,
               height: height * .72,
-              decoration: BoxDecoration(color: const Color(0xFFFFA800), borderRadius: BorderRadius.circular(width * .07)),
+              decoration: BoxDecoration(
+                color: AppColors.notificationGiftBody,
+                borderRadius: BorderRadius.circular(AppRadius.r2),
+              ),
             ),
           ),
           Positioned(
@@ -465,13 +425,16 @@ class _GiftBox extends StatelessWidget {
             child: Container(
               width: width,
               height: height * .34,
-              decoration: BoxDecoration(color: const Color(0xFFFFC02E), borderRadius: BorderRadius.circular(width * .07)),
+              decoration: BoxDecoration(
+                color: AppColors.notificationGiftTop,
+                borderRadius: BorderRadius.circular(AppRadius.r2),
+              ),
             ),
           ),
           Positioned(
             top: 0,
             bottom: 0,
-            child: Container(width: width * .14, color: const Color(0xFFFF7A00)),
+            child: Container(width: AppWidth.w2, color: AppColors.notificationGiftRibbon),
           ),
         ],
       ),
@@ -486,34 +449,20 @@ class _OthersIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blue = const Color(0xFF3C7CFF);
     return GridView.count(
       crossAxisCount: 2,
-      padding: EdgeInsets.all(size * .17),
-      mainAxisSpacing: size * .1,
-      crossAxisSpacing: size * .1,
+      padding: EdgeInsets.all(AppPaddingWidth.p4),
+      mainAxisSpacing: AppHeight.h2,
+      crossAxisSpacing: AppWidth.w2,
       physics: const NeverScrollableScrollPhysics(),
       children: List.generate(
         4,
-        (_) => Container(decoration: BoxDecoration(color: blue, borderRadius: BorderRadius.circular(size * .06))),
-      ),
-    );
-  }
-}
-
-class _HomeIndicator extends StatelessWidget {
-  const _HomeIndicator();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 23.h,
-      alignment: Alignment.topCenter,
-      color: const Color(0xFFF8F8F8),
-      child: Container(
-        width: 134.w,
-        height: 5.h,
-        decoration: BoxDecoration(color: const Color(0xFF111827), borderRadius: BorderRadius.circular(100.r)),
+        (_) => Container(
+          decoration: BoxDecoration(
+            color: AppColors.notificationOthers,
+            borderRadius: BorderRadius.circular(AppRadius.r2),
+          ),
+        ),
       ),
     );
   }
