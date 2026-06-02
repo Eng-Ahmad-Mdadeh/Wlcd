@@ -236,7 +236,7 @@ class CourseDetailsScreen extends StatelessWidget {
                   surfaceTintColor: Colors.transparent,
                   elevation: 0,
                   bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(64),
+                    preferredSize: const Size.fromHeight(65),
                     child: Container(
                       color: AppColors.white,
                       padding: EdgeInsets.fromLTRB(
