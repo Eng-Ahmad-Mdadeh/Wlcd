@@ -18,13 +18,35 @@ class CourseDetailsScreen extends StatefulWidget {
 }
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
-  static const List<String> _sections = ['Lessons', 'Announcements', 'Downloaded', 'Resources'];
+  static const int _initialSectionIndex = 2;
+  static const List<_CourseDetailsSection> _sections = [
+    _CourseDetailsSection(title: 'Lessons', page: LessonsTab()),
+    _CourseDetailsSection(title: 'Announcements', page: AnnouncementsTab()),
+    _CourseDetailsSection(title: 'Downloaded', page: DownloadedTab()),
+    _CourseDetailsSection(title: 'Resources', page: ResourcesTab()),
+  ];
 
-  final PageController _pageController = PageController(initialPage: 2);
-  int _selectedSectionIndex = 2;
+  late final PageController _pageController;
+  late final ScrollController _sectionsScrollController;
+  late final List<GlobalKey> _sectionKeys;
+  int _selectedSectionIndex = _initialSectionIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _initialSectionIndex);
+    _sectionsScrollController = ScrollController();
+    _sectionKeys = List.generate(_sections.length, (_) => GlobalKey());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _ensureSelectedSectionIsVisible(animated: false);
+    });
+  }
 
   @override
   void dispose() {
+    _sectionsScrollController.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -32,7 +54,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   void _selectSection(int index) {
     if (_selectedSectionIndex == index) return;
 
-    setState(() => _selectedSectionIndex = index);
+    _setSelectedSection(index);
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 250),
@@ -41,7 +63,26 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 
   void _handlePageChanged(int index) {
+    if (_selectedSectionIndex == index) return;
+
+    _setSelectedSection(index);
+  }
+
+  void _setSelectedSection(int index) {
     setState(() => _selectedSectionIndex = index);
+    _ensureSelectedSectionIsVisible();
+  }
+
+  void _ensureSelectedSectionIsVisible({bool animated = true}) {
+    final sectionContext = _sectionKeys[_selectedSectionIndex].currentContext;
+    if (sectionContext == null) return;
+
+    Scrollable.ensureVisible(
+      sectionContext,
+      duration: animated ? const Duration(milliseconds: 250) : Duration.zero,
+      curve: Curves.easeInOut,
+      alignment: .5,
+    );
   }
 
   @override
@@ -222,6 +263,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         borderRadius: BorderRadius.circular(AppRadius.r12),
                       ),
                       child: ListView.separated(
+                        controller: _sectionsScrollController,
                         padding: EdgeInsets.all(AppPaddingWidth.p4),
                         scrollDirection: Axis.horizontal,
                         itemCount: _sections.length,
@@ -230,7 +272,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                           final isSelected = _selectedSectionIndex == index;
 
                           return _CourseSectionTab(
-                            title: _sections[index],
+                            key: _sectionKeys[index],
+                            title: _sections[index].title,
                             isSelected: isSelected,
                             onTap: () => _selectSection(index),
                           );
@@ -245,7 +288,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           body: PageView(
             controller: _pageController,
             onPageChanged: _handlePageChanged,
-            children: const [LessonsTab(), AnnouncementsTab(), DownloadedTab(), ResourcesTab()],
+            children: _sections.map((section) => section.page).toList(growable: false),
           ),
         ),
       ),
@@ -253,8 +296,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 }
 
+class _CourseDetailsSection {
+  const _CourseDetailsSection({required this.title, required this.page});
+
+  final String title;
+  final Widget page;
+}
+
 class _CourseSectionTab extends StatelessWidget {
-  const _CourseSectionTab({required this.title, required this.isSelected, required this.onTap});
+  const _CourseSectionTab({super.key, required this.title, required this.isSelected, required this.onTap});
 
   final String title;
   final bool isSelected;
@@ -262,22 +312,34 @@ class _CourseSectionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(AppRadius.r10),
-      onTap: onTap,
+    final borderRadius = BorderRadius.circular(AppRadius.r10);
+
+    return Semantics(
+      button: true,
+      selected: isSelected,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p8),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : AppColors.white,
           border: Border.all(color: AppColors.searchCardBorder),
-          borderRadius: BorderRadius.circular(AppRadius.r10),
+          borderRadius: borderRadius,
         ),
-        child: Center(
-          child: BodyTitle(
-            text: title,
-            fontSize: 12,
-            color: isSelected ? AppColors.white : AppColors.searchRatingText,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: borderRadius,
+          child: InkWell(
+            borderRadius: borderRadius,
+            onTap: onTap,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p8),
+              child: Center(
+                child: BodyTitle(
+                  text: title,
+                  fontSize: 12,
+                  color: isSelected ? AppColors.white : AppColors.searchRatingText,
+                ),
+              ),
+            ),
           ),
         ),
       ),
