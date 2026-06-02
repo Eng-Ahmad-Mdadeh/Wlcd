@@ -162,7 +162,11 @@ class _FilterButton extends StatelessWidget {
       width: AppWidth.w60,
       child: Column(
         children: [
-          _NotificationCircleIcon(type: filter.type, size: AppSize.s24, dimension: AppWidth.w48),
+          _NotificationCircleIcon(
+            type: filter.type,
+            dimension: AppWidth.w48,
+            iconVariant: _NotificationIconVariant.large,
+          ),
           SizedBox(height: AppHeight.h12),
           BodyTitle(
             text: filter.label,
@@ -195,7 +199,11 @@ class _NotificationCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _NotificationCircleIcon(type: notification.type, size: AppSize.s20, dimension: AppWidth.w38),
+          _NotificationCircleIcon(
+            type: notification.type,
+            dimension: AppWidth.w38,
+            iconVariant: _NotificationIconVariant.small,
+          ),
           SizedBox(width: AppWidth.w12),
           Expanded(
             child: Column(
@@ -206,7 +214,7 @@ class _NotificationCard extends StatelessWidget {
                   color: AppColors.notificationTextPrimary,
                   fontSize: AppFontSize.s13,
                   fontWeight: AppFontWeight.bold,
-                  height: 1.16,
+                  height: AppLineHeight.notificationTitle,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -224,7 +232,7 @@ class _NotificationCard extends StatelessWidget {
                   color: AppColors.notificationBodyText,
                   fontSize: AppFontSize.s11,
                   fontWeight: AppFontWeight.regular,
-                  height: 1.45,
+                  height: AppLineHeight.notificationBody,
                   overflow: TextOverflow.visible,
                 ),
                 SizedBox(height: AppHeight.h16),
@@ -245,11 +253,11 @@ class _NotificationCard extends StatelessWidget {
 }
 
 class _NotificationCircleIcon extends StatelessWidget {
-  const _NotificationCircleIcon({required this.type, required this.size, required this.dimension});
+  const _NotificationCircleIcon({required this.type, required this.dimension, required this.iconVariant});
 
   final _NotificationType type;
-  final double size;
   final double dimension;
+  final _NotificationIconVariant iconVariant;
 
   @override
   Widget build(BuildContext context) {
@@ -261,36 +269,45 @@ class _NotificationCircleIcon extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.notificationBorder, width: AppWidth.w1),
       ),
-      child: Center(child: _NotificationTypeIcon(type: type, size: size)),
+      child: Center(child: _NotificationTypeIcon(type: type, variant: iconVariant)),
     );
   }
 }
 
 class _NotificationTypeIcon extends StatelessWidget {
-  const _NotificationTypeIcon({required this.type, required this.size});
+  const _NotificationTypeIcon({required this.type, required this.variant});
 
   final _NotificationType type;
-  final double size;
+  final _NotificationIconVariant variant;
+
+  double get _size => variant == _NotificationIconVariant.large ? AppSize.s24 : AppSize.s20;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size,
-      height: size,
+      width: _size,
+      height: _size,
       child: switch (type) {
-        _NotificationType.promotions => _PromotionsIcon(size: size),
-        _NotificationType.system => _SystemIcon(size: size),
-        _NotificationType.orders => _OrdersIcon(size: size),
-        _NotificationType.others => _OthersIcon(size: size),
+        _NotificationType.promotions => _PromotionsIcon(variant: variant),
+        _NotificationType.system => _SystemIcon(variant: variant),
+        _NotificationType.orders => _OrdersIcon(variant: variant),
+        _NotificationType.others => const _OthersIcon(),
       },
     );
   }
 }
 
 class _PromotionsIcon extends StatelessWidget {
-  const _PromotionsIcon({required this.size});
+  const _PromotionsIcon({required this.variant});
 
-  final double size;
+  final _NotificationIconVariant variant;
+
+  double get _ticketWidth => variant == _NotificationIconVariant.large ? AppWidth.w19 : AppWidth.w16;
+  double get _ticketHeight => variant == _NotificationIconVariant.large ? AppHeight.h11 : AppHeight.h10;
+  double get _starSize => variant == _NotificationIconVariant.large ? AppSize.s5 : AppSize.s3;
+  double get _dividerStart => variant == _NotificationIconVariant.large ? AppWidth.w8 : AppWidth.w7;
+  double get _dividerTop => variant == _NotificationIconVariant.large ? AppHeight.h6 : AppHeight.h5;
+  double get _dividerBottom => variant == _NotificationIconVariant.large ? AppHeight.h5 : AppHeight.h4;
 
   @override
   Widget build(BuildContext context) {
@@ -298,8 +315,8 @@ class _PromotionsIcon extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          width: size * .78,
-          height: size * .47,
+          width: _ticketWidth,
+          height: _ticketHeight,
           decoration: BoxDecoration(
             color: AppColors.notificationPromotion,
             borderRadius: BorderRadius.circular(AppRadius.r2),
@@ -308,15 +325,15 @@ class _PromotionsIcon extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.star, color: AppColors.white, size: size * .22),
+            Icon(Icons.star, color: AppColors.white, size: _starSize),
             SizedBox(width: AppWidth.w4),
-            Icon(Icons.star, color: AppColors.white, size: size * .22),
+            Icon(Icons.star, color: AppColors.white, size: _starSize),
           ],
         ),
-        Positioned(
-          left: size * .35,
-          top: size * .27,
-          bottom: size * .22,
+        PositionedDirectional(
+          start: _dividerStart,
+          top: _dividerTop,
+          bottom: _dividerBottom,
           child: Container(width: AppWidth.w1, color: AppColors.notificationPromotionDivider),
         ),
       ],
@@ -325,25 +342,31 @@ class _PromotionsIcon extends StatelessWidget {
 }
 
 class _SystemIcon extends StatelessWidget {
-  const _SystemIcon({required this.size});
+  const _SystemIcon({required this.variant});
 
-  final double size;
+  final _NotificationIconVariant variant;
+
+  double get _lineStart => variant == _NotificationIconVariant.large ? AppWidth.w4 : AppWidth.w3;
+  double get _lineTopOne => variant == _NotificationIconVariant.large ? AppHeight.h6 : AppHeight.h5;
+  double get _lineTopTwo => variant == _NotificationIconVariant.large ? AppHeight.h12 : AppHeight.h10;
+  double get _lineTopThree => variant == _NotificationIconVariant.large ? AppHeight.h18 : AppHeight.h15;
+  double get _dotSize => variant == _NotificationIconVariant.large ? AppSize.s3 : AppSize.s2;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        for (final top in [size * .25, size * .5, size * .75])
-          Positioned(
-            left: size * .16,
-            right: size * .16,
+        for (final top in [_lineTopOne, _lineTopTwo, _lineTopThree])
+          PositionedDirectional(
+            start: _lineStart,
+            end: _lineStart,
             top: top,
             child: Container(height: AppHeight.h1, color: AppColors.notificationSystem),
           ),
-        Positioned(left: size * .3, top: size * .18, child: _SystemDot(size: size * .16)),
-        Positioned(right: size * .25, top: size * .43, child: _SystemDot(size: size * .16)),
-        Positioned(left: size * .43, top: size * .68, child: _SystemDot(size: size * .16)),
+        PositionedDirectional(start: AppWidth.w7, top: AppHeight.h4, child: _SystemDot(size: _dotSize)),
+        PositionedDirectional(end: AppWidth.w6, top: AppHeight.h10, child: _SystemDot(size: _dotSize)),
+        PositionedDirectional(start: AppWidth.w10, top: AppHeight.h16, child: _SystemDot(size: _dotSize)),
       ],
     );
   }
@@ -369,9 +392,15 @@ class _SystemDot extends StatelessWidget {
 }
 
 class _OrdersIcon extends StatelessWidget {
-  const _OrdersIcon({required this.size});
+  const _OrdersIcon({required this.variant});
 
-  final double size;
+  final _NotificationIconVariant variant;
+
+  double get _giftWidth => variant == _NotificationIconVariant.large ? AppWidth.w17 : AppWidth.w14;
+  double get _giftHeight => variant == _NotificationIconVariant.large ? AppHeight.h13 : AppHeight.h11;
+  double get _giftTop => variant == _NotificationIconVariant.large ? AppHeight.h6 : AppHeight.h5;
+  double get _badgeSize => variant == _NotificationIconVariant.large ? AppSize.s8 : AppSize.s6;
+  double get _checkSize => variant == _NotificationIconVariant.large ? AppSize.s5 : AppSize.s3;
 
   @override
   Widget build(BuildContext context) {
@@ -379,15 +408,15 @@ class _OrdersIcon extends StatelessWidget {
       alignment: Alignment.center,
       clipBehavior: Clip.none,
       children: [
-        Positioned(top: size * .24, child: _GiftBox(width: size * .7, height: size * .55)),
-        Positioned(
-          right: size * .06,
-          bottom: size * .11,
+        Positioned(top: _giftTop, child: _GiftBox(width: _giftWidth, height: _giftHeight)),
+        PositionedDirectional(
+          end: AppWidth.w1,
+          bottom: AppHeight.h2,
           child: Container(
-            width: size * .32,
-            height: size * .32,
+            width: _badgeSize,
+            height: _badgeSize,
             decoration: const BoxDecoration(color: AppColors.notificationSuccess, shape: BoxShape.circle),
-            child: Icon(Icons.check, color: AppColors.white, size: size * .22),
+            child: Icon(Icons.check, color: AppColors.white, size: _checkSize),
           ),
         ),
       ],
@@ -412,8 +441,8 @@ class _GiftBox extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
-              width: width * .85,
-              height: height * .72,
+              width: width - AppWidth.w2,
+              height: height - AppHeight.h4,
               decoration: BoxDecoration(
                 color: AppColors.notificationGiftBody,
                 borderRadius: BorderRadius.circular(AppRadius.r2),
@@ -424,7 +453,7 @@ class _GiftBox extends StatelessWidget {
             top: 0,
             child: Container(
               width: width,
-              height: height * .34,
+              height: AppHeight.h4,
               decoration: BoxDecoration(
                 color: AppColors.notificationGiftTop,
                 borderRadius: BorderRadius.circular(AppRadius.r2),
@@ -443,9 +472,7 @@ class _GiftBox extends StatelessWidget {
 }
 
 class _OthersIcon extends StatelessWidget {
-  const _OthersIcon({required this.size});
-
-  final double size;
+  const _OthersIcon();
 
   @override
   Widget build(BuildContext context) {
@@ -492,3 +519,5 @@ class _NotificationItemData {
 }
 
 enum _NotificationType { promotions, system, orders, others }
+
+enum _NotificationIconVariant { large, small }
