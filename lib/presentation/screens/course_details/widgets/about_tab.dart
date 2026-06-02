@@ -9,22 +9,19 @@ class AboutTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return ListView(
       padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionTitle(text: 'Descriptions', fontSize: 18, color: AppColors.searchCardTitle),
-          SizedBox(height: 8),
-          BodyTitle(
-            text:
-                'Hi there! 👋 My name is Olivia Smith and welcome to this course. Digital products are more abstract and complex than any product you\'ve learned before. People are using their products in real-time and fast changing.',
-            fontSize: 13,
-            color: AppColors.searchRatingText,
-            maxLines: 20,
-          ),
-        ],
-      ),
+      children: const [
+        SectionTitle(text: 'Descriptions', fontSize: 18, color: AppColors.searchCardTitle),
+        SizedBox(height: 8),
+        BodyTitle(
+          text:
+          'Hi there! 👋 My name is Olivia Smith and welcome to this course. Digital products are more abstract and complex than any product you\'ve learned before. People are using their products in real-time and fast changing.',
+          fontSize: 13,
+          color: AppColors.searchRatingText,
+          maxLines: 20,
+        ),
+      ],
     );
   }
 }

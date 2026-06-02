@@ -35,7 +35,7 @@ class ReviewsTab extends StatelessWidget {
           SizedBox(height: AppHeight.h10),
           const BodyTitle(
             text:
-                'Merrill Kervin\n3 weeks ago\n\nPulvinar nisl blandit cras lacus diam posuere. Varius sem vestibulum egestas ultricies.',
+            'Merrill Kervin\n3 weeks ago\n\nPulvinar nisl blandit cras lacus diam posuere. Varius sem vestibulum egestas ultricies.',
             fontSize: 13,
             color: AppColors.searchRatingText,
           ),
