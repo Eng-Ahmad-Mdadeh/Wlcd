@@ -92,51 +92,69 @@ class HeaderActions extends StatelessWidget {
       children: [
         const HeaderIconButton(icon: Icons.search, semanticLabel: 'search'),
         SizedBox(width: AppWidth.w8),
-        const HeaderIconButton(icon: Icons.notifications_none_outlined, semanticLabel: 'Notifications', showDot: true),
+        HeaderIconButton(
+          icon: Icons.notifications_none_outlined,
+          semanticLabel: 'Notifications',
+          showDot: true,
+          onTap: () => NotificationsRoute().push(context),
+        ),
       ],
     );
   }
 }
 
 class HeaderIconButton extends StatelessWidget {
-  const HeaderIconButton({super.key, required this.icon, required this.semanticLabel, this.showDot = false});
+  const HeaderIconButton({
+    super.key,
+    required this.icon,
+    required this.semanticLabel,
+    this.showDot = false,
+    this.onTap,
+  });
 
   final IconData icon;
   final String semanticLabel;
   final bool showDot;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
       label: semanticLabel,
-      child: Container(
-        width: AppWidth.w37,
-        height: AppHeight.h37,
-        decoration: BoxDecoration(
-          color: AppColors.white.withOpacity(.08),
-          borderRadius: BorderRadius.circular(AppRadius.r15),
-          border: Border.all(color: AppColors.white.withOpacity(.28)),
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Icon(icon, color: AppColors.white, size: AppSize.s22),
-            if (showDot)
-              PositionedDirectional(
-                top: AppHeight.h12,
-                end: AppWidth.w10,
-                child: Container(
-                  width: AppWidth.w8,
-                  height: AppHeight.h8,
-                  decoration: BoxDecoration(
-                    color: AppColors.notificationDot,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: AppWidth.w1),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.r15),
+        splashColor: AppColors.none,
+        highlightColor: AppColors.none,
+        child: Container(
+          width: AppWidth.w37,
+          height: AppHeight.h37,
+          decoration: BoxDecoration(
+            color: AppColors.white.withOpacity(.08),
+            borderRadius: BorderRadius.circular(AppRadius.r15),
+            border: Border.all(color: AppColors.white.withOpacity(.28)),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(icon, color: AppColors.white, size: AppSize.s22),
+              if (showDot)
+                PositionedDirectional(
+                  top: AppHeight.h12,
+                  end: AppWidth.w10,
+                  child: Container(
+                    width: AppWidth.w8,
+                    height: AppHeight.h8,
+                    decoration: BoxDecoration(
+                      color: AppColors.notificationDot,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary, width: AppWidth.w1),
+                    ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
