@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
-import 'package:flutter/material.dart';
 
 class CustomNavItem extends StatelessWidget {
   final void Function() onPressed;
@@ -20,8 +21,8 @@ class CustomNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
+      splashColor: AppColors.none,
+      highlightColor: AppColors.none,
       onTap: onPressed,
       child: Padding(
         padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p4),
@@ -41,20 +42,20 @@ class CustomNavItem extends StatelessWidget {
                   5,
                 ),
                 decoration: BoxDecoration(
-                  color: selected ? const Color(0xFFDCE5E2) : Colors.transparent,
+                  color: selected ? AppColors.lightPrim : AppColors.none,
                   borderRadius: BorderRadius.circular(AppRadius.r18),
                 ),
                 child: Column(
                   children: [
                     Icon(
                       icon,
-                      color: selected ? const Color(0xFF0F7A4F) : const Color(0xFF8C96A6),
+                      color: selected ? AppColors.primary : AppColors.navInactive,
                       size: AppSize.s20,
                     ),
                     SizedBox(height: AppHeight.h6),
                     BodyTitle(
                       text: label,
-                      color: selected ? const Color(0xFF0F7A4F) : const Color(0xFF3F4A5A),
+                      color: selected ? AppColors.primary : AppColors.seeMore,
                       fontWeight: AppFontWeight.extraBold,
                       fontSize: AppFontSize.s13,
                     ),
@@ -64,7 +65,7 @@ class CustomNavItem extends StatelessWidget {
                       height: AppHeight.h8,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: selected ? const Color(0xFF0F7A4F) : Colors.transparent,
+                        color: selected ? AppColors.primary : AppColors.none,
                       ),
                     ),
                   ],

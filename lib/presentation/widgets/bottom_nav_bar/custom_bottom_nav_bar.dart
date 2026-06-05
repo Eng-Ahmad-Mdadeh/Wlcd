@@ -1,7 +1,6 @@
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
@@ -21,8 +20,6 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int currentIndex = navigationShell.currentIndex;
-    final tr = context.loc;
-
     return BlocBuilder<BottomBarCubit, bool>(
       builder: (context, state) {
         return AnimatedContainer(
@@ -40,10 +37,16 @@ class CustomBottomNavBar extends StatelessWidget {
               AppPaddingHeight.p10,
             ),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
-              border: Border.all(color: const Color(0xFFE6E8EB), width: 1),
+              color: AppColors.backGround,
+              border: Border.all(color: AppColors.notificationBorder, width: 1),
               borderRadius: BorderRadius.circular(AppRadius.r20),
-              boxShadow: const [BoxShadow(color: Color(0x14000000), offset: Offset(0, 2), blurRadius: 10)],
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.searchBottomShadow,
+                  offset: Offset(0, 2),
+                  blurRadius: 10,
+                ),
+              ],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
