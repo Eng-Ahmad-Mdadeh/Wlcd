@@ -16,6 +16,7 @@ import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
 import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
+import 'package:wlcd/presentation/screens/progress_history/progress_history_screen.dart';
 import 'package:wlcd/presentation/screens/search/search_screen.dart';
 import 'package:wlcd/presentation/screens/splash/splash_screen.dart';
 import 'package:wlcd/presentation/widgets/bottom_nav_bar/custom_bottom_nav_bar.dart';
@@ -84,6 +85,14 @@ class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+@TypedGoRoute<ProgressHistoryRoute>(path: '/progress-history')
+class ProgressHistoryRoute extends GoRouteData with $ProgressHistoryRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const ProgressHistoryScreen().buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 

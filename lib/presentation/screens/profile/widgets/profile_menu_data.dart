@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ProfileMenuAction { orderHistory }
+enum ProfileMenuAction { orderHistory, progressHistory }
 
 class ProfileMenuItemData {
   const ProfileMenuItemData({required this.title, required this.icon, this.showTrailingArrow = true, this.action});
@@ -16,6 +16,11 @@ const List<ProfileMenuItemData> profileAccountItems = [
   ProfileMenuItemData(title: 'Preference Video', icon: Icons.videocam_outlined),
   ProfileMenuItemData(title: 'Your Download', icon: Icons.file_download_outlined),
   ProfileMenuItemData(title: 'Order History', icon: Icons.receipt_long_outlined, action: ProfileMenuAction.orderHistory),
+  ProfileMenuItemData(
+    title: 'Progress History',
+    icon: Icons.trending_up_outlined,
+    action: ProfileMenuAction.progressHistory,
+  ),
   ProfileMenuItemData(title: 'Dark Mode', icon: Icons.dark_mode_outlined, showTrailingArrow: false),
 ];
 
