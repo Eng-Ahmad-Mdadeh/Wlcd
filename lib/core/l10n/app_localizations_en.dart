@@ -292,6 +292,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get home_course_title_investment_banking_zero =>
       'Guide to Investment Banking From Zero';
+
   @override
   String get order_history => 'Order History';
 
@@ -314,13 +315,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ux_design => 'UX Design';
 
   @override
-  String get order_course_title_hooked => 'Hooked: How to Build Habit Forming Products';
+  String get order_course_title_hooked =>
+      'Hooked: How to Build Habit Forming Products';
 
   @override
-  String get order_course_title_web_design => 'Complete Web Design from Figma to Webflow';
+  String get order_course_title_web_design =>
+      'Complete Web Design from Figma to Webflow';
 
   @override
-  String get order_course_title_cfo => 'Chief Financial Officer Leadership Program';
+  String get order_course_title_cfo =>
+      'Chief Financial Officer Leadership Program';
 
   @override
   String get order_date_first => 'Jan 28, 2023 04:00 PM';

@@ -293,6 +293,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get home_course_title_investment_banking_zero =>
       'دليل الخدمات المصرفية الاستثمارية من الصفر';
+
   @override
   String get order_history => 'سجل الطلبات';
 
@@ -315,10 +316,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ux_design => 'تصميم تجربة المستخدم';
 
   @override
-  String get order_course_title_hooked => 'Hooked: كيفية بناء منتجات تكوّن عادات';
+  String get order_course_title_hooked =>
+      'Hooked: كيفية بناء منتجات تكوّن عادات';
 
   @override
-  String get order_course_title_web_design => 'تصميم ويب كامل من Figma إلى Webflow';
+  String get order_course_title_web_design =>
+      'تصميم ويب كامل من Figma إلى Webflow';
 
   @override
   String get order_course_title_cfo => 'برنامج قيادة المدير المالي التنفيذي';

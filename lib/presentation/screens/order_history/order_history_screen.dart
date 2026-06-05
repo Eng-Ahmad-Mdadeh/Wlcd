@@ -20,17 +20,17 @@ class OrderHistoryScreen extends StatelessWidget {
         centerTitle: true,
         showBackButton: true,
         backgroundColor: AppColors.orderBackground,
-        customActions: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(end: AppPaddingWidth.p17),
-            child: IconButton(
-              onPressed: () {},
-              padding: EdgeInsets.zero,
-              constraints: BoxConstraints.tight(Size(AppWidth.w33, AppHeight.h33)),
-              icon: Icon(Icons.more_vert, color: AppColors.orderTitle, size: AppSize.s23),
-            ),
-          ),
-        ],
+        // customActions: [
+        //   Padding(
+        //     padding: EdgeInsetsDirectional.only(end: AppPaddingWidth.p17),
+        //     child: IconButton(
+        //       onPressed: () {},
+        //       padding: EdgeInsets.zero,
+        //       constraints: BoxConstraints.tight(Size(AppWidth.w33, AppHeight.h33)),
+        //       icon: Icon(Icons.more_vert, color: AppColors.orderTitle, size: AppSize.s23),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Center(
         child: ConstrainedBox(
