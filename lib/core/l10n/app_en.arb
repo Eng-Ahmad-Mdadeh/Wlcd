@@ -90,5 +90,18 @@
   "home_no_courses_found": "No courses found",
   "home_course_category_finance": "Finance",
   "home_course_title_investment_banking": "The Complete Investment Banking Course 2023",
-  "home_course_title_investment_banking_zero": "Guide to Investment Banking From Zero"
+  "home_course_title_investment_banking_zero": "Guide to Investment Banking From Zero",
+  "order_history": "Order History",
+  "order_course": "Course",
+  "order_refund": "Refund",
+  "order_status_pending": "Pending",
+  "order_status_successful": "Successful",
+  "order_status_canceled": "Canceled",
+  "ux_design": "UX Design",
+  "order_course_title_hooked": "Hooked: How to Build Habit Forming Products",
+  "order_course_title_web_design": "Complete Web Design from Figma to Webflow",
+  "order_course_title_cfo": "Chief Financial Officer Leadership Program",
+  "order_date_first": "Jan 28, 2023 04:00 PM",
+  "order_date_second": "Jan 24, 2023 04:00 PM",
+  "order_date_third": "Jan 10, 2023 03:15 AM"
 }

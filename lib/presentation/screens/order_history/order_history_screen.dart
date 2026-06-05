@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/notifications/widgets/notifications_home_indicator.dart';
@@ -15,7 +16,7 @@ class OrderHistoryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.orderBackground,
       appBar: CustomAppBar(
-        title: 'Order History',
+        title: context.loc.order_history,
         centerTitle: true,
         showBackButton: true,
         backgroundColor: AppColors.orderBackground,
@@ -40,7 +41,7 @@ class OrderHistoryScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p25),
                 child: const OrderHistoryTabs(),
               ),
-              const Expanded(child: OrderHistoryList(orders: orderHistoryItems)),
+              Expanded(child: OrderHistoryList(orders: orderHistoryItems(context))),
               const NotificationsHomeIndicator(),
             ],
           ),

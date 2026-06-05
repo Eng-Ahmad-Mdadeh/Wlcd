@@ -293,4 +293,42 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get home_course_title_investment_banking_zero =>
       'دليل الخدمات المصرفية الاستثمارية من الصفر';
+  @override
+  String get order_history => 'سجل الطلبات';
+
+  @override
+  String get order_course => 'الدورات';
+
+  @override
+  String get order_refund => 'الاسترداد';
+
+  @override
+  String get order_status_pending => 'قيد الانتظار';
+
+  @override
+  String get order_status_successful => 'ناجح';
+
+  @override
+  String get order_status_canceled => 'ملغي';
+
+  @override
+  String get ux_design => 'تصميم تجربة المستخدم';
+
+  @override
+  String get order_course_title_hooked => 'Hooked: كيفية بناء منتجات تكوّن عادات';
+
+  @override
+  String get order_course_title_web_design => 'تصميم ويب كامل من Figma إلى Webflow';
+
+  @override
+  String get order_course_title_cfo => 'برنامج قيادة المدير المالي التنفيذي';
+
+  @override
+  String get order_date_first => '28 يناير 2023 04:00 م';
+
+  @override
+  String get order_date_second => '24 يناير 2023 04:00 م';
+
+  @override
+  String get order_date_third => '10 يناير 2023 03:15 ص';
 }

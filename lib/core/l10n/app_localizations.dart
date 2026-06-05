@@ -683,4 +683,81 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
     'that was used.',
   );
+  /// No description provided for @order_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Order History'**
+  String get order_history;
+
+  /// No description provided for @order_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Course'**
+  String get order_course;
+
+  /// No description provided for @order_refund.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get order_refund;
+
+  /// No description provided for @order_status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get order_status_pending;
+
+  /// No description provided for @order_status_successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful'**
+  String get order_status_successful;
+
+  /// No description provided for @order_status_canceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get order_status_canceled;
+
+  /// No description provided for @ux_design.
+  ///
+  /// In en, this message translates to:
+  /// **'UX Design'**
+  String get ux_design;
+
+  /// No description provided for @order_course_title_hooked.
+  ///
+  /// In en, this message translates to:
+  /// **'Hooked: How to Build Habit Forming Products'**
+  String get order_course_title_hooked;
+
+  /// No description provided for @order_course_title_web_design.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Web Design from Figma to Webflow'**
+  String get order_course_title_web_design;
+
+  /// No description provided for @order_course_title_cfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Chief Financial Officer Leadership Program'**
+  String get order_course_title_cfo;
+
+  /// No description provided for @order_date_first.
+  ///
+  /// In en, this message translates to:
+  /// **'Jan 28, 2023 04:00 PM'**
+  String get order_date_first;
+
+  /// No description provided for @order_date_second.
+  ///
+  /// In en, this message translates to:
+  /// **'Jan 24, 2023 04:00 PM'**
+  String get order_date_second;
+
+  /// No description provided for @order_date_third.
+  ///
+  /// In en, this message translates to:
+  /// **'Jan 10, 2023 03:15 AM'**
+  String get order_date_third;
 }
