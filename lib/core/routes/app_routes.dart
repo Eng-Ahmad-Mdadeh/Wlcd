@@ -197,7 +197,7 @@ class AppShell extends StatelessWidget {
     final currentPath = navigationShell.shellRouteContext.routerState.fullPath;
 
     final shouldShowBottomBar = [
-      // HomeRoute().location,
+      HomeRoute().location,
       // OffersRoute().location,
       // AuctionsRoute().location,
       // MoreRoute().location,
