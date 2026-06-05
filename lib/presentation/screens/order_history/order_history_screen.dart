@@ -25,7 +25,7 @@ class OrderHistoryScreen extends StatelessWidget {
             child: IconButton(
               onPressed: () {},
               padding: EdgeInsets.zero,
-              constraints: BoxConstraints.tight(Size(AppWidth.w32, AppHeight.h32)),
+              constraints: BoxConstraints.tight(Size(AppWidth.w33, AppHeight.h33)),
               icon: Icon(Icons.more_vert, color: AppColors.orderTitle, size: AppSize.s23),
             ),
           ),
