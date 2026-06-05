@@ -422,4 +422,5 @@ class AppRadius {
 class AppLineHeight {
   static const double notificationTitle = 1.16;
   static const double notificationBody = 1.45;
+  static const double orderTitle = 1.24;
 }

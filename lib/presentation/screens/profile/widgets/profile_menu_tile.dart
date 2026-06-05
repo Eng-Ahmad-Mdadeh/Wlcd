@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/profile/widgets/profile_menu_data.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
@@ -14,7 +15,7 @@ class ProfileMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _handleTap(context),
       splashColor: AppColors.none,
       highlightColor: AppColors.none,
       child: Padding(
@@ -41,5 +42,14 @@ class ProfileMenuTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _handleTap(BuildContext context) {
+    switch (item.action) {
+      case ProfileMenuAction.orderHistory:
+        OrderHistoryRoute().push(context);
+      case null:
+        break;
+    }
   }
 }

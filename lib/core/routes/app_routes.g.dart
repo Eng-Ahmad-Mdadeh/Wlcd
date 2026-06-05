@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $searchRoute,
   $profileRoute,
   $courseDetailsRoute,
+  $orderHistoryRoute,
   $appShellRoute,
 ];
 
@@ -145,6 +146,32 @@ mixin $CourseDetailsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/course-details');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $orderHistoryRoute => GoRouteData.$route(
+  path: '/order-history',
+  factory: $OrderHistoryRoute._fromState,
+);
+
+mixin $OrderHistoryRoute on GoRouteData {
+  static OrderHistoryRoute _fromState(GoRouterState state) =>
+      OrderHistoryRoute();
+
+  @override
+  String get location => GoRouteData.$location('/order-history');
 
   @override
   void go(BuildContext context) => context.go(location);

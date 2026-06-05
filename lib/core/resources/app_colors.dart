@@ -121,5 +121,18 @@ class AppColors {
   static const Color profileChevron = Color(0xFFA6AFBD);
   static const Color profileChipBackground = Color(0xFFF1F3F6);
 
+  /// Order history screen
+  static const Color orderBackground = Color(0xFFFAFAFA);
+  static const Color orderTabBackground = Color(0xFFF6F7F9);
+  static const Color orderTabShadow = Color(0x140B1020);
+  static const Color orderTitle = Color(0xFF111827);
+  static const Color orderMuted = Color(0xFF9AA1AE);
+  static const Color orderDate = Color(0xFF8D95A4);
+  static const Color orderCardBorder = Color(0xFFE8EAF0);
+  static const Color orderDivider = Color(0xFFF0F1F5);
+  static const Color orderPending = Color(0xFF006BFF);
+  static const Color orderSuccessful = Color(0xFF12B76A);
+  static const Color orderCanceled = Color(0xFFFF335F);
+
   static const Color none = Colors.transparent;
 }
