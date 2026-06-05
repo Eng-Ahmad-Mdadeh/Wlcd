@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [
   $splashRoute,
   $loginRoute,
   $searchRoute,
-  $notificationsRoute,
   $profileRoute,
   $courseDetailsRoute,
   $appShellRoute,
@@ -110,32 +109,6 @@ mixin $SearchRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $notificationsRoute => GoRouteData.$route(
-  path: '/notifications',
-  factory: $NotificationsRoute._fromState,
-);
-
-mixin $NotificationsRoute on GoRouteData {
-  static NotificationsRoute _fromState(GoRouterState state) =>
-      NotificationsRoute();
-
-  @override
-  String get location => GoRouteData.$location('/notifications');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
 RouteBase get $profileRoute => GoRouteData.$route(
   path: '/profile',
   factory: $ProfileRoute._fromState,
@@ -195,6 +168,27 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
         GoRouteData.$route(path: '/home', factory: $HomeRoute._fromState),
       ],
     ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/favorites',
+          factory: $FavoritesRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/notifications',
+          factory: $NotificationsRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/more', factory: $MoreRoute._fromState),
+      ],
+    ),
   ],
 );
 
@@ -207,6 +201,67 @@ mixin $HomeRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $FavoritesRoute on GoRouteData {
+  static FavoritesRoute _fromState(GoRouterState state) => FavoritesRoute();
+
+  @override
+  String get location => GoRouteData.$location('/favorites');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $NotificationsRoute on GoRouteData {
+  static NotificationsRoute _fromState(GoRouterState state) =>
+      NotificationsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/notifications');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $MoreRoute on GoRouteData {
+  static MoreRoute _fromState(GoRouterState state) => MoreRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more');
 
   @override
   void go(BuildContext context) => context.go(location);

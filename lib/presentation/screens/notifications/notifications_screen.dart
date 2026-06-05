@@ -13,7 +13,7 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "الإشعارات", showBackButton: true),
+      appBar: const CustomAppBar(title: 'الإشعارات', centerTitle: true),
       backgroundColor: AppColors.notificationBackground,
       body: Center(
         child: ConstrainedBox(
