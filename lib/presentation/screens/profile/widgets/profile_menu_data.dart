@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ProfileMenuItemData {
-  const ProfileMenuItemData({
-    required this.title,
-    required this.icon,
-    this.showTrailingArrow = true,
-    this.isDarkMode = false,
-  });
+  const ProfileMenuItemData({required this.title, required this.icon, this.showTrailingArrow = true});
 
   final String title;
   final IconData icon;
   final bool showTrailingArrow;
-  final bool isDarkMode;
 }
 
 const List<ProfileMenuItemData> profileAccountItems = [
   ProfileMenuItemData(title: 'Personal Details', icon: Icons.person_outline),
   ProfileMenuItemData(title: 'Preference Video', icon: Icons.videocam_outlined),
   ProfileMenuItemData(title: 'Your Download', icon: Icons.file_download_outlined),
-  ProfileMenuItemData(
-    title: 'Dark Mode',
-    icon: Icons.dark_mode_outlined,
-    showTrailingArrow: false,
-    isDarkMode: true,
-  ),
+  ProfileMenuItemData(title: 'Dark Mode', icon: Icons.dark_mode_outlined, showTrailingArrow: false),
 ];
 
 const List<ProfileMenuItemData> profileBenefitsItems = [

@@ -14,12 +14,8 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Profile',
-        centerTitle: true,
         showBackButton: true,
-        backgroundColor: AppColors.notificationBackground,
-        showScrolledUnderElevation: false,
       ),
-      backgroundColor: AppColors.notificationBackground,
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: AppWidth.w428),
@@ -28,9 +24,9 @@ class ProfileScreen extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.fromLTRB(
-                    AppPaddingWidth.p35,
+                    AppPaddingWidth.p17,
                     AppPaddingHeight.p35,
-                    AppPaddingWidth.p35,
+                    AppPaddingWidth.p17,
                     AppPaddingHeight.p20,
                   ),
                   child: const Column(

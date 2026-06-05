@@ -72,7 +72,7 @@ class SearchRoute extends GoRouteData with $SearchRoute {
 class NotificationsRoute extends GoRouteData with $NotificationsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const NotificationsScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const NotificationsScreen().buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 
@@ -80,7 +80,7 @@ class NotificationsRoute extends GoRouteData with $NotificationsRoute {
 class ProfileRoute extends GoRouteData with $ProfileRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const ProfileScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const ProfileScreen().buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 

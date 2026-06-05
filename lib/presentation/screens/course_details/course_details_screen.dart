@@ -22,19 +22,12 @@ class CourseDetailsScreen extends StatelessWidget {
     Tab(text: 'Resources'),
   ];
 
-  static const _pages = [
-    LessonsTab(),
-    AboutTab(),
-    AnnouncementsTab(),
-    DownloadedTab(),
-    ResourcesTab(),
-  ];
+  static const _pages = [LessonsTab(), AboutTab(), AnnouncementsTab(), DownloadedTab(), ResourcesTab()];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _tabs.length,
-      initialIndex: 2,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.white,
@@ -63,16 +56,10 @@ class CourseDetailsScreen extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.r28),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
                       ),
                       onPressed: () {},
-                      child: const BodyTitle(
-                        text: 'Buy \$69.00',
-                        color: AppColors.white,
-                        fontSize: 16,
-                      ),
+                      child: const BodyTitle(text: 'Buy \$69.00', color: AppColors.white, fontSize: 16),
                     ),
                   ),
                 ),
@@ -80,6 +67,7 @@ class CourseDetailsScreen extends StatelessWidget {
             ),
           ),
           body: NestedScrollView(
+            physics: NeverScrollableScrollPhysics(),
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
@@ -110,8 +98,7 @@ class CourseDetailsScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             ImageView(
-                              imagePath:
-                                  'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
+                              imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
                               height: double.infinity,
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -123,11 +110,7 @@ class CourseDetailsScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 color: AppColors.white.withValues(alpha: .35),
                               ),
-                              child: const Icon(
-                                Icons.play_arrow_rounded,
-                                color: AppColors.white,
-                                size: 30,
-                              ),
+                              child: const Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 30),
                             ),
                           ],
                         ),
@@ -152,24 +135,12 @@ class CourseDetailsScreen extends StatelessWidget {
                                 color: AppColors.searchTagBackground,
                                 borderRadius: BorderRadius.circular(AppRadius.r8),
                               ),
-                              child: const BodyTitle(
-                                text: 'UX Design',
-                                fontSize: 10,
-                                color: AppColors.searchTagText,
-                              ),
+                              child: const BodyTitle(text: 'UX Design', fontSize: 10, color: AppColors.searchTagText),
                             ),
                             const Spacer(),
-                            const BodyTitle(
-                              text: '00',
-                              fontSize: 12,
-                              color: AppColors.searchRatingText,
-                            ),
+                            const BodyTitle(text: '00', fontSize: 12, color: AppColors.searchRatingText),
                             SizedBox(width: AppWidth.w8),
-                            const BodyTitle(
-                              text: 'All Levels',
-                              fontSize: 12,
-                              color: AppColors.searchCardTitle,
-                            ),
+                            const BodyTitle(text: 'All Levels', fontSize: 12, color: AppColors.searchCardTitle),
                           ],
                         ),
                         SizedBox(height: AppHeight.h10),
@@ -186,29 +157,17 @@ class CourseDetailsScreen extends StatelessWidget {
                           children: [
                             const Icon(Icons.star, size: 16, color: AppColors.searchStar),
                             SizedBox(width: AppWidth.w5),
-                            const BodyTitle(
-                              text: '4.5 (7,765)',
-                              fontSize: 12,
-                              color: AppColors.searchRatingText,
-                            ),
+                            const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
                             SizedBox(
                               height: AppHeight.h15,
                               child: const VerticalDivider(color: AppColors.grey),
                             ),
-                            const BodyTitle(
-                              text: '1,768 enrolled',
-                              fontSize: 12,
-                              color: AppColors.searchRatingText,
-                            ),
+                            const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
                             SizedBox(
                               height: AppHeight.h15,
                               child: const VerticalDivider(color: AppColors.grey),
                             ),
-                            const BodyTitle(
-                              text: '30+ Lessons',
-                              fontSize: 12,
-                              color: AppColors.searchRatingText,
-                            ),
+                            const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
                           ],
                         ),
                         SizedBox(height: AppHeight.h14),
@@ -236,19 +195,12 @@ class CourseDetailsScreen extends StatelessWidget {
                 SliverAppBar(
                   pinned: true,
                   toolbarHeight: 0,
-                  backgroundColor: AppColors.white,
-                  surfaceTintColor: Colors.transparent,
-                  elevation: 0,
+
                   bottom: PreferredSize(
                     preferredSize: const Size.fromHeight(65),
                     child: Container(
                       color: AppColors.white,
-                      padding: EdgeInsets.fromLTRB(
-                        AppPaddingWidth.p18,
-                        0,
-                        AppPaddingWidth.p18,
-                        AppPaddingHeight.p12,
-                      ),
+                      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p12),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: AppColors.lightGrey,
@@ -262,22 +214,14 @@ class CourseDetailsScreen extends StatelessWidget {
                           indicatorSize: TabBarIndicatorSize.tab,
                           indicator: BoxDecoration(
                             color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(AppRadius.r10),
+                            borderRadius: BorderRadius.circular(AppRadius.r8),
                           ),
                           labelColor: AppColors.white,
                           unselectedLabelColor: AppColors.searchRatingText,
-                          labelStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          unselectedLabelStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                           padding: EdgeInsets.all(AppPaddingWidth.p4),
-                          labelPadding: EdgeInsets.symmetric(
-                            horizontal: AppPaddingWidth.p12,
-                          ),
+                          labelPadding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12),
                         ),
                       ),
                     ),
@@ -285,7 +229,7 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: const TabBarView(children: _pages),
+            body: const TabBarView(physics: NeverScrollableScrollPhysics(), children: _pages),
           ),
         ),
       ),

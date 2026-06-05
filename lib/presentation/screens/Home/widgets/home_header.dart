@@ -56,29 +56,32 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
-            text: context.loc.home_welcome_user,
-            style: TextStyle(
-              color: AppColors.white,
-              fontSize: AppFontSize.s16,
-              fontWeight: AppFontWeight.extraBold,
-              fontFamily: AppFontFamily.rubik,
+    return InkWell(
+    onTap: () => ProfileRoute().push(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: context.loc.home_welcome_user,
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: AppFontSize.s16,
+                fontWeight: AppFontWeight.extraBold,
+                fontFamily: AppFontFamily.rubik,
+              ),
+              children: const [TextSpan(text: '👋')],
             ),
-            children: const [TextSpan(text: '👋')],
           ),
-        ),
-        SizedBox(height: AppHeight.h7),
-        BodyTitle(
-          text: context.loc.home_upgrade_skill,
-          color: AppColors.white.withOpacity(.72),
-          fontSize: AppFontSize.s12,
-          fontWeight: AppFontWeight.medium,
-        ),
-      ],
+          SizedBox(height: AppHeight.h7),
+          BodyTitle(
+            text: context.loc.home_upgrade_skill,
+            color: AppColors.white.withOpacity(.72),
+            fontSize: AppFontSize.s12,
+            fontWeight: AppFontWeight.medium,
+          ),
+        ],
+      ),
     );
   }
 }

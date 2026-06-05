@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/profile/widgets/profile_dark_mode_chip.dart';
 import 'package:wlcd/presentation/screens/profile/widgets/profile_menu_data.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class ProfileMenuTile extends StatelessWidget {
-  const ProfileMenuTile({
-    super.key,
-    required this.item,
-    required this.showDivider,
-  });
+  const ProfileMenuTile({super.key, required this.item, required this.showDivider});
 
   final ProfileMenuItemData item;
   final bool showDivider;
@@ -30,31 +25,18 @@ class ProfileMenuTile extends StatelessWidget {
               height: AppHeight.h62,
               child: Row(
                 children: [
-                  Icon(item.icon, color: AppColors.profileIcon, size: AppSize.s20),
+                  Icon(item.icon, color: AppColors.profileIcon, size: AppSize.s25),
                   SizedBox(width: AppWidth.w20),
                   Expanded(
-                    child: BodyTitle(
-                      text: item.title,
-                      color: AppColors.profileText,
-                      fontSize: AppFontSize.s14,
-                      fontWeight: AppFontWeight.medium,
-                      maxLines: 1,
-                    ),
+                    child: BodyTitle(text: item.title, color: AppColors.profileText, maxLines: 1),
                   ),
-                  if (item.isDarkMode)
-                    const ProfileDarkModeChip()
-                  else if (item.showTrailingArrow)
-                    Icon(Icons.chevron_right, color: AppColors.profileChevron, size: AppSize.s22),
+                  Icon(Icons.chevron_right, color: AppColors.profileChevron, size: AppSize.s25),
                   SizedBox(width: AppWidth.w16),
                 ],
               ),
             ),
             if (showDivider)
-              Divider(
-                height: AppHeight.h1,
-                thickness: AppHeight.h1,
-                color: AppColors.notificationBorder,
-              ),
+              Divider(height: AppHeight.h1, thickness: AppHeight.h1, color: AppColors.notificationBorder),
           ],
         ),
       ),
