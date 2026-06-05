@@ -89,5 +89,18 @@
   "home_no_courses_found": "لا توجد دورات",
   "home_course_category_finance": "المالية",
   "home_course_title_investment_banking": "الدورة الشاملة في الخدمات المصرفية الاستثمارية 2023",
-  "home_course_title_investment_banking_zero": "دليل الخدمات المصرفية الاستثمارية من الصفر"
+  "home_course_title_investment_banking_zero": "دليل الخدمات المصرفية الاستثمارية من الصفر",
+  "order_history": "سجل الطلبات",
+  "order_course": "الدورات",
+  "order_refund": "الاسترداد",
+  "order_status_pending": "قيد الانتظار",
+  "order_status_successful": "ناجح",
+  "order_status_canceled": "ملغي",
+  "ux_design": "تصميم تجربة المستخدم",
+  "order_course_title_hooked": "Hooked: كيفية بناء منتجات تكوّن عادات",
+  "order_course_title_web_design": "تصميم ويب كامل من Figma إلى Webflow",
+  "order_course_title_cfo": "برنامج قيادة المدير المالي التنفيذي",
+  "order_date_first": "28 يناير 2023 04:00 م",
+  "order_date_second": "24 يناير 2023 04:00 م",
+  "order_date_third": "10 يناير 2023 03:15 ص"
 }

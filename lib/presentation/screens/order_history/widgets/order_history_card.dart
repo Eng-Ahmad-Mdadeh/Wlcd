@@ -91,7 +91,7 @@ class OrderHistoryCard extends StatelessWidget {
                 ),
               ),
               BodyTitle(
-                text: order.status.label,
+                text: order.status.label(context),
                 color: order.status.color,
                 fontSize: AppFontSize.s12,
                 fontWeight: AppFontWeight.medium,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -20,14 +21,14 @@ class OrderHistoryTabs extends StatelessWidget {
         children: [
           Expanded(
             child: _OrderHistoryTabButton(
-              label: 'Course',
+              label: context.loc.order_course,
               isSelected: true,
               onTap: () {},
             ),
           ),
           Expanded(
             child: _OrderHistoryTabButton(
-              label: 'Refund',
+              label: context.loc.order_refund,
               isSelected: false,
               onTap: () {},
             ),

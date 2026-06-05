@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -29,7 +30,7 @@ class ProfileMenuTile extends StatelessWidget {
                   Icon(item.icon, color: AppColors.profileIcon, size: AppSize.s25),
                   SizedBox(width: AppWidth.w20),
                   Expanded(
-                    child: BodyTitle(text: item.title, color: AppColors.profileText, maxLines: 1),
+                    child: BodyTitle(text: _title(context), color: AppColors.profileText, maxLines: 1),
                   ),
                   Icon(Icons.chevron_right, color: AppColors.profileChevron, size: AppSize.s25),
                   SizedBox(width: AppWidth.w16),
@@ -42,6 +43,13 @@ class ProfileMenuTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _title(BuildContext context) {
+    return switch (item.action) {
+      ProfileMenuAction.orderHistory => context.loc.order_history,
+      null => item.title,
+    };
   }
 
   void _handleTap(BuildContext context) {
