@@ -39,13 +39,13 @@ class CoursesGrid extends StatelessWidget {
         mainAxisSpacing: AppHeight.h18,
         childAspectRatio: .75,
       ),
-      itemBuilder: (context, index) => CourseCard(course: courses[index]),
+      itemBuilder: (context, index) => CourseGridCard(course: courses[index]),
     );
   }
 }
 
-class CourseCard extends StatelessWidget {
-  const CourseCard({super.key, required this.course});
+class CourseGridCard extends StatelessWidget {
+  const CourseGridCard({super.key, required this.course});
 
   final CourseData course;
 

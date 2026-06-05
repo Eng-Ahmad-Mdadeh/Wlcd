@@ -3,7 +3,7 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/continue_learning_card.dart';
-import 'package:wlcd/presentation/widgets/courses_grid.dart';
+import 'package:wlcd/presentation/widgets/course/courses_grid.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/section_header.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';

@@ -25,7 +25,7 @@ class MoreScreen extends StatelessWidget {
                     AppPaddingWidth.p17,
                     AppPaddingHeight.p35,
                     AppPaddingWidth.p17,
-                    AppPaddingHeight.p20,
+                    AppPaddingHeight.p90,
                   ),
                   child: const Column(
                     children: [

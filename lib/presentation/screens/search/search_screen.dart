@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/search/widgets/course_card.dart';
+import 'package:wlcd/presentation/widgets/course/course_card.dart';
 import 'package:wlcd/presentation/screens/search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/search/widgets/search_header.dart';
