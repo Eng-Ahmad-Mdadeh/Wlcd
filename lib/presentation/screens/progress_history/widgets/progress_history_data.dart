@@ -35,8 +35,8 @@ const List<WatchingTimeDayData> watchingTimeDays = [
   WatchingTimeDayData('الأحد', 24),
   WatchingTimeDayData('الإثنين', 55),
   WatchingTimeDayData('الثلاثاء', 68),
-  WatchingTimeDayData('الأربعاء', 48),
-  WatchingTimeDayData('الخميس', 75, isSelected: true),
+  WatchingTimeDayData('الأربعاء', 90),
+  WatchingTimeDayData('الخميس', 110, isSelected: true),
   WatchingTimeDayData('الجمعة', 62),
   WatchingTimeDayData('السبت', 25),
 ];

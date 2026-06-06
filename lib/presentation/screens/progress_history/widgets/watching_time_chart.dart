@@ -16,12 +16,7 @@ class WatchingTimeChart extends StatelessWidget {
       height: AppHeight.h170,
       child: Stack(
         children: [
-          PositionedDirectional(
-            start: 0,
-            end: 0,
-            top: AppHeight.h62,
-            child: const _DashedDivider(),
-          ),
+          PositionedDirectional(start: 0, end: 0, top: AppHeight.h62, child: const _DashedDivider()),
           Positioned.fill(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -43,40 +38,45 @@ class _ChartDayColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final barHeight = math.max(AppHeight.h35, AppHeight.h115 * data.minutes / 90);
-    final barColor = data.isSelected ? AppColors.primary : AppColors.progressTrack;
+    final barColor = data.isSelected ? AppColors.primary : AppColors.lightGrey;
     final labelColor = data.isSelected ? AppColors.white : AppColors.text;
 
-    return SizedBox(
-      width: AppWidth.w45,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (data.isSelected) ...[
-            BodyTitle(
-              text: '${data.minutes} دقيقة',
-              color: AppColors.text,
-              fontSize: AppFontSize.s10,
-              fontWeight: AppFontWeight.bold,
-            ),
-            SizedBox(height: AppHeight.h5),
-          ],
-          Container(
-            width: AppWidth.w45,
-            height: barHeight,
-            padding: EdgeInsetsDirectional.only(bottom: AppPaddingHeight.p10),
-            decoration: BoxDecoration(color: barColor, borderRadius: BorderRadius.circular(AppRadius.r20)),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: BodyTitle(
-                text: data.label,
-                color: labelColor,
-                fontSize: AppFontSize.s7,
-                fontWeight: AppFontWeight.bold,
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (data.isSelected) ...[
+          BodyTitle(
+            text: '${data.minutes} دقيقة',
+            color: AppColors.text,
+            fontSize: AppFontSize.s10,
+            fontWeight: AppFontWeight.bold,
+          ),
+          SizedBox(height: AppHeight.h5),
+        ],
+        Container(
+          width: AppWidth.w40,
+          height: barHeight,
+          padding: EdgeInsetsDirectional.only(bottom: AppPaddingHeight.p7),
+          decoration: BoxDecoration(
+            color: barColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppRadius.r100),
+              topRight: Radius.circular(AppRadius.r100),
+              bottomLeft: Radius.circular(AppRadius.r25),
+              bottomRight: Radius.circular(AppRadius.r25),
             ),
           ),
-        ],
-      ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: BodyTitle(
+              text: data.label,
+              color: labelColor,
+              fontSize: AppFontSize.s8,
+              fontWeight: AppFontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

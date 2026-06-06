@@ -13,10 +13,7 @@ class ProgressCourseThumb extends StatelessWidget {
     return Container(
       width: AppWidth.w80,
       height: AppHeight.h65,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.r8),
-        gradient: _gradient,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppRadius.r8), gradient: _gradient),
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
@@ -51,7 +48,7 @@ class _WebsiteThumbDetails extends StatelessWidget {
       children: [
         PositionedDirectional(
           start: AppWidth.w8,
-          top: AppHeight.h9,
+          top: AppHeight.h8,
           child: Container(
             width: AppWidth.w35,
             height: AppHeight.h25,
@@ -68,11 +65,14 @@ class _WebsiteThumbDetails extends StatelessWidget {
           child: Container(
             width: AppWidth.w50,
             height: AppHeight.h8,
-            decoration: BoxDecoration(color: AppColors.white.withOpacity(.8), borderRadius: BorderRadius.circular(AppRadius.r5)),
+            decoration: BoxDecoration(
+              color: AppColors.white.withOpacity(.8),
+              borderRadius: BorderRadius.circular(AppRadius.r5),
+            ),
           ),
         ),
         PositionedDirectional(
-          end: AppWidth.w9,
+          end: AppWidth.w8,
           top: AppHeight.h10,
           child: Icon(Icons.desktop_windows_outlined, size: AppSize.s22, color: AppColors.primary.withOpacity(.75)),
         ),
@@ -90,12 +90,12 @@ class _FinanceThumbDetails extends StatelessWidget {
       children: [
         PositionedDirectional(
           start: AppWidth.w8,
-          top: AppHeight.h9,
+          top: AppHeight.h8,
           child: Icon(Icons.account_balance_wallet_outlined, size: AppSize.s25, color: AppColors.white.withOpacity(.9)),
         ),
         PositionedDirectional(
           end: AppWidth.w8,
-          bottom: AppHeight.h9,
+          bottom: AppHeight.h8,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

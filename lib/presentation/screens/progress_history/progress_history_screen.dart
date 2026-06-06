@@ -11,37 +11,16 @@ class ProgressHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backGround,
-      appBar: CustomAppBar(
-        title: 'سجل التقدم',
-        centerTitle: true,
-        showBackButton: true,
-        customActions: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(end: AppPaddingWidth.p20),
-            child: Icon(Icons.tune_rounded, color: AppColors.text, size: AppSize.s24),
-          ),
-        ],
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: AppWidth.w428),
-          child: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(
-              AppPaddingWidth.p17,
-              AppPaddingHeight.p20,
-              AppPaddingWidth.p17,
-              AppPaddingHeight.p110,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const WatchingTimeSection(),
-                SizedBox(height: AppHeight.h28),
-                const ActiveProgressSection(),
-              ],
-            ),
-          ),
+      appBar: CustomAppBar(title: 'سجل التقدم', centerTitle: true, showBackButton: true),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(AppPaddingWidth.p17, 0, AppPaddingWidth.p17, AppPaddingHeight.p110),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const WatchingTimeSection(),
+            SizedBox(height: AppHeight.h28),
+            const ActiveProgressSection(),
+          ],
         ),
       ),
     );
