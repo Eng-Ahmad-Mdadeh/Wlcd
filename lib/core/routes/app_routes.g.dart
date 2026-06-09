@@ -13,6 +13,9 @@ List<RouteBase> get $appRoutes => [
   $profileRoute,
   $courseDetailsRoute,
   $personalInformationRoute,
+  $privacyPolicyRoute,
+  $faqsRoute,
+  $termsAndConditionsRoute,
   $progressHistoryRoute,
   $orderHistoryRoute,
   $appShellRoute,
@@ -172,6 +175,83 @@ mixin $PersonalInformationRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/personal-information');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $privacyPolicyRoute => GoRouteData.$route(
+  path: '/privacy-policy',
+  factory: $PrivacyPolicyRoute._fromState,
+);
+
+mixin $PrivacyPolicyRoute on GoRouteData {
+  static PrivacyPolicyRoute _fromState(GoRouterState state) =>
+      PrivacyPolicyRoute();
+
+  @override
+  String get location => GoRouteData.$location('/privacy-policy');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $faqsRoute => GoRouteData.$route(
+  path: '/faqs',
+  factory: $FaqsRoute._fromState,
+);
+
+mixin $FaqsRoute on GoRouteData {
+  static FaqsRoute _fromState(GoRouterState state) => FaqsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/faqs');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $termsAndConditionsRoute => GoRouteData.$route(
+  path: '/terms-and-conditions',
+  factory: $TermsAndConditionsRoute._fromState,
+);
+
+mixin $TermsAndConditionsRoute on GoRouteData {
+  static TermsAndConditionsRoute _fromState(GoRouterState state) =>
+      TermsAndConditionsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/terms-and-conditions');
 
   @override
   void go(BuildContext context) => context.go(location);

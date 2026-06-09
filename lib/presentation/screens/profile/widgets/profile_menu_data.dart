@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-enum ProfileMenuAction { personalInformation, orderHistory, progressHistory }
+enum ProfileMenuAction {
+  personalInformation,
+  orderHistory,
+  progressHistory,
+  privacyPolicy,
+  faqs,
+  termsAndConditions,
+}
 
 class ProfileMenuItemData {
   const ProfileMenuItemData({required this.title, required this.icon, this.showTrailingArrow = true, this.action});
@@ -39,11 +46,16 @@ const List<ProfileMenuItemData> profileBenefitsItems = [
 
 const List<ProfileMenuItemData> profileSupportItems = [
   ProfileMenuItemData(title: 'Invester Academy', icon: Icons.description_outlined),
-  ProfileMenuItemData(title: 'FAQs', icon: Icons.help_outline),
+  ProfileMenuItemData(title: 'FAQs', icon: Icons.help_outline, action: ProfileMenuAction.faqs),
   ProfileMenuItemData(title: 'Help Center', icon: Icons.headset_mic_outlined),
 ];
 
 const List<ProfileMenuItemData> profileSettingsItems = [
   ProfileMenuItemData(title: 'Language', icon: Icons.language_outlined),
-  ProfileMenuItemData(title: 'Privacy', icon: Icons.privacy_tip_outlined),
+  ProfileMenuItemData(title: 'Privacy', icon: Icons.privacy_tip_outlined, action: ProfileMenuAction.privacyPolicy),
+  ProfileMenuItemData(
+    title: 'Terms and Conditions',
+    icon: Icons.article_outlined,
+    action: ProfileMenuAction.termsAndConditions,
+  ),
 ];

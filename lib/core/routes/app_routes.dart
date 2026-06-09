@@ -12,6 +12,9 @@ import 'package:wlcd/presentation/screens/check_code/check_code_screen.dart';
 import 'package:wlcd/presentation/screens/course_details/course_details_screen.dart';
 import 'package:wlcd/presentation/screens/login/login_screen.dart';
 import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
+import 'package:wlcd/presentation/screens/faqs/faqs_screen.dart';
+import 'package:wlcd/presentation/screens/privacy_policy/privacy_policy_screen.dart';
+import 'package:wlcd/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
 import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
@@ -94,6 +97,30 @@ class PersonalInformationRoute extends GoRouteData with $PersonalInformationRout
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const PersonalInformationScreen().buildPage(pageAnimation: PageAnimation.slide);
+  }
+}
+
+@TypedGoRoute<PrivacyPolicyRoute>(path: '/privacy-policy')
+class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.slide);
+  }
+}
+
+@TypedGoRoute<FaqsRoute>(path: '/faqs')
+class FaqsRoute extends GoRouteData with $FaqsRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const FaqsScreen().buildPage(pageAnimation: PageAnimation.slide);
+  }
+}
+
+@TypedGoRoute<TermsAndConditionsRoute>(path: '/terms-and-conditions')
+class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 

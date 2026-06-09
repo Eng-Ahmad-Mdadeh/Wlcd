@@ -50,6 +50,9 @@ class ProfileMenuTile extends StatelessWidget {
       ProfileMenuAction.orderHistory => context.loc.order_history,
       ProfileMenuAction.progressHistory => 'سجل التقدم',
       ProfileMenuAction.personalInformation => 'المعلومات الشخصية',
+      ProfileMenuAction.privacyPolicy => 'سياسة الخصوصية',
+      ProfileMenuAction.faqs => 'الأسئلة الشائعة',
+      ProfileMenuAction.termsAndConditions => 'الشروط والأحكام',
       null => item.title,
     };
   }
@@ -62,6 +65,12 @@ class ProfileMenuTile extends StatelessWidget {
         ProgressHistoryRoute().push(context);
       case ProfileMenuAction.personalInformation:
         PersonalInformationRoute().push(context);
+      case ProfileMenuAction.privacyPolicy:
+        PrivacyPolicyRoute().push(context);
+      case ProfileMenuAction.faqs:
+        FaqsRoute().push(context);
+      case ProfileMenuAction.termsAndConditions:
+        TermsAndConditionsRoute().push(context);
       case null:
         break;
 
