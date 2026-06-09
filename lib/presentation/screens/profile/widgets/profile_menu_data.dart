@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ProfileMenuAction { orderHistory, progressHistory }
+enum ProfileMenuAction { personalInformation, orderHistory, progressHistory }
 
 class ProfileMenuItemData {
   const ProfileMenuItemData({required this.title, required this.icon, this.showTrailingArrow = true, this.action});
@@ -12,16 +12,23 @@ class ProfileMenuItemData {
 }
 
 const List<ProfileMenuItemData> profileAccountItems = [
-  ProfileMenuItemData(title: 'Personal Details', icon: Icons.person_outline),
-  ProfileMenuItemData(title: 'Preference Video', icon: Icons.videocam_outlined),
-  ProfileMenuItemData(title: 'Your Download', icon: Icons.file_download_outlined),
-  ProfileMenuItemData(title: 'Order History', icon: Icons.receipt_long_outlined, action: ProfileMenuAction.orderHistory),
+  ProfileMenuItemData(
+    title: 'Personal Details',
+    icon: Icons.person_outline,
+    action: ProfileMenuAction.personalInformation,
+  ),
+  // ProfileMenuItemData(title: 'Preference Video', icon: Icons.videocam_outlined),
+  // ProfileMenuItemData(title: 'Your Download', icon: Icons.file_download_outlined),
+  ProfileMenuItemData(
+    title: 'Order History',
+    icon: Icons.receipt_long_outlined,
+    action: ProfileMenuAction.orderHistory,
+  ),
   ProfileMenuItemData(
     title: 'Progress History',
     icon: Icons.trending_up_outlined,
     action: ProfileMenuAction.progressHistory,
   ),
-  ProfileMenuItemData(title: 'Dark Mode', icon: Icons.dark_mode_outlined, showTrailingArrow: false),
 ];
 
 const List<ProfileMenuItemData> profileBenefitsItems = [

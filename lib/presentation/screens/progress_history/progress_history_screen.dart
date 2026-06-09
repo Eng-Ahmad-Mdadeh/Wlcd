@@ -11,7 +11,7 @@ class ProgressHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'سجل التقدم', centerTitle: true, showBackButton: true),
+      appBar: CustomAppBar(title: 'سجل التقدم',  showBackButton: true),
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(AppPaddingWidth.p17, 0, AppPaddingWidth.p17, AppPaddingHeight.p110),
         child: Column(

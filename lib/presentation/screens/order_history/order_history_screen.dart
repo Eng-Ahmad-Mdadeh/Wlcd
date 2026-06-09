@@ -17,7 +17,6 @@ class OrderHistoryScreen extends StatelessWidget {
       backgroundColor: AppColors.orderBackground,
       appBar: CustomAppBar(
         title: context.loc.order_history,
-        centerTitle: true,
         showBackButton: true,
         backgroundColor: AppColors.orderBackground,
         // customActions: [
@@ -37,12 +36,11 @@ class OrderHistoryScreen extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: AppWidth.w428),
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p25),
-                child: const OrderHistoryTabs(),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p25),
+              //   child: const OrderHistoryTabs(),
+              // ),
               Expanded(child: OrderHistoryList(orders: orderHistoryItems(context))),
-              const NotificationsHomeIndicator(),
             ],
           ),
         ),

@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $searchRoute,
   $profileRoute,
   $courseDetailsRoute,
+  $personalInformationRoute,
   $progressHistoryRoute,
   $orderHistoryRoute,
   $appShellRoute,
@@ -111,10 +112,8 @@ mixin $SearchRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $profileRoute => GoRouteData.$route(
-  path: '/profile',
-  factory: $ProfileRoute._fromState,
-);
+RouteBase get $profileRoute =>
+    GoRouteData.$route(path: '/profile', factory: $ProfileRoute._fromState);
 
 mixin $ProfileRoute on GoRouteData {
   static ProfileRoute _fromState(GoRouterState state) => ProfileRoute();
@@ -147,6 +146,32 @@ mixin $CourseDetailsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/course-details');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $personalInformationRoute => GoRouteData.$route(
+  path: '/personal-information',
+  factory: $PersonalInformationRoute._fromState,
+);
+
+mixin $PersonalInformationRoute on GoRouteData {
+  static PersonalInformationRoute _fromState(GoRouterState state) =>
+      PersonalInformationRoute();
+
+  @override
+  String get location => GoRouteData.$location('/personal-information');
 
   @override
   void go(BuildContext context) => context.go(location);

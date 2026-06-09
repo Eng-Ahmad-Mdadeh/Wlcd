@@ -49,6 +49,7 @@ class ProfileMenuTile extends StatelessWidget {
     return switch (item.action) {
       ProfileMenuAction.orderHistory => context.loc.order_history,
       ProfileMenuAction.progressHistory => 'سجل التقدم',
+      ProfileMenuAction.personalInformation => 'المعلومات الشخصية',
       null => item.title,
     };
   }
@@ -59,8 +60,11 @@ class ProfileMenuTile extends StatelessWidget {
         OrderHistoryRoute().push(context);
       case ProfileMenuAction.progressHistory:
         ProgressHistoryRoute().push(context);
+      case ProfileMenuAction.personalInformation:
+        PersonalInformationRoute().push(context);
       case null:
         break;
+
     }
   }
 }

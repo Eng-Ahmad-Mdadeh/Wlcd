@@ -32,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
                   child: const Column(
                     children: [
                       ProfileMenuSection(items: profileAccountItems),
-                      ProfileMenuSection(items: profileBenefitsItems),
+                      // ProfileMenuSection(items: profileBenefitsItems),
                       ProfileMenuSection(items: profileSupportItems),
                       ProfileMenuSection(items: profileSettingsItems),
                     ],

@@ -15,6 +15,7 @@ import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
 import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
+import 'package:wlcd/presentation/screens/personal_information/personal_information_screen.dart';
 import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
 import 'package:wlcd/presentation/screens/progress_history/progress_history_screen.dart';
 import 'package:wlcd/presentation/screens/search/search_screen.dart';
@@ -85,6 +86,14 @@ class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+@TypedGoRoute<PersonalInformationRoute>(path: '/personal-information')
+class PersonalInformationRoute extends GoRouteData with $PersonalInformationRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const PersonalInformationScreen().buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 
