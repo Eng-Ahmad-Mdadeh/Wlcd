@@ -5,6 +5,7 @@ import 'package:wlcd/presentation/screens/course_details/widgets/announcements_t
 import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
+import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -47,7 +48,10 @@ class CourseDetailsScreen extends StatelessWidget {
                     border: Border.all(color: AppColors.searchCardBorder),
                     borderRadius: BorderRadius.circular(AppRadius.r14),
                   ),
-                  child: const Icon(Icons.favorite_border, color: AppColors.primary),
+                  child: IconButton(
+                    onPressed: () => _showFavoriteGroupsSheet(context),
+                    icon: const Icon(Icons.favorite_border, color: AppColors.primary),
+                  ),
                 ),
                 SizedBox(width: AppWidth.w12),
                 Expanded(
@@ -235,4 +239,121 @@ class CourseDetailsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void _showFavoriteGroupsSheet(BuildContext context) {
+  final groupController = TextEditingController();
+
+  showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: AppColors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24)),
+    ),
+    builder: (sheetContext) {
+      return Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(
+          AppPaddingWidth.p18,
+          AppPaddingHeight.p18,
+          AppPaddingWidth.p18,
+          MediaQuery.of(sheetContext).viewInsets.bottom + AppPaddingHeight.p18,
+        ),
+        child: ValueListenableBuilder<List<FavoriteGroup>>(
+          valueListenable: FavoritesStore.groups,
+          builder: (context, groups, _) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: AppWidth.w45,
+                    height: AppHeight.h4,
+                    decoration: BoxDecoration(
+                      color: AppColors.searchCardBorder,
+                      borderRadius: BorderRadius.circular(AppRadius.r10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: AppHeight.h18),
+                SectionTitle(
+                  text: 'إضافة إلى مجموعة',
+                  color: AppColors.text,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+                SizedBox(height: AppHeight.h8),
+                BodyTitle(
+                  text: 'اختر مجموعة موجودة أو أنشئ مجموعة جديدة كما في قوائم Airbnb.',
+                  color: AppColors.muted,
+                  fontSize: 13,
+                  maxLines: 2,
+                ),
+                SizedBox(height: AppHeight.h18),
+                Flexible(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: groups.length,
+                    separatorBuilder: (_, __) => Divider(color: AppColors.searchCardBorder, height: AppHeight.h18),
+                    itemBuilder: (context, index) {
+                      final group = groups[index];
+                      return ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.lightPrim,
+                          child: const Icon(Icons.folder_rounded, color: AppColors.primary),
+                        ),
+                        title: SectionTitle(text: group.name, color: AppColors.text, fontSize: 14, fontWeight: FontWeight.w600),
+                        subtitle: BodyTitle(text: '${group.courses.length} كورسات', color: AppColors.muted, fontSize: 12),
+                        onTap: () {
+                          FavoritesStore.addCourseToGroup(course: FavoritesStore.demoCourse, groupName: group.name);
+                          Navigator.of(sheetContext).pop();
+                        },
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: AppHeight.h14),
+                TextField(
+                  controller: groupController,
+                  decoration: InputDecoration(
+                    hintText: 'اسم مجموعة جديدة',
+                    filled: true,
+                    fillColor: AppColors.backGround,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.r14),
+                      borderSide: const BorderSide(color: AppColors.searchCardBorder),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.r14),
+                      borderSide: const BorderSide(color: AppColors.searchCardBorder),
+                    ),
+                  ),
+                ),
+                SizedBox(height: AppHeight.h12),
+                SizedBox(
+                  width: double.infinity,
+                  height: AppHeight.h52,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
+                    ),
+                    onPressed: () {
+                      FavoritesStore.addCourseToGroup(course: FavoritesStore.demoCourse, groupName: groupController.text);
+                      Navigator.of(sheetContext).pop();
+                    },
+                    icon: const Icon(Icons.add_rounded, color: AppColors.white),
+                    label: const BodyTitle(text: 'إنشاء وإضافة الكورس', color: AppColors.white, fontSize: 15),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  ).whenComplete(groupController.dispose);
 }
