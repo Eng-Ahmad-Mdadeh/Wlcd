@@ -5,32 +5,32 @@ import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 
 class LoginTabs extends StatelessWidget {
-  const LoginTabs({super.key});
+  const LoginTabs({super.key, required this.controller});
+
+  final TabController controller;
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: TabBar(
-        indicatorColor: AppColors.loginTabIndicator,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorWeight: AppHeight.h2,
-        dividerColor: Colors.transparent,
-        labelColor: AppColors.loginTabActive,
-        labelStyle: TextStyle(
-          fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.bold,
-        ),
-        unselectedLabelColor: AppColors.loginTabInactive,
-        unselectedLabelStyle: TextStyle(
-          fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.regular,
-        ),
-        tabs: [
-          Tab(text: context.loc.email),
-          Tab(text: context.loc.phone_number),
-        ],
+    return TabBar(
+      controller: controller,
+      indicatorColor: AppColors.loginTabIndicator,
+      indicatorSize: TabBarIndicatorSize.tab,
+      indicatorWeight: AppHeight.h2,
+      dividerColor: Colors.transparent,
+      labelColor: AppColors.loginTabActive,
+      labelStyle: TextStyle(
+        fontSize: AppFontSize.s14,
+        fontWeight: AppFontWeight.bold,
       ),
+      unselectedLabelColor: AppColors.loginTabInactive,
+      unselectedLabelStyle: TextStyle(
+        fontSize: AppFontSize.s14,
+        fontWeight: AppFontWeight.regular,
+      ),
+      tabs: [
+        Tab(text: context.loc.email),
+        Tab(text: context.loc.phone_number),
+      ],
     );
   }
 }

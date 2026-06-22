@@ -13,6 +13,7 @@ class LoginTextField extends StatelessWidget {
     this.validator,
     this.obscureText = false,
     this.suffixIcon,
+    this.controller,
   });
 
   final IconData icon;
@@ -21,11 +22,13 @@ class LoginTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final IconData? suffixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return CustomTextFromField(
       maxLines: 1,
+      controller: controller,
       textInputType: keyboardType,
       obscureText: obscureText,
       validator: validator,
