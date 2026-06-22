@@ -102,7 +102,8 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
         hintText: context.loc.enter_phone_number,
         keyboardType: TextInputType.phone,
         buttonTitle: context.loc.send_link,
-        validator: (value) => _validatePhone(context, value),
+        // validator: (value) => _validatePhone(context, value),
+        validator: (p0) {},
         onUseAnotherMethod: () => _showView(_ForgotPasswordView.method),
         onSubmit: () => _submitResetRequest(_phoneFormKey),
       ),
@@ -133,12 +134,13 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
     return null;
   }
 
-  String? _validatePhone(BuildContext context, String? value) {
-    if (value == null || value.isEmpty || !value.isValidPhone) {
-      return context.loc.enter_valid_phone;
-    }
-    return null;
-  }
+  //
+  // String? _validatePhone(BuildContext context, String? value) {
+  //   if (value == null || value.isEmpty || !value.isValidPhone) {
+  //     return context.loc.enter_valid_phone;
+  //   }
+  //   return null;
+  // }
 }
 
 class _CloseButton extends StatelessWidget {
@@ -152,10 +154,7 @@ class _CloseButton extends StatelessWidget {
       width: AppWidth.w22,
       height: AppHeight.h22,
       child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.greyButton,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: AppColors.greyButton, shape: BoxShape.circle),
         child: IconButton(
           onPressed: onPressed,
           icon: Icon(Icons.close, color: AppColors.loginFieldHint, size: AppSize.s14),
@@ -239,12 +238,7 @@ class _ResetInputView extends StatelessWidget {
           SizedBox(height: AppHeight.h8),
           _SheetDescription(text: description),
           SizedBox(height: AppHeight.h22),
-          LoginTextField(
-            icon: icon,
-            hintText: hintText,
-            keyboardType: keyboardType,
-            validator: validator,
-          ),
+          LoginTextField(icon: icon, hintText: hintText, keyboardType: keyboardType, validator: validator),
           SizedBox(height: AppHeight.h12),
           TextButton(
             onPressed: onUseAnotherMethod,
@@ -280,12 +274,7 @@ class _ResetInputView extends StatelessWidget {
 }
 
 class _MethodCard extends StatelessWidget {
-  const _MethodCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onPressed,
-  });
+  const _MethodCard({required this.icon, required this.title, required this.subtitle, required this.onPressed});
 
   final IconData icon;
   final String title;
@@ -301,10 +290,7 @@ class _MethodCard extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(AppRadius.r14),
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppPaddingWidth.p16,
-            vertical: AppPaddingHeight.p14,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16, vertical: AppPaddingHeight.p14),
           child: Row(
             children: [
               Container(

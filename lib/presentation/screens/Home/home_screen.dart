@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/continue_learning_card.dart';
 import 'package:wlcd/presentation/widgets/course/courses_grid.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
@@ -94,7 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: AppHeight.h14),
                 CoursesGrid(courses: recentCourses),
-
+                SizedBox(height: AppHeight.h28),
+                BannersWidget(),
                 SizedBox(height: AppHeight.h28),
                 SectionHeaderRow(
                   title: context.loc.home_continue_learning,

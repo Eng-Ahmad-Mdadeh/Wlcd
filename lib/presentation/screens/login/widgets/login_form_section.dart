@@ -44,7 +44,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               icon: Icons.phone_outlined,
               hintText: context.loc.enter_phone_number,
               keyboardType: TextInputType.phone,
-              validator: (value) => _validatePhone(context, value),
+              // validator: (value) => _validatePhone(context, value),
             ),
           ] else ...[
             LoginTextField(
@@ -112,12 +112,12 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     return null;
   }
 
-  String? _validatePhone(BuildContext context, String? value) {
-    if (value == null || value.isEmpty || !value.isValidPhone) {
-      return context.loc.enter_valid_phone;
-    }
-    return null;
-  }
+  // String? _validatePhone(BuildContext context, String? value) {
+  //   if (value == null || value.isEmpty || !value.isValidPhone) {
+  //     return context.loc.enter_valid_phone;
+  //   }
+  //   return null;
+  // }
 
   String? _validatePassword(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {

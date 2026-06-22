@@ -1,3 +1,4 @@
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/domain/entity/auth/auth_entity.dart';
 import 'package:wlcd/presentation/bloc/auth/check_code/check_code_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,16 +37,17 @@ class CodeInputSection extends StatelessWidget {
                   // handler.refreshFcmToken();
                   // final fcmToken = await handler.refreshFcmToken();
                   if (context.mounted) {
-                    context.read<CheckCodeBloc>().add(
-                      CheckCodeEvent(
-                        AuthEntity(
-                          phone: "${state.dialCode}${(state.phone).removeZero}",
-                          code: value,
-                          rememberMe: state.rememberMe,
-                          // fcm: fcmToken,
-                        ),
-                      ),
-                    );
+                    HomeRoute().push(context);
+                    // context.read<CheckCodeBloc>().add(
+                    //   CheckCodeEvent(
+                    //     AuthEntity(
+                    //       phone: "${state.dialCode}${(state.phone).removeZero}",
+                    //       code: value,
+                    //       rememberMe: state.rememberMe,
+                    //       // fcm: fcmToken,
+                    //     ),
+                    //   ),
+                    // );
                   }
                 }
               },
