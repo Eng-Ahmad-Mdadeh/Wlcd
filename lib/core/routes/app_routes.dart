@@ -154,7 +154,18 @@ class HomeRoute extends GoRouteData with $HomeRoute {
 class FavoritesRoute extends GoRouteData with $FavoritesRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const FavoritesScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const FavoritesGroupsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class FavoriteCoursesRoute extends GoRouteData with $FavoriteCoursesRoute {
+  const FavoriteCoursesRoute({required this.groupName});
+
+  final String groupName;
+
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return FavoriteCoursesScreen(groupName: groupName).buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 //#endregion
@@ -183,7 +194,12 @@ class MoreRoute extends GoRouteData with $MoreRoute {
       routes: [TypedGoRoute<HomeRoute>(path: '/home', routes: [])],
     ),
     TypedStatefulShellBranch<FavoritesBranch>(
-      routes: [TypedGoRoute<FavoritesRoute>(path: '/favorites', routes: [])],
+      routes: [
+        TypedGoRoute<FavoritesRoute>(
+          path: '/favorites',
+          routes: [TypedGoRoute<FavoriteCoursesRoute>(path: 'groups/:groupName')],
+        ),
+      ],
     ),
     TypedStatefulShellBranch<NotificationsBranch>(
       routes: [TypedGoRoute<NotificationsRoute>(path: '/notifications', routes: [])],
