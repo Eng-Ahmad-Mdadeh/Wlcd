@@ -16,24 +16,25 @@ class BannersWidget extends StatelessWidget {
       child: CarouselSlider.builder(
         itemCount: 3,
         itemBuilder: (context, index, realIndex) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: ImageView(
+          return ImageView(
               radius: BorderRadius.circular(AppRadius.r7),
               fit: BoxFit.fill,
               width: double.infinity,
               height: double.infinity,
-              imagePath:
-                  "https://c8.alamy.com/comp/2XA6A91/an-ai-generated-illustration-of-the-word-academy-on-a-gray-background-of-a-modern-building-2XA6A91.jpg",
-            ),
+              imagePath: "https://c8.alamy.com/comp/2XA6A91/an-ai-generated-illustration-of-the-word-academy-on-a-gray-background-of-a-modern-building-2XA6A91.jpg",
+
           );
         },
         options: CarouselOptions(
-          viewportFraction: .9,
-          enlargeCenterPage: false,
+          viewportFraction: 1,
+          enlargeCenterPage: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.scale,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 4),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayInterval: const Duration(seconds: 5),
+          autoPlayAnimationDuration: const Duration(milliseconds: 900),
+          scrollDirection: Axis.horizontal,
+          enableInfiniteScroll: true,
+
         ),
       ),
     );
