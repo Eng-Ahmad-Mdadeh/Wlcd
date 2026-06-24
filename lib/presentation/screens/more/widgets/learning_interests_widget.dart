@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
+import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LearningInterestsWidget extends StatefulWidget {
   const LearningInterestsWidget({super.key});
@@ -29,7 +31,7 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r24),
+        borderRadius: BorderRadius.circular(AppRadius.r13),
         border: Border.all(color: AppColors.notificationBorder, width: AppWidth.w1),
         boxShadow: [
           BoxShadow(
@@ -44,11 +46,7 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
         children: [
           _buildHeader(),
           SizedBox(height: AppHeight.h16),
-          Wrap(
-            spacing: AppWidth.w10,
-            runSpacing: AppHeight.h10,
-            children: _interests.map(_buildInterestChip).toList(),
-          ),
+          Wrap(spacing: AppWidth.w10, runSpacing: AppHeight.h10, children: _interests.map(_buildInterestChip).toList()),
           SizedBox(height: AppHeight.h18),
           _buildFooter(),
         ],
@@ -79,11 +77,7 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
             children: [
               Text(
                 'اهتماماتك التعليمية',
-                style: TextStyle(
-                  color: AppColors.text,
-                  fontSize: AppFontSize.s17,
-                  fontWeight: AppFontWeight.bold,
-                ),
+                style: TextStyle(color: AppColors.text, fontSize: AppFontSize.s17, fontWeight: AppFontWeight.bold),
               ),
               SizedBox(height: AppHeight.h4),
               Text(
@@ -116,23 +110,18 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
           decoration: BoxDecoration(
             color: isSelected ? interest.color.withOpacity(0.12) : AppColors.greyButton,
             borderRadius: BorderRadius.circular(AppRadius.r100),
-            border: Border.all(
-              color: isSelected ? interest.color : AppColors.notificationBorder,
-              width: AppWidth.w1,
-            ),
+            border: Border.all(color: isSelected ? interest.color : AppColors.notificationBorder, width: AppWidth.w1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(interest.icon, color: isSelected ? interest.color : AppColors.profileIcon, size: AppSize.s18),
               SizedBox(width: AppWidth.w6),
-              Text(
-                interest.title,
-                style: TextStyle(
-                  color: isSelected ? AppColors.text : AppColors.seeMore,
-                  fontSize: AppFontSize.s13,
-                  fontWeight: isSelected ? AppFontWeight.bold : AppFontWeight.medium,
-                ),
+              SectionTitle(
+                text: interest.title,
+                color: isSelected ? AppColors.text : AppColors.seeMore,
+                fontSize: AppFontSize.s13,
+                fontWeight: isSelected ? AppFontWeight.bold : AppFontWeight.medium,
               ),
               if (isSelected) ...[
                 SizedBox(width: AppWidth.w6),
@@ -148,23 +137,18 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
   Widget _buildFooter() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p12),
-      decoration: BoxDecoration(
-        color: AppColors.lightBlue,
-        borderRadius: BorderRadius.circular(AppRadius.r16),
-      ),
+      decoration: BoxDecoration(color: AppColors.lightBlue, borderRadius: BorderRadius.circular(AppRadius.r16)),
       child: Row(
         children: [
           Icon(Icons.tips_and_updates_rounded, color: AppColors.accent, size: AppSize.s20),
           SizedBox(width: AppWidth.w10),
           Expanded(
-            child: Text(
-              'تم اختيار ${_selectedInterests.length} مجالات — يمكنك تعديلها في أي وقت لتحسين تجربة التعلم.',
-              style: TextStyle(
-                color: AppColors.seeMore,
-                fontSize: AppFontSize.s12,
-                fontWeight: AppFontWeight.medium,
-                height: 1.35,
-              ),
+            child: BodyTitle(
+              overflow: TextOverflow.visible,
+              text: 'تم اختيار ${_selectedInterests.length} مجالات — يمكنك تعديلها في أي وقت لتحسين تجربة التعلم.',
+              color: AppColors.seeMore,
+              fontSize: AppFontSize.s12,
+              height: 1.35,
             ),
           ),
         ],
