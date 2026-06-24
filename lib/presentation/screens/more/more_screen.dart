@@ -34,7 +34,6 @@ class MoreScreen extends StatelessWidget {
                     children: [
                       LearningInterestsWidget(),
                       SizedBox(height: 16),
-                      _PrivateTutorEntryCard(),
                       SizedBox(height: 20),
                       ProfileMenuSection(items: profileAccountItems),
                       // ProfileMenuSection(items: profileBenefitsItems),
@@ -53,64 +52,3 @@ class MoreScreen extends StatelessWidget {
   }
 }
 
-class _PrivateTutorEntryCard extends StatelessWidget {
-  const _PrivateTutorEntryCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(24),
-      onTap: () => PrivateTutorCategoriesRoute().push(context),
-      child: Ink(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [AppColors.primary, Color(0xFF3654D4)],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: const [BoxShadow(color: Color(0x241F275D), blurRadius: 22, offset: Offset(0, 12))],
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(color: AppColors.white.withOpacity(.16), borderRadius: BorderRadius.circular(18)),
-              child: const Icon(Icons.school_rounded, color: AppColors.white, size: 30),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'حجز درس خصوصي',
-                    style: TextStyle(
-                      fontFamily: AppFontFamily.rubik,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'اختر المادة والمدرس والتاريخ المناسب لك',
-                    style: TextStyle(
-                      fontFamily: AppFontFamily.rubik,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFFE6EAFF),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.white, size: 28),
-          ],
-        ),
-      ),
-    );
-  }
-}

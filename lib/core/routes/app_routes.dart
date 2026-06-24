@@ -19,9 +19,7 @@ import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
 import 'package:wlcd/presentation/screens/personal_information/personal_information_screen.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_categories_screen.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_tutors_screen.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_details_screen.dart';
+
 import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
 import 'package:wlcd/presentation/screens/progress_history/progress_history_screen.dart';
 import 'package:wlcd/presentation/screens/search/search_screen.dart';
@@ -145,44 +143,6 @@ class OrderHistoryRoute extends GoRouteData with $OrderHistoryRoute {
 //#endregion
 
 
-@TypedGoRoute<PrivateTutorCategoriesRoute>(
-  path: '/private-tutors',
-  routes: [
-    TypedGoRoute<PrivateTutorTutorsRoute>(
-      path: ':categoryTitle',
-      routes: [TypedGoRoute<PrivateTutorDetailsRoute>(path: ':tutorName')],
-    ),
-  ],
-)
-class PrivateTutorCategoriesRoute extends GoRouteData with $PrivateTutorCategoriesRoute {
-  @override
-  CustomTransitionPage<void> buildPage(context, state) {
-    return const PrivateTutorCategoriesScreen().buildPage(pageAnimation: PageAnimation.slide);
-  }
-}
-
-class PrivateTutorTutorsRoute extends GoRouteData with $PrivateTutorTutorsRoute {
-  const PrivateTutorTutorsRoute({required this.categoryTitle});
-
-  final String categoryTitle;
-
-  @override
-  CustomTransitionPage<void> buildPage(context, state) {
-    return PrivateTutorTutorsScreen(categoryTitle: categoryTitle).buildPage(pageAnimation: PageAnimation.slide);
-  }
-}
-
-class PrivateTutorDetailsRoute extends GoRouteData with $PrivateTutorDetailsRoute {
-  const PrivateTutorDetailsRoute({required this.categoryTitle, required this.tutorName});
-
-  final String categoryTitle;
-  final String tutorName;
-
-  @override
-  CustomTransitionPage<void> buildPage(context, state) {
-    return PrivateTutorDetailsScreen(tutorName: tutorName).buildPage(pageAnimation: PageAnimation.slide);
-  }
-}
 
 //#region Home
 class HomeRoute extends GoRouteData with $HomeRoute {
