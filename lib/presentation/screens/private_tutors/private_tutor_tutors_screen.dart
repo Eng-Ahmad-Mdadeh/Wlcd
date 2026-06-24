@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_details_screen.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/private_tutors/private_tutor_models.dart';
 import 'package:wlcd/presentation/screens/private_tutors/private_tutor_widgets.dart';
 
 class PrivateTutorTutorsScreen extends StatelessWidget {
-  const PrivateTutorTutorsScreen({super.key, required this.category});
+  const PrivateTutorTutorsScreen({super.key, required this.categoryTitle});
 
-  final SubjectCategory category;
+  final String categoryTitle;
 
   @override
   Widget build(BuildContext context) {
+    final category = privateTutorCategories.firstWhere((item) => item.title == categoryTitle, orElse: () => privateTutorCategories.first);
     final tutors = privateTutors().where((tutor) => tutor.category == category.title).toList();
 
     return PrivateTutorScaffold(
@@ -48,7 +49,7 @@ class _TutorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(28),
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => PrivateTutorDetailsScreen(tutor: tutor))),
+      onTap: () => PrivateTutorDetailsRoute(categoryTitle: tutor.category, tutorName: tutor.name).push(context),
       child: Ink(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(

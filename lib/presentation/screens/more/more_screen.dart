@@ -3,7 +3,7 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/notifications/widgets/notifications_home_indicator.dart';
 import 'package:wlcd/presentation/screens/more/widgets/learning_interests_widget.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_categories_screen.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/presentation/screens/profile/widgets/profile_menu_data.dart';
 import 'package:wlcd/presentation/screens/profile/widgets/profile_menu_section.dart';
@@ -60,9 +60,7 @@ class _PrivateTutorEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const PrivateTutorCategoriesScreen()),
-      ),
+      onTap: () => PrivateTutorCategoriesRoute().push(context),
       child: Ink(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/presentation/screens/private_tutors/private_tutor_models.dart';
-import 'package:wlcd/presentation/screens/private_tutors/private_tutor_tutors_screen.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/private_tutors/private_tutor_widgets.dart';
 
 class PrivateTutorCategoriesScreen extends StatelessWidget {
@@ -53,9 +53,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(26),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => PrivateTutorTutorsScreen(category: category)),
-      ),
+      onTap: () => PrivateTutorTutorsRoute(categoryTitle: category.title).push(context),
       child: Ink(
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(

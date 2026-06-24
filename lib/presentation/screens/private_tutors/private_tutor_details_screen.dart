@@ -4,9 +4,9 @@ import 'package:wlcd/presentation/screens/private_tutors/private_tutor_models.da
 import 'package:wlcd/presentation/screens/private_tutors/private_tutor_widgets.dart';
 
 class PrivateTutorDetailsScreen extends StatefulWidget {
-  const PrivateTutorDetailsScreen({super.key, required this.tutor});
+  const PrivateTutorDetailsScreen({super.key, required this.tutorName});
 
-  final Tutor tutor;
+  final String tutorName;
 
   @override
   State<PrivateTutorDetailsScreen> createState() => _PrivateTutorDetailsScreenState();
@@ -17,7 +17,7 @@ class _PrivateTutorDetailsScreenState extends State<PrivateTutorDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tutor = widget.tutor;
+    final tutor = privateTutors().firstWhere((item) => item.name == widget.tutorName, orElse: () => privateTutors().first);
     final days = nextSevenDays();
 
     return PrivateTutorScaffold(
