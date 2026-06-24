@@ -18,6 +18,7 @@ List<RouteBase> get $appRoutes => [
   $termsAndConditionsRoute,
   $progressHistoryRoute,
   $orderHistoryRoute,
+  $privateTutorCategoriesRoute,
   $appShellRoute,
 ];
 
@@ -304,6 +305,100 @@ mixin $OrderHistoryRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/order-history');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+
+RouteBase get $privateTutorCategoriesRoute => GoRouteData.$route(
+  path: '/private-tutors',
+  factory: $PrivateTutorCategoriesRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: ':categoryTitle',
+      factory: $PrivateTutorTutorsRoute._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: ':tutorName',
+          factory: $PrivateTutorDetailsRoute._fromState,
+        ),
+      ],
+    ),
+  ],
+);
+
+mixin $PrivateTutorCategoriesRoute on GoRouteData {
+  static PrivateTutorCategoriesRoute _fromState(GoRouterState state) =>
+      PrivateTutorCategoriesRoute();
+
+  @override
+  String get location => GoRouteData.$location('/private-tutors');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PrivateTutorTutorsRoute on GoRouteData {
+  static PrivateTutorTutorsRoute _fromState(GoRouterState state) =>
+      PrivateTutorTutorsRoute(
+        categoryTitle: state.pathParameters['categoryTitle']!,
+      );
+
+  PrivateTutorTutorsRoute get _self => this as PrivateTutorTutorsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/private-tutors/${Uri.encodeComponent(_self.categoryTitle)}',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PrivateTutorDetailsRoute on GoRouteData {
+  static PrivateTutorDetailsRoute _fromState(GoRouterState state) =>
+      PrivateTutorDetailsRoute(
+        categoryTitle: state.pathParameters['categoryTitle']!,
+        tutorName: state.pathParameters['tutorName']!,
+      );
+
+  PrivateTutorDetailsRoute get _self => this as PrivateTutorDetailsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+        '/private-tutors/${Uri.encodeComponent(_self.categoryTitle)}/${Uri.encodeComponent(_self.tutorName)}',
+      );
 
   @override
   void go(BuildContext context) => context.go(location);
