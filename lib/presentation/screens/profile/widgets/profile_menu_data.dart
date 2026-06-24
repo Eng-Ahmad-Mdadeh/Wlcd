@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 enum ProfileMenuAction {
   personalInformation,
+  categorySelection,
   orderHistory,
   progressHistory,
   privacyPolicy,
@@ -35,6 +36,11 @@ const List<ProfileMenuItemData> profileAccountItems = [
     title: 'Progress History',
     icon: Icons.trending_up_outlined,
     action: ProfileMenuAction.progressHistory,
+  ),
+  ProfileMenuItemData(
+    title: 'التصنيفات التعليمية',
+    icon: Icons.category_outlined,
+    action: ProfileMenuAction.categorySelection,
   ),
 ];
 

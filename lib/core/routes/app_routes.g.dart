@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $searchRoute,
   $profileRoute,
   $courseDetailsRoute,
+  $categorySelectionRoute,
   $personalInformationRoute,
   $privacyPolicyRoute,
   $faqsRoute,
@@ -149,6 +150,33 @@ mixin $CourseDetailsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/course-details');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+
+RouteBase get $categorySelectionRoute => GoRouteData.$route(
+  path: '/category-selection',
+  factory: $CategorySelectionRoute._fromState,
+);
+
+mixin $CategorySelectionRoute on GoRouteData {
+  static CategorySelectionRoute _fromState(GoRouterState state) =>
+      CategorySelectionRoute();
+
+  @override
+  String get location => GoRouteData.$location('/category-selection');
 
   @override
   void go(BuildContext context) => context.go(location);
