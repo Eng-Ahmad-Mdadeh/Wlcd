@@ -355,5 +355,5 @@ void _showFavoriteGroupsSheet(BuildContext context) {
         ),
       );
     },
-  ).whenComplete(groupController.dispose);
+  );
 }
