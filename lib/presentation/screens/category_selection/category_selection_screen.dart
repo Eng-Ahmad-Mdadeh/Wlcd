@@ -20,63 +20,57 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.searchScreenBackground,
-      appBar: const CustomAppBar(title: 'اختيار التصنيف', centerTitle: true, showBackButton: true),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: AppWidth.w428),
-          child: Column(
-            children: [
-              Expanded(
-                child: CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.fromLTRB(
-                        AppPaddingWidth.p17,
-                        AppPaddingHeight.p18,
-                        AppPaddingWidth.p17,
-                        AppPaddingHeight.p25,
+      appBar: const CustomAppBar(title: 'اختيار التصنيف', showBackButton: true),
+      body: Column(
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.fromLTRB(
+                    AppPaddingWidth.p17,
+                    AppPaddingHeight.p18,
+                    AppPaddingWidth.p17,
+                    AppPaddingHeight.p25,
+                  ),
+                  sliver: SliverList.list(
+                    children: [
+                      CategoryHeader(selectedCount: _selectedCategories.length),
+                      SizedBox(height: AppHeight.h18),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: categoryOptions.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: AppWidth.w12,
+                          mainAxisSpacing: AppHeight.h12,
+                          childAspectRatio: 0.92,
+                        ),
+                        itemBuilder: (context, index) {
+                          final category = categoryOptions[index];
+                          return CategoryCard(
+                            category: category,
+                            isSelected: _selectedCategories.contains(category.title),
+                            onTap: () => _toggleCategory(category.title),
+                          );
+                        },
                       ),
-                      sliver: SliverList.list(
-                        children: [
-                          CategoryHeader(selectedCount: _selectedCategories.length),
-                          SizedBox(height: AppHeight.h18),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: categoryOptions.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: AppWidth.w12,
-                              mainAxisSpacing: AppHeight.h12,
-                              childAspectRatio: 0.92,
-                            ),
-                            itemBuilder: (context, index) {
-                              final category = categoryOptions[index];
-                              return CategoryCard(
-                                category: category,
-                                isSelected: _selectedCategories.contains(category.title),
-                                onTap: () => _toggleCategory(category.title),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              CustomSubmitButton(
-                marginEnd: AppMarginWidth.m10,
-                marginStart: AppMarginWidth.m10,
-                marginBottom: AppMarginHeight.m20,
-                title: "التالي",
-                onPressed: () {},
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          CustomSubmitButton(
+            marginEnd: AppMarginWidth.m10,
+            marginStart: AppMarginWidth.m10,
+            marginBottom: AppMarginHeight.m20,
+            title: "التالي",
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
