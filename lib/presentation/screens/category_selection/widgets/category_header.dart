@@ -63,20 +63,20 @@ class CategoryHeader extends StatelessWidget {
             overflow: TextOverflow.visible,
             height: 1.45,
           ),
-          SizedBox(height: AppHeight.h16),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p9),
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.12),
-              borderRadius: BorderRadius.circular(AppRadius.r100),
-              border: Border.all(color: AppColors.white.withOpacity(0.2)),
-            ),
-            child: BodyTitle(
-              text: selectedCount == 0 ? 'لم يتم اختيار أي تصنيف بعد' : 'تم اختيار $selectedCount تصنيف',
-              color: AppColors.white,
-              fontSize: AppFontSize.s12,
-            ),
-          ),
+          // SizedBox(height: AppHeight.h16),
+          // Container(
+          //   padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p9),
+          //   decoration: BoxDecoration(
+          //     color: AppColors.white.withOpacity(0.12),
+          //     borderRadius: BorderRadius.circular(AppRadius.r100),
+          //     border: Border.all(color: AppColors.white.withOpacity(0.2)),
+          //   ),
+          //   child: BodyTitle(
+          //     text: selectedCount == 0 ? 'لم يتم اختيار أي تصنيف بعد' : 'تم اختيار $selectedCount تصنيف',
+          //     color: AppColors.white,
+          //     fontSize: AppFontSize.s12,
+          //   ),
+          // ),
         ],
       ),
     );
