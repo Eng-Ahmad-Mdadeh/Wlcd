@@ -43,8 +43,8 @@ class CategoryCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: AppWidth.w46,
-                      height: AppHeight.h46,
+                      width: AppWidth.w45,
+                      height: AppHeight.h45,
                       decoration: BoxDecoration(
                         color: category.color.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(AppRadius.r16),
@@ -84,7 +84,7 @@ class CategoryCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10, vertical: AppPaddingHeight.p6),
                   decoration: BoxDecoration(color: category.color.withOpacity(0.1), borderRadius: BorderRadius.circular(AppRadius.r100)),
                   child: BodyTitle(
-                    text: '${category.lessonsCount} درس',
+                    text: '${category.lessonsCount} مدرس',
                     color: category.color,
                     fontSize: AppFontSize.s11,
                     fontWeight: AppFontWeight.medium,

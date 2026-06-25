@@ -33,8 +33,6 @@ class MoreScreen extends StatelessWidget {
                   child: const Column(
                     children: [
                       LearningInterestsWidget(),
-                      SizedBox(height: 16),
-                      SizedBox(height: 20),
                       ProfileMenuSection(items: profileAccountItems),
                       // ProfileMenuSection(items: profileBenefitsItems),
                       ProfileMenuSection(items: profileSupportItems),
@@ -51,4 +49,3 @@ class MoreScreen extends StatelessWidget {
     );
   }
 }
-

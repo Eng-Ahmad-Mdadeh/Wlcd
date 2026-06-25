@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/category_selection/widgets/category_action_bar.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_card.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_header.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_selection_data.dart';
-import 'package:wlcd/presentation/screens/notifications/widgets/notifications_home_indicator.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
+import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 
 class CategorySelectionScreen extends StatefulWidget {
   const CategorySelectionScreen({super.key});
@@ -37,7 +36,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                         AppPaddingWidth.p17,
                         AppPaddingHeight.p18,
                         AppPaddingWidth.p17,
-                        AppPaddingHeight.p24,
+                        AppPaddingHeight.p25,
                       ),
                       sliver: SliverList.list(
                         children: [
@@ -62,19 +61,19 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                               );
                             },
                           ),
-                          SizedBox(height: AppHeight.h18),
-                          CategoryActionBar(
-                            selectedCount: _selectedCategories.length,
-                            onClear: _selectedCategories.isEmpty ? null : () => setState(_selectedCategories.clear),
-                            onContinue: _selectedCategories.isEmpty ? null : _showSelectedMessage,
-                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              const NotificationsHomeIndicator(),
+              CustomSubmitButton(
+                marginEnd: AppMarginWidth.m10,
+                marginStart: AppMarginWidth.m10,
+                marginBottom: AppMarginHeight.m20,
+                title: "التالي",
+                onPressed: () {},
+              ),
             ],
           ),
         ),
@@ -93,8 +92,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   }
 
   void _showSelectedMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('تم اختيار ${_selectedCategories.length} تصنيفات بنجاح')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('تم اختيار ${_selectedCategories.length} تصنيفات بنجاح')));
   }
 }
