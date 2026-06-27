@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum ProfileMenuAction {
   personalInformation,
   categorySelection,
+  teachers,
   orderHistory,
   progressHistory,
   privacyPolicy,
@@ -41,6 +42,11 @@ const List<ProfileMenuItemData> profileAccountItems = [
     title: 'التصنيفات التعليمية',
     icon: Icons.category_outlined,
     action: ProfileMenuAction.categorySelection,
+  ),
+  ProfileMenuItemData(
+    title: 'المدرسون',
+    icon: Icons.school_outlined,
+    action: ProfileMenuAction.teachers,
   ),
 ];
 

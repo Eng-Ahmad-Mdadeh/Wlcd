@@ -19,8 +19,32 @@ List<RouteBase> get $appRoutes => [
   $termsAndConditionsRoute,
   $progressHistoryRoute,
   $orderHistoryRoute,
+  $teachersRoute,
   $appShellRoute,
 ];
+
+RouteBase get $teachersRoute =>
+    GoRouteData.$route(path: '/teachers', factory: $TeachersRoute._fromState);
+
+mixin $TeachersRoute on GoRouteData {
+  static TeachersRoute _fromState(GoRouterState state) => TeachersRoute();
+
+  @override
+  String get location => GoRouteData.$location('/teachers');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
 
 RouteBase get $splashRoute =>
     GoRouteData.$route(path: '/', factory: $SplashRoute._fromState);

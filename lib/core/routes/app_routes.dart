@@ -16,6 +16,7 @@ import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
 import 'package:wlcd/presentation/screens/faqs/faqs_screen.dart';
 import 'package:wlcd/presentation/screens/privacy_policy/privacy_policy_screen.dart';
 import 'package:wlcd/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
+import 'package:wlcd/presentation/screens/teachers/teachers_screen.dart';
 import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
@@ -151,7 +152,16 @@ class OrderHistoryRoute extends GoRouteData with $OrderHistoryRoute {
 }
 //#endregion
 
+//#region Teachers
 
+@TypedGoRoute<TeachersRoute>(path: '/teachers')
+class TeachersRoute extends GoRouteData with $TeachersRoute {
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return const TeachersScreen().buildPage(pageAnimation: PageAnimation.slide);
+  }
+}
+//#endregion
 
 //#region Home
 class HomeRoute extends GoRouteData with $HomeRoute {
