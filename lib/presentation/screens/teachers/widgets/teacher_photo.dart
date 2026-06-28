@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/widgets/teachers/teacher_data.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 
 class TeacherPhoto extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/widgets/teachers/rating_badge.dart';
-import 'package:wlcd/presentation/widgets/teachers/specialty_chip.dart';
-import 'package:wlcd/presentation/widgets/teachers/teacher_data.dart';
-import 'package:wlcd/presentation/widgets/teachers/teacher_photo.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/rating_badge.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/specialty_chip.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_photo.dart';
 
 class TeacherCard extends StatelessWidget {
   const TeacherCard({super.key, required this.teacher});
