@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/core/services/app_lifecycle_tracker.dart';
@@ -37,6 +38,7 @@ final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<Sca
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await initializeDateFormatting('ar');
   ConnectionService().initialize(navigatorKey);
   await AppServices.init();
   final initialLocale = await _loadInitialLocale();

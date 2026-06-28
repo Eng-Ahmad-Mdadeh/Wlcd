@@ -49,6 +49,7 @@ dependencies:
   package_info_plus: ^9.0.1
   local_hero_transform: ^1.0.6
   carousel_slider: ^5.0.0
+  table_calendar: ^3.2.0
 
 
 
@@ -89,5 +90,4 @@ flutter:
           weight: 800
         - asset: assets/fonts/rubik/Rubik-Black.ttf
           weight: 900
-
 
