@@ -7,38 +7,68 @@ import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
-class TeacherBookingSheet extends StatelessWidget {
+class TeacherBookingSheet extends StatefulWidget {
   const TeacherBookingSheet({super.key, required this.teacher});
 
   final TeacherData teacher;
 
   @override
+  State<TeacherBookingSheet> createState() => _TeacherBookingSheetState();
+}
+
+class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
+  late final List<_BookingSlot> _slots;
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _slots = _BookingSlot.upcomingSlots();
+    _selectedDate = _dateOnly(_slots.first.date);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final slots = _BookingSlot.upcomingSlots();
+    final selectedSlots = _slots.where((slot) => _isSameDay(slot.date, _selectedDate)).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _TeacherSummary(teacher: teacher),
+        _TeacherSummary(teacher: widget.teacher),
         SizedBox(height: AppHeight.h20),
         SectionTitle(
-          text: 'اختر الموعد المناسب لك',
+          text: 'اختر التاريخ المناسب لك',
           color: AppColors.text,
           fontSize: AppSize.s18,
         ),
         SizedBox(height: AppHeight.h6),
         BodyTitle(
-          text: 'التواريخ التالية متاحة لحجز جلسة مباشرة مع ${teacher.name}.',
+          text: 'حدد يومًا من التقويم لعرض جلسات ${widget.teacher.name} المتاحة في هذا اليوم.',
           color: AppColors.muted,
           fontSize: AppSize.s13,
           height: AppLineHeight.teacherBio,
           overflow: TextOverflow.visible,
         ),
         SizedBox(height: AppHeight.h16),
-        ...slots.map(
+        _BookingCalendar(
+          slots: _slots,
+          selectedDate: _selectedDate,
+          color: widget.teacher.accentColor,
+          onDateSelected: (date) {
+            setState(() => _selectedDate = _dateOnly(date));
+          },
+        ),
+        SizedBox(height: AppHeight.h20),
+        SectionTitle(
+          text: 'المواعيد المتاحة',
+          color: AppColors.text,
+          fontSize: AppSize.s17,
+        ),
+        SizedBox(height: AppHeight.h12),
+        ...selectedSlots.map(
           (slot) => _BookingSlotCard(
             slot: slot,
-            color: teacher.accentColor,
+            color: widget.teacher.accentColor,
           ),
         ),
       ],
@@ -105,6 +135,165 @@ class _TeacherSummary extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _BookingCalendar extends StatelessWidget {
+  const _BookingCalendar({
+    required this.slots,
+    required this.selectedDate,
+    required this.color,
+    required this.onDateSelected,
+  });
+
+  final List<_BookingSlot> slots;
+  final DateTime selectedDate;
+  final Color color;
+  final ValueChanged<DateTime> onDateSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final dates = _visibleCalendarDates();
+
+    return Container(
+      padding: EdgeInsets.all(AppSize.s14),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .06),
+        borderRadius: BorderRadius.circular(AppRadius.r24),
+        border: Border.all(color: color.withValues(alpha: .14)),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.calendar_month_rounded, color: color, size: AppSize.s22),
+              SizedBox(width: AppWidth.w8),
+              Expanded(
+                child: SectionTitle(
+                  text: 'تقويم المواعيد المتاحة',
+                  color: AppColors.text,
+                  fontSize: AppSize.s16,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppHeight.h14),
+          Row(
+            children: _weekDays
+                .map(
+                  (day) => Expanded(
+                    child: Center(
+                      child: BodyTitle(
+                        text: day,
+                        color: AppColors.muted,
+                        fontSize: AppSize.s11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+          SizedBox(height: AppHeight.h10),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: dates.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: DateTime.daysPerWeek,
+              mainAxisSpacing: AppHeight.h8,
+              crossAxisSpacing: AppWidth.w6,
+            ),
+            itemBuilder: (context, index) {
+              final date = dates[index];
+              final hasSlot = _hasSlot(date);
+              final isSelected = _isSameDay(date, selectedDate);
+
+              return _CalendarDay(
+                date: date,
+                color: color,
+                hasSlot: hasSlot,
+                isSelected: isSelected,
+                onTap: hasSlot ? () => onDateSelected(date) : null,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _hasSlot(DateTime date) {
+    return slots.any((slot) => _isSameDay(slot.date, date));
+  }
+
+  List<DateTime> _visibleCalendarDates() {
+    final today = _dateOnly(DateTime.now());
+    final start = today.subtract(Duration(days: today.weekday - 1));
+
+    return List.generate(
+      DateTime.daysPerWeek * 5,
+      (index) => start.add(Duration(days: index)),
+    );
+  }
+}
+
+class _CalendarDay extends StatelessWidget {
+  const _CalendarDay({
+    required this.date,
+    required this.color,
+    required this.hasSlot,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final DateTime date;
+  final Color color;
+  final bool hasSlot;
+  final bool isSelected;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isSelected
+        ? AppColors.white
+        : hasSlot
+            ? color
+            : AppColors.muted.withValues(alpha: .55);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppRadius.r16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected ? color : AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r16),
+          border: Border.all(
+            color: hasSlot ? color.withValues(alpha: .3) : AppColors.teacherCardBorder,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BodyTitle(
+              text: date.day.toString(),
+              color: textColor,
+              fontSize: AppSize.s14,
+              fontWeight: FontWeight.w800,
+            ),
+            SizedBox(height: AppHeight.h4),
+            Container(
+              width: AppSize.s5,
+              height: AppSize.s5,
+              decoration: BoxDecoration(
+                color: hasSlot ? textColor : AppColors.none,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -283,6 +472,22 @@ class _BookingSlot {
     ];
   }
 }
+
+DateTime _dateOnly(DateTime date) => DateTime(date.year, date.month, date.day);
+
+bool _isSameDay(DateTime first, DateTime second) {
+  return first.year == second.year && first.month == second.month && first.day == second.day;
+}
+
+const _weekDays = [
+  'إث',
+  'ثل',
+  'أر',
+  'خم',
+  'جم',
+  'سب',
+  'أح',
+];
 
 const _arabicDays = [
   'الإثنين',
