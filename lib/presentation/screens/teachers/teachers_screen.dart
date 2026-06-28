@@ -10,12 +10,9 @@ class TeachersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.teacherBackground,
       appBar: CustomAppBar(
         title: 'المدرسون',
-        centerTitle: true,
-        backgroundColor: AppColors.primary,
-        colorTitle: AppColors.white,
+        showBackButton: true,
       ),
       body: const TeachersList(teachers: teachers),
     );

@@ -21,7 +21,7 @@ class TeacherCard extends StatelessWidget {
         border: Border.all(color: AppColors.teacherCardBorder),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: .08),
+            color: AppColors.blackCow.withValues(alpha: .08),
             blurRadius: AppSize.s24,
             offset: const Offset(0, 12),
           ),

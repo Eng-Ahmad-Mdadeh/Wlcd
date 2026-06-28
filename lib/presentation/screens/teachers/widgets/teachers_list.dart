@@ -15,14 +15,14 @@ class TeachersList extends StatelessWidget {
       slivers: [
         SliverPadding(
           padding: EdgeInsets.fromLTRB(
-            AppPaddingWidth.p20,
+            AppPaddingWidth.p13,
             AppPaddingHeight.p10,
-            AppPaddingWidth.p20,
+            AppPaddingWidth.p13,
             AppPaddingHeight.p30,
           ),
           sliver: SliverList.separated(
             itemCount: teachers.length,
-            separatorBuilder: (_, __) => SizedBox(height: AppHeight.h16),
+            separatorBuilder: (_, __) => SizedBox(height: AppHeight.h13),
             itemBuilder: (context, index) => TeacherCard(teacher: teachers[index]),
           ),
         ),
