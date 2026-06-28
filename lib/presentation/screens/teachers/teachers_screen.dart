@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
+import 'package:wlcd/presentation/widgets/image_view.dart';
 
 class TeachersScreen extends StatelessWidget {
   const TeachersScreen({super.key});
@@ -59,63 +60,18 @@ class TeachersScreen extends StatelessWidget {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          SliverToBoxAdapter(child: _TeachersHeader(totalTeachers: _teachers.length)),
           SliverPadding(
-            padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, 0, AppPaddingWidth.p20, AppPaddingHeight.p30),
+            padding: EdgeInsets.fromLTRB(
+              AppPaddingWidth.p20,
+              AppPaddingHeight.p10,
+              AppPaddingWidth.p20,
+              AppPaddingHeight.p30,
+            ),
             sliver: SliverList.separated(
               itemCount: _teachers.length,
               separatorBuilder: (_, __) => SizedBox(height: 16.h),
               itemBuilder: (context, index) => _TeacherCard(teacher: _teachers[index]),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TeachersHeader extends StatelessWidget {
-  const _TeachersHeader({required this.totalTeachers});
-
-  final int totalTeachers;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 18.h),
-      padding: EdgeInsets.fromLTRB(22.w, 24.h, 22.w, 28.h),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [AppColors.primary, Color(0xFF2D65F8)],
-        ),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 7.h),
-            decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(100.r),
-              border: Border.all(color: AppColors.white.withValues(alpha: .18)),
-            ),
-            child: Text(
-              '$totalTeachers مدرسين مختارين بعناية',
-              style: TextStyle(color: AppColors.white, fontSize: 12.sp, fontWeight: FontWeight.w600),
-            ),
-          ),
-          SizedBox(height: 14.h),
-          Text(
-            'تعلّم مع نخبة من الخبراء',
-            style: TextStyle(color: AppColors.white, fontSize: 26.sp, fontWeight: FontWeight.w800, height: 1.25),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            'استعرض ملفات المدرسين، تقييماتهم، اختصاصاتهم ونبذة سريعة تساعدك على اختيار الأنسب لرحلتك التعليمية.',
-            style: TextStyle(color: AppColors.white.withValues(alpha: .82), fontSize: 14.sp, height: 1.6),
           ),
         ],
       ),
@@ -176,11 +132,10 @@ class _TeacherCard extends StatelessWidget {
                   children: [
                     Icon(Icons.groups_rounded, size: 16.r, color: AppColors.accent),
                     SizedBox(width: 5.w),
-                    Text('${teacher.students} طالب', style: TextStyle(color: AppColors.seeMore, fontSize: 12.sp, fontWeight: FontWeight.w600)),
-                    const Spacer(),
-                    Text('عرض الملف', style: TextStyle(color: AppColors.accent, fontSize: 12.sp, fontWeight: FontWeight.w700)),
-                    SizedBox(width: 4.w),
-                    Icon(Icons.arrow_forward_ios_rounded, size: 12.r, color: AppColors.accent),
+                    Text(
+                      '${teacher.students} طالب',
+                      style: TextStyle(color: AppColors.seeMore, fontSize: 12.sp, fontWeight: FontWeight.w600),
+                    ),
                   ],
                 ),
               ],
@@ -204,14 +159,12 @@ class _TeacherPhoto extends StatelessWidget {
       height: 112.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22.r),
-        gradient: LinearGradient(colors: [teacher.accentColor.withValues(alpha: .22), teacher.accentColor.withValues(alpha: .06)]),
+        gradient: LinearGradient(
+          colors: [teacher.accentColor.withValues(alpha: .22), teacher.accentColor.withValues(alpha: .06)],
+        ),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Image.network(
-        teacher.imageUrl,
-        fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => Icon(Icons.person_rounded, color: teacher.accentColor, size: 42.r),
-      ),
+      child: ImageView(imagePath: teacher.imageUrl, fit: BoxFit.cover),
     );
   }
 }
@@ -231,7 +184,10 @@ class _RatingBadge extends StatelessWidget {
         children: [
           Icon(Icons.star_rounded, color: AppColors.warning, size: 15.r),
           SizedBox(width: 3.w),
-          Text(rating.toStringAsFixed(1), style: TextStyle(color: AppColors.text, fontSize: 12.sp, fontWeight: FontWeight.w800)),
+          Text(
+            rating.toStringAsFixed(1),
+            style: TextStyle(color: AppColors.text, fontSize: 12.sp, fontWeight: FontWeight.w800),
+          ),
         ],
       ),
     );
@@ -249,7 +205,10 @@ class _SpecialtyChip extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(color: color.withValues(alpha: .11), borderRadius: BorderRadius.circular(12.r)),
-      child: Text(label, style: TextStyle(color: color, fontSize: 12.sp, fontWeight: FontWeight.w700)),
+      child: Text(
+        label,
+        style: TextStyle(color: color, fontSize: 12.sp, fontWeight: FontWeight.w700),
+      ),
     );
   }
 }
