@@ -29,7 +29,6 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedSlots = _slots.where((slot) => _isSameDay(slot.date, _selectedDate)).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,19 +56,6 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
           onDateSelected: (date) {
             setState(() => _selectedDate = _dateOnly(date));
           },
-        ),
-        SizedBox(height: AppHeight.h20),
-        SectionTitle(
-          text: 'المواعيد المتاحة',
-          color: AppColors.text,
-          fontSize: AppSize.s17,
-        ),
-        SizedBox(height: AppHeight.h12),
-        ...selectedSlots.map(
-          (slot) => _BookingSlotCard(
-            slot: slot,
-            color: widget.teacher.accentColor,
-          ),
         ),
       ],
     );
