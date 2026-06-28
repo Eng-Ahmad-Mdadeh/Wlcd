@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 
 class TeacherData {
   const TeacherData({
@@ -28,7 +29,7 @@ const List<TeacherData> teachers = [
     rating: 4.9,
     students: '2.4k',
     imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=480&q=80',
-    accentColor: Color(0xFF6C63FF),
+    accentColor: AppColors.teacherPurple,
   ),
   TeacherData(
     name: 'م. أحمد منصور',
@@ -37,7 +38,7 @@ const List<TeacherData> teachers = [
     rating: 4.8,
     students: '1.8k',
     imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=480&q=80',
-    accentColor: Color(0xFF16A3B8),
+    accentColor: AppColors.teacherCyan,
   ),
   TeacherData(
     name: 'أ. ليان خالد',
@@ -46,7 +47,7 @@ const List<TeacherData> teachers = [
     rating: 4.7,
     students: '3.1k',
     imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=480&q=80',
-    accentColor: Color(0xFFF59E0B),
+    accentColor: AppColors.teacherAmber,
   ),
   TeacherData(
     name: 'د. يوسف ناصر',
@@ -55,6 +56,6 @@ const List<TeacherData> teachers = [
     rating: 4.9,
     students: '2.9k',
     imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=480&q=80',
-    accentColor: Color(0xFF12B76A),
+    accentColor: AppColors.teacherGreen,
   ),
 ];

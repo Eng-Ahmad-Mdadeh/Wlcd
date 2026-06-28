@@ -98,6 +98,16 @@ class AppColors {
   static const Color searchNavInactiveIcon = Color(0xFF9FA6B4);
   static const Color searchNavInactiveText = Color(0xFFA8AFBC);
 
+
+  /// Teachers screen
+  static const Color teacherBackground = Color(0xFFF7F8FC);
+  static const Color teacherCardBorder = Color(0xFFECEEF5);
+  static const Color teacherRatingBackground = Color(0xFFFFF7E8);
+  static const Color teacherPurple = Color(0xFF6C63FF);
+  static const Color teacherCyan = Color(0xFF16A3B8);
+  static const Color teacherAmber = Color(0xFFF59E0B);
+  static const Color teacherGreen = Color(0xFF12B76A);
+
   /// Notifications screen
   static const Color notificationBackground = Color(0xFFF8F8F8);
   static const Color notificationTextPrimary = Color(0xFF111827);
