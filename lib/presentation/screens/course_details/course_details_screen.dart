@@ -5,6 +5,7 @@ import 'package:wlcd/presentation/screens/course_details/widgets/announcements_t
 import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/forum_tab.dart';
 import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
@@ -21,9 +22,10 @@ class CourseDetailsScreen extends StatelessWidget {
     Tab(text: 'Announcements'),
     Tab(text: 'Downloaded'),
     Tab(text: 'Resources'),
+    Tab(text: 'المنتدى'),
   ];
 
-  static const _pages = [LessonsTab(), AboutTab(), AnnouncementsTab(), DownloadedTab(), ResourcesTab()];
+  static const _pages = [LessonsTab(), AboutTab(), AnnouncementsTab(), DownloadedTab(), ResourcesTab(), ForumTab()];
 
   @override
   Widget build(BuildContext context) {
