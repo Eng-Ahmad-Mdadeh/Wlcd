@@ -17,7 +17,7 @@ class ForumQuestionCard extends StatelessWidget {
     final cubit = context.read<ForumCubit>();
 
     return Container(
-      margin: EdgeInsets.only(bottom: AppMarginHeight.m18),
+      margin: EdgeInsets.only(bottom: AppMarginHeight.m20),
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
         color: AppColors.white,
