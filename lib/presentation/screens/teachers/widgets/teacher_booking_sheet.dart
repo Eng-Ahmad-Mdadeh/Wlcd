@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class TeacherBookingSheet extends StatefulWidget {
@@ -30,11 +32,7 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
-          text: 'اختر التاريخ المناسب لك',
-          color: AppColors.text,
-          fontSize: AppSize.s18,
-        ),
+        SectionTitle(text: 'اختر التاريخ المناسب لك', color: AppColors.text, fontSize: AppSize.s18),
         SizedBox(height: AppHeight.h16),
         _BookingCalendar(
           selectedDate: _selectedDate,
@@ -48,6 +46,13 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
           },
           onPageChanged: (focusedDate) {
             setState(() => _focusedDate = _dateOnly(focusedDate));
+          },
+        ),
+        SizedBox(height: AppHeight.h16),
+        CustomSubmitButton(
+          title: "حفظ",
+          onPressed: () {
+            context.pop();
           },
         ),
       ],
@@ -95,64 +100,22 @@ class _BookingCalendar extends StatelessWidget {
             headerStyle: HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false,
-              leftChevronIcon: Icon(
-                Icons.chevron_left_rounded,
-                color: color,
-                size: AppSize.s26,
-              ),
-              rightChevronIcon: Icon(
-                Icons.chevron_right_rounded,
-                color: color,
-                size: AppSize.s26,
-              ),
-              titleTextStyle: TextStyle(
-                color: AppColors.text,
-                fontSize: AppSize.s16,
-                fontWeight: FontWeight.w800,
-              ),
+              leftChevronIcon: Icon(Icons.chevron_left_rounded, color: color, size: AppSize.s25),
+              rightChevronIcon: Icon(Icons.chevron_right_rounded, color: color, size: AppSize.s25),
+              titleTextStyle: TextStyle(color: AppColors.text, fontSize: AppSize.s16, fontWeight: FontWeight.w800),
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: TextStyle(
-                color: AppColors.muted,
-                fontSize: AppSize.s11,
-                fontWeight: FontWeight.w700,
-              ),
-              weekendStyle: TextStyle(
-                color: AppColors.muted,
-                fontSize: AppSize.s11,
-                fontWeight: FontWeight.w700,
-              ),
+              weekdayStyle: TextStyle(color: AppColors.muted, fontSize: AppSize.s11, fontWeight: FontWeight.w700),
+              weekendStyle: TextStyle(color: AppColors.muted, fontSize: AppSize.s11, fontWeight: FontWeight.w700),
             ),
             calendarStyle: CalendarStyle(
               outsideDaysVisible: false,
-              todayDecoration: BoxDecoration(
-                color: color.withValues(alpha: .14),
-                shape: BoxShape.circle,
-              ),
-              todayTextStyle: TextStyle(
-                color: color,
-                fontSize: AppSize.s14,
-                fontWeight: FontWeight.w800,
-              ),
-              selectedDecoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-              ),
-              selectedTextStyle: TextStyle(
-                color: AppColors.white,
-                fontSize: AppSize.s14,
-                fontWeight: FontWeight.w800,
-              ),
-              defaultTextStyle: TextStyle(
-                color: AppColors.text,
-                fontSize: AppSize.s14,
-                fontWeight: FontWeight.w700,
-              ),
-              weekendTextStyle: TextStyle(
-                color: AppColors.text,
-                fontSize: AppSize.s14,
-                fontWeight: FontWeight.w700,
-              ),
+              todayDecoration: BoxDecoration(color: color.withValues(alpha: .14), shape: BoxShape.circle),
+              todayTextStyle: TextStyle(color: color, fontSize: AppSize.s14, fontWeight: FontWeight.w800),
+              selectedDecoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              selectedTextStyle: TextStyle(color: AppColors.white, fontSize: AppSize.s14, fontWeight: FontWeight.w800),
+              defaultTextStyle: TextStyle(color: AppColors.text, fontSize: AppSize.s14, fontWeight: FontWeight.w700),
+              weekendTextStyle: TextStyle(color: AppColors.text, fontSize: AppSize.s14, fontWeight: FontWeight.w700),
               disabledTextStyle: TextStyle(
                 color: AppColors.muted.withValues(alpha: .45),
                 fontSize: AppSize.s14,

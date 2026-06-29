@@ -20,7 +20,7 @@ class TeacherCard extends StatelessWidget {
       onTap: () => CustomBottomSheet.show(
         context,
         title: 'حجز جلسة',
-        heightFactor: .82,
+        heightFactor: .75,
         borderRadius: AppRadius.r30,
         body: TeacherBookingSheet(teacher: teacher),
       ),
