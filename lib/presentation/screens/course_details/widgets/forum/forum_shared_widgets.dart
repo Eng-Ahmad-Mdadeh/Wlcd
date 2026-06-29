@@ -14,9 +14,9 @@ class ForumGradientButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Color(0xFF1665E7), Color(0xFFC84EEA)]),
-        borderRadius: BorderRadius.circular(AppRadius.r12),
-        boxShadow: [BoxShadow(color: AppColors.searchBottomShadow, blurRadius: 16, offset: const Offset(0, 8))],
+        gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]),
+        borderRadius: BorderRadius.circular(AppRadius.r14),
+        boxShadow: [BoxShadow(color: AppColors.searchBottomShadow, blurRadius: 18, offset: const Offset(0, 8))],
       ),
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
@@ -24,36 +24,43 @@ class ForumGradientButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18, vertical: AppPaddingHeight.p12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r14)),
         ),
         onPressed: onPressed,
         icon: icon == null ? const SizedBox.shrink() : Icon(icon, color: AppColors.white, size: 20),
-        label: BodyTitle(text: label, color: AppColors.white, fontSize: 14),
+        label: BodyTitle(text: label, color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w700),
       ),
     );
   }
 }
 
-class ForumActionButton extends StatelessWidget {
-  const ForumActionButton({super.key, required this.icon, required this.label, required this.onTap});
+class ForumOutlinedButton extends StatelessWidget {
+  const ForumOutlinedButton({super.key, required this.label, required this.onTap, this.icon});
 
-  final IconData icon;
   final String label;
   final VoidCallback onTap;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(AppRadius.r8),
-      child: Padding(
-        padding: EdgeInsets.all(AppPaddingWidth.p4),
+      borderRadius: BorderRadius.circular(AppRadius.r12),
+      child: Ink(
+        padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p8),
+        decoration: BoxDecoration(
+          color: AppColors.lightBlue,
+          borderRadius: BorderRadius.circular(AppRadius.r12),
+          border: Border.all(color: AppColors.searchCardBorder),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 20, color: AppColors.black),
-            SizedBox(width: AppWidth.w5),
-            BodyTitle(text: label, fontSize: 12, color: AppColors.searchRatingText),
+            if (icon != null) ...[
+              Icon(icon, size: 18, color: AppColors.primary),
+              SizedBox(width: AppWidth.w5),
+            ],
+            BodyTitle(text: label, fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w700),
           ],
         ),
       ),

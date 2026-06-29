@@ -56,8 +56,6 @@ class ForumQuestion {
     required this.details,
     required this.createdAt,
     this.replies = const [],
-    this.isLiked = false,
-    this.isDisliked = false,
   });
 
   final String id;
@@ -65,16 +63,12 @@ class ForumQuestion {
   final String details;
   final DateTime createdAt;
   final List<ForumReply> replies;
-  final bool isLiked;
-  final bool isDisliked;
 
   ForumQuestion copyWith({
     String? title,
     String? details,
     DateTime? createdAt,
     List<ForumReply>? replies,
-    bool? isLiked,
-    bool? isDisliked,
   }) {
     return ForumQuestion(
       id: id,
@@ -82,8 +76,6 @@ class ForumQuestion {
       details: details ?? this.details,
       createdAt: createdAt ?? this.createdAt,
       replies: replies ?? this.replies,
-      isLiked: isLiked ?? this.isLiked,
-      isDisliked: isDisliked ?? this.isDisliked,
     );
   }
 }
