@@ -69,19 +69,4 @@ class ForumCubit extends Cubit<ForumState> {
     return true;
   }
 
-  void toggleLike(String questionId) {
-    final questions = state.questions.map((question) {
-      if (question.id != questionId) return question;
-      return question.copyWith(isLiked: !question.isLiked);
-    }).toList();
-    emit(state.copyWith(questions: questions));
-  }
-
-  void toggleDislike(String questionId) {
-    final questions = state.questions.map((question) {
-      if (question.id != questionId) return question;
-      return question.copyWith(isDisliked: !question.isDisliked);
-    }).toList();
-    emit(state.copyWith(questions: questions));
-  }
 }
