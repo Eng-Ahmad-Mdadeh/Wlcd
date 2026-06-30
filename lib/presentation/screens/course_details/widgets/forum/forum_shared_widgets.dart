@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class ForumGradientButton extends StatelessWidget {
@@ -12,23 +13,16 @@ class ForumGradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]),
-        borderRadius: BorderRadius.circular(AppRadius.r14),
-        boxShadow: [BoxShadow(color: AppColors.searchBottomShadow, blurRadius: 18, offset: const Offset(0, 8))],
-      ),
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18, vertical: AppPaddingHeight.p12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r14)),
-        ),
-        onPressed: onPressed,
-        icon: icon == null ? const SizedBox.shrink() : Icon(icon, color: AppColors.white, size: 20),
-        label: BodyTitle(text: label, color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w700),
+    return CustomElevatedButton(
+      onPressed: onPressed,
+      color: AppColors.primary,
+      borderRadius: AppRadius.r9,
+      child: Row(
+        spacing: AppWidth.w5,
+        children: [
+          icon == null ? const SizedBox.shrink() : Icon(icon, color: AppColors.white, size: AppSize.s20),
+          BodyTitle(text: label, color: AppColors.white),
+        ],
       ),
     );
   }
@@ -56,10 +50,7 @@ class ForumOutlinedButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[
-              Icon(icon, size: 18, color: AppColors.primary),
-              SizedBox(width: AppWidth.w5),
-            ],
+            if (icon != null) ...[Icon(icon, size: 18, color: AppColors.primary), SizedBox(width: AppWidth.w5)],
             BodyTitle(text: label, fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w700),
           ],
         ),

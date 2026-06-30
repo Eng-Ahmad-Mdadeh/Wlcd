@@ -42,20 +42,9 @@ class _ForumListState extends State<ForumList> {
       key: const PageStorageKey('forum-tab-scroll'),
       padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
       children: [
-        _ForumIntroCard(questionsCount: widget.state.questions.length),
-        SizedBox(height: AppHeight.h16),
-        _ForumSearchField(controller: _searchController, onChanged: cubit.updateSearchQuery),
-        SizedBox(height: AppHeight.h24),
         Row(
           children: [
-            Expanded(
-              child: SectionTitle(
-                text: 'أسئلة في هذه الدورة ${widget.state.questions.length}',
-                fontSize: 20,
-                color: AppColors.searchCardTitle,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            Expanded(child: SectionTitle(text: 'أسئلة في هذه الدورة ${widget.state.questions.length}')),
             ForumGradientButton(label: 'اطرح سؤال', icon: Icons.add_rounded, onPressed: cubit.showQuestionForm),
           ],
         ),
@@ -65,58 +54,6 @@ class _ForumListState extends State<ForumList> {
         else
           ...widget.state.filteredQuestions.map((question) => ForumQuestionCard(question: question)),
       ],
-    );
-  }
-}
-
-
-class _ForumIntroCard extends StatelessWidget {
-  const _ForumIntroCard({required this.questionsCount});
-
-  final int questionsCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppPaddingWidth.p16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]),
-        borderRadius: BorderRadius.circular(AppRadius.r18),
-        boxShadow: [BoxShadow(color: AppColors.searchBottomShadow, blurRadius: 18, offset: const Offset(0, 8))],
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 48,
-            width: 48,
-            decoration: BoxDecoration(color: AppColors.white.withValues(alpha: .18), borderRadius: BorderRadius.circular(AppRadius.r14)),
-            child: const Icon(Icons.forum_outlined, color: AppColors.white),
-          ),
-          SizedBox(width: AppWidth.w12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SectionTitle(text: 'منتدى الدورة', fontSize: 17, color: AppColors.white, fontWeight: FontWeight.w700),
-                SizedBox(height: AppHeight.h6),
-                BodyTitle(
-                  text: 'اطرح سؤالك وتابع ردود المعلم والطلاب في مكان واحد.',
-                  fontSize: 12,
-                  color: AppColors.white.withValues(alpha: .86),
-                  maxLines: 2,
-                  height: 1.4,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: AppWidth.w8),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10, vertical: AppPaddingHeight.p8),
-            decoration: BoxDecoration(color: AppColors.white.withValues(alpha: .16), borderRadius: BorderRadius.circular(AppRadius.r12)),
-            child: BodyTitle(text: '$questionsCount أسئلة', fontSize: 12, color: AppColors.white, fontWeight: FontWeight.w700),
-          ),
-        ],
-      ),
     );
   }
 }
