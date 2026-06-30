@@ -37,8 +37,7 @@ class _ForumQuestionFormState extends State<ForumQuestionForm> {
       quillController: quillController,
       detailsHint: 'اكتب تفاصيل السؤال هنا',
       onPublish: () {
-        print(_titleController.text);
-        print(quillController.getPlainText());
+
         final isPublished = context.read<ForumCubit>().publishQuestion(
           title: _titleController.text,
           details: quillController.pastePlainText,
