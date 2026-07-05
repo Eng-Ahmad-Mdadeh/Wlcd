@@ -188,6 +188,16 @@ class AppLocalizationsAr extends AppLocalizations {
       'يسعدنا رؤيتك مرة أخرى! لاستخدام حسابك، يجب تسجيل الدخول أولاً.';
 
   @override
+  String get login_learning_banner_title => 'ابدأ رحلتك التعليمية اليوم';
+
+  @override
+  String get login_learning_banner_subtitle =>
+      'اكتشف دورات تساعدك على التطور مهارةً بعد مهارة.';
+
+  @override
+  String get create_new_account => 'إنشاء حساب جديد';
+
+  @override
   String get email => 'البريد الإلكتروني';
 
   @override

@@ -4,6 +4,7 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/cubit/remember_me/remember_me_cubit.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_form_section.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_header_section.dart';
+import 'package:wlcd/presentation/screens/login/widgets/login_learning_banner.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_home_indicator.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_status_bar.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_tabs.dart';
@@ -59,21 +60,34 @@ class _BodyLoginScreenState extends State<BodyLoginScreen> with SingleTickerProv
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(AppWidth.w39, AppHeight.h18, AppWidth.w39, AppHeight.h8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const LoginHeaderSection(),
-            SizedBox(height: AppHeight.h31),
-            LoginTabs(controller: _tabController),
-            SizedBox(height: AppHeight.h26),
-            LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
-            SizedBox(height: AppHeight.h70),
-            // const LoginSocialSection(),
-            const Spacer(),
-            const LoginHomeIndicator(),
-          ],
+      body: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(AppWidth.w39, AppHeight.h18, AppWidth.w39, AppHeight.h8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const LoginHeaderSection(),
+                      SizedBox(height: AppHeight.h18),
+                      const LoginLearningBanner(),
+                      SizedBox(height: AppHeight.h24),
+                      LoginTabs(controller: _tabController),
+                      SizedBox(height: AppHeight.h22),
+                      LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
+                      SizedBox(height: AppHeight.h24),
+                    ],
+                  ),
+                ),
+              ),
+              const LoginHomeIndicator(),
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:wlcd/presentation/screens/login/widgets/forgot_password_bottom_sheet.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginFormSection extends StatefulWidget {
@@ -96,6 +97,24 @@ class _LoginFormSectionState extends State<LoginFormSection> {
                 }
               }
             },
+          ),
+          SizedBox(height: AppHeight.h12),
+          OutlinedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.person_add_alt_1_rounded, size: AppSize.s18),
+            label: BodyTitle(
+              text: context.loc.create_new_account,
+              color: AppColors.loginPrimary,
+              fontSize: AppFontSize.s15,
+              fontWeight: AppFontWeight.bold,
+            ),
+            style: OutlinedButton.styleFrom(
+              minimumSize: Size(double.infinity, AppHeight.h50),
+              foregroundColor: AppColors.loginPrimary,
+              side: BorderSide(color: AppColors.loginPrimary.withOpacity(.18)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r24)),
+              backgroundColor: AppColors.loginPrimary.withOpacity(.04),
+            ),
           ),
         ],
       ),

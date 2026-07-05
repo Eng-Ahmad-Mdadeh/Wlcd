@@ -188,6 +188,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'We happy to see you again! to use your account, you should sign in first.';
 
   @override
+  String get login_learning_banner_title => 'Start your learning journey today';
+
+  @override
+  String get login_learning_banner_subtitle =>
+      'Discover courses that help you grow one skill at a time.';
+
+  @override
+  String get create_new_account => 'Create a new account';
+
+  @override
   String get email => 'Email';
 
   @override

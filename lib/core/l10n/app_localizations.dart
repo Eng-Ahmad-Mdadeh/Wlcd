@@ -452,6 +452,24 @@ abstract class AppLocalizations {
   /// **'We happy to see you again! to use your account, you should sign in first.'**
   String get login_welcome_subtitle;
 
+  /// No description provided for @login_learning_banner_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your learning journey today'**
+  String get login_learning_banner_title;
+
+  /// No description provided for @login_learning_banner_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover courses that help you grow one skill at a time.'**
+  String get login_learning_banner_subtitle;
+
+  /// No description provided for @create_new_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new account'**
+  String get create_new_account;
+
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
