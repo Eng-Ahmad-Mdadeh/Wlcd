@@ -284,6 +284,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_recently_added => 'أضيف حديثًا';
 
   @override
+  String get home_explore_trainers => 'استكشف المدربين';
+
+  @override
   String get home_see_more => 'عرض المزيد';
 
   @override

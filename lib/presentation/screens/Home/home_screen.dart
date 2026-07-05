@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/continue_learning_card.dart';
-import 'package:wlcd/presentation/widgets/course/courses_grid.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
+import 'package:wlcd/presentation/screens/Home/widgets/home_trainers_section.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/section_header.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/presentation/widgets/course/courses_grid.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -106,6 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: AppHeight.h14),
                 CoursesGrid(courses: recentCourses),
+                SizedBox(height: AppHeight.h28),
+
+                SectionHeaderRow(
+                  title: context.loc.home_explore_trainers,
+                  actionText: context.loc.home_see_more,
+                  onActionPressed: () => TeachersRoute().push(context),
+                ),
+                SizedBox(height: AppHeight.h14),
+                const HomeTrainersSection(trainers: teachers),
                 SizedBox(height: AppHeight.h28),
 
                 SectionHeaderRow(

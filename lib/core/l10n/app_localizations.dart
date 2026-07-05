@@ -632,6 +632,12 @@ abstract class AppLocalizations {
   /// **'Recently added'**
   String get home_recently_added;
 
+  /// No description provided for @home_explore_trainers.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore trainers'**
+  String get home_explore_trainers;
+
   /// No description provided for @home_see_more.
   ///
   /// In en, this message translates to:

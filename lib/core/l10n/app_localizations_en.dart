@@ -283,6 +283,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_recently_added => 'Recently added';
 
   @override
+  String get home_explore_trainers => 'Explore trainers';
+
+  @override
   String get home_see_more => 'See more';
 
   @override
