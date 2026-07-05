@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/course_details/widgets/announcements_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
@@ -19,13 +18,12 @@ class CourseDetailsScreen extends StatelessWidget {
   static const _tabs = [
     Tab(text: 'Lessons'),
     Tab(text: 'About'),
-    Tab(text: 'Announcements'),
+    Tab(text: 'المنتدى'),
     Tab(text: 'Downloaded'),
     Tab(text: 'Resources'),
-    Tab(text: 'المنتدى'),
   ];
 
-  static const _pages = [LessonsTab(), AboutTab(), AnnouncementsTab(), DownloadedTab(), ResourcesTab(), ForumTab()];
+  static const _pages = [LessonsTab(), AboutTab(), ForumTab(), DownloadedTab(), ResourcesTab()];
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +241,6 @@ class CourseDetailsScreen extends StatelessWidget {
   }
 }
 
-
 void _showFavoriteGroupsSheet(BuildContext context) {
   final groupController = TextEditingController();
 
@@ -251,9 +248,7 @@ void _showFavoriteGroupsSheet(BuildContext context) {
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24)),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24))),
     builder: (sheetContext) {
       return Padding(
         padding: EdgeInsetsDirectional.fromSTEB(
@@ -307,8 +302,17 @@ void _showFavoriteGroupsSheet(BuildContext context) {
                           backgroundColor: AppColors.lightPrim,
                           child: const Icon(Icons.folder_rounded, color: AppColors.primary),
                         ),
-                        title: SectionTitle(text: group.name, color: AppColors.text, fontSize: 14, fontWeight: FontWeight.w600),
-                        subtitle: BodyTitle(text: '${group.courses.length} كورسات', color: AppColors.muted, fontSize: 12),
+                        title: SectionTitle(
+                          text: group.name,
+                          color: AppColors.text,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        subtitle: BodyTitle(
+                          text: '${group.courses.length} كورسات',
+                          color: AppColors.muted,
+                          fontSize: 12,
+                        ),
                         onTap: () {
                           FavoritesStore.addCourseToGroup(course: FavoritesStore.demoCourse, groupName: group.name);
                           Navigator.of(sheetContext).pop();
@@ -344,7 +348,10 @@ void _showFavoriteGroupsSheet(BuildContext context) {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
                     ),
                     onPressed: () {
-                      FavoritesStore.addCourseToGroup(course: FavoritesStore.demoCourse, groupName: groupController.text);
+                      FavoritesStore.addCourseToGroup(
+                        course: FavoritesStore.demoCourse,
+                        groupName: groupController.text,
+                      );
                       Navigator.of(sheetContext).pop();
                     },
                     icon: const Icon(Icons.add_rounded, color: AppColors.white),

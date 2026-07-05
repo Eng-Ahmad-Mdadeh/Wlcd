@@ -7,7 +7,6 @@ import 'package:wlcd/presentation/cubit/forum/forum_cubit.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/forum/forum_shared_widgets.dart';
 import 'package:wlcd/presentation/widgets/custom_html_editor.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
-import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class ForumQuestionForm extends StatefulWidget {
@@ -37,12 +36,13 @@ class _ForumQuestionFormState extends State<ForumQuestionForm> {
       quillController: quillController,
       detailsHint: 'اكتب تفاصيل السؤال هنا',
       onPublish: () {
-
         final isPublished = context.read<ForumCubit>().publishQuestion(
           title: _titleController.text,
-          details: quillController.pastePlainText,
+          details: quillController.document.toPlainText(),
         );
-        if (!isPublished) _showMessage(context, 'اكتب عنوان السؤال والتفاصيل أولاً');
+        if (!isPublished) {
+          _showMessage(context, 'اكتب عنوان السؤال والتفاصيل أولاً');
+        }
       },
     );
   }
@@ -74,8 +74,12 @@ class _ForumReplyFormState extends State<ForumReplyForm> {
       quillController: _replyController,
       detailsHint: 'اكتب ردك هنا',
       onPublish: () {
-        final isPublished = context.read<ForumCubit>().publishReply(_replyController.pastePlainText);
-        if (!isPublished) _showMessage(context, 'اكتب الرد أولاً');
+        final isPublished = context.read<ForumCubit>().publishReply(
+          _replyController.document.toPlainText(),
+        );
+        if (!isPublished) {
+          _showMessage(context, 'اكتب الرد أولاً');
+        }
       },
     );
   }
@@ -101,9 +105,13 @@ class ForumEditorScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ListView(
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
+      padding: EdgeInsets.fromLTRB(
+        AppPaddingWidth.p18,
+        0,
+        AppPaddingWidth.p18,
+        AppPaddingHeight.p90,
+      ),
       children: [
         SectionTitle(text: title, color: AppColors.searchCardTitle),
         if (titleController != null) ...[

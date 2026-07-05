@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum ProfileMenuAction {
   personalInformation,
   categorySelection,
-  teachers,
+  // teachers,
   orderHistory,
   progressHistory,
   privacyPolicy,
@@ -39,15 +39,15 @@ const List<ProfileMenuItemData> profileAccountItems = [
     action: ProfileMenuAction.progressHistory,
   ),
   ProfileMenuItemData(
-    title: 'التصنيفات التعليمية',
+    title: 'إحجز درساً',
     icon: Icons.category_outlined,
     action: ProfileMenuAction.categorySelection,
   ),
-  ProfileMenuItemData(
-    title: 'المدرسون',
-    icon: Icons.school_outlined,
-    action: ProfileMenuAction.teachers,
-  ),
+  // ProfileMenuItemData(
+  //   title: 'المدرسون',
+  //   icon: Icons.school_outlined,
+  //   action: ProfileMenuAction.teachers,
+  // ),
 ];
 
 const List<ProfileMenuItemData> profileBenefitsItems = [

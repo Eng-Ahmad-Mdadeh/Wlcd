@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_card.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_header.dart';
 import 'package:wlcd/presentation/screens/category_selection/widgets/category_selection_data.dart';
@@ -68,7 +69,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
             marginStart: AppMarginWidth.m10,
             marginBottom: AppMarginHeight.m20,
             title: "التالي",
-            onPressed: () {},
+            onPressed: () {
+              TeachersRoute().push(context);
+            },
           ),
         ],
       ),

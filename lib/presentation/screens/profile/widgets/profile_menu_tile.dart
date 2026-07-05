@@ -50,8 +50,8 @@ class ProfileMenuTile extends StatelessWidget {
       ProfileMenuAction.orderHistory => context.loc.order_history,
       ProfileMenuAction.progressHistory => 'سجل التقدم',
       ProfileMenuAction.personalInformation => 'المعلومات الشخصية',
-      ProfileMenuAction.categorySelection => 'التصنيفات التعليمية',
-      ProfileMenuAction.teachers => 'المدرسون',
+      ProfileMenuAction.categorySelection => 'إحجز درساً',
+      // ProfileMenuAction.teachers => 'المدرسون',
       ProfileMenuAction.privacyPolicy => 'سياسة الخصوصية',
       ProfileMenuAction.faqs => 'الأسئلة الشائعة',
       ProfileMenuAction.termsAndConditions => 'الشروط والأحكام',
@@ -69,8 +69,8 @@ class ProfileMenuTile extends StatelessWidget {
         PersonalInformationRoute().push(context);
       case ProfileMenuAction.categorySelection:
         CategorySelectionRoute().push(context);
-      case ProfileMenuAction.teachers:
-        TeachersRoute().push(context);
+      // case ProfileMenuAction.teachers:
+      //   TeachersRoute().push(context);
       case ProfileMenuAction.privacyPolicy:
         PrivacyPolicyRoute().push(context);
       case ProfileMenuAction.faqs:
