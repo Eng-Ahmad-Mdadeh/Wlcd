@@ -88,6 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
+                BannersWidget(),
+                SizedBox(height: AppHeight.h28),
                 SectionHeaderRow(
                   title: context.loc.home_recently_added,
                   actionText: context.loc.home_see_more,
@@ -96,8 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: AppHeight.h14),
                 CoursesGrid(courses: recentCourses),
                 SizedBox(height: AppHeight.h28),
-                BannersWidget(),
-                SizedBox(height: AppHeight.h28),
+
                 SectionHeaderRow(
                   title: context.loc.home_continue_learning,
                   actionText: context.loc.home_see_more,

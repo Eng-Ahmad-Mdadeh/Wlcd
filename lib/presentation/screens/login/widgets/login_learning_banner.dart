@@ -16,9 +16,9 @@ class LoginLearningBanner extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppWidth.w16, vertical: AppHeight.h14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppRadius.r24),
-        gradient: const LinearGradient(
-          begin: Alignment.topDirectional.centerStart,
-          end: Alignment.bottomDirectional.centerEnd,
+        gradient:  LinearGradient(
+          begin: Alignment.centerRight,
+          end: Alignment.centerLeft,
           colors: [Color(0xFFF3F7FF), Color(0xFFFFF8E8)],
         ),
         border: Border.all(color: AppColors.loginFieldBorder),

@@ -20,13 +20,13 @@ class LoginHeaderSection extends StatelessWidget {
           fontSize: AppFontSize.s25,
           height: 1,
         ),
-        SizedBox(height: AppHeight.h8),
-        BodyTitle(
-          overflow: TextOverflow.visible,
-          text: context.loc.login_welcome_subtitle,
-          color: AppColors.loginSubtitle,
-          fontWeight: AppFontWeight.regular,
-        ),
+        // SizedBox(height: AppHeight.h8),
+        // BodyTitle(
+        //   overflow: TextOverflow.visible,
+        //   text: context.loc.login_welcome_subtitle,
+        //   color: AppColors.loginSubtitle,
+        //   fontWeight: AppFontWeight.regular,
+        // ),
       ],
     );
   }

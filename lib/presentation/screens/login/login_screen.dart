@@ -63,7 +63,7 @@ class _BodyLoginScreenState extends State<BodyLoginScreen> with SingleTickerProv
       body: SafeArea(
         top: false,
         child: Padding(
-          padding: EdgeInsets.fromLTRB(AppWidth.w39, AppHeight.h18, AppWidth.w39, AppHeight.h8),
+          padding: EdgeInsets.fromLTRB(AppWidth.w20, AppHeight.h18, AppWidth.w20, AppHeight.h8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
