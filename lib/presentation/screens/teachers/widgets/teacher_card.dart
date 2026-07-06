@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/presentation/screens/teachers/teacher_profile_screen.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/rating_badge.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/specialty_chip.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_photo.dart';
-import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
 
 class TeacherCard extends StatelessWidget {
   const TeacherCard({super.key, required this.teacher});
@@ -17,12 +16,8 @@ class TeacherCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(AppRadius.r27),
-      onTap: () => CustomBottomSheet.show(
-        context,
-        title: 'حجز جلسة',
-        heightFactor: .75,
-        borderRadius: AppRadius.r30,
-        body: TeacherBookingSheet(teacher: teacher),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => TeacherProfileScreen(teacher: teacher)),
       ),
       child: Container(
         padding: EdgeInsets.all(AppSize.s14),
