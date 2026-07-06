@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_photo.dart';
+import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -15,7 +14,7 @@ class HomeTrainersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppHeight.h220,
+      height: AppHeight.h225,
       child: ListView.separated(
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
@@ -35,74 +34,79 @@ class HomeTrainerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(AppRadius.r18),
-      onTap: () => TeachersRoute().push(context),
-      child: Container(
-        width: AppWidth.w150,
-        padding: EdgeInsets.all(AppPaddingWidth.p10),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppRadius.r18),
-          border: Border.all(color: AppColors.teacherCardBorder),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.blackCow.withValues(alpha: .08),
-              blurRadius: AppRadius.r18,
-              offset: Offset(0, AppHeight.h8),
+    return Container(
+      width: AppWidth.w150,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.r18),
+        border: Border.all(color: AppColors.teacherCardBorder),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.blackCow.withValues(alpha: .08),
+            blurRadius: AppRadius.r18,
+            offset: Offset(0, AppHeight.h8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ImageView(
+            imagePath: trainer.imageUrl,
+            fit: BoxFit.fill,
+            width: double.infinity,
+            height: AppHeight.h135,
+            radius: BorderRadius.only(
+              topRight: Radius.circular(AppRadius.r18),
+              topLeft: Radius.circular(AppRadius.r18),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: SizedBox(
-                width: AppWidth.w98,
-                height: AppHeight.h113,
-                child: TeacherPhoto(teacher: trainer),
-              ),
-            ),
-            SizedBox(height: AppHeight.h10),
-            SectionTitle(
-              text: trainer.name,
-              color: AppColors.text,
-              fontSize: AppSize.s14,
-              fontWeight: FontWeight.w800,
-              maxLines: 1,
-            ),
-            SizedBox(height: AppHeight.h6),
-            BodyTitle(
-              text: trainer.specialty,
-              color: trainer.accentColor,
-              fontSize: AppSize.s11,
-              fontWeight: FontWeight.w700,
-              maxLines: 1,
-            ),
-            SizedBox(height: AppHeight.h8),
-            Row(
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.star_rounded, size: AppSize.s15, color: AppColors.searchStar),
-                SizedBox(width: AppWidth.w3),
+                SectionTitle(
+                  text: trainer.name,
+                  color: AppColors.text,
+                  fontSize: AppSize.s14,
+                  fontWeight: FontWeight.w800,
+                  maxLines: 1,
+                ),
+                SizedBox(height: AppHeight.h6),
                 BodyTitle(
-                  text: trainer.rating.toStringAsFixed(1),
-                  color: AppColors.seeMore,
+                  text: trainer.specialty,
+                  color: trainer.accentColor,
                   fontSize: AppSize.s11,
                   fontWeight: FontWeight.w700,
+                  maxLines: 1,
                 ),
-                const Spacer(),
-                Icon(Icons.groups_rounded, size: AppSize.s14, color: AppColors.accent),
-                SizedBox(width: AppWidth.w3),
-                BodyTitle(
-                  text: trainer.students,
-                  color: AppColors.muted,
-                  fontSize: AppSize.s10,
-                  fontWeight: FontWeight.w600,
+                SizedBox(height: AppHeight.h8),
+                Row(
+                  children: [
+                    Icon(Icons.star_rounded, size: AppSize.s15, color: AppColors.searchStar),
+                    SizedBox(width: AppWidth.w3),
+                    BodyTitle(
+                      text: trainer.rating.toStringAsFixed(1),
+                      color: AppColors.seeMore,
+                      fontSize: AppSize.s11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    const Spacer(),
+                    Icon(Icons.groups_rounded, size: AppSize.s14, color: AppColors.accent),
+                    SizedBox(width: AppWidth.w3),
+                    BodyTitle(
+                      text: trainer.students,
+                      color: AppColors.muted,
+                      fontSize: AppSize.s10,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

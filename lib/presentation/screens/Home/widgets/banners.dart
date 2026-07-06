@@ -1,4 +1,3 @@
-import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 
@@ -26,6 +25,7 @@ class BannersWidget extends StatelessWidget {
           );
         },
         options: CarouselOptions(
+          clipBehavior: Clip.none,
           viewportFraction: 1,
           enlargeCenterPage: true,
           enlargeStrategy: CenterPageEnlargeStrategy.scale,

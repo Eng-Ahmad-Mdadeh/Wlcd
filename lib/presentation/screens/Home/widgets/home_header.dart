@@ -93,7 +93,7 @@ class HeaderActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const HeaderIconButton(icon: Icons.search, semanticLabel: 'search'),
+        const HeaderIconButton(icon: Icons.language_rounded, semanticLabel: 'search'),
         SizedBox(width: AppWidth.w8),
         HeaderIconButton(
           icon: Icons.notifications_none_outlined,

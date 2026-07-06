@@ -320,6 +320,7 @@ class AppHeight {
   static double h200 = 200.0.h;
   static double h210 = 210.0.h;
   static double h220 = 220.0.h;
+  static double h225 = 225.0.h;
   static double h230 = 230.0.h;
   static double h240 = 240.0.h;
   static double h260 = 260.0.h;
