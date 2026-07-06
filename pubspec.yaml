@@ -92,3 +92,26 @@ flutter:
         - asset: assets/fonts/rubik/Rubik-Black.ttf
           weight: 900
 
+    - family: sans_ar
+      fonts:
+        - asset: assets/fonts/sans_ar/ArbFonts.com-(6)/ArbFONTS-THESANSARABIC-LIGHT.ttf
+          weight: 300
+        - asset: assets/fonts/sans_ar/ArbFonts.com-(6)/ArbFONTS-The-Sans-Plain.otf
+          weight: 400
+        - asset: assets/fonts/sans_ar/ArbFonts.com-(6)/ArbFONTS-THESANSARABIC-BOLD.ttf
+          weight: 700
+
+    - family: sans_en
+      fonts:
+        - asset: assets/fonts/sans_en/SourceSansPro-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/sans_en/SourceSansPro-Light.ttf
+          weight: 300
+        - asset: assets/fonts/sans_en/SourceSansPro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/sans_en/SourceSansPro-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/sans_en/SourceSansPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/sans_en/SourceSansPro-Black.ttf
+          weight: 900

@@ -19,7 +19,7 @@ class AppTheme {
   static ThemeData darkTheme(String languageCode) => _theme(_resolveFontFamily(languageCode)).copyWith();
 
   static String _resolveFontFamily(String languageCode) =>
-      languageCode == 'ar' ? AppFontFamily.tajawal : AppFontFamily.cairo;
+      languageCode == 'ar' ? AppFontFamily.sansAr : AppFontFamily.sansEn;
 
   static AppBarTheme get _appBarTheme => const AppBarTheme(
     elevation: 0.0,
