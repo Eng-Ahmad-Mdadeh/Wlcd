@@ -6,6 +6,8 @@ class AppFontFamily {
   static const String rubik = "Rubik";
   static const String poppins = "Poppins";
   static const String cairo = "Cairo";
+  static const String sansAr = "sans_ar";
+  static const String sansEn = "sans_en";
   static const String almarai = "Almarai";
 }
 
