@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/teachers/teacher_profile_screen.dart';
+import 'package:wlcd/presentation/screens/teachers/teacher_profile/teacher_profile_screen.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/rating_badge.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/specialty_chip.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';

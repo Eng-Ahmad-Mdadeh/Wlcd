@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_profile_widgets.dart';
+import 'package:wlcd/presentation/screens/teachers/teacher_profile/widgets/teacher_profile_widgets.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
   const TeacherProfileScreen({super.key, required this.teacher});
