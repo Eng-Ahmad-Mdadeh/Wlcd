@@ -16,11 +16,13 @@ import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
 import 'package:wlcd/presentation/screens/faqs/faqs_screen.dart';
 import 'package:wlcd/presentation/screens/privacy_policy/privacy_policy_screen.dart';
 import 'package:wlcd/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
+import 'package:wlcd/presentation/screens/teachers/teacher_profile/teacher_profile_screen.dart';
 import 'package:wlcd/presentation/screens/teachers/teachers_screen.dart';
 import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
 import 'package:wlcd/presentation/screens/personal_information/personal_information_screen.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 
 import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
 import 'package:wlcd/presentation/screens/progress_history/progress_history_screen.dart';
@@ -154,11 +156,25 @@ class OrderHistoryRoute extends GoRouteData with $OrderHistoryRoute {
 
 //#region Teachers
 
-@TypedGoRoute<TeachersRoute>(path: '/teachers')
+@TypedGoRoute<TeachersRoute>(
+  path: '/teachers',
+  routes: [TypedGoRoute<TeacherProfileRoute>(path: 'profile')],
+)
 class TeachersRoute extends GoRouteData with $TeachersRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
     return const TeachersScreen().buildPage(pageAnimation: PageAnimation.slide);
+  }
+}
+
+class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
+  const TeacherProfileRoute({required this.$extra});
+
+  final TeacherData $extra;
+
+  @override
+  CustomTransitionPage<void> buildPage(context, state) {
+    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.slide);
   }
 }
 //#endregion
