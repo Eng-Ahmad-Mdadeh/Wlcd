@@ -127,6 +127,7 @@ class AppPaddingHeight {
   static double p20 = 20.0.h;
   static double p23 = 23.0.h;
   static double p25 = 25.0.h;
+  static double p24 = 24.0.h;
   static double p27 = 27.0.h;
   static double p30 = 30.0.h;
   static double p33 = 33.0.h;

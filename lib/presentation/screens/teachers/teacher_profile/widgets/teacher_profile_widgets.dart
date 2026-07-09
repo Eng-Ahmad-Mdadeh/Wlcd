@@ -17,7 +17,7 @@ class TeacherProfileHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, AppPaddingHeight.p70, AppPaddingWidth.p20, AppPaddingHeight.p24),
+      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, 0, AppPaddingWidth.p20, AppPaddingHeight.p24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
@@ -34,15 +34,36 @@ class TeacherProfileHero extends StatelessWidget {
               color: AppColors.white,
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(color: teacher.accentColor.withValues(alpha: .22), blurRadius: 30, offset: const Offset(0, 14)),
+                BoxShadow(
+                  color: teacher.accentColor.withValues(alpha: .22),
+                  blurRadius: 30,
+                  offset: const Offset(0, 14),
+                ),
               ],
             ),
-            child: ClipOval(child: ImageView(imagePath: teacher.imageUrl, width: AppWidth.w110, height: AppHeight.h110, fit: BoxFit.cover)),
+            child: ClipOval(
+              child: ImageView(
+                imagePath: teacher.imageUrl,
+                width: AppWidth.w110,
+                height: AppHeight.h110,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SizedBox(height: AppHeight.h14),
-          SectionTitle(text: teacher.name, color: AppColors.text, fontSize: AppFontSize.s24, fontWeight: AppFontWeight.extraBold),
+          SectionTitle(
+            text: teacher.name,
+            color: AppColors.text,
+            fontSize: AppFontSize.s24,
+            fontWeight: AppFontWeight.extraBold,
+          ),
           SizedBox(height: AppHeight.h6),
-          BodyTitle(text: teacher.specialty, color: teacher.accentColor, fontSize: AppFontSize.s14, fontWeight: AppFontWeight.extraBold),
+          BodyTitle(
+            text: teacher.specialty,
+            color: teacher.accentColor,
+            fontSize: AppFontSize.s14,
+            fontWeight: AppFontWeight.extraBold,
+          ),
           SizedBox(height: AppHeight.h12),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -89,11 +110,32 @@ class TeacherProfileStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: TeacherStatCard(value: teacher.students, label: 'طالب', icon: Icons.groups_rounded, color: teacher.accentColor)),
+        Expanded(
+          child: TeacherStatCard(
+            value: teacher.students,
+            label: 'طالب',
+            icon: Icons.groups_rounded,
+            color: teacher.accentColor,
+          ),
+        ),
         SizedBox(width: AppWidth.w12),
-        Expanded(child: TeacherStatCard(value: teacher.rating.toStringAsFixed(1), label: 'تقييم', icon: Icons.star_rounded, color: AppColors.teacherAmber)),
+        Expanded(
+          child: TeacherStatCard(
+            value: teacher.rating.toStringAsFixed(1),
+            label: 'تقييم',
+            icon: Icons.star_rounded,
+            color: AppColors.teacherAmber,
+          ),
+        ),
         SizedBox(width: AppWidth.w12),
-        const Expanded(child: TeacherStatCard(value: '12', label: 'دورة', icon: Icons.play_lesson_rounded, color: AppColors.teacherGreen)),
+        const Expanded(
+          child: TeacherStatCard(
+            value: '12',
+            label: 'دورة',
+            icon: Icons.play_lesson_rounded,
+            color: AppColors.teacherGreen,
+          ),
+        ),
       ],
     );
   }
@@ -120,7 +162,12 @@ class TeacherStatCard extends StatelessWidget {
         children: [
           Icon(icon, color: color, size: AppSize.s22),
           SizedBox(height: AppHeight.h6),
-          SectionTitle(text: value, color: AppColors.text, fontSize: AppFontSize.s17, fontWeight: AppFontWeight.extraBold),
+          SectionTitle(
+            text: value,
+            color: AppColors.text,
+            fontSize: AppFontSize.s17,
+            fontWeight: AppFontWeight.extraBold,
+          ),
           SizedBox(height: AppHeight.h2),
           BodyTitle(text: label, color: AppColors.muted, fontSize: AppFontSize.s12, fontWeight: AppFontWeight.semiBold),
         ],
@@ -138,9 +185,19 @@ class TeacherProfileActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TeacherActionButton(label: 'احجز حصة', icon: Icons.calendar_month_rounded, color: AppColors.teacherGreen, onTap: () => _showBooking(context)),
+        TeacherActionButton(
+          label: 'احجز حصة',
+          icon: Icons.calendar_month_rounded,
+          color: AppColors.teacherGreen,
+          onTap: () => _showBooking(context),
+        ),
         SizedBox(height: AppHeight.h12),
-        TeacherActionButton(label: 'تواصل معي', icon: Icons.chat_bubble_outline_rounded, color: AppColors.seeMore, onTap: () {}),
+        TeacherActionButton(
+          label: 'تواصل معي',
+          icon: Icons.chat_bubble_outline_rounded,
+          color: AppColors.seeMore,
+          onTap: () {},
+        ),
         SizedBox(height: AppHeight.h12),
         TeacherActionButton(label: 'مشاركة', icon: Icons.share_rounded, color: AppColors.orange, onTap: () {}),
       ],
@@ -148,12 +205,24 @@ class TeacherProfileActions extends StatelessWidget {
   }
 
   void _showBooking(BuildContext context) {
-    CustomBottomSheet.show(context, title: 'حجز جلسة', heightFactor: .75, borderRadius: AppRadius.r30, body: TeacherBookingSheet(teacher: teacher));
+    CustomBottomSheet.show(
+      context,
+      title: 'حجز جلسة',
+      heightFactor: .75,
+      borderRadius: AppRadius.r30,
+      body: TeacherBookingSheet(teacher: teacher),
+    );
   }
 }
 
 class TeacherActionButton extends StatelessWidget {
-  const TeacherActionButton({super.key, required this.label, required this.icon, required this.color, required this.onTap});
+  const TeacherActionButton({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
 
   final String label;
   final IconData icon;
@@ -178,7 +247,12 @@ class TeacherActionButton extends StatelessWidget {
           children: [
             Icon(icon, color: AppColors.white, size: AppSize.s24),
             SizedBox(width: AppWidth.w10),
-            SectionTitle(text: label, color: AppColors.white, fontSize: AppFontSize.s18, fontWeight: AppFontWeight.extraBold),
+            SectionTitle(
+              text: label,
+              color: AppColors.white,
+              fontSize: AppFontSize.s18,
+              fontWeight: AppFontWeight.extraBold,
+            ),
           ],
         ),
       ),
@@ -266,9 +340,17 @@ class TeacherCoursesCard extends StatelessWidget {
       icon: Icons.menu_book_outlined,
       child: Column(
         children: [
-          TeacherCourseTile(color: teacher.accentColor, title: 'رحلة التعلم معي', subtitle: 'مسار تطبيقي يبدأ من الأساسيات حتى بناء مشروع عملي.'),
+          TeacherCourseTile(
+            color: teacher.accentColor,
+            title: 'رحلة التعلم معي',
+            subtitle: 'مسار تطبيقي يبدأ من الأساسيات حتى بناء مشروع عملي.',
+          ),
           SizedBox(height: AppHeight.h12),
-          TeacherCourseTile(color: AppColors.teacherGreen, title: teacher.specialty, subtitle: 'دروس قصيرة، تمارين، ومتابعة تساعدك على تحقيق نتائج واضحة.'),
+          TeacherCourseTile(
+            color: AppColors.teacherGreen,
+            title: teacher.specialty,
+            subtitle: 'دروس قصيرة، تمارين، ومتابعة تساعدك على تحقيق نتائج واضحة.',
+          ),
         ],
       ),
     );
@@ -290,7 +372,9 @@ class TeacherSectionCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r28),
         border: Border.all(color: AppColors.teacherCardBorder),
-        boxShadow: [BoxShadow(color: AppColors.blackCow.withValues(alpha: .05), blurRadius: 24, offset: const Offset(0, 12))],
+        boxShadow: [
+          BoxShadow(color: AppColors.blackCow.withValues(alpha: .05), blurRadius: 24, offset: const Offset(0, 12)),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -298,7 +382,12 @@ class TeacherSectionCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SectionTitle(text: title, color: AppColors.text, fontSize: AppFontSize.s20, fontWeight: AppFontWeight.extraBold),
+              SectionTitle(
+                text: title,
+                color: AppColors.text,
+                fontSize: AppFontSize.s20,
+                fontWeight: AppFontWeight.extraBold,
+              ),
               SizedBox(width: AppWidth.w10),
               Icon(icon, color: AppColors.seeMore, size: AppSize.s24),
             ],
@@ -333,7 +422,10 @@ class TeacherCourseTile extends StatelessWidget {
           Container(
             width: AppWidth.w70,
             height: AppHeight.h70,
-            decoration: BoxDecoration(color: color.withValues(alpha: .14), borderRadius: BorderRadius.circular(AppRadius.r18)),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .14),
+              borderRadius: BorderRadius.circular(AppRadius.r18),
+            ),
             child: Icon(Icons.school_rounded, color: color, size: AppSize.s30),
           ),
           SizedBox(width: AppWidth.w12),
@@ -341,7 +433,13 @@ class TeacherCourseTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SectionTitle(text: title, textAlign: TextAlign.right, color: AppColors.text, fontSize: AppFontSize.s16, maxLines: 1),
+                SectionTitle(
+                  text: title,
+                  textAlign: TextAlign.right,
+                  color: AppColors.text,
+                  fontSize: AppFontSize.s16,
+                  maxLines: 1,
+                ),
                 SizedBox(height: AppHeight.h6),
                 BodyTitle(
                   text: subtitle,

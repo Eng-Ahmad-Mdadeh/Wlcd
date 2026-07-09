@@ -17,7 +17,8 @@ class TeacherProfileScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: AppHeight.h260,
+            expandedHeight: AppHeight.h300,
+            actionsPadding: EdgeInsets.zero,
             backgroundColor: AppColors.white,
             surfaceTintColor: AppColors.white,
             flexibleSpace: FlexibleSpaceBar(background: TeacherProfileHero(teacher: teacher)),
