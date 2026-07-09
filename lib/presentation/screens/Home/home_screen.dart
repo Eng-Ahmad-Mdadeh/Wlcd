@@ -5,6 +5,7 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/continue_learning_card.dart';
+import 'package:wlcd/presentation/screens/Home/widgets/external_courses_section.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_trainers_section.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/section_header.dart';
@@ -101,6 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: AppHeight.h14),
                 CoursesGrid(courses: recentCourses),
+                SizedBox(height: AppHeight.h28),
+                SectionHeaderRow(title: context.loc.home_external_courses),
+                SizedBox(height: AppHeight.h14),
+                const ExternalCoursesSection(),
                 SizedBox(height: AppHeight.h28),
 
                 SectionHeaderRow(

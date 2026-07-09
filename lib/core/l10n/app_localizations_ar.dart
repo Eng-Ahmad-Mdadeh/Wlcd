@@ -308,6 +308,29 @@ class AppLocalizationsAr extends AppLocalizations {
       'دليل الخدمات المصرفية الاستثمارية من الصفر';
 
   @override
+  String get home_external_courses => 'كورسات خارج المنصة';
+
+  @override
+  String get home_external_course_platform_coursera => 'كورسيرا';
+
+  @override
+  String get home_external_course_title_coursera => 'شهادة تحليل البيانات من Google';
+
+  @override
+  String get home_external_course_description_coursera =>
+      'طوّر مهارات جاهزة للعمل في تحليل البيانات من خلال مشاريع تطبيقية على كورسيرا.';
+
+  @override
+  String get home_external_course_platform_google => 'Google';
+
+  @override
+  String get home_external_course_title_google => 'كورس التسويق الرقمي من Google';
+
+  @override
+  String get home_external_course_description_google =>
+      'تعلّم تخطيط الحملات وتحسين محركات البحث والتحليلات من موارد Google التعليمية.';
+
+  @override
   String get order_history => 'سجل الطلبات';
 
   @override

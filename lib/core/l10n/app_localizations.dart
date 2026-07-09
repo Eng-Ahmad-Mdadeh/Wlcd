@@ -674,6 +674,48 @@ abstract class AppLocalizations {
   /// **'Guide to Investment Banking From Zero'**
   String get home_course_title_investment_banking_zero;
 
+  /// No description provided for @home_external_courses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses outside the platform'**
+  String get home_external_courses;
+
+  /// No description provided for @home_external_course_platform_coursera.
+  ///
+  /// In en, this message translates to:
+  /// **'Coursera'**
+  String get home_external_course_platform_coursera;
+
+  /// No description provided for @home_external_course_title_coursera.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Data Analytics Certificate'**
+  String get home_external_course_title_coursera;
+
+  /// No description provided for @home_external_course_description_coursera.
+  ///
+  /// In en, this message translates to:
+  /// **'Build job-ready data analysis skills through practical projects on Coursera.'**
+  String get home_external_course_description_coursera;
+
+  /// No description provided for @home_external_course_platform_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get home_external_course_platform_google;
+
+  /// No description provided for @home_external_course_title_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Digital Marketing Course'**
+  String get home_external_course_title_google;
+
+  /// No description provided for @home_external_course_description_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn campaign planning, SEO, and analytics from Google learning resources.'**
+  String get home_external_course_description_google;
+
   /// No description provided for @order_history.
   ///
   /// In en, this message translates to:

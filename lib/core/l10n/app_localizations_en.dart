@@ -307,6 +307,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Guide to Investment Banking From Zero';
 
   @override
+  String get home_external_courses => 'Courses outside the platform';
+
+  @override
+  String get home_external_course_platform_coursera => 'Coursera';
+
+  @override
+  String get home_external_course_title_coursera => 'Google Data Analytics Certificate';
+
+  @override
+  String get home_external_course_description_coursera =>
+      'Build job-ready data analysis skills through practical projects on Coursera.';
+
+  @override
+  String get home_external_course_platform_google => 'Google';
+
+  @override
+  String get home_external_course_title_google => 'Google Digital Marketing Course';
+
+  @override
+  String get home_external_course_description_google =>
+      'Learn campaign planning, SEO, and analytics from Google learning resources.';
+
+  @override
   String get order_history => 'Order History';
 
   @override
