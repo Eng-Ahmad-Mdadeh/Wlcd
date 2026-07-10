@@ -9,6 +9,7 @@ import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:wlcd/presentation/screens/login/widgets/forgot_password_bottom_sheet.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
+import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -162,31 +163,23 @@ class _CreateAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return CustomElevatedButton(
       onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(double.infinity, AppHeight.h60),
-        elevation: 0,
-        backgroundColor: AppColors.accent,
-        foregroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r12)),
-      ),
+      width: double.infinity,
+      borderRadius: AppRadius.r24,
+      color: AppColors.loginPrimary,
       child: Text.rich(
         TextSpan(
           text: 'هل أنت جديد على Wlcd? ',
           children: [
             TextSpan(
               text: 'إنشاء حساب!',
-              style: TextStyle(fontWeight: AppFontWeight.extraBold),
+              style: TextStyle(fontWeight: AppFontWeight.bold),
             ),
           ],
         ),
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: AppColors.white,
-          fontSize: AppFontSize.s18,
-          fontWeight: AppFontWeight.bold,
-        ),
+        style: TextStyle(color: AppColors.white, fontSize: AppFontSize.s18, fontWeight: AppFontWeight.medium),
       ),
     );
   }

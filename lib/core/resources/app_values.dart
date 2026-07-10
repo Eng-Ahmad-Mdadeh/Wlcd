@@ -209,6 +209,7 @@ class AppWidth {
   static double w92 = 92.0.w;
   static double w93 = 93.0.w;
   static double w98 = 98.0.w;
+  static double w96 = 96.0.w;
   static double w100 = 100.0.w;
   static double w110 = 110.0.w;
   static double w105 = 105.0.w;

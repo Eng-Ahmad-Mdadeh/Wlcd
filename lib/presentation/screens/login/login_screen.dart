@@ -59,36 +59,35 @@ class _BodyLoginScreenState extends State<BodyLoginScreen> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
-      body: SafeArea(
-        top: false,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(AppWidth.w20, AppHeight.h18, AppWidth.w20, AppHeight.h8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const LoginHeaderSection(),
-                      SizedBox(height: AppHeight.h18),
-                      const LoginLearningBanner(),
-                      SizedBox(height: AppHeight.h24),
-                      LoginTabs(controller: _tabController),
-                      SizedBox(height: AppHeight.h22),
-                      LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
-                      SizedBox(height: AppHeight.h24),
-                    ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const LoginLearningBanner(),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(AppWidth.w20, 0, AppWidth.w20, AppHeight.h8),
+                    child: Column(
+                      children: [
+                        // const LoginHeaderSection(),
+                        // SizedBox(height: AppHeight.h18),
+                        SizedBox(height: AppHeight.h24),
+                        LoginTabs(controller: _tabController),
+                        SizedBox(height: AppHeight.h22),
+                        LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
+                        SizedBox(height: AppHeight.h24),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              const LoginHomeIndicator(),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -13,35 +13,24 @@ class LoginLearningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: AppHeight.h190,
+      height: AppHeight.h300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppRadius.r4),
         color: AppColors.accent,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.accent.withOpacity(.18),
-            blurRadius: 22,
-            offset: const Offset(0, 12),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: AppColors.accent.withOpacity(.18), blurRadius: 22, offset: const Offset(0, 12))],
       ),
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.none,
       child: Stack(
         children: [
-          const PositionedDirectional(
-            top: 0,
-            bottom: 0,
-            end: 0,
-            child: _CourseraStripes(),
-          ),
+          const PositionedDirectional(top: 0, bottom: 0, end: 0, child: _CourseraStripes()),
           PositionedDirectional(
             start: AppWidth.w22,
             end: AppWidth.w96,
-            top: AppHeight.h24,
+            top: AppHeight.h70,
             bottom: AppHeight.h24,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionTitle(
                   text: 'Wlcd',
@@ -51,14 +40,12 @@ class LoginLearningBanner extends StatelessWidget {
                   height: 1,
                 ),
                 SizedBox(height: AppHeight.h16),
-                BodyTitle(
+                SectionTitle(
                   overflow: TextOverflow.visible,
                   text: context.loc.login_learning_banner_subtitle,
                   color: AppColors.white,
                   fontSize: AppFontSize.s18,
-                  fontWeight: AppFontWeight.bold,
                   height: 1.55,
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -76,7 +63,7 @@ class _CourseraStripes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _Stripe(width: AppWidth.w26, color: const Color(0xFF2C7BEA)),
+        _Stripe(width: AppWidth.w25, color: const Color(0xFF2C7BEA)),
         _Stripe(width: AppWidth.w28, color: const Color(0xFF4A8FED)),
         _Stripe(width: AppWidth.w28, color: const Color(0xFF70A8F3)),
       ],
@@ -96,9 +83,7 @@ class _Stripe extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         color: color,
-        border: BorderDirectional(
-          start: BorderSide(color: AppColors.loginPrimary.withOpacity(.2), width: 2),
-        ),
+        border: BorderDirectional(start: BorderSide(color: AppColors.loginPrimary.withOpacity(.2), width: 2)),
       ),
     );
   }
