@@ -43,7 +43,7 @@ class SplashRoute extends GoRouteData with $SplashRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return SplashScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return SplashScreen().buildPage(pageAnimation: PageAnimation.fadeScale);
   }
 }
 
@@ -57,7 +57,7 @@ class SplashRoute extends GoRouteData with $SplashRoute {
 class LoginRoute extends GoRouteData with $LoginRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const LoginScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const LoginScreen().buildPage(pageAnimation: PageAnimation.fadeScale);
   }
 }
 
@@ -67,7 +67,7 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return CheckCodeScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return CheckCodeScreen().buildPage(pageAnimation: PageAnimation.slideUp);
   }
 }
 //#endregion
@@ -77,7 +77,7 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
 class SearchRoute extends GoRouteData with $SearchRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const SearchScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const SearchScreen().buildPage(pageAnimation: PageAnimation.slideUp);
   }
 }
 
@@ -85,7 +85,9 @@ class SearchRoute extends GoRouteData with $SearchRoute {
 class ProfileRoute extends GoRouteData with $ProfileRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const ProfileScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const ProfileScreen().buildPage(
+      pageAnimation: PageAnimation.sharedAxisVertical,
+    );
   }
 }
 
@@ -93,7 +95,9 @@ class ProfileRoute extends GoRouteData with $ProfileRoute {
 class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const CourseDetailsScreen().buildPage(
+      pageAnimation: PageAnimation.sharedAxisScale,
+    );
   }
 }
 
@@ -101,7 +105,7 @@ class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
 class CategorySelectionRoute extends GoRouteData with $CategorySelectionRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const CategorySelectionScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const CategorySelectionScreen().buildPage(pageAnimation: PageAnimation.zoom);
   }
 }
 
@@ -109,7 +113,7 @@ class CategorySelectionRoute extends GoRouteData with $CategorySelectionRoute {
 class PersonalInformationRoute extends GoRouteData with $PersonalInformationRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const PersonalInformationScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const PersonalInformationScreen().buildPage(pageAnimation: PageAnimation.slideUp);
   }
 }
 
@@ -117,7 +121,9 @@ class PersonalInformationRoute extends GoRouteData with $PersonalInformationRout
 class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const PrivacyPolicyScreen().buildPage(
+      pageAnimation: PageAnimation.sharedAxisHorizontal,
+    );
   }
 }
 
@@ -125,7 +131,7 @@ class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
 class FaqsRoute extends GoRouteData with $FaqsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const FaqsScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const FaqsScreen().buildPage(pageAnimation: PageAnimation.sharedAxisVertical);
   }
 }
 
@@ -133,7 +139,9 @@ class FaqsRoute extends GoRouteData with $FaqsRoute {
 class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const TermsAndConditionsScreen().buildPage(
+      pageAnimation: PageAnimation.sharedAxisHorizontal,
+    );
   }
 }
 
@@ -141,7 +149,9 @@ class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute 
 class ProgressHistoryRoute extends GoRouteData with $ProgressHistoryRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const ProgressHistoryScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const ProgressHistoryScreen().buildPage(
+      pageAnimation: PageAnimation.sharedAxisVertical,
+    );
   }
 }
 
@@ -149,7 +159,7 @@ class ProgressHistoryRoute extends GoRouteData with $ProgressHistoryRoute {
 class OrderHistoryRoute extends GoRouteData with $OrderHistoryRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const OrderHistoryScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const OrderHistoryScreen().buildPage(pageAnimation: PageAnimation.slideUp);
   }
 }
 //#endregion
@@ -163,7 +173,7 @@ class OrderHistoryRoute extends GoRouteData with $OrderHistoryRoute {
 class TeachersRoute extends GoRouteData with $TeachersRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const TeachersScreen().buildPage(pageAnimation: PageAnimation.slide);
+    return const TeachersScreen().buildPage(pageAnimation: PageAnimation.zoom);
   }
 }
 
@@ -174,7 +184,9 @@ class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.none);
+    return TeacherProfileScreen(teacher: $extra).buildPage(
+      pageAnimation: PageAnimation.sharedAxisScale,
+    );
   }
 }
 //#endregion
@@ -183,7 +195,7 @@ class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
 class HomeRoute extends GoRouteData with $HomeRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const HomeScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const HomeScreen().buildPage(pageAnimation: PageAnimation.fadeScale);
   }
 }
 //#endregion
@@ -192,7 +204,7 @@ class HomeRoute extends GoRouteData with $HomeRoute {
 class FavoritesRoute extends GoRouteData with $FavoritesRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const FavoritesGroupsScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const FavoritesGroupsScreen().buildPage(pageAnimation: PageAnimation.sharedAxisHorizontal);
   }
 }
 
@@ -203,7 +215,9 @@ class FavoriteCoursesRoute extends GoRouteData with $FavoriteCoursesRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return FavoriteCoursesScreen(groupName: groupName).buildPage(pageAnimation: PageAnimation.slide);
+    return FavoriteCoursesScreen(groupName: groupName).buildPage(
+      pageAnimation: PageAnimation.sharedAxisScale,
+    );
   }
 }
 //#endregion
@@ -212,7 +226,7 @@ class FavoriteCoursesRoute extends GoRouteData with $FavoriteCoursesRoute {
 class NotificationsRoute extends GoRouteData with $NotificationsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const NotificationsScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const NotificationsScreen().buildPage(pageAnimation: PageAnimation.slideUp);
   }
 }
 //#endregion
@@ -221,7 +235,7 @@ class NotificationsRoute extends GoRouteData with $NotificationsRoute {
 class MoreRoute extends GoRouteData with $MoreRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const MoreScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const MoreScreen().buildPage(pageAnimation: PageAnimation.fadeScale);
   }
 }
 //#endregion
