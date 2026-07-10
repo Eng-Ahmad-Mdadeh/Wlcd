@@ -10,7 +10,6 @@ import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:wlcd/presentation/screens/login/widgets/forgot_password_bottom_sheet.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
-import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class LoginFormSection extends StatefulWidget {
@@ -98,24 +97,10 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               }
             },
           ),
-          SizedBox(height: AppHeight.h12),
-          OutlinedButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.person_add_alt_1_rounded, size: AppSize.s18),
-            label: BodyTitle(
-              text: context.loc.create_new_account,
-              color: AppColors.loginPrimary,
-              fontSize: AppFontSize.s15,
-              fontWeight: AppFontWeight.bold,
-            ),
-            style: OutlinedButton.styleFrom(
-              minimumSize: Size(double.infinity, AppHeight.h50),
-              foregroundColor: AppColors.loginPrimary,
-              side: BorderSide(color: AppColors.loginPrimary.withOpacity(.18)),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r24)),
-              backgroundColor: AppColors.loginPrimary.withOpacity(.04),
-            ),
-          ),
+          SizedBox(height: AppHeight.h26),
+          const _LoginOrDivider(),
+          SizedBox(height: AppHeight.h22),
+          const _CreateAccountButton(),
         ],
       ),
     );
@@ -146,5 +131,63 @@ class _LoginFormSectionState extends State<LoginFormSection> {
       return context.loc.short_password_validation;
     }
     return null;
+  }
+}
+
+class _LoginOrDivider extends StatelessWidget {
+  const _LoginOrDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(child: Divider(color: AppColors.loginDivider, thickness: 1)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppWidth.w12),
+          child: SectionTitle(
+            text: 'أو',
+            color: AppColors.loginDarkText,
+            fontSize: AppFontSize.s18,
+            fontWeight: AppFontWeight.bold,
+          ),
+        ),
+        const Expanded(child: Divider(color: AppColors.loginDivider, thickness: 1)),
+      ],
+    );
+  }
+}
+
+class _CreateAccountButton extends StatelessWidget {
+  const _CreateAccountButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(double.infinity, AppHeight.h60),
+        elevation: 0,
+        backgroundColor: AppColors.accent,
+        foregroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r12)),
+      ),
+      child: Text.rich(
+        TextSpan(
+          text: 'هل أنت جديد على Wlcd? ',
+          children: [
+            TextSpan(
+              text: 'إنشاء حساب!',
+              style: TextStyle(fontWeight: AppFontWeight.extraBold),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AppColors.white,
+          fontSize: AppFontSize.s18,
+          fontWeight: AppFontWeight.bold,
+        ),
+      ),
+    );
   }
 }

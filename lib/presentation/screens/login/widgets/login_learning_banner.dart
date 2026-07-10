@@ -13,46 +13,52 @@ class LoginLearningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: AppWidth.w16, vertical: AppHeight.h14),
+      height: AppHeight.h190,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.r24),
-        gradient:  LinearGradient(
-          begin: Alignment.centerRight,
-          end: Alignment.centerLeft,
-          colors: [Color(0xFFF3F7FF), Color(0xFFFFF8E8)],
-        ),
-        border: Border.all(color: AppColors.loginFieldBorder),
+        borderRadius: BorderRadius.circular(AppRadius.r4),
+        color: AppColors.accent,
         boxShadow: [
           BoxShadow(
-            color: AppColors.loginPrimary.withOpacity(.08),
-            blurRadius: 24,
+            color: AppColors.accent.withOpacity(.18),
+            blurRadius: 22,
             offset: const Offset(0, 12),
           ),
         ],
       ),
-      child: Row(
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
         children: [
-          const _LearningIllustration(),
-          SizedBox(width: AppWidth.w14),
-          Expanded(
+          const PositionedDirectional(
+            top: 0,
+            bottom: 0,
+            end: 0,
+            child: _CourseraStripes(),
+          ),
+          PositionedDirectional(
+            start: AppWidth.w22,
+            end: AppWidth.w96,
+            top: AppHeight.h24,
+            bottom: AppHeight.h24,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SectionTitle(
-                  text: context.loc.login_learning_banner_title,
-                  color: AppColors.loginTitle,
-                  fontSize: AppFontSize.s17,
-                  fontWeight: AppFontWeight.bold,
-                  height: 1.2,
+                  text: 'Wlcd',
+                  color: AppColors.white,
+                  fontSize: AppFontSize.s28,
+                  fontWeight: AppFontWeight.extraBold,
+                  height: 1,
                 ),
-                SizedBox(height: AppHeight.h6),
+                SizedBox(height: AppHeight.h16),
                 BodyTitle(
                   overflow: TextOverflow.visible,
                   text: context.loc.login_learning_banner_subtitle,
-                  color: AppColors.loginSubtitle,
-                  fontSize: AppFontSize.s12,
-                  fontWeight: AppFontWeight.regular,
+                  color: AppColors.white,
+                  fontSize: AppFontSize.s18,
+                  fontWeight: AppFontWeight.bold,
+                  height: 1.55,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -63,41 +69,36 @@ class LoginLearningBanner extends StatelessWidget {
   }
 }
 
-class _LearningIllustration extends StatelessWidget {
-  const _LearningIllustration();
+class _CourseraStripes extends StatelessWidget {
+  const _CourseraStripes();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _Stripe(width: AppWidth.w26, color: const Color(0xFF2C7BEA)),
+        _Stripe(width: AppWidth.w28, color: const Color(0xFF4A8FED)),
+        _Stripe(width: AppWidth.w28, color: const Color(0xFF70A8F3)),
+      ],
+    );
+  }
+}
+
+class _Stripe extends StatelessWidget {
+  const _Stripe({required this.width, required this.color});
+
+  final double width;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: AppWidth.w70,
-      height: AppWidth.w70,
+      width: width,
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r22),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          PositionedDirectional(
-            top: AppHeight.h10,
-            end: AppWidth.w12,
-            child: Icon(Icons.auto_awesome, color: AppColors.logoOrange, size: AppSize.s16),
-          ),
-          PositionedDirectional(
-            bottom: AppHeight.h12,
-            start: AppWidth.w12,
-            child: Icon(Icons.school_outlined, color: AppColors.accent.withOpacity(.22), size: AppSize.s18),
-          ),
-          Container(
-            width: AppWidth.w48,
-            height: AppWidth.w48,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.loginPrimary.withOpacity(.08),
-            ),
-            child: Icon(Icons.menu_book_rounded, color: AppColors.loginPrimary, size: AppSize.s30),
-          ),
-        ],
+        color: color,
+        border: BorderDirectional(
+          start: BorderSide(color: AppColors.loginPrimary.withOpacity(.2), width: 2),
+        ),
       ),
     );
   }
