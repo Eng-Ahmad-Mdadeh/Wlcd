@@ -313,7 +313,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_external_course_platform_coursera => 'Coursera';
 
   @override
-  String get home_external_course_title_coursera => 'Google Data Analytics Certificate';
+  String get home_external_course_title_coursera =>
+      'Google Data Analytics Certificate';
 
   @override
   String get home_external_course_description_coursera =>
@@ -323,7 +324,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_external_course_platform_google => 'Google';
 
   @override
-  String get home_external_course_title_google => 'Google Digital Marketing Course';
+  String get home_external_course_title_google =>
+      'Google Digital Marketing Course';
 
   @override
   String get home_external_course_description_google =>

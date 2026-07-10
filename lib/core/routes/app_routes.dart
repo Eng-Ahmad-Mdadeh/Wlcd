@@ -174,7 +174,7 @@ class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.slide);
+    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.none);
   }
 }
 //#endregion

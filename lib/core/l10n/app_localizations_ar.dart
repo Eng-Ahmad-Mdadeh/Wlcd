@@ -314,7 +314,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_external_course_platform_coursera => 'كورسيرا';
 
   @override
-  String get home_external_course_title_coursera => 'شهادة تحليل البيانات من Google';
+  String get home_external_course_title_coursera =>
+      'شهادة تحليل البيانات من Google';
 
   @override
   String get home_external_course_description_coursera =>
@@ -324,7 +325,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_external_course_platform_google => 'Google';
 
   @override
-  String get home_external_course_title_google => 'كورس التسويق الرقمي من Google';
+  String get home_external_course_title_google =>
+      'كورس التسويق الرقمي من Google';
 
   @override
   String get home_external_course_description_google =>
