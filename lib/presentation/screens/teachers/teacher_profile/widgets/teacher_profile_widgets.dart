@@ -195,7 +195,7 @@ class TeacherProfileActions extends StatelessWidget {
     CustomBottomSheet.show(
       context,
       title: 'حجز جلسة',
-      heightFactor: .75,
+      heightFactor: .85,
       borderRadius: AppRadius.r30,
       body: TeacherBookingSheet(teacher: teacher),
     );

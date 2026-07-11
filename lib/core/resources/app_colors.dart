@@ -23,7 +23,7 @@ class AppColors {
   static const Color blueText = Color(0xFFDCEBF6);
   static const Color blueBackGround = Color(0x0D00415F);
   static const Color iconBackGround = Color(0x0d3d5f81);
-  static const Color searchColor = Color(0xD075E54);
+  static const Color searchColor = Color(0xFD075E54);
   static const Color green = Color(0xFF7BB801);
   static const Color darkGreen = Color(0xFF27AE60);
   static const Color lightGreen = Color(0x337BB801);

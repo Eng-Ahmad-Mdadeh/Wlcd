@@ -68,9 +68,9 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
           onSlotSelected: (slot) => setState(() => _selectedSlot = slot),
           onChatPressed: () {
             context.pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('سيتم الانتقال إلى المحادثة مع ${widget.teacher.name} قريباً')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('سيتم الانتقال إلى المحادثة مع ${widget.teacher.name} قريباً')));
           },
         ),
         SizedBox(height: AppHeight.h16),
@@ -145,6 +145,7 @@ class _BookingCalendar extends StatelessWidget {
           selectedTextStyle: TextStyle(color: AppColors.white, fontSize: AppSize.s14, fontWeight: FontWeight.w800),
           markerDecoration: BoxDecoration(color: AppColors.teacherGreen, shape: BoxShape.circle),
           markersMaxCount: 1,
+          markerMargin: EdgeInsets.only(top: AppMarginHeight.m10),
           defaultTextStyle: TextStyle(color: AppColors.text, fontSize: AppSize.s14, fontWeight: FontWeight.w700),
           weekendTextStyle: TextStyle(color: AppColors.text, fontSize: AppSize.s14, fontWeight: FontWeight.w700),
           disabledTextStyle: TextStyle(
@@ -186,10 +187,12 @@ class _SelectedDaySchedule extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r24),
         border: Border.all(color: AppColors.teacherCardBorder),
-        boxShadow: [BoxShadow(color: AppColors.blackCow.withValues(alpha: .04), blurRadius: 18, offset: const Offset(0, 8))],
+        boxShadow: [
+          BoxShadow(color: AppColors.blackCow.withValues(alpha: .04), blurRadius: 18, offset: const Offset(0, 8)),
+        ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SectionTitle(
             text: 'مواعيد $formattedDate',
@@ -211,7 +214,8 @@ class _SelectedDaySchedule extends StatelessWidget {
               child: Column(
                 children: [
                   BodyTitle(
-                    text: 'لا توجد حصص متاحة في يوم $formattedDate. يمكنك اختيار يوم آخر من التقويم أو مراسلة المعلم لطلب مواعيد لهذا اليوم.',
+                    text:
+                        'لا توجد حصص متاحة في يوم $formattedDate. يمكنك اختيار يوم آخر من التقويم أو مراسلة المعلم لطلب مواعيد لهذا اليوم.',
                     textAlign: TextAlign.center,
                     color: AppColors.muted,
                     fontSize: AppFontSize.s15,
@@ -224,7 +228,7 @@ class _SelectedDaySchedule extends StatelessWidget {
                     onPressed: onChatPressed,
                     icon: Icon(Icons.chat_bubble_outline_rounded, color: color),
                     label: SectionTitle(
-                      text: 'الانتقال إلى المحادثة مع المعلم',
+                      text: 'تواصل مع المعلم',
                       color: color,
                       fontSize: AppFontSize.s15,
                       fontWeight: AppFontWeight.extraBold,
