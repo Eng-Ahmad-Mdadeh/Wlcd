@@ -38,7 +38,6 @@ part 'app_routes.g.dart';
 //#region Splash
 @TypedGoRoute<SplashRoute>(path: '/')
 class SplashRoute extends GoRouteData with $SplashRoute {
-
   SplashRoute();
 
   @override
@@ -62,7 +61,6 @@ class LoginRoute extends GoRouteData with $LoginRoute {
 }
 
 class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
-
   CheckCodeRoute();
 
   @override
@@ -85,9 +83,7 @@ class SearchRoute extends GoRouteData with $SearchRoute {
 class ProfileRoute extends GoRouteData with $ProfileRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const ProfileScreen().buildPage(
-      pageAnimation: PageAnimation.sharedAxisVertical,
-    );
+    return const ProfileScreen().buildPage(pageAnimation: PageAnimation.sharedAxisVertical);
   }
 }
 
@@ -95,9 +91,7 @@ class ProfileRoute extends GoRouteData with $ProfileRoute {
 class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const CourseDetailsScreen().buildPage(
-      pageAnimation: PageAnimation.sharedAxisScale,
-    );
+    return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 
@@ -121,9 +115,7 @@ class PersonalInformationRoute extends GoRouteData with $PersonalInformationRout
 class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const PrivacyPolicyScreen().buildPage(
-      pageAnimation: PageAnimation.sharedAxisHorizontal,
-    );
+    return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.sharedAxisHorizontal);
   }
 }
 
@@ -139,9 +131,7 @@ class FaqsRoute extends GoRouteData with $FaqsRoute {
 class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const TermsAndConditionsScreen().buildPage(
-      pageAnimation: PageAnimation.sharedAxisHorizontal,
-    );
+    return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.sharedAxisHorizontal);
   }
 }
 
@@ -149,9 +139,7 @@ class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute 
 class ProgressHistoryRoute extends GoRouteData with $ProgressHistoryRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const ProgressHistoryScreen().buildPage(
-      pageAnimation: PageAnimation.sharedAxisVertical,
-    );
+    return const ProgressHistoryScreen().buildPage(pageAnimation: PageAnimation.sharedAxisVertical);
   }
 }
 
@@ -184,9 +172,7 @@ class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return TeacherProfileScreen(teacher: $extra).buildPage(
-      pageAnimation: PageAnimation.sharedAxisScale,
-    );
+    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 //#endregion
@@ -215,9 +201,7 @@ class FavoriteCoursesRoute extends GoRouteData with $FavoriteCoursesRoute {
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return FavoriteCoursesScreen(groupName: groupName).buildPage(
-      pageAnimation: PageAnimation.sharedAxisScale,
-    );
+    return FavoriteCoursesScreen(groupName: groupName).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 //#endregion

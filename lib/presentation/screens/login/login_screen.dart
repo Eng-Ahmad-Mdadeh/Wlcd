@@ -20,8 +20,7 @@ class BodyLoginScreen extends StatefulWidget {
   State<BodyLoginScreen> createState() => _BodyLoginScreenState();
 }
 
-class _BodyLoginScreenState extends State<BodyLoginScreen>
-    with SingleTickerProviderStateMixin {
+class _BodyLoginScreenState extends State<BodyLoginScreen> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   late final TabController _tabController;
   bool _isPhoneLogin = false;
@@ -62,21 +61,12 @@ class _BodyLoginScreenState extends State<BodyLoginScreen>
                 children: [
                   const LoginLearningBanner(),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      AppWidth.w20,
-                      0,
-                      AppWidth.w20,
-                      AppHeight.h8,
-                    ),
+                    padding: EdgeInsets.fromLTRB(AppWidth.w20, 0, AppWidth.w20, AppHeight.h8),
                     child: Column(
                       children: [
-                        SizedBox(height: AppHeight.h24),
                         LoginTabs(controller: _tabController),
-                        SizedBox(height: AppHeight.h22),
-                        LoginFormSection(
-                          formKey: loginFormKey,
-                          isPhoneLogin: _isPhoneLogin,
-                        ),
+                        SizedBox(height: AppHeight.h25),
+                        LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
                         SizedBox(height: AppHeight.h24),
                       ],
                     ),

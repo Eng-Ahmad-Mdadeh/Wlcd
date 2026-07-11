@@ -12,7 +12,7 @@ class LoginLearningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: AppHeight.h300,
+      height: AppHeight.h335,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppRadius.r4),
         gradient: const LinearGradient(
@@ -47,7 +47,7 @@ class LoginLearningBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionTitle(
-                  text: 'Wlcd',
+                  text: 'WLCD academy',
                   color: AppColors.white,
                   fontSize: AppFontSize.s28,
                   fontWeight: AppFontWeight.extraBold,

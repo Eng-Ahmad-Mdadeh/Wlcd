@@ -170,16 +170,16 @@ class _CreateAccountButton extends StatelessWidget {
       color: AppColors.loginPrimary,
       child: Text.rich(
         TextSpan(
-          text: 'هل أنت جديد على Wlcd? ',
+          text: 'هل أنت جديد على WLCD؟ ',
           children: [
             TextSpan(
               text: 'إنشاء حساب!',
-              style: TextStyle(fontWeight: AppFontWeight.bold),
+              style: TextStyle(fontWeight: AppFontWeight.extraBold),
             ),
           ],
         ),
         textAlign: TextAlign.center,
-        style: TextStyle(color: AppColors.white, fontSize: AppFontSize.s18, fontWeight: AppFontWeight.medium),
+        style: TextStyle(color: AppColors.white, fontSize: AppFontSize.s14, fontWeight: AppFontWeight.extraBold),
       ),
     );
   }

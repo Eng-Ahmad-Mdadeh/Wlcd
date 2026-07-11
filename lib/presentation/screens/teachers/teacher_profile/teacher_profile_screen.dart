@@ -36,8 +36,6 @@ class TeacherProfileScreen extends StatelessWidget {
                 SizedBox(height: AppHeight.h20),
                 TeacherProfileActions(teacher: teacher),
                 SizedBox(height: AppHeight.h24),
-                const TeacherProfileTabs(),
-                SizedBox(height: AppHeight.h28),
                 TeacherAboutCard(teacher: teacher),
                 SizedBox(height: AppHeight.h20),
                 TeacherCoursesCard(teacher: teacher),

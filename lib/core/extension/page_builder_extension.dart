@@ -4,10 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../utils/enums/enum_utils.dart';
 
 extension PageBuilder on Widget {
-  CustomTransitionPage buildPage({
-    PageAnimation pageAnimation = PageAnimation.none,
-    LocalKey? key,
-  }) {
+  CustomTransitionPage buildPage({PageAnimation pageAnimation = PageAnimation.none, LocalKey? key}) {
     return CustomTransitionPage(
       key: key,
       child: this,
@@ -42,29 +39,16 @@ extension PageBuilder on Widget {
             );
 
           case PageAnimation.slideUp:
-            return _SlideFadeTransition(
-              animation: curvedAnimation,
-              begin: const Offset(0, 0.12),
-              child: child,
-            );
+            return _SlideFadeTransition(animation: curvedAnimation, begin: const Offset(0, 0.12), child: child);
 
           case PageAnimation.fade:
-            return FadeTransition(
-              opacity: curvedAnimation,
-              child: child,
-            );
+            return FadeTransition(opacity: curvedAnimation, child: child);
 
           case PageAnimation.fadeScale:
-            return _FadeScaleTransition(
-              animation: curvedAnimation,
-              child: child,
-            );
+            return _FadeScaleTransition(animation: curvedAnimation, child: child);
 
           case PageAnimation.zoom:
-            return _ZoomFadeTransition(
-              animation: curvedAnimation,
-              child: child,
-            );
+            return _ZoomFadeTransition(animation: curvedAnimation, child: child);
 
           case PageAnimation.sharedAxisHorizontal:
             return _SharedAxisTransition(
@@ -91,10 +75,7 @@ extension PageBuilder on Widget {
             );
 
           case PageAnimation.none:
-            return _ModernPageTransition(
-              animation: curvedAnimation,
-              child: child,
-            );
+            return _ModernPageTransition(animation: curvedAnimation, child: child);
         }
       },
     );
@@ -102,9 +83,7 @@ extension PageBuilder on Widget {
 
   Offset _horizontalStartOffset(BuildContext context) {
     final textDirection = Directionality.of(context);
-    return textDirection == TextDirection.rtl
-        ? const Offset(-0.10, 0)
-        : const Offset(0.10, 0);
+    return textDirection == TextDirection.rtl ? const Offset(-0.10, 0) : const Offset(0.10, 0);
   }
 
   Curve _curve(PageAnimation animation) {
@@ -159,7 +138,7 @@ extension PageBuilder on Widget {
       case PageAnimation.sharedAxisVertical:
       case PageAnimation.sharedAxisScale:
       case PageAnimation.none:
-        return const Duration(milliseconds: 360);
+        return const Duration(milliseconds: 200);
     }
   }
 
@@ -179,17 +158,13 @@ extension PageBuilder on Widget {
       case PageAnimation.sharedAxisVertical:
       case PageAnimation.sharedAxisScale:
       case PageAnimation.none:
-        return const Duration(milliseconds: 240);
+        return const Duration(milliseconds: 150);
     }
   }
 }
 
 class _SlideFadeTransition extends StatelessWidget {
-  const _SlideFadeTransition({
-    required this.animation,
-    required this.begin,
-    required this.child,
-  });
+  const _SlideFadeTransition({required this.animation, required this.begin, required this.child});
 
   final Animation<double> animation;
   final Offset begin;
@@ -197,69 +172,45 @@ class _SlideFadeTransition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offsetAnimation = Tween<Offset>(
-      begin: begin,
-      end: Offset.zero,
-    ).animate(animation);
+    final offsetAnimation = Tween<Offset>(begin: begin, end: Offset.zero).animate(animation);
 
     return FadeTransition(
       opacity: animation,
-      child: SlideTransition(
-        position: offsetAnimation,
-        child: child,
-      ),
+      child: SlideTransition(position: offsetAnimation, child: child),
     );
   }
 }
 
 class _FadeScaleTransition extends StatelessWidget {
-  const _FadeScaleTransition({
-    required this.animation,
-    required this.child,
-  });
+  const _FadeScaleTransition({required this.animation, required this.child});
 
   final Animation<double> animation;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final scaleAnimation = Tween<double>(
-      begin: 0.96,
-      end: 1,
-    ).animate(animation);
+    final scaleAnimation = Tween<double>(begin: 0.96, end: 1).animate(animation);
 
     return FadeTransition(
       opacity: animation,
-      child: ScaleTransition(
-        scale: scaleAnimation,
-        child: child,
-      ),
+      child: ScaleTransition(scale: scaleAnimation, child: child),
     );
   }
 }
 
 class _ZoomFadeTransition extends StatelessWidget {
-  const _ZoomFadeTransition({
-    required this.animation,
-    required this.child,
-  });
+  const _ZoomFadeTransition({required this.animation, required this.child});
 
   final Animation<double> animation;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final scaleAnimation = Tween<double>(
-      begin: 0.88,
-      end: 1,
-    ).animate(animation);
+    final scaleAnimation = Tween<double>(begin: 0.88, end: 1).animate(animation);
 
     return FadeTransition(
       opacity: animation,
-      child: ScaleTransition(
-        scale: scaleAnimation,
-        child: child,
-      ),
+      child: ScaleTransition(scale: scaleAnimation, child: child),
     );
   }
 }
@@ -284,14 +235,8 @@ class _SharedAxisTransition extends StatelessWidget {
     final incomingBegin = _offset(0.16);
     final outgoingEnd = _offset(-0.08);
 
-    final incomingOffset = Tween<Offset>(
-      begin: incomingBegin,
-      end: Offset.zero,
-    ).animate(animation);
-    final outgoingOffset = Tween<Offset>(
-      begin: Offset.zero,
-      end: outgoingEnd,
-    ).animate(secondaryAnimation);
+    final incomingOffset = Tween<Offset>(begin: incomingBegin, end: Offset.zero).animate(animation);
+    final outgoingOffset = Tween<Offset>(begin: Offset.zero, end: outgoingEnd).animate(secondaryAnimation);
 
     return SlideTransition(
       position: outgoingOffset,
@@ -299,10 +244,7 @@ class _SharedAxisTransition extends StatelessWidget {
         opacity: ReverseAnimation(secondaryAnimation),
         child: SlideTransition(
           position: incomingOffset,
-          child: FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
+          child: FadeTransition(opacity: animation, child: child),
         ),
       ),
     );
@@ -310,18 +252,12 @@ class _SharedAxisTransition extends StatelessWidget {
 
   Offset _offset(double value) {
     final resolvedValue = reverse ? -value : value;
-    return axis == Axis.horizontal
-        ? Offset(resolvedValue, 0)
-        : Offset(0, resolvedValue);
+    return axis == Axis.horizontal ? Offset(resolvedValue, 0) : Offset(0, resolvedValue);
   }
 }
 
 class _SharedAxisScaleTransition extends StatelessWidget {
-  const _SharedAxisScaleTransition({
-    required this.animation,
-    required this.secondaryAnimation,
-    required this.child,
-  });
+  const _SharedAxisScaleTransition({required this.animation, required this.secondaryAnimation, required this.child});
 
   final Animation<double> animation;
   final Animation<double> secondaryAnimation;
@@ -329,14 +265,8 @@ class _SharedAxisScaleTransition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final incomingScale = Tween<double>(
-      begin: 0.92,
-      end: 1,
-    ).animate(animation);
-    final outgoingScale = Tween<double>(
-      begin: 1,
-      end: 1.04,
-    ).animate(secondaryAnimation);
+    final incomingScale = Tween<double>(begin: 0.92, end: 1).animate(animation);
+    final outgoingScale = Tween<double>(begin: 1, end: 1.04).animate(secondaryAnimation);
 
     return ScaleTransition(
       scale: outgoingScale,
@@ -344,10 +274,7 @@ class _SharedAxisScaleTransition extends StatelessWidget {
         opacity: ReverseAnimation(secondaryAnimation),
         child: ScaleTransition(
           scale: incomingScale,
-          child: FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
+          child: FadeTransition(opacity: animation, child: child),
         ),
       ),
     );
@@ -355,34 +282,22 @@ class _SharedAxisScaleTransition extends StatelessWidget {
 }
 
 class _ModernPageTransition extends StatelessWidget {
-  const _ModernPageTransition({
-    required this.animation,
-    required this.child,
-  });
+  const _ModernPageTransition({required this.animation, required this.child});
 
   final Animation<double> animation;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.04),
-      end: Offset.zero,
-    ).animate(animation);
+    final slideAnimation = Tween<Offset>(begin: const Offset(0, 0.04), end: Offset.zero).animate(animation);
 
-    final scaleAnimation = Tween<double>(
-      begin: 0.985,
-      end: 1,
-    ).animate(animation);
+    final scaleAnimation = Tween<double>(begin: 0.985, end: 1).animate(animation);
 
     return FadeTransition(
       opacity: animation,
       child: SlideTransition(
         position: slideAnimation,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: child,
-        ),
+        child: ScaleTransition(scale: scaleAnimation, child: child),
       ),
     );
   }

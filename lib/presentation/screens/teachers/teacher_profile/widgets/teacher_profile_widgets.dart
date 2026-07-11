@@ -183,24 +183,11 @@ class TeacherProfileActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TeacherActionButton(
-          label: 'احجز حصة',
-          icon: Icons.calendar_month_rounded,
-          color: AppColors.teacherGreen,
-          onTap: () => _showBooking(context),
-        ),
-        SizedBox(height: AppHeight.h12),
-        TeacherActionButton(
-          label: 'تواصل معي',
-          icon: Icons.chat_bubble_outline_rounded,
-          color: AppColors.seeMore,
-          onTap: () {},
-        ),
-        SizedBox(height: AppHeight.h12),
-        TeacherActionButton(label: 'مشاركة', icon: Icons.share_rounded, color: AppColors.orange, onTap: () {}),
-      ],
+    return TeacherActionButton(
+      label: 'احجز حصة',
+      icon: Icons.calendar_month_rounded,
+      color: AppColors.teacherGreen,
+      onTap: () => _showBooking(context),
     );
   }
 
@@ -260,22 +247,7 @@ class TeacherActionButton extends StatelessWidget {
   }
 }
 
-class TeacherProfileTabs extends StatelessWidget {
-  const TeacherProfileTabs({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(child: TeacherTabChip(label: 'معلومات عن المعلم', selected: true)),
-        SizedBox(width: AppWidth.w10),
-        const Expanded(child: TeacherTabChip(label: 'التقييمات', selected: false)),
-        SizedBox(width: AppWidth.w10),
-        const Expanded(child: TeacherTabChip(label: 'المكتبة', selected: false)),
-      ],
-    );
-  }
-}
 
 class TeacherTabChip extends StatelessWidget {
   const TeacherTabChip({super.key, required this.label, required this.selected});

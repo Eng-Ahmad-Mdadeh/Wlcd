@@ -307,7 +307,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Guide to Investment Banking From Zero';
 
   @override
-  String get home_external_courses => 'Courses outside the platform';
+  String get home_global_courses => 'Global courses';
 
   @override
   String get home_external_course_platform_coursera => 'Coursera';

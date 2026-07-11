@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: AppHeight.h14),
                 CoursesGrid(courses: recentCourses),
                 SizedBox(height: AppHeight.h28),
-                SectionHeaderRow(title: context.loc.home_external_courses),
+                SectionHeaderRow(title: context.loc.home_global_courses),
                 SizedBox(height: AppHeight.h14),
                 const ExternalCoursesSection(),
                 SizedBox(height: AppHeight.h28),

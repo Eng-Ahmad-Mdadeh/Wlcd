@@ -308,7 +308,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'دليل الخدمات المصرفية الاستثمارية من الصفر';
 
   @override
-  String get home_external_courses => 'كورسات خارج المنصة';
+  String get home_global_courses => 'دورات عالمية';
 
   @override
   String get home_external_course_platform_coursera => 'كورسيرا';

@@ -674,11 +674,11 @@ abstract class AppLocalizations {
   /// **'Guide to Investment Banking From Zero'**
   String get home_course_title_investment_banking_zero;
 
-  /// No description provided for @home_external_courses.
+  /// No description provided for @home_global_courses.
   ///
   /// In en, this message translates to:
-  /// **'Courses outside the platform'**
-  String get home_external_courses;
+  /// **'Global courses'**
+  String get home_global_courses;
 
   /// No description provided for @home_external_course_platform_coursera.
   ///
