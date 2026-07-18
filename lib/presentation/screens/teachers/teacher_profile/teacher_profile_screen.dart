@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart' show Iconsax;
+import 'package:share_plus/share_plus.dart' show ShareParams, SharePlus;
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 import 'package:wlcd/presentation/screens/teachers/teacher_profile/widgets/teacher_profile_widgets.dart';
@@ -20,6 +24,23 @@ class TeacherProfileScreen extends StatelessWidget {
             expandedHeight: AppHeight.h300,
             actionsPadding: EdgeInsets.zero,
             backgroundColor: AppColors.white,
+            actions: [
+              InkWell(
+                onTap: () async {
+                  final box = context.findRenderObject() as RenderBox?;
+                  await SharePlus.instance.share(
+                    ShareParams(
+                      text: "شارك ملف المعلم الشخصي",
+                      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(end: AppPaddingWidth.p15),
+                  child: Icon(Iconsax.share_outline),
+                ),
+              ),
+            ],
             surfaceTintColor: AppColors.white,
             flexibleSpace: FlexibleSpaceBar(background: TeacherProfileHero(teacher: teacher)),
           ),
