@@ -6,15 +6,24 @@ import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/domain/entity/auth/request_password_reset_entity.dart';
+import 'package:wlcd/presentation/bloc/auth/request_password_reset/request_password_reset_bloc.dart';
+import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 Future<void> showForgotPasswordBottomSheet(BuildContext context) {
+  final requestPasswordResetBloc = context.read<RequestPasswordResetBloc>();
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     backgroundColor: AppColors.none,
     barrierColor: const Color(0x940F172A),
-    builder: (context) => const ForgotPasswordBottomSheet(),
+    builder: (_) => BlocProvider.value(
+      value: requestPasswordResetBloc,
+      child: const ForgotPasswordBottomSheet(),
+    ),
   );
 }
 
@@ -30,14 +39,25 @@ enum _ForgotPasswordView { method, email, phone }
 class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
   final GlobalKey<FormState> _emailFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _phoneFormKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   _ForgotPasswordView _currentView = _ForgotPasswordView.method;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final EdgeInsets viewInsets = MediaQuery.viewInsetsOf(context);
 
-    return AnimatedPadding(
+    return BlocListener<RequestPasswordResetBloc, IRequestPasswordResetState>(
+      listener: _onPasswordResetRequestState,
+      child: AnimatedPadding(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOut,
       padding: EdgeInsets.only(bottom: viewInsets.bottom),
@@ -70,6 +90,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
           ),
         ),
       ),
+      ),
     );
   }
 
@@ -88,6 +109,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
         icon: Icons.email_outlined,
         hintText: context.loc.your_email,
         keyboardType: TextInputType.emailAddress,
+        controller: _emailController,
         buttonTitle: context.loc.send_link,
         validator: (value) => _validateEmail(context, value),
         onUseAnotherMethod: () => _showView(_ForgotPasswordView.method),
@@ -101,6 +123,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
         icon: Icons.phone_outlined,
         hintText: context.loc.enter_phone_number,
         keyboardType: TextInputType.phone,
+        controller: _phoneController,
         buttonTitle: context.loc.send_link,
         // validator: (value) => _validatePhone(context, value),
         validator: (p0) {},
@@ -115,12 +138,39 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
   }
 
   void _submitResetRequest(GlobalKey<FormState> formKey) {
-    if (formKey.currentState?.validate() ?? false) {
-      final ScaffoldMessengerState scaffoldMessenger = ScaffoldMessenger.of(context);
-      final String successMessage = context.loc.password_reset_link_sent;
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    if (_currentView != _ForgotPasswordView.email) {
+      showCustomSnackBar(
+        context: context,
+        title: 'تنبيه',
+        message: 'استعادة كلمة المرور متاحة عبر البريد الإلكتروني حالياً',
+        contentType: ContentType.warning,
+      );
+      return;
+    }
+    context.read<RequestPasswordResetBloc>().add(
+      SubmitRequestPasswordResetEvent(
+        RequestPasswordResetEntity(email: _emailController.text.trim()),
+      ),
+    );
+  }
 
+  void _onPasswordResetRequestState(
+    BuildContext context,
+    IRequestPasswordResetState state,
+  ) {
+    if (state is RequestPasswordResetLoaded) {
+      final messenger = ScaffoldMessenger.of(context);
+      final message = context.loc.password_reset_link_sent;
       Navigator.of(context).pop();
-      scaffoldMessenger.showSnackBar(SnackBar(content: Text(successMessage)));
+      messenger.showSnackBar(SnackBar(content: Text(message)));
+    } else if (state is RequestPasswordResetFailed) {
+      showCustomSnackBar(
+        context: context,
+        title: 'خطأ',
+        message: state.message,
+        contentType: ContentType.failure,
+      );
     }
   }
 
@@ -209,6 +259,7 @@ class _ResetInputView extends StatelessWidget {
     required this.icon,
     required this.hintText,
     required this.keyboardType,
+    required this.controller,
     required this.buttonTitle,
     required this.validator,
     required this.onUseAnotherMethod,
@@ -221,6 +272,7 @@ class _ResetInputView extends StatelessWidget {
   final IconData icon;
   final String hintText;
   final TextInputType keyboardType;
+  final TextEditingController controller;
   final String buttonTitle;
   final String? Function(String?) validator;
   final VoidCallback onUseAnotherMethod;
@@ -238,7 +290,13 @@ class _ResetInputView extends StatelessWidget {
           SizedBox(height: AppHeight.h8),
           _SheetDescription(text: description),
           SizedBox(height: AppHeight.h22),
-          LoginTextField(icon: icon, hintText: hintText, keyboardType: keyboardType, validator: validator),
+          LoginTextField(
+            controller: controller,
+            icon: icon,
+            hintText: hintText,
+            keyboardType: keyboardType,
+            validator: validator,
+          ),
           SizedBox(height: AppHeight.h12),
           TextButton(
             onPressed: onUseAnotherMethod,
@@ -258,14 +316,18 @@ class _ResetInputView extends StatelessWidget {
               ),
             ),
           ),
-          CustomSubmitButton(
-            title: buttonTitle,
-            marginTop: AppMarginHeight.m20,
-            height: AppHeight.h55,
-            borderRadius: AppRadius.r28,
-            elevation: 0,
-            buttonColor: AppColors.loginPrimary,
-            onPressed: onSubmit,
+          BlocBuilder<RequestPasswordResetBloc, IRequestPasswordResetState>(
+            builder: (context, state) => CustomSubmitButton(
+              title: buttonTitle,
+              marginTop: AppMarginHeight.m20,
+              height: AppHeight.h55,
+              borderRadius: AppRadius.r28,
+              elevation: 0,
+              buttonColor: AppColors.loginPrimary,
+              isLoading: state is RequestPasswordResetLoading,
+              verification: state is! RequestPasswordResetLoading,
+              onPressed: onSubmit,
+            ),
           ),
         ],
       ),

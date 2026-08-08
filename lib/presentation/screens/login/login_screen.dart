@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_form_section.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_learning_banner.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_tabs.dart';
+import 'package:wlcd/presentation/bloc/auth/login_with_password/login_with_password_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/request_login_otp/request_login_otp_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/request_password_reset/request_password_reset_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const BodyLoginScreen();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LoginWithPasswordBloc()),
+        BlocProvider(create: (_) => RequestLoginOtpBloc()),
+        BlocProvider(create: (_) => RequestPasswordResetBloc()),
+      ],
+      child: const BodyLoginScreen(),
+    );
   }
 }
 
