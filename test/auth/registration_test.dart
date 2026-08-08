@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wlcd/data/model/auth/auth_model.dart';
+import 'package:wlcd/data/model/auth/verify_email_model.dart';
 import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
 import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
+import 'package:wlcd/domain/entity/auth/verify_email_entity.dart';
 
 void main() {
   group('RegisterWithEmailEntity', () {
@@ -48,6 +50,28 @@ void main() {
         'Idempotency-Key': 'phone-registration-1',
       });
     });
+  });
+
+  test('VerifyEmailEntity serializes the verification request', () {
+    const entity = VerifyEmailEntity(
+      token: 'email-verification-token',
+      challengeId: '01HXYZABCDEFGHJKMNPQRSTVWX',
+    );
+
+    expect(entity.toJson(), {
+      'token': 'email-verification-token',
+      'challengeId': '01HXYZABCDEFGHJKMNPQRSTVWX',
+    });
+  });
+
+  test('VerifyEmailModel parses the verification response', () {
+    final model = VerifyEmailModel.fromJson({
+      'verified': true,
+      'accountId': '01HXYZABCDEFGHJKMNPQRSTVWX',
+    });
+
+    expect(model.verified, isTrue);
+    expect(model.accountId, '01HXYZABCDEFGHJKMNPQRSTVWX');
   });
 
   test('AuthModel parses the registration session response', () {

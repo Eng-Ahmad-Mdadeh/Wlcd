@@ -5,9 +5,11 @@ import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/data_sources/base/base_remote_data_source.dart';
 import 'package:wlcd/data/model/auth/auth_model.dart';
+import 'package:wlcd/data/model/auth/verify_email_model.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
 import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
+import 'package:wlcd/domain/entity/auth/verify_email_entity.dart';
 
 @Injectable()
 class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
@@ -35,6 +37,20 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       headers: data.headers,
+      isFormDate: false,
+      wrappedResponse: false,
+      includeAuthorization: false,
+    );
+  }
+
+  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(
+    VerifyEmailEntity data,
+  ) {
+    return postDataAs<VerifyEmailModel>(
+      endpoint: ApiEndpoints.verifyEmail,
+      fromJsonT: (json) =>
+          VerifyEmailModel.fromJson(json as Map<String, dynamic>),
+      data: data.toJson(),
       isFormDate: false,
       wrappedResponse: false,
       includeAuthorization: false,
