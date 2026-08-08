@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wlcd/data/model/auth/auth_model.dart';
 import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
+import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
 
 void main() {
   group('RegisterWithEmailEntity', () {
@@ -23,6 +24,28 @@ void main() {
       expect(entity.headers, {
         'Idempotency-Key': 'registration-1',
         'X-Correlation-ID': 'journey-1',
+      });
+    });
+  });
+
+  group('RegisterWithPhoneEntity', () {
+    const entity = RegisterWithPhoneEntity(
+      phone: '+966550000000',
+      challengeId: '01HXYZABCDEFGHJKMNPQRSTVWX',
+      otpCode: '123456',
+      locale: 'ar',
+      idempotencyKey: 'phone-registration-1',
+    );
+
+    test('serializes request body separately from idempotency header', () {
+      expect(entity.toJson(), {
+        'phone': '+966550000000',
+        'challengeId': '01HXYZABCDEFGHJKMNPQRSTVWX',
+        'otpCode': '123456',
+        'locale': 'ar',
+      });
+      expect(entity.headers, {
+        'Idempotency-Key': 'phone-registration-1',
       });
     });
   });

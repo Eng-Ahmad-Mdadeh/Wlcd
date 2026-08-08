@@ -21,6 +21,8 @@ import '../../../domain/usecase/i_use_case.dart' as _i405;
 import '../../../data/model/auth/auth_model.dart' as _i406;
 import '../../../data/model/base/base_model.dart' as _i407;
 import '../../../domain/entity/auth/register_with_email_entity.dart' as _i408;
+import '../../../domain/entity/auth/register_with_phone_entity.dart' as _i409;
+import '../../../domain/usecase/auth/register_with_phone_usecase.dart' as _i410;
 import '../../helper/local_storage_helper.dart' as _i218;
 import '../../helper/network_helper.dart' as _i779;
 
@@ -45,6 +47,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i408.RegisterWithEmailEntity>>(
       () => _i404.RegisterWithEmailUsecase(gh<_i403.IAuthRepository>()),
       instanceName: 'RegisterWithEmail',
+    );
+    gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i409.RegisterWithPhoneEntity>>(
+      () => _i410.RegisterWithPhoneUsecase(gh<_i403.IAuthRepository>()),
+      instanceName: 'RegisterWithPhone',
     );
     return this;
   }

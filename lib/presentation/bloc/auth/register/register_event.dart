@@ -12,3 +12,12 @@ final class RegisterWithEmailEvent extends IRegisterEvent {
   @override
   List<Object?> get props => [entity];
 }
+
+final class RegisterWithPhoneEvent extends IRegisterEvent {
+  const RegisterWithPhoneEvent(this.entity);
+
+  final RegisterWithPhoneEntity entity;
+
+  @override
+  List<Object?> get props => [entity];
+}

@@ -9,6 +9,7 @@ class ApiEndpoints {
   //#region Auth
   static const String auth = '/auth';
   static const String registerWithEmail = '/register/email';
+  static const String registerWithPhone = '/register/phone';
   static const String login = '/login';
   static const String checkCode = '/check-code';
 //#endregion
