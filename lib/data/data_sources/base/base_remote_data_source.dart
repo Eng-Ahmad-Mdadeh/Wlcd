@@ -114,13 +114,26 @@ class BaseRemoteDataSource<T> {
     bool isFormDate = true,
     List<Map<String, dynamic>>? files,
     T Function(Object? json)? fromJsonT,
+    Map<String, dynamic>? headers,
+    bool wrappedResponse = true,
+    bool includeAuthorization = true,
   }) async {
     try {
-      final response = await _networkHelper.post(baseEndpoint + endpoint, data: data, files: files, isFormDate: isFormDate);
+      final response = await _networkHelper.post(
+        baseEndpoint + endpoint,
+        data: data,
+        files: files,
+        isFormDate: isFormDate,
+        headers: headers,
+        includeAuthorization: includeAuthorization,
+      );
       return response.fold(
         (e) => Left(e),
         (r) {
           if (fromJsonT == null) return const Right(null);
+          if (!wrappedResponse) {
+            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+          }
           return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
         },
       );

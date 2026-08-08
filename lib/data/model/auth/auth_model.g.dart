@@ -7,10 +7,24 @@ part of 'auth_model.dart';
 // **************************************************************************
 
 AuthModel _$AuthModelFromJson(Map<String, dynamic> json) => AuthModel(
-  user: json['user'] == null
+  tokenType: json['tokenType'] as String?,
+  expiresAt: json['expiresAt'] == null
       ? null
-      : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-  accessToken: json['access_token'] as String?,
-  tokenType: json['token_type'] as String?,
-  expiresIn: json['expires_in'] as num?,
+      : DateTime.parse(json['expiresAt'] as String),
+  sessionId: json['sessionId'] as String?,
+  account: json['account'] == null
+      ? null
+      : AuthAccountModel.fromJson(json['account'] as Map<String, dynamic>),
+  effectivePermissions:
+      (json['effectivePermissions'] as List<dynamic>?)
+          ?.map((permission) => permission as String)
+          .toList() ??
+      const [],
 );
+
+AuthAccountModel _$AuthAccountModelFromJson(Map<String, dynamic> json) =>
+    AuthAccountModel(
+      accountId: json['accountId'] as String?,
+      status: json['status'] as String?,
+      profileComplete: json['profileComplete'] as bool?,
+    );

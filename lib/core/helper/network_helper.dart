@@ -111,6 +111,8 @@ class NetworkHelper {
     dynamic data,
     bool isFormDate = true,
     List<Map<String, dynamic>>? files,
+    Map<String, dynamic>? headers,
+    bool includeAuthorization = true,
   }) async {
     final token = await getToken();
     final version = await getVersion();
@@ -120,7 +122,16 @@ class NetworkHelper {
     return _performRequest(() {
       return _dio.post(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormDate)),
+        options: Options(
+          headers: {
+            ..._buildHeaders(
+              includeAuthorization ? token : null,
+              version,
+              isMultipart: isFormDate,
+            ),
+            ...?headers,
+          },
+        ),
         data: formData,
       );
     });
@@ -300,6 +311,14 @@ class NetworkHelper {
 
     final message = responseData['message'];
     if (message is String && message.isNotEmpty) return message;
+
+    final error = responseData['error'];
+    if (error is Map<String, dynamic>) {
+      final errorMessage = error['message'];
+      if (errorMessage is String && errorMessage.isNotEmpty) {
+        return errorMessage;
+      }
+    }
 
     return null;
   }

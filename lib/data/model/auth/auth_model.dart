@@ -1,4 +1,3 @@
-import 'package:wlcd/data/model/user/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,26 +6,47 @@ part 'auth_model.g.dart';
 @JsonSerializable(createToJson: false)
 class AuthModel extends Equatable {
   const AuthModel({
-    required this.user,
-    required this.accessToken,
     required this.tokenType,
-    required this.expiresIn,
+    required this.expiresAt,
+    required this.sessionId,
+    required this.account,
+    required this.effectivePermissions,
   });
 
-  final UserModel? user;
-
-  @JsonKey(name: 'access_token')
-  final String? accessToken;
-
-  @JsonKey(name: 'token_type')
   final String? tokenType;
+  final DateTime? expiresAt;
+  final String? sessionId;
+  final AuthAccountModel? account;
+  final List<String> effectivePermissions;
 
-  @JsonKey(name: 'expires_in')
-  final num? expiresIn;
-
-  factory AuthModel.fromJson(Map<String, dynamic> json) => _$AuthModelFromJson(json);
+  factory AuthModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthModelFromJson(json);
 
   @override
   List<Object?> get props => [
-    user, accessToken, tokenType, expiresIn, ];
+    tokenType,
+    expiresAt,
+    sessionId,
+    account,
+    effectivePermissions,
+  ];
+}
+
+@JsonSerializable(createToJson: false)
+class AuthAccountModel extends Equatable {
+  const AuthAccountModel({
+    required this.accountId,
+    required this.status,
+    required this.profileComplete,
+  });
+
+  final String? accountId;
+  final String? status;
+  final bool? profileComplete;
+
+  factory AuthAccountModel.fromJson(Map<String, dynamic> json) =>
+      _$AuthAccountModelFromJson(json);
+
+  @override
+  List<Object?> get props => [accountId, status, profileComplete];
 }

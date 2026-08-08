@@ -6,10 +6,40 @@ import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/data_sources/base/base_remote_data_source.dart';
 import 'package:wlcd/data/model/auth/auth_model.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
+import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
+import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
 
 @Injectable()
 class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
   AuthRemoteDataSource() : super(ApiEndpoints.auth);
+
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithEmail(
+    RegisterWithEmailEntity data,
+  ) {
+    return postData(
+      endpoint: ApiEndpoints.registerWithEmail,
+      fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
+      data: data.toJson(),
+      headers: data.headers,
+      isFormDate: false,
+      wrappedResponse: false,
+      includeAuthorization: false,
+    );
+  }
+
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithPhone(
+    RegisterWithPhoneEntity data,
+  ) {
+    return postData(
+      endpoint: ApiEndpoints.registerWithPhone,
+      fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
+      data: data.toJson(),
+      headers: data.headers,
+      isFormDate: false,
+      wrappedResponse: false,
+      includeAuthorization: false,
+    );
+  }
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(
