@@ -10,7 +10,7 @@ class LanguageCubit extends Cubit<Locale> {
   static const String localeKey = 'locale';
   static const List<String> supportedLocales = ['ar', 'en'];
 
-  final LocalStorageHelper _storage = locator<LocalStorageHelper>();
+  // final LocalStorageHelper _storage = locator<LocalStorageHelper>();
 
   Future<void> setLocale(Locale locale) async {
     if (!supportedLocales.contains(locale.languageCode)) {
@@ -20,6 +20,6 @@ class LanguageCubit extends Cubit<Locale> {
       return;
     }
     emit(locale);
-    await _storage.saveValue(boxName, localeKey, locale.languageCode);
+    // await _storage.saveValue(boxName, localeKey, locale.languageCode);
   }
 }

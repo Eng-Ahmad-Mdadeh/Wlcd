@@ -12,38 +12,39 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
-import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i401;
-import '../../../data/repository/auth/auth_repository.dart' as _i402;
-import '../../../domain/repository/auth/i_auth_repository.dart' as _i403;
-import '../../../domain/usecase/auth/register_with_email_usecase.dart' as _i404;
-import '../../../domain/usecase/i_use_case.dart' as _i405;
-import '../../../data/model/auth/auth_model.dart' as _i406;
-import '../../../data/model/base/base_model.dart' as _i407;
-import '../../../domain/entity/auth/register_with_email_entity.dart' as _i408;
-import '../../../domain/entity/auth/register_with_phone_entity.dart' as _i409;
-import '../../../domain/usecase/auth/register_with_phone_usecase.dart' as _i410;
-import '../../../data/model/auth/verify_email_model.dart' as _i411;
-import '../../../domain/entity/auth/verify_email_entity.dart' as _i412;
-import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i413;
-import '../../../data/model/auth/phone_otp_challenge_model.dart' as _i414;
-import '../../../domain/entity/auth/request_phone_otp_entity.dart' as _i415;
-import '../../../domain/usecase/auth/request_phone_otp_usecase.dart' as _i416;
-import '../../../data/model/auth/phone_otp_verification_model.dart' as _i417;
-import '../../../data/model/auth/operation_success_model.dart' as _i418;
-import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i419;
-import '../../../domain/entity/auth/login_with_password_entity.dart' as _i420;
-import '../../../domain/entity/auth/request_login_otp_entity.dart' as _i421;
-import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i422;
-import '../../../domain/entity/auth/request_password_reset_entity.dart' as _i423;
-import '../../../domain/entity/auth/reset_password_entity.dart' as _i424;
-import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i425;
-import '../../../domain/usecase/auth/login_with_password_usecase.dart' as _i426;
-import '../../../domain/usecase/auth/request_login_otp_usecase.dart' as _i427;
-import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i428;
-import '../../../domain/usecase/auth/request_password_reset_usecase.dart' as _i429;
-import '../../../domain/usecase/auth/reset_password_usecase.dart' as _i430;
-import '../../helper/local_storage_helper.dart' as _i218;
+import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
+import '../../../data/model/auth/auth_model.dart' as _i49;
+import '../../../data/model/auth/operation_success_model.dart' as _i938;
+import '../../../data/model/auth/phone_otp_challenge_model.dart' as _i959;
+import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
+import '../../../data/model/auth/verify_email_model.dart' as _i638;
+import '../../../data/model/base/base_model.dart' as _i830;
+import '../../../data/repository/auth/auth_repository.dart' as _i728;
+import '../../../domain/entity/auth/auth_entity.dart' as _i250;
+import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
+import '../../../domain/entity/auth/login_with_password_entity.dart' as _i679;
+import '../../../domain/entity/auth/register_with_email_entity.dart' as _i207;
+import '../../../domain/entity/auth/register_with_phone_entity.dart' as _i1034;
+import '../../../domain/entity/auth/request_login_otp_entity.dart' as _i745;
+import '../../../domain/entity/auth/request_password_reset_entity.dart'
+    as _i552;
+import '../../../domain/entity/auth/request_phone_otp_entity.dart' as _i92;
+import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
+import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
+import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
+import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
+import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i446;
+import '../../../domain/usecase/auth/login_with_password_usecase.dart' as _i823;
+import '../../../domain/usecase/auth/register_with_email_usecase.dart' as _i714;
+import '../../../domain/usecase/auth/register_with_phone_usecase.dart' as _i14;
+import '../../../domain/usecase/auth/request_login_otp_usecase.dart' as _i804;
+import '../../../domain/usecase/auth/request_password_reset_usecase.dart'
+    as _i65;
+import '../../../domain/usecase/auth/request_phone_otp_usecase.dart' as _i784;
+import '../../../domain/usecase/auth/reset_password_usecase.dart' as _i888;
+import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i46;
+import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i827;
+import '../../../domain/usecase/i_use_case.dart' as _i759;
 import '../../helper/network_helper.dart' as _i779;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -53,45 +54,107 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i218.LocalStorageHelper>(() => _i218.LocalStorageHelper());
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
-    gh.factory<_i244.AuthStorageDataSource>(
-      () => _i244.AuthStorageDataSource(),
+    gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.factory<_i154.IAuthRepository>(
+      () => _i728.AuthRepository(gh<_i444.AuthRemoteDataSource>()),
     );
-    gh.factory<_i401.AuthRemoteDataSource>(
-      () => _i401.AuthRemoteDataSource(),
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i248.PhoneOtpVerificationModel>?,
+        _i982.VerifyPhoneOtpEntity
+      >
+    >(
+      () => _i827.VerifyPhoneOtpUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'VerifyPhoneOtp',
     );
-    gh.factory<_i403.IAuthRepository>(
-      () => _i402.AuthRepository(gh<_i401.AuthRemoteDataSource>()),
-    );
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i408.RegisterWithEmailEntity>>(
-      () => _i404.RegisterWithEmailUsecase(gh<_i403.IAuthRepository>()),
-      instanceName: 'RegisterWithEmail',
-    );
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i409.RegisterWithPhoneEntity>>(
-      () => _i410.RegisterWithPhoneUsecase(gh<_i403.IAuthRepository>()),
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i49.AuthModel>?,
+        _i1034.RegisterWithPhoneEntity
+      >
+    >(
+      () => _i14.RegisterWithPhoneUsecase(gh<_i154.IAuthRepository>()),
       instanceName: 'RegisterWithPhone',
     );
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i411.VerifyEmailModel>?, _i412.VerifyEmailEntity>>(
-      () => _i413.VerifyEmailUsecase(gh<_i403.IAuthRepository>()),
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i638.VerifyEmailModel>?,
+        _i853.VerifyEmailEntity
+      >
+    >(
+      () => _i46.VerifyEmailUsecase(gh<_i154.IAuthRepository>()),
       instanceName: 'VerifyEmail',
     );
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i414.PhoneOtpChallengeModel>?, _i415.RequestPhoneOtpEntity>>(
-      () => _i416.RequestPhoneOtpUsecase(gh<_i403.IAuthRepository>()),
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i49.AuthModel>?,
+        _i679.LoginWithPasswordEntity
+      >
+    >(
+      () => _i823.LoginWithPasswordUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'LoginWithPassword',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i938.OperationSuccessModel>?,
+        _i394.ResetPasswordEntity
+      >
+    >(
+      () => _i888.ResetPasswordUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'ResetPassword',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i49.AuthModel>?,
+        _i207.RegisterWithEmailEntity
+      >
+    >(
+      () => _i714.RegisterWithEmailUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'RegisterWithEmail',
+    );
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i49.AuthModel>?, _i352.LoginWithOtpEntity>
+    >(
+      () => _i446.LoginWithOtpUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'LoginWithOtp',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i959.PhoneOtpChallengeModel>?,
+        _i92.RequestPhoneOtpEntity
+      >
+    >(
+      () => _i784.RequestPhoneOtpUsecase(gh<_i154.IAuthRepository>()),
       instanceName: 'RequestPhoneOtp',
     );
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i417.PhoneOtpVerificationModel>?, _i419.VerifyPhoneOtpEntity>>(
-      () => _i425.VerifyPhoneOtpUsecase(gh<_i403.IAuthRepository>()), instanceName: 'VerifyPhoneOtp');
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i420.LoginWithPasswordEntity>>(
-      () => _i426.LoginWithPasswordUsecase(gh<_i403.IAuthRepository>()), instanceName: 'LoginWithPassword');
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i414.PhoneOtpChallengeModel>?, _i421.RequestLoginOtpEntity>>(
-      () => _i427.RequestLoginOtpUsecase(gh<_i403.IAuthRepository>()), instanceName: 'RequestLoginOtp');
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i406.AuthModel>?, _i422.LoginWithOtpEntity>>(
-      () => _i428.LoginWithOtpUsecase(gh<_i403.IAuthRepository>()), instanceName: 'LoginWithOtp');
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i418.OperationSuccessModel>?, _i423.RequestPasswordResetEntity>>(
-      () => _i429.RequestPasswordResetUsecase(gh<_i403.IAuthRepository>()), instanceName: 'RequestPasswordReset');
-    gh.factory<_i405.IUseCase<_i407.BaseModel<_i418.OperationSuccessModel>?, _i424.ResetPasswordEntity>>(
-      () => _i430.ResetPasswordUsecase(gh<_i403.IAuthRepository>()), instanceName: 'ResetPassword');
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i938.OperationSuccessModel>?,
+        _i552.RequestPasswordResetEntity
+      >
+    >(
+      () => _i65.RequestPasswordResetUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'RequestPasswordReset',
+    );
+    gh.factory<_i250.AuthEntity>(
+      () => _i250.AuthEntity(
+        phone: gh<String>(),
+        typeMessage: gh<String>(),
+        code: gh<String>(),
+        fcm: gh<String>(),
+        rememberMe: gh<bool>(),
+      ),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i959.PhoneOtpChallengeModel>?,
+        _i745.RequestLoginOtpEntity
+      >
+    >(
+      () => _i804.RequestLoginOtpUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'RequestLoginOtp',
+    );
     return this;
   }
 }

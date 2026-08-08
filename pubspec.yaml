@@ -41,7 +41,7 @@ dependencies:
   pinput: ^6.0.2
   flutter_timer_countdown: ^1.0.7
   url_launcher: ^6.3.2
-  hive_flutter: ^1.1.0
+#  hive_flutter: ^1.1.0
   image_picker: ^1.2.2
   image_cropper: ^12.2.1
   dio: ^5.9.2

@@ -23,62 +23,6 @@ List<RouteBase> get $appRoutes => [
   $appShellRoute,
 ];
 
-RouteBase get $teachersRoute => GoRouteData.$route(
-  path: '/teachers',
-  factory: $TeachersRoute._fromState,
-  routes: [
-    GoRouteData.$route(
-      path: 'profile',
-      factory: $TeacherProfileRoute._fromState,
-    ),
-  ],
-);
-
-mixin $TeachersRoute on GoRouteData {
-  static TeachersRoute _fromState(GoRouterState state) => TeachersRoute();
-
-  @override
-  String get location => GoRouteData.$location('/teachers');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $TeacherProfileRoute on GoRouteData {
-  static TeacherProfileRoute _fromState(GoRouterState state) =>
-      TeacherProfileRoute($extra: state.extra as TeacherData);
-
-  TeacherProfileRoute get _self => this as TeacherProfileRoute;
-
-  @override
-  String get location => GoRouteData.$location('/teachers/profile');
-
-  @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
-
-  @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
-
-  @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
-}
-
 RouteBase get $splashRoute =>
     GoRouteData.$route(path: '/', factory: $SplashRoute._fromState);
 
@@ -221,7 +165,6 @@ mixin $CourseDetailsRoute on GoRouteData {
   @override
   void replace(BuildContext context) => context.replace(location);
 }
-
 
 RouteBase get $categorySelectionRoute => GoRouteData.$route(
   path: '/category-selection',
@@ -400,6 +343,62 @@ mixin $OrderHistoryRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $teachersRoute => GoRouteData.$route(
+  path: '/teachers',
+  factory: $TeachersRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'profile',
+      factory: $TeacherProfileRoute._fromState,
+    ),
+  ],
+);
+
+mixin $TeachersRoute on GoRouteData {
+  static TeachersRoute _fromState(GoRouterState state) => TeachersRoute();
+
+  @override
+  String get location => GoRouteData.$location('/teachers');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $TeacherProfileRoute on GoRouteData {
+  static TeacherProfileRoute _fromState(GoRouterState state) =>
+      TeacherProfileRoute($extra: state.extra as TeacherData);
+
+  TeacherProfileRoute get _self => this as TeacherProfileRoute;
+
+  @override
+  String get location => GoRouteData.$location('/teachers/profile');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(

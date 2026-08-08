@@ -73,7 +73,7 @@ class NetworkHelper {
 
   /// Fetches the token from the local data source.
   Future<String?> getToken() async {
-    return locator<AuthStorageDataSource>().getToken().then((result) => result.fold((l) => null, (r) => r));
+    // return locator<AuthStorageDataSource>().getToken().then((result) => result.fold((l) => null, (r) => r));
   }
 
   /// Fetches the version, appName ..etc.

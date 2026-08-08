@@ -6,5 +6,6 @@ part of 'operation_success_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OperationSuccessModel _$OperationSuccessModelFromJson(Map<String, dynamic> json) =>
-    OperationSuccessModel(success: json['success'] as bool?);
+OperationSuccessModel _$OperationSuccessModelFromJson(
+  Map<String, dynamic> json,
+) => OperationSuccessModel(success: json['success'] as bool?);

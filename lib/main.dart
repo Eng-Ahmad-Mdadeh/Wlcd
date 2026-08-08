@@ -7,9 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/core/services/app_lifecycle_tracker.dart';
-import 'package:wlcd/data/data_sources/auth/auth_storage_data_source.dart';
-import 'package:wlcd/data/model/base/base_model.dart';
-import 'package:wlcd/domain/usecase/i_use_case.dart';
+
 
 
 // import 'package:app_links/app_links.dart';
@@ -21,7 +19,6 @@ import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/core/utils/connection_network_service.dart';
 import 'package:wlcd/presentation/cubit/bottom_bar/bottom_bar_cubit.dart';
 
-import 'core/helper/local_storage_helper.dart';
 import 'core/services/app_services.dart';
 import 'core/constants/app_theme.dart';
 import 'core/routes/app_routes.dart';
@@ -166,15 +163,15 @@ class _MyAppState extends State<MyApp> {
 
 Future<Locale> _loadInitialLocale() async {
   const fallback = Locale('ar');
-  final storage = locator<LocalStorageHelper>();
-  final response = await storage.getValue(LanguageCubit.boxName, LanguageCubit.localeKey);
-  return response.fold((_) => fallback, (value) {
-    final code = value?.toString();
-    if (code != null && LanguageCubit.supportedLocales.contains(code)) {
-      return Locale(code);
-    }
+//   // final storage = locator<LocalStorageHelper>();
+//   final response = await storage.getValue(LanguageCubit.boxName, LanguageCubit.localeKey);
+//   return response.fold((_) => fallback, (value) {
+//     final code = value?.toString();
+//     if (code != null && LanguageCubit.supportedLocales.contains(code)) {
+//       return Locale(code);
+//     }
     return fallback;
-  });
+//   });
 }
 
 
@@ -184,19 +181,19 @@ Future<String?> _guard(BuildContext context, GoRouterState state) async {
 
 
   // Fetch token to check if the user is signed in
-  final tokenResult = await locator<AuthStorageDataSource>().getToken();
-  final String? token = tokenResult.fold(
-        (failure) {
-      log("Error retrieving token: $failure");
-      return null;
-    },
-        (success) {
-      log("Token: $success");
-      return success;
-    },
-  );
+  // final tokenResult = await locator<AuthStorageDataSource>().getToken();
+  // final String? token = tokenResult.fold(
+  //       (failure) {
+  //     log("Error retrieving token: $failure");
+  //     return null;
+  //   },
+  //       (success) {
+  //     log("Token: $success");
+  //     return success;
+  //   },
+  // );
 
-  final bool signedIn = token != null;
+  // final bool signedIn = token != null;
 
   // Define routes that are allowed without login
   final bool allowedWithoutLogin = [
@@ -210,20 +207,20 @@ Future<String?> _guard(BuildContext context, GoRouterState state) async {
   log("###############################################################");
   log("MATCHED LOCATION: ${state.matchedLocation}");
   log("ALLOWED WITHOUT SIGN IN: $allowedWithoutLogin");
-  log("LOGGED: $signedIn");
+  // log("LOGGED: $signedIn");
   log("QUERY PARAMETERS: ${state.uri.queryParameters}");
   log("###############################################################");
 
   // Redirect to login if the user is not signed in and the route is not allowed
-  if (!signedIn && !allowedWithoutLogin) {
-    final destination = state.uri.toString();
+  // if (!signedIn && !allowedWithoutLogin) {
+  //   final destination = state.uri.toString();
     // print('4444444444444444444444444444444444');
     // print(state.extra);
     // print('4444444444444444444444444444444444');
-    AuthRedirectStore.save(location: destination, extra: state.extra);
-    final redirectPath = '${LoginRoute().location}?redirect=${Uri.encodeComponent(destination)}';
-    return redirectPath;
-  }
+    // AuthRedirectStore.save(location: destination, extra: state.extra);
+    // final redirectPath = '${LoginRoute().location}?redirect=${Uri.encodeComponent(destination)}';
+    // return redirectPath;
+  // }
 
   // Returning null tells GoRouter to keep the current matched location.
   // Returning state.uri.toString() can re-inject absolute deep-link URLs
