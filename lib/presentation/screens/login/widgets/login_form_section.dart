@@ -12,6 +12,12 @@ import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
+import 'package:wlcd/domain/entity/auth/login_with_password_entity.dart';
+import 'package:wlcd/domain/entity/auth/request_login_otp_entity.dart';
+import 'package:wlcd/presentation/bloc/auth/login_with_password/login_with_password_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/request_login_otp/request_login_otp_bloc.dart';
+import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class LoginFormSection extends StatefulWidget {
   const LoginFormSection({super.key, required this.formKey, required this.isPhoneLogin});
@@ -25,18 +31,33 @@ class LoginFormSection extends StatefulWidget {
 
 class _LoginFormSectionState extends State<LoginFormSection> {
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _passwordLoginPayload;
+  String? _passwordLoginIdempotencyKey;
 
   @override
   void dispose() {
     _phoneController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget.formKey,
-      child: Column(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<LoginWithPasswordBloc, ILoginWithPasswordState>(
+          listener: _onPasswordLoginState,
+        ),
+        BlocListener<RequestLoginOtpBloc, IRequestLoginOtpState>(
+          listener: _onLoginOtpRequestState,
+        ),
+      ],
+      child: Form(
+        key: widget.formKey,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.isPhoneLogin) ...[
@@ -45,10 +66,11 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               icon: Icons.phone_outlined,
               hintText: context.loc.enter_phone_number,
               keyboardType: TextInputType.phone,
-              // validator: (value) => _validatePhone(context, value),
+              validator: (value) => _validatePhone(context, value),
             ),
           ] else ...[
             LoginTextField(
+              controller: _emailController,
               icon: Icons.email_outlined,
               hintText: context.loc.your_email,
               keyboardType: TextInputType.emailAddress,
@@ -56,6 +78,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
             ),
             SizedBox(height: AppHeight.h14),
             LoginTextField(
+              controller: _passwordController,
               icon: Icons.lock,
               hintText: context.loc.your_password,
               obscureText: true,
@@ -80,22 +103,24 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               ),
             ),
           ],
-          CustomSubmitButton(
-            title: context.loc.sign_in,
-            marginTop: AppMarginHeight.m30,
-            borderRadius: AppRadius.r24,
-            buttonColor: AppColors.loginPrimary,
-            onPressed: () {
-              if (widget.formKey.currentState!.validate()) {
-                if (widget.isPhoneLogin) {
-                  context.read<CodeCheckCubit>()
-                    ..setPhone(_phoneController.text.trim())
-                    ..setType('sms', '');
-                  CheckCodeRoute().push(context);
-                } else {
-                  HomeRoute().push(context);
-                }
-              }
+          BlocBuilder<LoginWithPasswordBloc, ILoginWithPasswordState>(
+            builder: (context, passwordState) {
+              return BlocBuilder<RequestLoginOtpBloc, IRequestLoginOtpState>(
+                builder: (context, otpState) {
+                  final isLoading =
+                      passwordState is LoginWithPasswordLoading ||
+                      otpState is RequestLoginOtpLoading;
+                  return CustomSubmitButton(
+                    title: context.loc.sign_in,
+                    marginTop: AppMarginHeight.m30,
+                    borderRadius: AppRadius.r24,
+                    buttonColor: AppColors.loginPrimary,
+                    isLoading: isLoading,
+                    verification: !isLoading,
+                    onPressed: _submit,
+                  );
+                },
+              );
             },
           ),
           SizedBox(height: AppHeight.h26),
@@ -103,7 +128,79 @@ class _LoginFormSectionState extends State<LoginFormSection> {
           SizedBox(height: AppHeight.h22),
           const _CreateAccountButton(),
         ],
+        ),
       ),
+    );
+  }
+
+  void _submit() {
+    if (!(widget.formKey.currentState?.validate() ?? false)) return;
+    if (widget.isPhoneLogin) {
+      context.read<RequestLoginOtpBloc>().add(
+        SubmitRequestLoginOtpEvent(
+          RequestLoginOtpEntity(phone: _phoneController.text.trim()),
+        ),
+      );
+      return;
+    }
+
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final payload = '$email\u0000$password\u0000false';
+    if (_passwordLoginPayload != payload) {
+      _passwordLoginPayload = payload;
+      _passwordLoginIdempotencyKey =
+          'login-password-${DateTime.now().microsecondsSinceEpoch}';
+    }
+    context.read<LoginWithPasswordBloc>().add(
+      SubmitLoginWithPasswordEvent(
+        LoginWithPasswordEntity(
+          email: email,
+          password: password,
+          rememberMe: false,
+          idempotencyKey: _passwordLoginIdempotencyKey!,
+        ),
+      ),
+    );
+  }
+
+  void _onPasswordLoginState(
+    BuildContext context,
+    ILoginWithPasswordState state,
+  ) {
+    if (state is LoginWithPasswordLoaded) {
+      HomeRoute().go(context);
+    } else if (state is LoginWithPasswordFailed) {
+      _showFailure(context, state.message);
+    }
+  }
+
+  void _onLoginOtpRequestState(
+    BuildContext context,
+    IRequestLoginOtpState state,
+  ) {
+    if (state is RequestLoginOtpLoaded) {
+      final challengeId = state.challenge?.data?.challengeId;
+      if (challengeId == null || challengeId.isEmpty) {
+        _showFailure(context, 'لم يتم استلام معرّف التحقق');
+        return;
+      }
+      context.read<CodeCheckCubit>()
+        ..setPhone(_phoneController.text.trim())
+        ..setType('sms', '')
+        ..setChallengeId(challengeId);
+      CheckCodeRoute().push(context);
+    } else if (state is RequestLoginOtpFailed) {
+      _showFailure(context, state.message);
+    }
+  }
+
+  void _showFailure(BuildContext context, String message) {
+    showCustomSnackBar(
+      context: context,
+      title: 'خطأ',
+      message: message,
+      contentType: ContentType.failure,
     );
   }
 
@@ -117,12 +214,12 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     return null;
   }
 
-  // String? _validatePhone(BuildContext context, String? value) {
-  //   if (value == null || value.isEmpty || !value.isValidPhone) {
-  //     return context.loc.enter_valid_phone;
-  //   }
-  //   return null;
-  // }
+  String? _validatePhone(BuildContext context, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return context.loc.enter_phone_number;
+    }
+    return null;
+  }
 
   String? _validatePassword(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
