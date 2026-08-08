@@ -117,6 +117,28 @@ class BaseRemoteDataSource<T> {
     Map<String, dynamic>? headers,
     bool wrappedResponse = true,
     bool includeAuthorization = true,
+  }) {
+    return postDataAs<T>(
+      endpoint: endpoint,
+      data: data,
+      isFormDate: isFormDate,
+      files: files,
+      fromJsonT: fromJsonT,
+      headers: headers,
+      wrappedResponse: wrappedResponse,
+      includeAuthorization: includeAuthorization,
+    );
+  }
+
+  Future<Either<AppException, BaseModel<R>?>> postDataAs<R>({
+    String endpoint = '',
+    Map<String, dynamic>? data,
+    bool isFormDate = true,
+    List<Map<String, dynamic>>? files,
+    R Function(Object? json)? fromJsonT,
+    Map<String, dynamic>? headers,
+    bool wrappedResponse = true,
+    bool includeAuthorization = true,
   }) async {
     try {
       final response = await _networkHelper.post(
@@ -132,9 +154,9 @@ class BaseRemoteDataSource<T> {
         (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
-            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+            return Right(BaseModel<R>(data: fromJsonT(r.data)));
           }
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
         },
       );
     } on AppException catch (e, s) {

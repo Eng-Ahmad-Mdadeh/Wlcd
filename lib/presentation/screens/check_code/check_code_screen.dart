@@ -24,9 +24,7 @@ class CheckCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc()),
-      ],
+      providers: [BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc())],
       child: BodyCheckCodeScreen(redirects: redirects),
     );
   }
@@ -60,7 +58,7 @@ class _BodyCheckCodeScreenState extends State<BodyCheckCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(showBackButton: true),
+      appBar: CustomAppBar(showBackButton: true),
       body: BlocListener<CheckCodeBloc, ICheckCodeState>(
         listener: (context, state) async {
           if (state is CheckCodeLoading) {
@@ -71,13 +69,14 @@ class _BodyCheckCodeScreenState extends State<BodyCheckCodeScreen> {
           }
           if (state is CheckCodeLoaded) {
             context.pop();
-            if (!state.authModel!.data!.user!.profileComplete!) {
-              // CompleteProfileRoute().push(context);
-            } else {
-              if (context.mounted) {
-                // HomeRoute().go(context);
-              }
-            }
+            // if (!state.authModel!.data!.user!.profileComplete!) {
+            // CompleteProfileRoute().push(context);
+            // }
+            // else {
+            //   if (context.mounted) {
+            //     HomeRoute().go(context);
+            // }
+            // }
           }
           if (state is CheckCodeFailed && context.mounted) {
             context.pop();
