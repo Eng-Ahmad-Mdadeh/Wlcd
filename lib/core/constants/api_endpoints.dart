@@ -2,7 +2,7 @@ class ApiEndpoints {
   const ApiEndpoints._();
 
   //#region Base Url
-  static const String baseUrl = ' https://wlcd.mubashar.tr/api/v1';
+  static const String baseUrl = 'https://wlcd.mubashar.tr/api/v1';
   //#endregion
 
 

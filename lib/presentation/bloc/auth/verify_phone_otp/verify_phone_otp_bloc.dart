@@ -9,6 +9,7 @@ import 'package:wlcd/domain/entity/auth/verify_phone_otp_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'verify_phone_otp_event.dart';
+
 part 'verify_phone_otp_state.dart';
 
 class VerifyPhoneOtpBloc extends Bloc<IVerifyPhoneOtpEvent, IVerifyPhoneOtpState> {
@@ -19,9 +20,9 @@ class VerifyPhoneOtpBloc extends Bloc<IVerifyPhoneOtpEvent, IVerifyPhoneOtpState
   FutureOr<void> _submit(SubmitVerifyPhoneOtpEvent event, Emitter<IVerifyPhoneOtpState> emit) async {
     emit(VerifyPhoneOtpLoading());
     try {
-      final usecase = locator<
-        IUseCase<BaseModel<PhoneOtpVerificationModel>?, VerifyPhoneOtpEntity>
-      >(instanceName: 'VerifyPhoneOtp');
+      final usecase = locator<IUseCase<BaseModel<PhoneOtpVerificationModel>?, VerifyPhoneOtpEntity>>(
+        instanceName: 'VerifyPhoneOtp',
+      );
       final response = await usecase(event.entity);
       response.fold(
         (failure) => emit(VerifyPhoneOtpFailed(failure.message)),
