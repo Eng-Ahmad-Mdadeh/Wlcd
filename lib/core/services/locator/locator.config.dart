@@ -11,10 +11,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i777;
 
+import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i778;
 import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/model/auth/auth_model.dart' as _i49;
 import '../../../data/model/auth/operation_success_model.dart' as _i938;
+import '../../../data/model/auth/session_model.dart' as _i939;
 import '../../../data/model/auth/phone_otp_challenge_model.dart' as _i959;
 import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
@@ -33,6 +36,8 @@ import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
 import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
+import '../../../domain/usecase/auth/get_session_usecase.dart' as _i900;
+import '../../../domain/usecase/auth/logout_usecase.dart' as _i901;
 import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i446;
 import '../../../domain/usecase/auth/login_with_password_usecase.dart' as _i823;
 import '../../../domain/usecase/auth/register_with_email_usecase.dart' as _i714;
@@ -54,10 +59,25 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i777.FlutterSecureStorage>(() => const _i777.FlutterSecureStorage());
+    gh.factory<_i778.AuthStorageDataSource>(() => _i778.AuthStorageDataSource(gh<_i777.FlutterSecureStorage>()));
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
     gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
     gh.factory<_i154.IAuthRepository>(
-      () => _i728.AuthRepository(gh<_i444.AuthRemoteDataSource>()),
+      () => _i728.AuthRepository(gh<_i444.AuthRemoteDataSource>(), gh<_i778.AuthStorageDataSource>()),
+    );
+
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i939.SessionModel>?, Null>
+    >(
+      () => _i900.GetSessionUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'GetSession',
+    );
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i938.OperationSuccessModel>?, Null>
+    >(
+      () => _i901.LogoutUsecase(gh<_i154.IAuthRepository>()),
+      instanceName: 'Logout',
     );
     gh.factory<
       _i759.IUseCase<

@@ -9,6 +9,7 @@ import 'package:wlcd/data/model/auth/verify_email_model.dart';
 import 'package:wlcd/data/model/auth/phone_otp_challenge_model.dart';
 import 'package:wlcd/data/model/auth/phone_otp_verification_model.dart';
 import 'package:wlcd/data/model/auth/operation_success_model.dart';
+import 'package:wlcd/data/model/auth/session_model.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
 import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
@@ -149,6 +150,23 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     wrappedResponse: false,
     includeAuthorization: false,
   );
+
+
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout() =>
+      postDataAs(
+        endpoint: ApiEndpoints.logout,
+        fromJsonT: (json) =>
+            OperationSuccessModel.fromJson(json as Map<String, dynamic>),
+        isFormDate: false,
+        wrappedResponse: false,
+      );
+
+  Future<Either<AppException, BaseModel<SessionModel>?>> getSession() =>
+      fetchDataAs(
+        endpoint: ApiEndpoints.session,
+        fromJsonT: (json) => SessionModel.fromJson(json as Map<String, dynamic>),
+        wrappedResponse: false,
+      );
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(

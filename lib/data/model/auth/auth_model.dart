@@ -6,6 +6,7 @@ part 'auth_model.g.dart';
 @JsonSerializable(createToJson: false)
 class AuthModel extends Equatable {
   const AuthModel({
+    required this.accessToken,
     required this.tokenType,
     required this.expiresAt,
     required this.sessionId,
@@ -13,6 +14,7 @@ class AuthModel extends Equatable {
     required this.effectivePermissions,
   });
 
+  final String? accessToken;
   final String? tokenType;
   final DateTime? expiresAt;
   final String? sessionId;
@@ -24,6 +26,7 @@ class AuthModel extends Equatable {
 
   @override
   List<Object?> get props => [
+    accessToken,
     tokenType,
     expiresAt,
     sessionId,
@@ -38,15 +41,31 @@ class AuthAccountModel extends Equatable {
     required this.accountId,
     required this.status,
     required this.profileComplete,
+    this.displayName,
+    this.email,
+    this.phone,
+    this.onboardingComplete,
   });
 
   final String? accountId;
   final String? status;
   final bool? profileComplete;
+  final String? displayName;
+  final String? email;
+  final String? phone;
+  final bool? onboardingComplete;
 
   factory AuthAccountModel.fromJson(Map<String, dynamic> json) =>
       _$AuthAccountModelFromJson(json);
 
   @override
-  List<Object?> get props => [accountId, status, profileComplete];
+  List<Object?> get props => [
+    accountId,
+    status,
+    profileComplete,
+    displayName,
+    email,
+    phone,
+    onboardingComplete,
+  ];
 }

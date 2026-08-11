@@ -46,6 +46,7 @@ class BaseRemoteDataSource<T> {
     Map<String, dynamic>? queryParams,
     Map<String, dynamic>? data,
     required T Function(Object? json) fromJsonT,
+    bool wrappedResponse = true,
   }) async {
     try {
       final response = await _networkHelper.get(
@@ -80,6 +81,23 @@ class BaseRemoteDataSource<T> {
     Map<String, dynamic>? queryParams,
     Map<String, dynamic>? data,
     required T Function(Object? json) fromJsonT,
+    bool wrappedResponse = true,
+  }) {
+    return fetchDataAs<T>(
+      endpoint: endpoint,
+      queryParams: queryParams,
+      data: data,
+      fromJsonT: fromJsonT,
+      wrappedResponse: wrappedResponse,
+    );
+  }
+
+  Future<Either<AppException, BaseModel<R>?>> fetchDataAs<R>({
+    String endpoint = '',
+    Map<String, dynamic>? queryParams,
+    Map<String, dynamic>? data,
+    required R Function(Object? json) fromJsonT,
+    bool wrappedResponse = true,
   }) async {
     try {
       final response = await _networkHelper.get(
@@ -89,7 +107,12 @@ class BaseRemoteDataSource<T> {
       );
       return response.fold(
         (e) => Left(e),
-        (r) => Right(BaseModel<T>.fromJson(r.data!, fromJsonT)),
+        (r) {
+          if (!wrappedResponse) {
+            return Right(BaseModel<R>(data: fromJsonT(r.data)));
+          }
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
+        },
       );
     } on AppException catch (e, s) {
       log("############################# FETCH APP EXCEPTION ################################");
@@ -105,6 +128,7 @@ class BaseRemoteDataSource<T> {
       return Left(UnKnownException(e.toString()));
     }
   }
+
   
 
 

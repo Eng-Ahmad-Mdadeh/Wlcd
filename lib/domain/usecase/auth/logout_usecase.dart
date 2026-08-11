@@ -1,18 +1,20 @@
-// import 'package:tamalok/domain/repository/auth/i_auth_repository.dart';
-// import 'package:tamalok/domain/usecase/i_use_case.dart';
-// import 'package:dartz/dartz.dart';
-// import 'package:injectable/injectable.dart';
-// import '../../../core/exceptions/app_exception.dart';
-//
-// @Injectable(as: IUseCase<void, Null>)
-// @Named('LogOut')
-// class LogoutUsecase implements IUseCase<void, Null> {
-//   final IAuthRepository _repository;
-//
-//   LogoutUsecase(this._repository);
-//
-//   @override
-//   Future<Either<AppException, void>> call(Null n) {
-//     return _repository.logout();
-//   }
-// }
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:wlcd/core/exceptions/app_exception.dart';
+import 'package:wlcd/data/model/auth/operation_success_model.dart';
+import 'package:wlcd/data/model/base/base_model.dart';
+import 'package:wlcd/domain/repository/auth/i_auth_repository.dart';
+import 'package:wlcd/domain/usecase/i_use_case.dart';
+
+@Injectable(as: IUseCase<BaseModel<OperationSuccessModel>?, Null>)
+@Named('Logout')
+class LogoutUsecase implements IUseCase<BaseModel<OperationSuccessModel>?, Null> {
+  const LogoutUsecase(this._repository);
+
+  final IAuthRepository _repository;
+
+  @override
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> call(Null data) {
+    return _repository.logout();
+  }
+}

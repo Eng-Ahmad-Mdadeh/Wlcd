@@ -5,6 +5,7 @@ import 'package:wlcd/data/model/auth/verify_email_model.dart';
 import 'package:wlcd/data/model/auth/phone_otp_challenge_model.dart';
 import 'package:wlcd/data/model/auth/phone_otp_verification_model.dart';
 import 'package:wlcd/data/model/auth/operation_success_model.dart';
+import 'package:wlcd/data/model/auth/session_model.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
 import 'package:wlcd/domain/entity/auth/register_with_phone_entity.dart';
@@ -39,4 +40,6 @@ abstract interface class IAuthRepository {
   Future<Either<AppException, BaseModel<AuthModel>?>> loginWithOtp(LoginWithOtpEntity data);
   Future<Either<AppException, BaseModel<OperationSuccessModel>?>> requestPasswordReset(RequestPasswordResetEntity data);
   Future<Either<AppException, BaseModel<OperationSuccessModel>?>> resetPassword(ResetPasswordEntity data);
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout();
+  Future<Either<AppException, BaseModel<SessionModel>?>> getSession();
 }
