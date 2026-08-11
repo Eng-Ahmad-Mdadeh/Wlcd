@@ -3,8 +3,8 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
-import 'package:wlcd/main.dart';
 import 'package:wlcd/presentation/bloc/auth/check_code/check_code_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/verify_phone_otp/verify_phone_otp_bloc.dart';
 import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/presentation/widgets/auth/logo_section.dart';
@@ -24,7 +24,10 @@ class CheckCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc())],
+      providers: [
+        BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc()),
+        BlocProvider<VerifyPhoneOtpBloc>(create: (context) => VerifyPhoneOtpBloc()),
+      ],
       child: BodyCheckCodeScreen(redirects: redirects),
     );
   }
@@ -59,45 +62,72 @@ class _BodyCheckCodeScreenState extends State<BodyCheckCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(showBackButton: true),
-      body: BlocListener<CheckCodeBloc, ICheckCodeState>(
-        listener: (context, state) async {
-          if (state is CheckCodeLoading) {
-            showDialog(
-              context: context,
-              builder: (context) => const PopScope(canPop: false, child: LoadingWidget(0)),
-            );
-          }
-          if (state is CheckCodeLoaded) {
-            context.pop();
-            // if (!state.authModel!.data!.user!.profileComplete!) {
-            // CompleteProfileRoute().push(context);
-            // }
-            // else {
-            //   if (context.mounted) {
-            //     HomeRoute().go(context);
-            // }
-            // }
-          }
-          if (state is CheckCodeFailed && context.mounted) {
-            context.pop();
-            showCustomSnackBar(
-              context: context,
-              title: "error",
-              message: state.message,
-              contentType: ContentType.failure,
-            );
-          }
-          if (state is ResendCodeSuccess && context.mounted) {
-            context.pop();
-            context.read<CodeCheckCubit>().resetTime();
-            showCustomSnackBar(
-              context: context,
-              title: context.loc.success,
-              message: context.loc.code_sent,
-              contentType: ContentType.success,
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<VerifyPhoneOtpBloc, IVerifyPhoneOtpState>(
+            listener: (context, state) async {
+              if (state is VerifyPhoneOtpLoading) {
+                showDialog(
+                  context: context,
+                  builder: (context) => const PopScope(canPop: false, child: LoadingWidget(0)),
+                );
+              }
+              if (state is VerifyPhoneOtpLoaded && context.mounted) {
+                context.pop();
+                HomeRoute().go(context);
+              }
+              if (state is VerifyPhoneOtpFailed && context.mounted) {
+                context.pop();
+                showCustomSnackBar(
+                  context: context,
+                  title: "error",
+                  message: state.message,
+                  contentType: ContentType.failure,
+                );
+              }
+            },
+          ),
+          BlocListener<CheckCodeBloc, ICheckCodeState>(
+            listener: (context, state) async {
+              if (state is CheckCodeLoading) {
+                showDialog(
+                  context: context,
+                  builder: (context) => const PopScope(canPop: false, child: LoadingWidget(0)),
+                );
+              }
+              if (state is CheckCodeLoaded) {
+                context.pop();
+                // if (!state.authModel!.data!.user!.profileComplete!) {
+                // CompleteProfileRoute().push(context);
+                // }
+                // else {
+                //   if (context.mounted) {
+                //     HomeRoute().go(context);
+                // }
+                // }
+              }
+              if (state is CheckCodeFailed && context.mounted) {
+                context.pop();
+                showCustomSnackBar(
+                  context: context,
+                  title: "error",
+                  message: state.message,
+                  contentType: ContentType.failure,
+                );
+              }
+              if (state is ResendCodeSuccess && context.mounted) {
+                context.pop();
+                context.read<CodeCheckCubit>().resetTime();
+                showCustomSnackBar(
+                  context: context,
+                  title: context.loc.success,
+                  message: context.loc.code_sent,
+                  contentType: ContentType.success,
+                );
+              }
+            },
+          ),
+        ],
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Padding(

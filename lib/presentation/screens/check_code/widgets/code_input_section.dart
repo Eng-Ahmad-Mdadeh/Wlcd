@@ -1,10 +1,7 @@
-import 'package:wlcd/core/routes/app_routes.dart';
-import 'package:wlcd/domain/entity/auth/auth_entity.dart';
-import 'package:wlcd/presentation/bloc/auth/check_code/check_code_bloc.dart';
+import 'package:wlcd/domain/entity/auth/verify_phone_otp_entity.dart';
+import 'package:wlcd/presentation/bloc/auth/verify_phone_otp/verify_phone_otp_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlcd/core/extension/remove_zero_from_number.dart';
-
 import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 
 import '../../../../core/resources/app_values.dart';
@@ -37,17 +34,14 @@ class CodeInputSection extends StatelessWidget {
                   // handler.refreshFcmToken();
                   // final fcmToken = await handler.refreshFcmToken();
                   if (context.mounted) {
-                    HomeRoute().push(context);
-                    // context.read<CheckCodeBloc>().add(
-                    //   CheckCodeEvent(
-                    //     AuthEntity(
-                    //       phone: "${state.dialCode}${(state.phone).removeZero}",
-                    //       code: value,
-                    //       rememberMe: state.rememberMe,
-                    //       // fcm: fcmToken,
-                    //     ),
-                    //   ),
-                    // );
+                    context.read<VerifyPhoneOtpBloc>().add(
+                      SubmitVerifyPhoneOtpEvent(
+                        VerifyPhoneOtpEntity(
+                          challengeId: state.challengeId,
+                          otpCode: value,
+                        ),
+                      ),
+                    );
                   }
                 }
               },
