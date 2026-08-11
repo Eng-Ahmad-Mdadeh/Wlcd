@@ -8,7 +8,6 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/utils/enums/enum_utils.dart';
 import 'package:wlcd/presentation/cubit/bottom_bar/bottom_bar_cubit.dart';
 import 'package:wlcd/presentation/screens/Home/home_screen.dart';
-import 'package:wlcd/presentation/screens/check_code/check_code_screen.dart';
 import 'package:wlcd/presentation/screens/category_selection/category_selection_screen.dart';
 import 'package:wlcd/presentation/screens/course_details/course_details_screen.dart';
 import 'package:wlcd/presentation/screens/login/login_screen.dart';
@@ -49,10 +48,7 @@ class SplashRoute extends GoRouteData with $SplashRoute {
 //#endregion
 
 //#region Auth
-@TypedGoRoute<LoginRoute>(
-  path: '/login',
-  routes: [TypedGoRoute<CheckCodeRoute>(path: 'check_code')],
-)
+@TypedGoRoute<LoginRoute>(path: '/login')
 class LoginRoute extends GoRouteData with $LoginRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {
@@ -60,14 +56,6 @@ class LoginRoute extends GoRouteData with $LoginRoute {
   }
 }
 
-class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
-  CheckCodeRoute();
-
-  @override
-  CustomTransitionPage<void> buildPage(context, state) {
-    return CheckCodeScreen().buildPage(pageAnimation: PageAnimation.slideUp);
-  }
-}
 //#endregion
 
 //#region search

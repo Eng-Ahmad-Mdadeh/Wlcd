@@ -20,7 +20,5 @@ class ApiEndpoints {
   static const String resetPassword = '/password/reset';
   static const String logout = '/logout';
   static const String session = '/session';
-  static const String login = '/login';
-  static const String checkCode = '/check-code';
 //#endregion
 }

@@ -46,13 +46,8 @@ mixin $SplashRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $loginRoute => GoRouteData.$route(
-  path: '/login',
-  factory: $LoginRoute._fromState,
-  routes: [
-    GoRouteData.$route(path: 'check_code', factory: $CheckCodeRoute._fromState),
-  ],
-);
+RouteBase get $loginRoute =>
+    GoRouteData.$route(path: '/login', factory: $LoginRoute._fromState);
 
 mixin $LoginRoute on GoRouteData {
   static LoginRoute _fromState(GoRouterState state) => LoginRoute();
@@ -74,25 +69,6 @@ mixin $LoginRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $CheckCodeRoute on GoRouteData {
-  static CheckCodeRoute _fromState(GoRouterState state) => CheckCodeRoute();
-
-  @override
-  String get location => GoRouteData.$location('/login/check_code');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
 
 RouteBase get $searchRoute =>
     GoRouteData.$route(path: '/search', factory: $SearchRoute._fromState);

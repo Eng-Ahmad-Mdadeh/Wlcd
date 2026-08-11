@@ -5,8 +5,6 @@ import 'package:wlcd/core/extension/validation_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/core/routes/app_routes.dart';
-import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:wlcd/presentation/screens/login/widgets/forgot_password_bottom_sheet.dart';
 import 'package:wlcd/presentation/screens/login/widgets/login_text_field.dart';
 import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
@@ -185,11 +183,10 @@ class _LoginFormSectionState extends State<LoginFormSection> {
         _showFailure(context, 'لم يتم استلام معرّف التحقق');
         return;
       }
-      context.read<CodeCheckCubit>()
-        ..setPhone(_phoneController.text.trim())
-        ..setType('sms', '')
-        ..setChallengeId(challengeId);
-      CheckCodeRoute().push(context);
+      _showFailure(
+        context,
+        'تم إرسال رمز التحقق. استخدم معرّف التحدي لتسجيل الدخول عبر OTP.',
+      );
     } else if (state is RequestLoginOtpFailed) {
       _showFailure(context, state.message);
     }
