@@ -7,6 +7,7 @@ import 'package:wlcd/presentation/screens/login/widgets/login_tabs.dart';
 import 'package:wlcd/presentation/bloc/auth/login_with_password/login_with_password_bloc.dart';
 import 'package:wlcd/presentation/bloc/auth/request_login_otp/request_login_otp_bloc.dart';
 import 'package:wlcd/presentation/bloc/auth/request_password_reset/request_password_reset_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/reset_password/reset_password_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -18,6 +19,7 @@ class LoginScreen extends StatelessWidget {
         BlocProvider(create: (_) => LoginWithPasswordBloc()),
         BlocProvider(create: (_) => RequestLoginOtpBloc()),
         BlocProvider(create: (_) => RequestPasswordResetBloc()),
+        BlocProvider(create: (_) => ResetPasswordBloc()),
       ],
       child: const BodyLoginScreen(),
     );
