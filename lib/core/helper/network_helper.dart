@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
+import 'dart:math' hide log;
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -47,7 +47,7 @@ class NetworkHelper {
     final packageInfo = await PackageInfo.fromPlatform();
     _dio.options.headers.addAll({
       'Idempotency-Key': _generateIdempotencyKey(),
-      'ifMatch': packageInfo.version,
+      // 'If-Match': packageInfo.version,
     });
     _applicationHeadersInitialized = true;
   }
