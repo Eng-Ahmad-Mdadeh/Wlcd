@@ -6,9 +6,14 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 
 class SaveButtonSection extends StatelessWidget {
-  const SaveButtonSection({super.key, required this.onPressed});
+  const SaveButtonSection({
+    super.key,
+    required this.onPressed,
+    this.isLoading = false,
+  });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,13 @@ class SaveButtonSection extends StatelessWidget {
           ),
         ],
       ),
-      child: CustomSubmitButton(elevation: 0, title: "حفظ", onPressed: onPressed),
+      child: CustomSubmitButton(
+        elevation: 0,
+        title: "حفظ",
+        isLoading: isLoading,
+        loadingColor: AppColors.white,
+        onPressed: onPressed ?? () {},
+      ),
     ).animate().slideY(begin: .5, duration: const Duration(milliseconds: 200)).fadeIn();
   }
 }
