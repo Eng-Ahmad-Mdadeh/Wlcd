@@ -14,15 +14,9 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
   ProfileRemoteDataSource() : super(ApiEndpoints.accounts);
 
   Future<Either<AppException, BaseModel<ProfileModel>?>> getProfile() =>
-      fetchData(
-        endpoint: ApiEndpoints.profile,
-        fromJsonT: _profileFromJson,
-        wrappedResponse: false,
-      );
+      fetchData(endpoint: ApiEndpoints.profile, fromJsonT: _profileFromJson, wrappedResponse: false);
 
-  Future<Either<AppException, BaseModel<ProfileModel>?>> completeProfile(
-    CompleteProfileEntity intent,
-  ) => postData(
+  Future<Either<AppException, BaseModel<ProfileModel>?>> completeProfile(CompleteProfileEntity intent) => postData(
     endpoint: ApiEndpoints.completeProfile,
     data: intent.toJson(),
     headers: intent.headers,
@@ -31,9 +25,7 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
     fromJsonT: _profileFromJson,
   );
 
-  Future<Either<AppException, BaseModel<ProfileModel>?>> updateProfile(
-    UpdateProfileEntity intent,
-  ) => patchData(
+  Future<Either<AppException, BaseModel<ProfileModel>?>> updateProfile(UpdateProfileEntity intent) => patchData(
     endpoint: ApiEndpoints.updateProfile,
     data: intent.toJson(),
     headers: intent.headers,
@@ -42,9 +34,7 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
     fromJsonT: _profileFromJson,
   );
 
-  Future<Either<AppException, BaseModel<ProfileModel>?>> uploadAvatar(
-    UploadAvatarEntity intent,
-  ) => postData(
+  Future<Either<AppException, BaseModel<ProfileModel>?>> uploadAvatar(UploadAvatarEntity intent) => postData(
     endpoint: ApiEndpoints.learnerAvatar,
     headers: intent.headers,
     files: [
@@ -55,6 +45,5 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
     fromJsonT: _profileFromJson,
   );
 
-  static ProfileModel _profileFromJson(Object? json) =>
-      ProfileModel.fromJson(json as Map<String, dynamic>);
+  static ProfileModel _profileFromJson(Object? json) => ProfileModel.fromJson(json as Map<String, dynamic>);
 }
