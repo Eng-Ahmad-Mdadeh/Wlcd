@@ -33,8 +33,6 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String? _passwordLoginPayload;
-  String? _passwordLoginIdempotencyKey;
 
   @override
   void dispose() {
@@ -146,19 +144,12 @@ class _LoginFormSectionState extends State<LoginFormSection> {
 
     final email = _emailController.text.trim();
     final password = _passwordController.text;
-    final payload = '$email\u0000$password\u0000false';
-    if (_passwordLoginPayload != payload) {
-      _passwordLoginPayload = payload;
-      _passwordLoginIdempotencyKey =
-          'login-password-${DateTime.now().microsecondsSinceEpoch}';
-    }
     context.read<LoginWithPasswordBloc>().add(
       SubmitLoginWithPasswordEvent(
         LoginWithPasswordEntity(
           email: email,
           password: password,
           rememberMe: false,
-          idempotencyKey: _passwordLoginIdempotencyKey!,
         ),
       ),
     );

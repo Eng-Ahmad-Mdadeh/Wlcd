@@ -40,8 +40,6 @@ class CodeInputSection extends StatelessWidget {
                           challengeId: state.challengeId,
                           otpCode: value,
                           rememberMe: state.rememberMe,
-                          idempotencyKey:
-                              'login-otp-${DateTime.now().microsecondsSinceEpoch}',
                         ),
                       ),
                     );

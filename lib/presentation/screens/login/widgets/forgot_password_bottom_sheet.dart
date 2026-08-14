@@ -213,7 +213,6 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
         ResetPasswordEntity(
           token: _tokenController.text.trim(),
           newPassword: _newPasswordController.text,
-          idempotencyKey: 'reset-password-${DateTime.now().microsecondsSinceEpoch}',
         ),
       ),
     );

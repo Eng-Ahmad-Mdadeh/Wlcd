@@ -6,7 +6,6 @@ class RegisterWithEmailEntity extends Equatable {
     required this.email,
     required this.password,
     required this.locale,
-    required this.idempotencyKey,
     this.correlationId,
   });
 
@@ -14,7 +13,6 @@ class RegisterWithEmailEntity extends Equatable {
   final String email;
   final String password;
   final String locale;
-  final String idempotencyKey;
   final String? correlationId;
 
   Map<String, dynamic> toJson() => {
@@ -25,7 +23,6 @@ class RegisterWithEmailEntity extends Equatable {
   };
 
   Map<String, dynamic> get headers => {
-    'Idempotency-Key': idempotencyKey,
     if (correlationId != null) 'X-Correlation-ID': correlationId,
   };
 
@@ -35,7 +32,6 @@ class RegisterWithEmailEntity extends Equatable {
     email,
     password,
     locale,
-    idempotencyKey,
     correlationId,
   ];
 }

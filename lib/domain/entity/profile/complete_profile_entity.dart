@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 class CompleteProfileEntity extends Equatable {
   const CompleteProfileEntity({
     required this.displayName,
-    required this.idempotencyKey,
     this.email,
     this.phone,
   });
@@ -11,7 +10,6 @@ class CompleteProfileEntity extends Equatable {
   final String displayName;
   final String? email;
   final String? phone;
-  final String idempotencyKey;
 
   Map<String, dynamic> toJson() => {
     'displayName': displayName,
@@ -19,8 +17,6 @@ class CompleteProfileEntity extends Equatable {
     if (phone != null) 'phone': phone,
   };
 
-  Map<String, dynamic> get headers => {'Idempotency-Key': idempotencyKey};
-
   @override
-  List<Object?> get props => [displayName, email, phone, idempotencyKey];
+  List<Object?> get props => [displayName, email, phone];
 }

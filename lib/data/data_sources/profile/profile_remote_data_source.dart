@@ -19,7 +19,6 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
   Future<Either<AppException, BaseModel<ProfileModel>?>> completeProfile(CompleteProfileEntity intent) => postData(
     endpoint: ApiEndpoints.completeProfile,
     data: intent.toJson(),
-    headers: intent.headers,
     isFormDate: false,
     wrappedResponse: false,
     fromJsonT: _profileFromJson,
@@ -28,7 +27,6 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
   Future<Either<AppException, BaseModel<ProfileModel>?>> updateProfile(UpdateProfileEntity intent) => patchData(
     endpoint: ApiEndpoints.updateProfile,
     data: intent.toJson(),
-    headers: intent.headers,
     isFormData: false,
     wrappedResponse: false,
     fromJsonT: _profileFromJson,
@@ -36,7 +34,6 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
 
   Future<Either<AppException, BaseModel<ProfileModel>?>> uploadAvatar(UploadAvatarEntity intent) => postData(
     endpoint: ApiEndpoints.learnerAvatar,
-    headers: intent.headers,
     files: [
       {'field_name': 'file', 'path': intent.filePath},
     ],

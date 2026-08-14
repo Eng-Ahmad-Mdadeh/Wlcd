@@ -6,14 +6,12 @@ class RegisterWithPhoneEntity extends Equatable {
     required this.challengeId,
     required this.otpCode,
     required this.locale,
-    required this.idempotencyKey,
   });
 
   final String phone;
   final String challengeId;
   final String otpCode;
   final String locale;
-  final String idempotencyKey;
 
   Map<String, dynamic> toJson() => {
     'phone': phone,
@@ -22,16 +20,11 @@ class RegisterWithPhoneEntity extends Equatable {
     'locale': locale,
   };
 
-  Map<String, dynamic> get headers => {
-    'Idempotency-Key': idempotencyKey,
-  };
-
   @override
   List<Object?> get props => [
     phone,
     challengeId,
     otpCode,
     locale,
-    idempotencyKey,
   ];
 }

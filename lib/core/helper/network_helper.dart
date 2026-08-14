@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -25,6 +26,7 @@ class NetworkHelper {
   void Function()? _onSessionExpired;
   bool _archiveFlowHandled = false;
   bool _sessionExpiredFlowHandled = false;
+  bool _applicationHeadersInitialized = false;
 
   // Singleton pattern
   static final NetworkHelper _instance = NetworkHelper._internal();
@@ -36,6 +38,19 @@ class NetworkHelper {
   }
 
   Dio get dio => _dio;
+
+  /// Configures headers whose values stay fixed for the lifetime of this app
+  /// process. Calling this method again is intentionally a no-op.
+  Future<void> initializeApplicationHeaders() async {
+    if (_applicationHeadersInitialized) return;
+
+    final packageInfo = await PackageInfo.fromPlatform();
+    _dio.options.headers.addAll({
+      'Idempotency-Key': _generateIdempotencyKey(),
+      'ifMatch': packageInfo.version,
+    });
+    _applicationHeadersInitialized = true;
+  }
 
   void setOnUserArchived(void Function() handler) {
     _onUserArchived = handler;
@@ -78,16 +93,6 @@ class NetworkHelper {
         .then((result) => result.fold((l) => null, (r) => r));
   }
 
-  /// Fetches the version, appName ..etc.
-
-  Future<String?> getVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // String appName = packageInfo.appName;
-    // String packageName = packageInfo.packageName;
-    // String buildNumber = packageInfo.buildNumber;
-    return packageInfo.version;
-  }
-
   /// Executes a GET request with optional query parameters.
   Future<Either<ApiException, Response<Map<String, dynamic>>>> get(
     String url, {
@@ -95,14 +100,13 @@ class NetworkHelper {
     dynamic data,
   }) async {
     final token = await getToken();
-    final version = await getVersion();
 
     return _performRequest(() {
       return _dio.get(
         url,
         data: data,
         queryParameters: queryParams,
-        options: Options(headers: _buildHeaders(token, version)),
+        options: Options(headers: _buildHeaders(token)),
       );
     });
   }
@@ -117,7 +121,6 @@ class NetworkHelper {
     bool includeAuthorization = true,
   }) async {
     final token = await getToken();
-    final version = await getVersion();
 
     final formData = isFormDate ? await _buildFormData(data, files) : data;
 
@@ -128,7 +131,6 @@ class NetworkHelper {
           headers: {
             ..._buildHeaders(
               includeAuthorization ? token : null,
-              version,
               isMultipart: isFormDate,
             ),
             ...?headers,
@@ -147,7 +149,6 @@ class NetworkHelper {
     Map<String, dynamic>? headers,
   }) async {
     final token = await getToken();
-    final version = await getVersion();
 
     final formData = isFormDate ? await _buildFormData(data, files) : data;
 
@@ -155,7 +156,7 @@ class NetworkHelper {
       return _dio.put(
         url,
         options: Options(headers: {
-          ..._buildHeaders(token, version, isMultipart: isFormDate),
+          ..._buildHeaders(token, isMultipart: isFormDate),
           ...?headers,
         }),
         data: formData,
@@ -173,7 +174,6 @@ class NetworkHelper {
     Map<String, dynamic>? headers,
   }) async {
     final token = await getToken();
-    final version = await getVersion();
 
     final payload = isFormData ? await _buildFormData(data, files) : data;
 
@@ -181,7 +181,7 @@ class NetworkHelper {
       return _dio.patch(
         url,
         options: Options(headers: {
-          ..._buildHeaders(token, version, isMultipart: isFormData),
+          ..._buildHeaders(token, isMultipart: isFormData),
           ...?headers,
         }),
         data: payload,
@@ -230,7 +230,6 @@ class NetworkHelper {
     bool isFormData = false,
   }) async {
     final token = await getToken();
-    final version = await getVersion();
 
     final payload = isFormData ? await _buildFormData(data, null) : data;
 
@@ -238,7 +237,7 @@ class NetworkHelper {
       return _dio.delete(
         url,
 
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormData)),
+        options: Options(headers: _buildHeaders(token, isMultipart: isFormData)),
         data: payload,
         queryParameters: queryParams,
       );
@@ -390,14 +389,23 @@ class NetworkHelper {
   }
 
   /// Builds headers for requests.
-  Map<String, String> _buildHeaders(String? token, String? version, {bool isMultipart = false}) {
+  Map<String, String> _buildHeaders(String? token, {bool isMultipart = false}) {
     final headers = {
       'Accept': 'application/json',
       if (isMultipart) 'Content-Type': 'multipart/form-data',
       if ((token ?? '').isNotEmpty) 'Authorization': 'Bearer $token',
-      if ((version ?? '').isNotEmpty) 'version': '$version',
     };
     return headers;
+  }
+
+  String _generateIdempotencyKey() {
+    final random = Random.secure();
+    final bytes = List<int>.generate(16, (_) => random.nextInt(256));
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    final hex = bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+    return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-'
+        '${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}';
   }
 
   /// Builds form data for multipart requests.

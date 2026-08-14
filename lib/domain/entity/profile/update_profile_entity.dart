@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 
 class UpdateProfileEntity extends Equatable {
   const UpdateProfileEntity({
-    required this.idempotencyKey,
     this.displayName,
     this.email,
     this.phone,
@@ -13,21 +12,18 @@ class UpdateProfileEntity extends Equatable {
   final String? email;
   final String? phone;
   final String? locale;
-  final String idempotencyKey;
 
   UpdateProfileEntity copyWith({
     String? displayName,
     String? email,
     String? phone,
     String? locale,
-    String? idempotencyKey,
   }) {
     return UpdateProfileEntity(
       displayName: displayName ?? this.displayName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       locale: locale ?? this.locale,
-      idempotencyKey: idempotencyKey ?? this.idempotencyKey,
     );
   }
 
@@ -38,16 +34,11 @@ class UpdateProfileEntity extends Equatable {
     if (locale != null) 'locale': locale,
   };
 
-  Map<String, dynamic> get headers => {
-    'Idempotency-Key': idempotencyKey,
-  };
-
   @override
   List<Object?> get props => [
     displayName,
     email,
     phone,
     locale,
-    idempotencyKey,
   ];
 }

@@ -10,7 +10,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileEntity> {
           // email: profile.email,
           // phone: profile.phone,
           locale: "ar",
-          idempotencyKey: _createIdempotencyKey(),
         ),
       );
 
@@ -32,10 +31,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileEntity> {
         displayName: state.displayName?.trim(),
         email: state.email?.trim(),
         phone: state.phone?.trim(),
-        idempotencyKey: _createIdempotencyKey(),
       ),
     );
   }
-
-  static String _createIdempotencyKey() => 'update-profile-${DateTime.now().microsecondsSinceEpoch}';
 }
