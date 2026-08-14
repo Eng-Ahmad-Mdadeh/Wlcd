@@ -17,6 +17,24 @@ class UpdateProfileEntity extends Equatable {
   final String idempotencyKey;
   final String ifMatch;
 
+  UpdateProfileEntity copyWith({
+    String? displayName,
+    String? email,
+    String? phone,
+    String? locale,
+    String? idempotencyKey,
+    String? ifMatch,
+  }) {
+    return UpdateProfileEntity(
+      displayName: displayName ?? this.displayName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      locale: locale ?? this.locale,
+      idempotencyKey: idempotencyKey ?? this.idempotencyKey,
+      ifMatch: ifMatch ?? this.ifMatch,
+    );
+  }
+
   Map<String, dynamic> toJson() => {
     if (displayName != null) 'displayName': displayName,
     if (email != null) 'email': email,

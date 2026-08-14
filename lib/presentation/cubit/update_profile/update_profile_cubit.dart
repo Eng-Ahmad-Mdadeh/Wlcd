@@ -16,41 +16,25 @@ class UpdateProfileCubit extends Cubit<UpdateProfileEntity> {
       );
 
   void setDisplayName(String value) {
-    emit(_copyWith(displayName: value));
+    emit(state.copyWith(displayName: value));
   }
 
   void setEmail(String value) {
-    emit(_copyWith(email: value));
+    emit(state.copyWith(email: value));
   }
 
   void setPhone(String value) {
-    emit(_copyWith(phone: value));
+    emit(state.copyWith(phone: value));
   }
 
   void prepareForSubmission() {
     emit(
-      _copyWith(
+      state.copyWith(
         displayName: state.displayName?.trim(),
         email: state.email?.trim(),
         phone: state.phone?.trim(),
         idempotencyKey: _createIdempotencyKey(),
       ),
-    );
-  }
-
-  UpdateProfileEntity _copyWith({
-    String? displayName,
-    String? email,
-    String? phone,
-    String? idempotencyKey,
-  }) {
-    return UpdateProfileEntity(
-      displayName: displayName ?? state.displayName,
-      email: email ?? state.email,
-      phone: phone ?? state.phone,
-      locale: state.locale,
-      idempotencyKey: idempotencyKey ?? state.idempotencyKey,
-      ifMatch: state.ifMatch,
     );
   }
 
