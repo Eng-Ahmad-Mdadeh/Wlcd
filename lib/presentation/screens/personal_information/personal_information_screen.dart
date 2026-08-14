@@ -5,9 +5,9 @@ import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/data/model/profile/profile_model.dart';
-import 'package:wlcd/domain/entity/profile/update_profile_entity.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/update_profile/update_profile_bloc.dart';
+import 'package:wlcd/presentation/cubit/update_profile/update_profile_cubit.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
@@ -47,8 +47,10 @@ class BodyPersonalInformationScreen extends StatelessWidget {
       body: BlocBuilder<GetProfileBloc, IGetProfileState>(
         builder: (context, state) {
           if (state is GetProfileLoaded && state.profileModel?.data != null) {
-            return _PersonalInformationContent(
-              profile: state.profileModel!.data!,
+            final profile = state.profileModel!.data!;
+            return BlocProvider(
+              create: (_) => UpdateProfileCubit(profile),
+              child: _PersonalInformationContent(profile: profile),
             );
           }
 
@@ -67,41 +69,10 @@ class BodyPersonalInformationScreen extends StatelessWidget {
   }
 }
 
-class _PersonalInformationContent extends StatefulWidget {
+class _PersonalInformationContent extends StatelessWidget {
   const _PersonalInformationContent({required this.profile});
 
   final ProfileModel profile;
-
-  @override
-  State<_PersonalInformationContent> createState() =>
-      _PersonalInformationContentState();
-}
-
-class _PersonalInformationContentState
-    extends State<_PersonalInformationContent> {
-  late String _displayName;
-  late String _email;
-  late String _phone;
-
-  ProfileModel get profile => widget.profile;
-
-  @override
-  void initState() {
-    super.initState();
-    _setValuesFromProfile();
-  }
-
-  @override
-  void didUpdateWidget(covariant _PersonalInformationContent oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.profile != widget.profile) _setValuesFromProfile();
-  }
-
-  void _setValuesFromProfile() {
-    _displayName = profile.displayName;
-    _email = profile.email ?? '';
-    _phone = profile.phone ?? '';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,19 +98,20 @@ class _PersonalInformationContentState
                     label: "الإسم الكامل",
                     icon: Iconsax.user_outline,
                     initValue: profile.displayName,
-                    onChanged: (value) => _displayName = value,
+                    onChanged:
+                        context.read<UpdateProfileCubit>().setDisplayName,
                   ),
                   InfoTextField(
                     label: "البريد الإلكتروني",
                     icon: Iconsax.sms_outline,
                     initValue: profile.email ?? '',
-                    onChanged: (value) => _email = value,
+                    onChanged: context.read<UpdateProfileCubit>().setEmail,
                   ),
                   InfoTextField(
                     label: "رقم الهاتف",
                     icon: Iconsax.call_outline,
                     initValue: profile.phone ?? '',
-                    onChanged: (value) => _phone = value,
+                    onChanged: context.read<UpdateProfileCubit>().setPhone,
                   ),
                 ],
               ),
@@ -165,18 +137,10 @@ class _PersonalInformationContentState
 
   void _updateProfile(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
+    final updateProfileCubit = context.read<UpdateProfileCubit>()
+      ..prepareForSubmission();
     context.read<UpdateProfileBloc>().add(
-      SubmitUpdateProfileEvent(
-        UpdateProfileEntity(
-          displayName: _displayName.trim(),
-          email: _email.trim(),
-          phone: _phone.trim(),
-          locale: profile.locale,
-          idempotencyKey:
-              'update-profile-${DateTime.now().microsecondsSinceEpoch}',
-          ifMatch: profile.etag ?? '*',
-        ),
-      ),
+      SubmitUpdateProfileEvent(updateProfileCubit.state),
     );
   }
 
