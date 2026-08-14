@@ -26,9 +26,7 @@ import 'package:wlcd/domain/entity/auth/reset_password_entity.dart';
 class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
   AuthRemoteDataSource() : super(ApiEndpoints.auth);
 
-  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithEmail(
-    RegisterWithEmailEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithEmail(RegisterWithEmailEntity data) {
     return postData(
       endpoint: ApiEndpoints.registerWithEmail,
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
@@ -40,9 +38,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     );
   }
 
-  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithPhone(
-    RegisterWithPhoneEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithPhone(RegisterWithPhoneEntity data) {
     return postData(
       endpoint: ApiEndpoints.registerWithPhone,
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
@@ -54,13 +50,10 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     );
   }
 
-  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(
-    VerifyEmailEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(VerifyEmailEntity data) {
     return postDataAs<VerifyEmailModel>(
       endpoint: ApiEndpoints.verifyEmail,
-      fromJsonT: (json) =>
-          VerifyEmailModel.fromJson(json as Map<String, dynamic>),
+      fromJsonT: (json) => VerifyEmailModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       isFormDate: false,
       wrappedResponse: false,
@@ -68,13 +61,10 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     );
   }
 
-  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestPhoneOtp(
-    RequestPhoneOtpEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestPhoneOtp(RequestPhoneOtpEntity data) {
     return postDataAs<PhoneOtpChallengeModel>(
       endpoint: ApiEndpoints.requestPhoneOtp,
-      fromJsonT: (json) =>
-          PhoneOtpChallengeModel.fromJson(json as Map<String, dynamic>),
+      fromJsonT: (json) => PhoneOtpChallengeModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       isFormDate: false,
       wrappedResponse: false,
@@ -82,20 +72,17 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     );
   }
 
-  Future<Either<AppException, BaseModel<PhoneOtpVerificationModel>?>> verifyPhoneOtp(
-    VerifyPhoneOtpEntity data,
-  ) => postDataAs(
-    endpoint: ApiEndpoints.verifyPhoneOtp,
-    fromJsonT: (json) => PhoneOtpVerificationModel.fromJson(json as Map<String, dynamic>),
-    data: data.toJson(),
-    isFormDate: false,
-    wrappedResponse: false,
-    includeAuthorization: false,
-  );
+  Future<Either<AppException, BaseModel<PhoneOtpVerificationModel>?>> verifyPhoneOtp(VerifyPhoneOtpEntity data) =>
+      postDataAs(
+        endpoint: ApiEndpoints.verifyPhoneOtp,
+        fromJsonT: (json) => PhoneOtpVerificationModel.fromJson(json as Map<String, dynamic>),
+        data: data.toJson(),
+        isFormDate: false,
+        wrappedResponse: false,
+        includeAuthorization: false,
+      );
 
-  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithPassword(
-    LoginWithPasswordEntity data,
-  ) => postData(
+  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithPassword(LoginWithPasswordEntity data) => postData(
     endpoint: ApiEndpoints.loginWithPassword,
     fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
     data: data.toJson(),
@@ -105,20 +92,17 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     includeAuthorization: false,
   );
 
-  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestLoginOtp(
-    RequestLoginOtpEntity data,
-  ) => postDataAs(
-    endpoint: ApiEndpoints.requestLoginOtp,
-    fromJsonT: (json) => PhoneOtpChallengeModel.fromJson(json as Map<String, dynamic>),
-    data: data.toJson(),
-    isFormDate: false,
-    wrappedResponse: false,
-    includeAuthorization: false,
-  );
+  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestLoginOtp(RequestLoginOtpEntity data) =>
+      postDataAs(
+        endpoint: ApiEndpoints.requestLoginOtp,
+        fromJsonT: (json) => PhoneOtpChallengeModel.fromJson(json as Map<String, dynamic>),
+        data: data.toJson(),
+        isFormDate: false,
+        wrappedResponse: false,
+        includeAuthorization: false,
+      );
 
-  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithOtp(
-    LoginWithOtpEntity data,
-  ) => postData(
+  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithOtp(LoginWithOtpEntity data) => postData(
     endpoint: ApiEndpoints.loginWithOtp,
     fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
     data: data.toJson(),
@@ -139,9 +123,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     includeAuthorization: false,
   );
 
-  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> resetPassword(
-    ResetPasswordEntity data,
-  ) => postDataAs(
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> resetPassword(ResetPasswordEntity data) => postDataAs(
     endpoint: ApiEndpoints.resetPassword,
     fromJsonT: (json) => OperationSuccessModel.fromJson(json as Map<String, dynamic>),
     data: data.toJson(),
@@ -151,22 +133,18 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     includeAuthorization: false,
   );
 
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout() => postDataAs(
+    endpoint: ApiEndpoints.logout,
+    fromJsonT: (json) => OperationSuccessModel.fromJson(json as Map<String, dynamic>),
+    isFormDate: false,
+    wrappedResponse: false,
+  );
 
-  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout() =>
-      postDataAs(
-        endpoint: ApiEndpoints.logout,
-        fromJsonT: (json) =>
-            OperationSuccessModel.fromJson(json as Map<String, dynamic>),
-        isFormDate: false,
-        wrappedResponse: false,
-      );
-
-  Future<Either<AppException, BaseModel<SessionModel>?>> getSession() =>
-      fetchDataAs(
-        endpoint: ApiEndpoints.session,
-        fromJsonT: (json) => SessionModel.fromJson(json as Map<String, dynamic>),
-        wrappedResponse: false,
-      );
+  Future<Either<AppException, BaseModel<SessionModel>?>> getSession() => fetchDataAs(
+    endpoint: ApiEndpoints.session,
+    fromJsonT: (json) => SessionModel.fromJson(json as Map<String, dynamic>),
+    wrappedResponse: false,
+  );
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(

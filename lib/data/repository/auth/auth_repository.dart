@@ -33,69 +33,58 @@ class AuthRepository implements IAuthRepository {
     Future<Either<AppException, BaseModel<AuthModel>?>> request,
   ) async {
     final result = await request;
-    await result.fold(
-      (error) async {},
-      (response) async {
-        final auth = response?.data;
-        await _storageDataSource.storeToken(auth?.accessToken);
-        await _storageDataSource.storeSessionId(auth?.sessionId);
-      },
-    );
+    await result.fold((error) async {}, (response) async {
+      final auth = response?.data;
+      await _storageDataSource.storeToken(auth?.accessToken);
+      await _storageDataSource.storeSessionId(auth?.sessionId);
+    });
     return result;
   }
 
   @override
-  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithEmail(
-    RegisterWithEmailEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithEmail(RegisterWithEmailEntity data) {
     return _cacheAuth(_remoteDataSource.registerWithEmail(data));
   }
 
   @override
-  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithPhone(
-    RegisterWithPhoneEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<AuthModel>?>> registerWithPhone(RegisterWithPhoneEntity data) {
     return _cacheAuth(_remoteDataSource.registerWithPhone(data));
   }
 
   @override
-  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(
-    VerifyEmailEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(VerifyEmailEntity data) {
     return _remoteDataSource.verifyEmail(data);
   }
 
   @override
-  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestPhoneOtp(
-    RequestPhoneOtpEntity data,
-  ) {
+  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestPhoneOtp(RequestPhoneOtpEntity data) {
     return _remoteDataSource.requestPhoneOtp(data);
   }
 
   @override
-  Future<Either<AppException, BaseModel<PhoneOtpVerificationModel>?>> verifyPhoneOtp(
-    VerifyPhoneOtpEntity data,
-  ) => _remoteDataSource.verifyPhoneOtp(data);
+  Future<Either<AppException, BaseModel<PhoneOtpVerificationModel>?>> verifyPhoneOtp(VerifyPhoneOtpEntity data) =>
+      _remoteDataSource.verifyPhoneOtp(data);
+
   @override
-  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithPassword(
-    LoginWithPasswordEntity data,
-  ) => _cacheAuth(_remoteDataSource.loginWithPassword(data));
+  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithPassword(LoginWithPasswordEntity data) =>
+      _cacheAuth(_remoteDataSource.loginWithPassword(data));
+
   @override
-  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestLoginOtp(
-    RequestLoginOtpEntity data,
-  ) => _remoteDataSource.requestLoginOtp(data);
+  Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestLoginOtp(RequestLoginOtpEntity data) =>
+      _remoteDataSource.requestLoginOtp(data);
+
   @override
-  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithOtp(
-    LoginWithOtpEntity data,
-  ) => _cacheAuth(_remoteDataSource.loginWithOtp(data));
+  Future<Either<AppException, BaseModel<AuthModel>?>> loginWithOtp(LoginWithOtpEntity data) =>
+      _cacheAuth(_remoteDataSource.loginWithOtp(data));
+
   @override
   Future<Either<AppException, BaseModel<OperationSuccessModel>?>> requestPasswordReset(
     RequestPasswordResetEntity data,
   ) => _remoteDataSource.requestPasswordReset(data);
+
   @override
-  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> resetPassword(
-    ResetPasswordEntity data,
-  ) => _remoteDataSource.resetPassword(data);
+  Future<Either<AppException, BaseModel<OperationSuccessModel>?>> resetPassword(ResetPasswordEntity data) =>
+      _remoteDataSource.resetPassword(data);
 
   @override
   Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout() async {

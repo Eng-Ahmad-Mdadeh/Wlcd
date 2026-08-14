@@ -18,7 +18,7 @@ SessionModel _$SessionModelFromJson(Map<String, dynamic> json) => SessionModel(
       : AuthAccountModel.fromJson(json['account'] as Map<String, dynamic>),
   profileComplete: json['profileComplete'] as bool?,
   onboardingComplete: json['onboardingComplete'] as bool?,
-  effectivePermissions: (json['effectivePermissions'] as List<dynamic>? ?? [])
+  effectivePermissions: (json['effectivePermissions'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
 );

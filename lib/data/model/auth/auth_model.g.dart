@@ -16,7 +16,7 @@ AuthModel _$AuthModelFromJson(Map<String, dynamic> json) => AuthModel(
   account: json['account'] == null
       ? null
       : AuthAccountModel.fromJson(json['account'] as Map<String, dynamic>),
-  effectivePermissions: (json['effectivePermissions'] as List<dynamic>? ?? [])
+  effectivePermissions: (json['effectivePermissions'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
 );
