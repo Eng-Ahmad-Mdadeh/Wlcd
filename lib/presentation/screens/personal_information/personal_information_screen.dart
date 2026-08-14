@@ -5,8 +5,11 @@ import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/data/model/profile/profile_model.dart';
+import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/update_profile/update_profile_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/upload_avatar/upload_avatar_bloc.dart';
+import 'package:wlcd/presentation/cubit/upload_avatar/upload_avatar_cubit.dart';
 import 'package:wlcd/presentation/cubit/update_profile/update_profile_cubit.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
@@ -26,6 +29,8 @@ class PersonalInformationScreen extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => GetProfileBloc()..add(const SubmitGetProfileEvent())),
         BlocProvider(create: (_) => UpdateProfileBloc()),
+        BlocProvider(create: (_) => UploadAvatarBloc()),
+        BlocProvider(create: (_) => UploadAvatarCubit()),
       ],
       child: const BodyPersonalInformationScreen(),
     );
@@ -67,8 +72,12 @@ class _PersonalInformationContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UpdateProfileBloc, IUpdateProfileState>(
-      listener: _onUpdateProfileState,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<UpdateProfileBloc, IUpdateProfileState>(listener: _onUpdateProfileState),
+        BlocListener<UploadAvatarBloc, IUploadAvatarState>(listener: _onUploadAvatarState),
+        BlocListener<UploadAvatarCubit, UploadAvatarEntity>(listener: _onAvatarChanged),
+      ],
       child: Stack(
         fit: StackFit.expand,
         alignment: Alignment.bottomCenter,
@@ -83,7 +92,17 @@ class _PersonalInformationContent extends StatelessWidget {
               child: Column(
                 spacing: AppHeight.h20,
                 children: [
-                  PictureSection(image: profile.avatar?.url ?? AppAssets.logo),
+                  BlocBuilder<UploadAvatarCubit, UploadAvatarEntity>(
+                    builder: (context, avatar) => BlocBuilder<UploadAvatarBloc, IUploadAvatarState>(
+                      builder: (context, state) => PictureSection(
+                        image: _avatarPath(avatar) ?? profile.avatar?.url ?? AppAssets.logo,
+                        isLoading: state is UploadAvatarLoading,
+                        onTap: state is UploadAvatarLoading
+                            ? null
+                            : context.read<UploadAvatarCubit>().avatarChanged,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: AppHeight.h1),
                   InfoTextField(
                     label: "الإسم الكامل",
@@ -129,6 +148,19 @@ class _PersonalInformationContent extends StatelessWidget {
     context.read<UpdateProfileBloc>().add(SubmitUpdateProfileEvent(updateProfileCubit.state));
   }
 
+  String? _avatarPath(UploadAvatarEntity avatar) {
+    if (avatar.file case [final file, ...]) {
+      return file['path'] as String?;
+    }
+    return null;
+  }
+
+  void _onAvatarChanged(BuildContext context, UploadAvatarEntity avatar) {
+    if (avatar.file?.isNotEmpty ?? false) {
+      context.read<UploadAvatarBloc>().add(SubmitUploadAvatarEvent(avatar));
+    }
+  }
+
   void _onUpdateProfileState(BuildContext context, IUpdateProfileState state) {
     if (state is UpdateProfileLoaded) {
       showCustomSnackBar(
@@ -139,6 +171,20 @@ class _PersonalInformationContent extends StatelessWidget {
       );
       context.read<GetProfileBloc>().add(const SubmitGetProfileEvent());
     } else if (state is UpdateProfileFailed) {
+      showCustomSnackBar(context: context, title: 'خطأ', message: state.message, contentType: ContentType.failure);
+    }
+  }
+
+  void _onUploadAvatarState(BuildContext context, IUploadAvatarState state) {
+    if (state is UploadAvatarLoaded) {
+      showCustomSnackBar(
+        context: context,
+        title: 'تم بنجاح',
+        message: state.profileModel?.message ?? 'تم تحديث الصورة الشخصية',
+        contentType: ContentType.success,
+      );
+      context.read<GetProfileBloc>().add(const SubmitGetProfileEvent());
+    } else if (state is UploadAvatarFailed) {
       showCustomSnackBar(context: context, title: 'خطأ', message: state.message, contentType: ContentType.failure);
     }
   }

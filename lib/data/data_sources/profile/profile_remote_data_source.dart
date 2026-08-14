@@ -34,9 +34,7 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
 
   Future<Either<AppException, BaseModel<ProfileModel>?>> uploadAvatar(UploadAvatarEntity intent) => postData(
     endpoint: ApiEndpoints.learnerAvatar,
-    files: [
-      {'field_name': 'file', 'path': intent.filePath},
-    ],
+    files: intent.file ?? const [],
     isFormDate: true,
     wrappedResponse: false,
     fromJsonT: _profileFromJson,

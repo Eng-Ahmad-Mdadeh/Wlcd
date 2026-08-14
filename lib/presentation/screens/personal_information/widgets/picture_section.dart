@@ -8,8 +8,10 @@ import 'package:wlcd/presentation/widgets/image_view.dart';
 
 class PictureSection extends StatelessWidget {
   final String? image;
+  final VoidCallback? onTap;
+  final bool isLoading;
 
-  const PictureSection({super.key, this.image});
+  const PictureSection({super.key, this.image, this.onTap, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +21,26 @@ class PictureSection extends StatelessWidget {
           InkWell(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
-            onTap: () async {},
+            onTap: onTap,
             child: Container(
               margin: EdgeInsetsDirectional.only(top: AppMarginHeight.m25),
               alignment: Alignment.center,
               width: AppWidth.w105,
               height: AppHeight.h105,
               decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0XFFF5F7F9)),
-              child: ImageView(
-                width: AppWidth.w105,
-                height: AppHeight.h105,
-                imagePath: image ?? '',
-                // imagePath: (profileState.entity.image != null && profileState.entity.image!.isNotEmpty)
-                //     ? profileState.entity.image!.first["path"]
-                //     : image ?? AppAssets.profile,
-                radius: BorderRadius.circular(100),
-                // color: (profileState.entity.image != null && profileState.entity.image!.isEmpty) ? AppColors.greySec : null,
-                fit: BoxFit.cover,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  ImageView(
+                    width: AppWidth.w105,
+                    height: AppHeight.h105,
+                    imagePath: image ?? '',
+                    radius: BorderRadius.circular(100),
+                    fit: BoxFit.cover,
+                  ),
+                  if (isLoading)
+                    const CircularProgressIndicator(color: AppColors.primary),
+                ],
               ),
             ),
           ),
