@@ -15,6 +15,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i777;
 
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i778;
 import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
+import '../../../data/data_sources/profile/profile_remote_data_source.dart'
+    as _i1001;
 import '../../../data/model/auth/auth_model.dart' as _i49;
 import '../../../data/model/auth/operation_success_model.dart' as _i938;
 import '../../../data/model/auth/session_model.dart' as _i939;
@@ -23,6 +25,7 @@ import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
+import '../../../data/repository/profile/profile_repository.dart' as _i1002;
 import '../../../domain/entity/auth/auth_entity.dart' as _i250;
 import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
 import '../../../domain/entity/auth/login_with_password_entity.dart' as _i679;
@@ -36,6 +39,7 @@ import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
 import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
+import '../../../domain/repository/profile/i_profile_repository.dart' as _i1003;
 import '../../../domain/usecase/auth/get_session_usecase.dart' as _i900;
 import '../../../domain/usecase/auth/logout_usecase.dart' as _i901;
 import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i446;
@@ -50,6 +54,14 @@ import '../../../domain/usecase/auth/reset_password_usecase.dart' as _i888;
 import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i46;
 import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i827;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
+import '../../../domain/usecase/profile/complete_profile_usecase.dart' as _i1004;
+import '../../../domain/entity/profile/complete_profile_entity.dart' as _i1010;
+import '../../../domain/entity/profile/update_profile_entity.dart' as _i1011;
+import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i1012;
+import '../../../data/model/profile/profile_model.dart' as _i1013;
+import '../../../domain/usecase/profile/get_profile_usecase.dart' as _i1005;
+import '../../../domain/usecase/profile/update_profile_usecase.dart' as _i1006;
+import '../../../domain/usecase/profile/upload_avatar_usecase.dart' as _i1007;
 import '../../helper/network_helper.dart' as _i779;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -63,10 +75,48 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i778.AuthStorageDataSource>(() => _i778.AuthStorageDataSource(gh<_i777.FlutterSecureStorage>()));
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
     gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.factory<_i1001.ProfileRemoteDataSource>(
+      () => _i1001.ProfileRemoteDataSource(),
+    );
     gh.factory<_i154.IAuthRepository>(
       () => _i728.AuthRepository(gh<_i444.AuthRemoteDataSource>(), gh<_i778.AuthStorageDataSource>()),
     );
-
+    gh.factory<_i1003.IProfileRepository>(
+      () => _i1002.ProfileRepository(gh<_i1001.ProfileRemoteDataSource>()),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1013.ProfileModel>?,
+        _i1010.CompleteProfileEntity
+      >
+    >(
+      () => _i1004.CompleteProfileUsecase(gh<_i1003.IProfileRepository>()),
+      instanceName: 'CompleteProfile',
+    );
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i1013.ProfileModel>?, Null>
+    >(
+      () => _i1005.GetProfileUsecase(gh<_i1003.IProfileRepository>()),
+      instanceName: 'GetProfile',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1013.ProfileModel>?,
+        _i1011.UpdateProfileEntity
+      >
+    >(
+      () => _i1006.UpdateProfileUsecase(gh<_i1003.IProfileRepository>()),
+      instanceName: 'UpdateProfile',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1013.ProfileModel>?,
+        _i1012.UploadAvatarEntity
+      >
+    >(
+      () => _i1007.UploadAvatarUsecase(gh<_i1003.IProfileRepository>()),
+      instanceName: 'UploadAvatar',
+    );
     gh.factory<
       _i759.IUseCase<_i830.BaseModel<_i939.SessionModel>?, Null>
     >(

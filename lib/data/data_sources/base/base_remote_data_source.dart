@@ -204,6 +204,8 @@ class BaseRemoteDataSource<T> {
     bool isFormData = true,
     List<Map<String, dynamic>>? files,
     T Function(Object? json)? fromJsonT,
+    Map<String, dynamic>? headers,
+    bool wrappedResponse = true,
   }) async {
     try {
       final response = await _networkHelper.patch(
@@ -211,11 +213,15 @@ class BaseRemoteDataSource<T> {
         data: data,
         isFormData: isFormData,
         files: files,
+        headers: headers,
       );
       return response.fold(
         (e) => Left(e),
         (r) {
           if (fromJsonT == null) return const Right(null);
+          if (!wrappedResponse) {
+            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+          }
           return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
         },
       );
@@ -338,13 +344,24 @@ class BaseRemoteDataSource<T> {
     bool isFormDate = true,
     List<Map<String, dynamic>>? files,
     T Function(Object? json)? fromJsonT,
+    Map<String, dynamic>? headers,
+    bool wrappedResponse = true,
   }) async {
     try {
-      final response = await _networkHelper.put(baseEndpoint + endpoint, data: data, files: files, isFormDate: isFormDate);
+      final response = await _networkHelper.put(
+        baseEndpoint + endpoint,
+        data: data,
+        files: files,
+        isFormDate: isFormDate,
+        headers: headers,
+      );
       return response.fold(
         (e) => Left(e),
         (r) {
           if (fromJsonT == null) return const Right(null);
+          if (!wrappedResponse) {
+            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+          }
           return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
         },
       );

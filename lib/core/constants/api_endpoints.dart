@@ -23,4 +23,12 @@ class ApiEndpoints {
   static const String login = '/login';
   static const String checkCode = '/check-code';
 //#endregion
+
+  //#region Profile
+  static const String accounts = '/accounts';
+  static const String profile = '/me';
+  static const String completeProfile = '/me/profile/complete';
+  static const String updateProfile = '/me/profile';
+  static const String learnerAvatar = '/me/profile/avatar';
+  //#endregion
 }

@@ -144,6 +144,7 @@ class NetworkHelper {
     dynamic data,
     bool isFormDate = true,
     List<Map<String, dynamic>>? files,
+    Map<String, dynamic>? headers,
   }) async {
     final token = await getToken();
     final version = await getVersion();
@@ -153,7 +154,10 @@ class NetworkHelper {
     return _performRequest(() {
       return _dio.put(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormDate)),
+        options: Options(headers: {
+          ..._buildHeaders(token, version, isMultipart: isFormDate),
+          ...?headers,
+        }),
         data: formData,
       );
     });
@@ -166,6 +170,7 @@ class NetworkHelper {
     bool isFormData = true,
     Map<String, dynamic>? queryParams,
     List<Map<String, dynamic>>? files,
+    Map<String, dynamic>? headers,
   }) async {
     final token = await getToken();
     final version = await getVersion();
@@ -175,7 +180,10 @@ class NetworkHelper {
     return _performRequest(() {
       return _dio.patch(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormData)),
+        options: Options(headers: {
+          ..._buildHeaders(token, version, isMultipart: isFormData),
+          ...?headers,
+        }),
         data: payload,
         queryParameters: queryParams,
       );
