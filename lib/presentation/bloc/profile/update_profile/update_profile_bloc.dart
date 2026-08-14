@@ -10,6 +10,7 @@ import 'package:wlcd/domain/entity/profile/update_profile_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'update_profile_event.dart';
+
 part 'update_profile_state.dart';
 
 class UpdateProfileBloc extends Bloc<IUpdateProfileEvent, IUpdateProfileState> {
@@ -17,15 +18,10 @@ class UpdateProfileBloc extends Bloc<IUpdateProfileEvent, IUpdateProfileState> {
     on<SubmitUpdateProfileEvent>(_submit);
   }
 
-  FutureOr<void> _submit(
-    SubmitUpdateProfileEvent event,
-    Emitter<IUpdateProfileState> emit,
-  ) async {
+  FutureOr<void> _submit(SubmitUpdateProfileEvent event, Emitter<IUpdateProfileState> emit) async {
     emit(UpdateProfileLoading());
     try {
-      final usecase = locator<
-        IUseCase<BaseModel<ProfileModel>?, UpdateProfileEntity>
-      >(instanceName: 'UpdateProfile');
+      final usecase = locator<IUseCase<BaseModel<ProfileModel>?, UpdateProfileEntity>>(instanceName: 'UpdateProfile');
       final response = await usecase(event.entity);
       response.fold(
         (failure) => emit(UpdateProfileFailed(failure.message)),

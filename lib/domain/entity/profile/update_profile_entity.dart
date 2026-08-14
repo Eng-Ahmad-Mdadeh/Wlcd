@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 class UpdateProfileEntity extends Equatable {
   const UpdateProfileEntity({
     required this.idempotencyKey,
-    required this.ifMatch,
     this.displayName,
     this.email,
     this.phone,
@@ -15,7 +14,6 @@ class UpdateProfileEntity extends Equatable {
   final String? phone;
   final String? locale;
   final String idempotencyKey;
-  final String ifMatch;
 
   UpdateProfileEntity copyWith({
     String? displayName,
@@ -23,7 +21,6 @@ class UpdateProfileEntity extends Equatable {
     String? phone,
     String? locale,
     String? idempotencyKey,
-    String? ifMatch,
   }) {
     return UpdateProfileEntity(
       displayName: displayName ?? this.displayName,
@@ -31,7 +28,6 @@ class UpdateProfileEntity extends Equatable {
       phone: phone ?? this.phone,
       locale: locale ?? this.locale,
       idempotencyKey: idempotencyKey ?? this.idempotencyKey,
-      ifMatch: ifMatch ?? this.ifMatch,
     );
   }
 
@@ -44,7 +40,6 @@ class UpdateProfileEntity extends Equatable {
 
   Map<String, dynamic> get headers => {
     'Idempotency-Key': idempotencyKey,
-    'If-Match': ifMatch,
   };
 
   @override
@@ -54,6 +49,5 @@ class UpdateProfileEntity extends Equatable {
     phone,
     locale,
     idempotencyKey,
-    ifMatch,
   ];
 }

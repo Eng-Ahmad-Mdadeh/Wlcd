@@ -24,9 +24,7 @@ class PersonalInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => GetProfileBloc()..add(const SubmitGetProfileEvent()),
-        ),
+        BlocProvider(create: (_) => GetProfileBloc()..add(const SubmitGetProfileEvent())),
         BlocProvider(create: (_) => UpdateProfileBloc()),
       ],
       child: const BodyPersonalInformationScreen(),
@@ -40,10 +38,7 @@ class BodyPersonalInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "المعلومات الشخصية",
-        showBackButton: true,
-      ),
+      appBar: const CustomAppBar(title: "المعلومات الشخصية", showBackButton: true),
       body: BlocBuilder<GetProfileBloc, IGetProfileState>(
         builder: (context, state) {
           if (state is GetProfileLoaded && state.profileModel?.data != null) {
@@ -55,11 +50,7 @@ class BodyPersonalInformationScreen extends StatelessWidget {
           }
 
           if (state is GetProfileFailed || state is GetProfileLoaded) {
-            return RetryWidget(
-              onReload: () => context.read<GetProfileBloc>().add(
-                const SubmitGetProfileEvent(),
-              ),
-            );
+            return RetryWidget(onReload: () => context.read<GetProfileBloc>().add(const SubmitGetProfileEvent()));
           }
 
           return const LoadingWidget(0);
@@ -98,8 +89,7 @@ class _PersonalInformationContent extends StatelessWidget {
                     label: "الإسم الكامل",
                     icon: Iconsax.user_outline,
                     initValue: profile.displayName,
-                    onChanged:
-                        context.read<UpdateProfileCubit>().setDisplayName,
+                    onChanged: context.read<UpdateProfileCubit>().setDisplayName,
                   ),
                   InfoTextField(
                     label: "البريد الإلكتروني",
@@ -124,9 +114,7 @@ class _PersonalInformationContent extends StatelessWidget {
             child: BlocBuilder<UpdateProfileBloc, IUpdateProfileState>(
               builder: (context, state) => SaveButtonSection(
                 isLoading: state is UpdateProfileLoading,
-                onPressed: state is UpdateProfileLoading
-                    ? null
-                    : () => _updateProfile(context),
+                onPressed: state is UpdateProfileLoading ? null : () => _updateProfile(context),
               ),
             ),
           ),
@@ -137,17 +125,11 @@ class _PersonalInformationContent extends StatelessWidget {
 
   void _updateProfile(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
-    final updateProfileCubit = context.read<UpdateProfileCubit>()
-      ..prepareForSubmission();
-    context.read<UpdateProfileBloc>().add(
-      SubmitUpdateProfileEvent(updateProfileCubit.state),
-    );
+    final updateProfileCubit = context.read<UpdateProfileCubit>()..prepareForSubmission();
+    context.read<UpdateProfileBloc>().add(SubmitUpdateProfileEvent(updateProfileCubit.state));
   }
 
-  void _onUpdateProfileState(
-    BuildContext context,
-    IUpdateProfileState state,
-  ) {
+  void _onUpdateProfileState(BuildContext context, IUpdateProfileState state) {
     if (state is UpdateProfileLoaded) {
       showCustomSnackBar(
         context: context,
@@ -157,12 +139,7 @@ class _PersonalInformationContent extends StatelessWidget {
       );
       context.read<GetProfileBloc>().add(const SubmitGetProfileEvent());
     } else if (state is UpdateProfileFailed) {
-      showCustomSnackBar(
-        context: context,
-        title: 'خطأ',
-        message: state.message,
-        contentType: ContentType.failure,
-      );
+      showCustomSnackBar(context: context, title: 'خطأ', message: state.message, contentType: ContentType.failure);
     }
   }
 }
