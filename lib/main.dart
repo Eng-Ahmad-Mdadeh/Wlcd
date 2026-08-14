@@ -23,6 +23,7 @@ import 'core/services/app_services.dart';
 import 'core/constants/app_theme.dart';
 import 'core/routes/app_routes.dart';
 
+import 'presentation/cubit/code_check/code_check_cubit.dart';
 import 'presentation/cubit/language/language_cubit.dart';
 import 'presentation/cubit/remember_me/remember_me_cubit.dart';
 // import 'package:telr_mobile_payment_sdk/telr_mobile_payment_sdk.dart';
@@ -108,6 +109,7 @@ class _MyAppState extends State<MyApp> {
         ),
 
         // AUTH
+        BlocProvider<CodeCheckCubit>(create: (context) => CodeCheckCubit()),
         BlocProvider<RememberMeCubit>(create: (context) => RememberMeCubit()),
 
       ],
@@ -199,6 +201,7 @@ Future<String?> _guard(BuildContext context, GoRouterState state) async {
     // MoreRoute().location,
     SplashRoute().location,
     LoginRoute().location,
+    CheckCodeRoute().location,
   ].contains(state.matchedLocation);
 
   log("###############################################################");

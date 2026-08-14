@@ -23,6 +23,7 @@ import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
+import '../../../domain/entity/auth/auth_entity.dart' as _i250;
 import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
 import '../../../domain/entity/auth/login_with_password_entity.dart' as _i679;
 import '../../../domain/entity/auth/register_with_email_entity.dart' as _i207;
@@ -155,6 +156,15 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i65.RequestPasswordResetUsecase(gh<_i154.IAuthRepository>()),
       instanceName: 'RequestPasswordReset',
+    );
+    gh.factory<_i250.AuthEntity>(
+      () => _i250.AuthEntity(
+        phone: gh<String>(),
+        typeMessage: gh<String>(),
+        code: gh<String>(),
+        fcm: gh<String>(),
+        rememberMe: gh<bool>(),
+      ),
     );
     gh.factory<
       _i759.IUseCase<
