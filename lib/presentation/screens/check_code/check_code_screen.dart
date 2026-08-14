@@ -4,7 +4,7 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/presentation/bloc/auth/check_code/check_code_bloc.dart';
-import 'package:wlcd/presentation/bloc/auth/verify_phone_otp/verify_phone_otp_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/login_with_otp/login_with_otp_bloc.dart';
 import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/presentation/widgets/auth/logo_section.dart';
@@ -26,7 +26,7 @@ class CheckCodeScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc()),
-        BlocProvider<VerifyPhoneOtpBloc>(create: (context) => VerifyPhoneOtpBloc()),
+        BlocProvider<LoginWithOtpBloc>(create: (context) => LoginWithOtpBloc()),
       ],
       child: BodyCheckCodeScreen(redirects: redirects),
     );
@@ -64,19 +64,19 @@ class _BodyCheckCodeScreenState extends State<BodyCheckCodeScreen> {
       appBar: CustomAppBar(showBackButton: true),
       body: MultiBlocListener(
         listeners: [
-          BlocListener<VerifyPhoneOtpBloc, IVerifyPhoneOtpState>(
+          BlocListener<LoginWithOtpBloc, ILoginWithOtpState>(
             listener: (context, state) async {
-              if (state is VerifyPhoneOtpLoading) {
+              if (state is LoginWithOtpLoading) {
                 showDialog(
                   context: context,
                   builder: (context) => const PopScope(canPop: false, child: LoadingWidget(0)),
                 );
               }
-              if (state is VerifyPhoneOtpLoaded && context.mounted) {
+              if (state is LoginWithOtpLoaded && context.mounted) {
                 context.pop();
                 HomeRoute().go(context);
               }
-              if (state is VerifyPhoneOtpFailed && context.mounted) {
+              if (state is LoginWithOtpFailed && context.mounted) {
                 context.pop();
                 showCustomSnackBar(
                   context: context,

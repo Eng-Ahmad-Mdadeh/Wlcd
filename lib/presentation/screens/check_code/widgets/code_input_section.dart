@@ -1,5 +1,5 @@
-import 'package:wlcd/domain/entity/auth/verify_phone_otp_entity.dart';
-import 'package:wlcd/presentation/bloc/auth/verify_phone_otp/verify_phone_otp_bloc.dart';
+import 'package:wlcd/domain/entity/auth/login_with_otp_entity.dart';
+import 'package:wlcd/presentation/bloc/auth/login_with_otp/login_with_otp_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/presentation/cubit/code_check/code_check_cubit.dart';
@@ -34,11 +34,14 @@ class CodeInputSection extends StatelessWidget {
                   // handler.refreshFcmToken();
                   // final fcmToken = await handler.refreshFcmToken();
                   if (context.mounted) {
-                    context.read<VerifyPhoneOtpBloc>().add(
-                      SubmitVerifyPhoneOtpEvent(
-                        VerifyPhoneOtpEntity(
+                    context.read<LoginWithOtpBloc>().add(
+                      SubmitLoginWithOtpEvent(
+                        LoginWithOtpEntity(
                           challengeId: state.challengeId,
                           otpCode: value,
+                          rememberMe: state.rememberMe,
+                          idempotencyKey:
+                              'login-otp-${DateTime.now().microsecondsSinceEpoch}',
                         ),
                       ),
                     );
