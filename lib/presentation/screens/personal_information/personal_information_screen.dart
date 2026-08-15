@@ -11,6 +11,7 @@ import 'package:wlcd/presentation/bloc/profile/add_email_identifier/add_email_id
 import 'package:wlcd/presentation/bloc/profile/change_email/change_email_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/add_phone_identifier/add_phone_identifier_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/change_phone/change_phone_bloc.dart';
+import 'package:wlcd/presentation/bloc/auth/request_phone_otp/request_phone_otp_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/update_profile/update_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/upload_avatar/upload_avatar_bloc.dart';
 import 'package:wlcd/presentation/cubit/upload_avatar/upload_avatar_cubit.dart';
@@ -41,6 +42,7 @@ class PersonalInformationScreen extends StatelessWidget {
         BlocProvider(create: (_) => ChangeEmailBloc()),
         BlocProvider(create: (_) => AddPhoneIdentifierBloc()),
         BlocProvider(create: (_) => ChangePhoneBloc()),
+        BlocProvider(create: (_) => RequestPhoneOtpBloc()),
       ],
       child: const BodyPersonalInformationScreen(),
     );
