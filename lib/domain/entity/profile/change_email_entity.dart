@@ -5,10 +5,9 @@ class ChangeEmailEntity extends Equatable {
 
   final String email;
 
-  ChangeEmailEntity copyWith({String? email}) =>
-      ChangeEmailEntity(email: email ?? this.email);
+  ChangeEmailEntity copyWith({String? email}) => ChangeEmailEntity(email: email ?? this.email);
 
-  Map<String, dynamic> toJson() => {'email': email};
+  Map<String, dynamic> toJson() => {'newEmail': email};
 
   @override
   List<Object?> get props => [email];

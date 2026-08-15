@@ -10,23 +10,20 @@ import 'package:wlcd/domain/entity/auth/request_phone_otp_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'request_phone_otp_event.dart';
+
 part 'request_phone_otp_state.dart';
 
-class RequestPhoneOtpBloc
-    extends Bloc<IRequestPhoneOtpEvent, IRequestPhoneOtpState> {
+class RequestPhoneOtpBloc extends Bloc<IRequestPhoneOtpEvent, IRequestPhoneOtpState> {
   RequestPhoneOtpBloc() : super(RequestPhoneOtpInitial()) {
     on<SubmitRequestPhoneOtpEvent>(_requestPhoneOtp);
   }
 
-  FutureOr<void> _requestPhoneOtp(
-    SubmitRequestPhoneOtpEvent event,
-    Emitter<IRequestPhoneOtpState> emit,
-  ) async {
+  FutureOr<void> _requestPhoneOtp(SubmitRequestPhoneOtpEvent event, Emitter<IRequestPhoneOtpState> emit) async {
     emit(RequestPhoneOtpLoading());
     try {
-      final usecase = locator<
-        IUseCase<BaseModel<PhoneOtpChallengeModel>?, RequestPhoneOtpEntity>
-      >(instanceName: 'RequestPhoneOtp');
+      final usecase = locator<IUseCase<BaseModel<PhoneOtpChallengeModel>?, RequestPhoneOtpEntity>>(
+        instanceName: 'RequestPhoneOtp',
+      );
       final result = await usecase(event.entity);
       result.fold(
         (failure) => emit(RequestPhoneOtpFailed(failure.message)),
