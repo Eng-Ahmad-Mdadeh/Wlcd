@@ -12,6 +12,8 @@ class InfoTextField extends StatelessWidget {
   final bool? readeOnly;
   final double? height;
   final Function(String)? onChanged;
+  final VoidCallback? onTap;
+  final Widget? suffixIcon;
 
   const InfoTextField({
     super.key,
@@ -22,6 +24,8 @@ class InfoTextField extends StatelessWidget {
     this.readeOnly = false,
     this.height,
     this.onChanged,
+    this.onTap,
+    this.suffixIcon,
   });
 
   @override
@@ -37,6 +41,8 @@ class InfoTextField extends StatelessWidget {
         contentPaddingTop: AppPaddingHeight.p17,
         maxLines: maxLines ?? 1,
         onChanged: onChanged,
+        onTap: onTap,
+        suffixIcon: suffixIcon,
         borderRadius: AppRadius.r7,
         labelText: label,
         prefixIcon: Icon(

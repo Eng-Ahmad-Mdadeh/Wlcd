@@ -7,6 +7,8 @@ import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/data/model/profile/profile_model.dart';
 import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/add_email_identifier/add_email_identifier_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/change_email/change_email_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/update_profile/update_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/upload_avatar/upload_avatar_bloc.dart';
 import 'package:wlcd/presentation/cubit/upload_avatar/upload_avatar_cubit.dart';
@@ -17,6 +19,7 @@ import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
 
 import 'widgets/info_text_field.dart';
+import 'widgets/email_identifier_bottom_sheet.dart';
 import 'widgets/picture_section.dart';
 import 'widgets/save_button_section.dart';
 
@@ -31,6 +34,8 @@ class PersonalInformationScreen extends StatelessWidget {
         BlocProvider(create: (_) => UpdateProfileBloc()),
         BlocProvider(create: (_) => UploadAvatarBloc()),
         BlocProvider(create: (_) => UploadAvatarCubit()),
+        BlocProvider(create: (_) => AddEmailIdentifierBloc()),
+        BlocProvider(create: (_) => ChangeEmailBloc()),
       ],
       child: const BodyPersonalInformationScreen(),
     );
@@ -113,7 +118,14 @@ class _PersonalInformationContent extends StatelessWidget {
                     label: "البريد الإلكتروني",
                     icon: Iconsax.sms_outline,
                     initValue: profile.email ?? '',
-                    onChanged: context.read<UpdateProfileCubit>().setEmail,
+                    suffixIcon: const Icon(Icons.edit_outlined),
+                    onTap: () => showEmailIdentifierBottomSheet(
+                      context,
+                      currentEmail: profile.email,
+                      onSuccess: () => context.read<GetProfileBloc>().add(
+                        const SubmitGetProfileEvent(),
+                      ),
+                    ),
                   ),
                   InfoTextField(
                     readeOnly: true,

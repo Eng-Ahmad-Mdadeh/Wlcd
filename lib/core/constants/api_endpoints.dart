@@ -30,5 +30,7 @@ class ApiEndpoints {
   static const String completeProfile = '/me/profile/complete';
   static const String updateProfile = '/me/profile';
   static const String learnerAvatar = '/me/profile/avatar';
+  static const String addEmailIdentifier = '/me/identifiers/email';
+  static const String changeEmail = '/me/identifiers/email/change';
   //#endregion
 }

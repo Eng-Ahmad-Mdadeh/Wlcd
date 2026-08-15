@@ -4,7 +4,10 @@ import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/data_sources/base/base_remote_data_source.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
+import 'package:wlcd/data/model/profile/email_identifier_model.dart';
 import 'package:wlcd/data/model/profile/profile_model.dart';
+import 'package:wlcd/domain/entity/profile/add_email_identifier_entity.dart';
+import 'package:wlcd/domain/entity/profile/change_email_entity.dart';
 import 'package:wlcd/domain/entity/profile/complete_profile_entity.dart';
 import 'package:wlcd/domain/entity/profile/update_profile_entity.dart';
 import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
@@ -40,5 +43,29 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
     fromJsonT: _profileFromJson,
   );
 
+  Future<Either<AppException, BaseModel<EmailIdentifierModel>?>>
+  addEmailIdentifier(
+    AddEmailIdentifierEntity intent,
+  ) => postDataAs<EmailIdentifierModel>(
+    endpoint: ApiEndpoints.addEmailIdentifier,
+    data: intent.toJson(),
+    isFormDate: false,
+    wrappedResponse: false,
+    fromJsonT: _emailIdentifierFromJson,
+  );
+
+  Future<Either<AppException, BaseModel<EmailIdentifierModel>?>> changeEmail(
+    ChangeEmailEntity intent,
+  ) => postDataAs<EmailIdentifierModel>(
+    endpoint: ApiEndpoints.changeEmail,
+    data: intent.toJson(),
+    isFormDate: false,
+    wrappedResponse: false,
+    fromJsonT: _emailIdentifierFromJson,
+  );
+
   static ProfileModel _profileFromJson(Object? json) => ProfileModel.fromJson(json as Map<String, dynamic>);
+
+  static EmailIdentifierModel _emailIdentifierFromJson(Object? json) =>
+      EmailIdentifierModel.fromJson(json as Map<String, dynamic>);
 }

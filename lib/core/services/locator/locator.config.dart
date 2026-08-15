@@ -24,6 +24,7 @@ import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/session_model.dart' as _i695;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
+import '../../../data/model/profile/email_identifier_model.dart' as _i1001;
 import '../../../data/model/profile/profile_model.dart' as _i967;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
@@ -40,6 +41,9 @@ import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
 import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/entity/profile/complete_profile_entity.dart' as _i904;
+import '../../../domain/entity/profile/add_email_identifier_entity.dart'
+    as _i1002;
+import '../../../domain/entity/profile/change_email_entity.dart' as _i1003;
 import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
@@ -59,6 +63,9 @@ import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i46;
 import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i827;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
 import '../../../domain/usecase/profile/complete_profile_usecase.dart' as _i373;
+import '../../../domain/usecase/profile/add_email_identifier_usecase.dart'
+    as _i1004;
+import '../../../domain/usecase/profile/change_email_usecase.dart' as _i1005;
 import '../../../domain/usecase/profile/get_profile_usecase.dart' as _i406;
 import '../../../domain/usecase/profile/update_profile_usecase.dart' as _i999;
 import '../../../domain/usecase/profile/upload_avatar_usecase.dart' as _i911;
@@ -86,6 +93,24 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i950.IProfileRepository>(
       () => _i732.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1001.EmailIdentifierModel>?,
+        _i1002.AddEmailIdentifierEntity
+      >
+    >(
+      () => _i1004.AddEmailIdentifierUsecase(gh<_i950.IProfileRepository>()),
+      instanceName: 'AddEmailIdentifier',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1001.EmailIdentifierModel>?,
+        _i1003.ChangeEmailEntity
+      >
+    >(
+      () => _i1005.ChangeEmailUsecase(gh<_i950.IProfileRepository>()),
+      instanceName: 'ChangeEmail',
     );
     gh.factory<
       _i759.IUseCase<
