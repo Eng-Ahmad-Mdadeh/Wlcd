@@ -9,15 +9,17 @@ class InfoTextField extends StatelessWidget {
   final String? initValue;
   final IconData icon;
   final int? maxLines;
+  final bool? readeOnly;
   final double? height;
   final Function(String)? onChanged;
 
   const InfoTextField({
     super.key,
     required this.label,
-     this.initValue,
+    this.initValue,
     required this.icon,
     this.maxLines,
+    this.readeOnly = false,
     this.height,
     this.onChanged,
   });
@@ -27,6 +29,7 @@ class InfoTextField extends StatelessWidget {
     return SizedBox(
       height: height ?? AppHeight.h50,
       child: CustomTextFromField(
+        readOnly: readeOnly,
         unFocus: false,
         initialValue: initValue,
         contentPaddingStart: AppPaddingWidth.p10,

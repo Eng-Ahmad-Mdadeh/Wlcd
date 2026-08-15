@@ -97,9 +97,7 @@ class _PersonalInformationContent extends StatelessWidget {
                       builder: (context, state) => PictureSection(
                         image: _avatarPath(avatar) ?? profile.avatar?.url ?? AppAssets.logo,
                         isLoading: state is UploadAvatarLoading,
-                        onTap: state is UploadAvatarLoading
-                            ? null
-                            : context.read<UploadAvatarCubit>().avatarChanged,
+                        onTap: state is UploadAvatarLoading ? null : context.read<UploadAvatarCubit>().avatarChanged,
                       ),
                     ),
                   ),
@@ -111,12 +109,15 @@ class _PersonalInformationContent extends StatelessWidget {
                     onChanged: context.read<UpdateProfileCubit>().setDisplayName,
                   ),
                   InfoTextField(
+                    readeOnly: true,
                     label: "البريد الإلكتروني",
                     icon: Iconsax.sms_outline,
                     initValue: profile.email ?? '',
                     onChanged: context.read<UpdateProfileCubit>().setEmail,
                   ),
                   InfoTextField(
+                    readeOnly: true,
+
                     label: "رقم الهاتف",
                     icon: Iconsax.call_outline,
                     initValue: profile.phone ?? '',
