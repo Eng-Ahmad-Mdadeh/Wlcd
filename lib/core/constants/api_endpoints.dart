@@ -32,5 +32,7 @@ class ApiEndpoints {
   static const String learnerAvatar = '/me/profile/avatar';
   static const String addEmailIdentifier = '/me/identifiers/email';
   static const String changeEmail = '/me/identifiers/email/change';
+  static const String addPhoneIdentifier = '/me/identifiers/phone';
+  static const String changePhone = '/me/identifiers/phone/change';
   //#endregion
 }

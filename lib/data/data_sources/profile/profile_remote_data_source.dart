@@ -6,8 +6,11 @@ import 'package:wlcd/data/data_sources/base/base_remote_data_source.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/data/model/profile/email_identifier_model.dart';
 import 'package:wlcd/data/model/profile/profile_model.dart';
+import 'package:wlcd/data/model/profile/phone_identifier_model.dart';
 import 'package:wlcd/domain/entity/profile/add_email_identifier_entity.dart';
+import 'package:wlcd/domain/entity/profile/add_phone_identifier_entity.dart';
 import 'package:wlcd/domain/entity/profile/change_email_entity.dart';
+import 'package:wlcd/domain/entity/profile/change_phone_entity.dart';
 import 'package:wlcd/domain/entity/profile/complete_profile_entity.dart';
 import 'package:wlcd/domain/entity/profile/update_profile_entity.dart';
 import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
@@ -64,8 +67,32 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
     fromJsonT: _emailIdentifierFromJson,
   );
 
+  Future<Either<AppException, BaseModel<PhoneIdentifierModel>?>>
+  addPhoneIdentifier(
+    AddPhoneIdentifierEntity intent,
+  ) => postDataAs<PhoneIdentifierModel>(
+    endpoint: ApiEndpoints.addPhoneIdentifier,
+    data: intent.toJson(),
+    isFormDate: false,
+    wrappedResponse: false,
+    fromJsonT: _phoneIdentifierFromJson,
+  );
+
+  Future<Either<AppException, BaseModel<PhoneIdentifierModel>?>> changePhone(
+    ChangePhoneEntity intent,
+  ) => postDataAs<PhoneIdentifierModel>(
+    endpoint: ApiEndpoints.changePhone,
+    data: intent.toJson(),
+    isFormDate: false,
+    wrappedResponse: false,
+    fromJsonT: _phoneIdentifierFromJson,
+  );
+
   static ProfileModel _profileFromJson(Object? json) => ProfileModel.fromJson(json as Map<String, dynamic>);
 
   static EmailIdentifierModel _emailIdentifierFromJson(Object? json) =>
       EmailIdentifierModel.fromJson(json as Map<String, dynamic>);
+
+  static PhoneIdentifierModel _phoneIdentifierFromJson(Object? json) =>
+      PhoneIdentifierModel.fromJson(json as Map<String, dynamic>);
 }

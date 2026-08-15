@@ -9,6 +9,8 @@ import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/add_email_identifier/add_email_identifier_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/change_email/change_email_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/add_phone_identifier/add_phone_identifier_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/change_phone/change_phone_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/update_profile/update_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/upload_avatar/upload_avatar_bloc.dart';
 import 'package:wlcd/presentation/cubit/upload_avatar/upload_avatar_cubit.dart';
@@ -20,6 +22,7 @@ import 'package:wlcd/presentation/widgets/retry_widget.dart';
 
 import 'widgets/info_text_field.dart';
 import 'widgets/email_identifier_bottom_sheet.dart';
+import 'widgets/phone_identifier_bottom_sheet.dart';
 import 'widgets/picture_section.dart';
 import 'widgets/save_button_section.dart';
 
@@ -36,6 +39,8 @@ class PersonalInformationScreen extends StatelessWidget {
         BlocProvider(create: (_) => UploadAvatarCubit()),
         BlocProvider(create: (_) => AddEmailIdentifierBloc()),
         BlocProvider(create: (_) => ChangeEmailBloc()),
+        BlocProvider(create: (_) => AddPhoneIdentifierBloc()),
+        BlocProvider(create: (_) => ChangePhoneBloc()),
       ],
       child: const BodyPersonalInformationScreen(),
     );
@@ -129,11 +134,17 @@ class _PersonalInformationContent extends StatelessWidget {
                   ),
                   InfoTextField(
                     readeOnly: true,
-
                     label: "رقم الهاتف",
                     icon: Iconsax.call_outline,
                     initValue: profile.phone ?? '',
-                    onChanged: context.read<UpdateProfileCubit>().setPhone,
+                    suffixIcon: const Icon(Icons.edit_outlined),
+                    onTap: () => showPhoneIdentifierBottomSheet(
+                      context,
+                      currentPhone: profile.phone,
+                      onSuccess: () => context.read<GetProfileBloc>().add(
+                        const SubmitGetProfileEvent(),
+                      ),
+                    ),
                   ),
                 ],
               ),

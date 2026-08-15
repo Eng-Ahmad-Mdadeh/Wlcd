@@ -26,6 +26,7 @@ import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/model/profile/email_identifier_model.dart' as _i1001;
 import '../../../data/model/profile/profile_model.dart' as _i967;
+import '../../../data/model/profile/phone_identifier_model.dart' as _i1006;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
 import '../../../domain/entity/auth/auth_entity.dart' as _i250;
@@ -44,6 +45,9 @@ import '../../../domain/entity/profile/complete_profile_entity.dart' as _i904;
 import '../../../domain/entity/profile/add_email_identifier_entity.dart'
     as _i1002;
 import '../../../domain/entity/profile/change_email_entity.dart' as _i1003;
+import '../../../domain/entity/profile/add_phone_identifier_entity.dart'
+    as _i1007;
+import '../../../domain/entity/profile/change_phone_entity.dart' as _i1008;
 import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
@@ -66,6 +70,9 @@ import '../../../domain/usecase/profile/complete_profile_usecase.dart' as _i373;
 import '../../../domain/usecase/profile/add_email_identifier_usecase.dart'
     as _i1004;
 import '../../../domain/usecase/profile/change_email_usecase.dart' as _i1005;
+import '../../../domain/usecase/profile/add_phone_identifier_usecase.dart'
+    as _i1009;
+import '../../../domain/usecase/profile/change_phone_usecase.dart' as _i1010;
 import '../../../domain/usecase/profile/get_profile_usecase.dart' as _i406;
 import '../../../domain/usecase/profile/update_profile_usecase.dart' as _i999;
 import '../../../domain/usecase/profile/upload_avatar_usecase.dart' as _i911;
@@ -111,6 +118,24 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i1005.ChangeEmailUsecase(gh<_i950.IProfileRepository>()),
       instanceName: 'ChangeEmail',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1006.PhoneIdentifierModel>?,
+        _i1007.AddPhoneIdentifierEntity
+      >
+    >(
+      () => _i1009.AddPhoneIdentifierUsecase(gh<_i950.IProfileRepository>()),
+      instanceName: 'AddPhoneIdentifier',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1006.PhoneIdentifierModel>?,
+        _i1008.ChangePhoneEntity
+      >
+    >(
+      () => _i1010.ChangePhoneUsecase(gh<_i950.IProfileRepository>()),
+      instanceName: 'ChangePhone',
     );
     gh.factory<
       _i759.IUseCase<
