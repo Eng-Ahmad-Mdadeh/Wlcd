@@ -257,7 +257,7 @@ class _PhoneIdentifierBottomSheetState
       SubmitRequestPhoneOtpEvent(
         RequestPhoneOtpEntity(
           phone: phone,
-          purpose: _isChangingPhone ? 'change_phone' : 'add_phone',
+          purpose: _isChangingPhone ? 'Register' : 'identifiers',
         ),
       ),
     );
