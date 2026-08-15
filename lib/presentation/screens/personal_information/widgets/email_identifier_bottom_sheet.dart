@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
@@ -12,6 +13,8 @@ import 'package:wlcd/presentation/cubit/profile/change_email/change_email_cubit.
 import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
+import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 Future<void> showEmailIdentifierBottomSheet(
   BuildContext context, {
@@ -119,28 +122,23 @@ class _EmailIdentifierBottomSheetState
                   Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: context.pop,
                       icon: const Icon(Icons.close),
                     ),
                   ),
-                  Text(
-                    _isChangingEmail
+                  SectionTitle(
+                    text: _isChangingEmail
                         ? 'تغيير البريد الإلكتروني'
                         : 'إضافة بريد إلكتروني',
-                    style: TextStyle(
-                      fontSize: AppFontSize.s20,
-                      fontWeight: AppFontWeight.bold,
-                    ),
+                    fontSize: AppFontSize.s20,
+                    fontWeight: AppFontWeight.bold,
                   ),
                   SizedBox(height: AppHeight.h8),
-                  Text(
-                    _isChangingEmail
+                  BodyTitle(
+                    text: _isChangingEmail
                         ? 'أدخل عنوان البريد الإلكتروني الجديد لحسابك.'
                         : 'أدخل عنوان بريد إلكتروني لإضافته إلى حسابك.',
-                    style: TextStyle(
-                      color: AppColors.grey,
-                      fontSize: AppFontSize.s14,
-                    ),
+                    color: AppColors.grey,
                   ),
                   SizedBox(height: AppHeight.h22),
                   CustomTextFromField(
@@ -230,7 +228,7 @@ class _EmailIdentifierBottomSheetState
       contentType: ContentType.success,
     );
     widget.onSuccess?.call();
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _showFailure(String message) {
