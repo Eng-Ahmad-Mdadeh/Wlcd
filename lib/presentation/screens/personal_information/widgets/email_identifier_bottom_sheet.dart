@@ -16,11 +16,7 @@ import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
-Future<void> showEmailIdentifierBottomSheet(
-  BuildContext context, {
-  String? currentEmail,
-  VoidCallback? onSuccess,
-}) {
+Future<void> showEmailIdentifierBottomSheet(BuildContext context, {String? currentEmail, VoidCallback? onSuccess}) {
   final addEmailIdentifierBloc = context.read<AddEmailIdentifierBloc>();
   final changeEmailBloc = context.read<ChangeEmailBloc>();
 
@@ -35,35 +31,24 @@ Future<void> showEmailIdentifierBottomSheet(
         BlocProvider.value(value: addEmailIdentifierBloc),
         BlocProvider.value(value: changeEmailBloc),
         BlocProvider(create: (_) => AddEmailIdentifierCubit()),
-        BlocProvider(
-          create: (_) => ChangeEmailCubit(email: currentEmail ?? ''),
-        ),
+        BlocProvider(create: (_) => ChangeEmailCubit(email: currentEmail ?? '')),
       ],
-      child: EmailIdentifierBottomSheet(
-        currentEmail: currentEmail,
-        onSuccess: onSuccess,
-      ),
+      child: EmailIdentifierBottomSheet(currentEmail: currentEmail, onSuccess: onSuccess),
     ),
   );
 }
 
 class EmailIdentifierBottomSheet extends StatefulWidget {
-  const EmailIdentifierBottomSheet({
-    super.key,
-    this.currentEmail,
-    this.onSuccess,
-  });
+  const EmailIdentifierBottomSheet({super.key, this.currentEmail, this.onSuccess});
 
   final String? currentEmail;
   final VoidCallback? onSuccess;
 
   @override
-  State<EmailIdentifierBottomSheet> createState() =>
-      _EmailIdentifierBottomSheetState();
+  State<EmailIdentifierBottomSheet> createState() => _EmailIdentifierBottomSheetState();
 }
 
-class _EmailIdentifierBottomSheetState
-    extends State<EmailIdentifierBottomSheet> {
+class _EmailIdentifierBottomSheetState extends State<EmailIdentifierBottomSheet> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
 
@@ -87,12 +72,8 @@ class _EmailIdentifierBottomSheetState
 
     return MultiBlocListener(
       listeners: [
-        BlocListener<AddEmailIdentifierBloc, IAddEmailIdentifierState>(
-          listener: _onAddEmailState,
-        ),
-        BlocListener<ChangeEmailBloc, IChangeEmailState>(
-          listener: _onChangeEmailState,
-        ),
+        BlocListener<AddEmailIdentifierBloc, IAddEmailIdentifierState>(listener: _onAddEmailState),
+        BlocListener<ChangeEmailBloc, IChangeEmailState>(listener: _onChangeEmailState),
       ],
       child: AnimatedPadding(
         duration: const Duration(milliseconds: 220),
@@ -108,9 +89,7 @@ class _EmailIdentifierBottomSheetState
           ),
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(AppRadius.r24),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24)),
           ),
           child: SingleChildScrollView(
             child: Form(
@@ -121,15 +100,10 @@ class _EmailIdentifierBottomSheetState
                 children: [
                   Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: IconButton(
-                      onPressed: context.pop,
-                      icon: const Icon(Icons.close),
-                    ),
+                    child: IconButton(onPressed: context.pop, icon: const Icon(Icons.close)),
                   ),
                   SectionTitle(
-                    text: _isChangingEmail
-                        ? 'تغيير البريد الإلكتروني'
-                        : 'إضافة بريد إلكتروني',
+                    text: _isChangingEmail ? 'تغيير البريد الإلكتروني' : 'إضافة بريد إلكتروني',
                     fontSize: AppFontSize.s20,
                     fontWeight: AppFontWeight.bold,
                   ),
@@ -154,10 +128,7 @@ class _EmailIdentifierBottomSheetState
                     onChanged: _onEmailChanged,
                   ),
                   SizedBox(height: AppHeight.h20),
-                  _SubmitEmailButton(
-                    isChangingEmail: _isChangingEmail,
-                    onPressed: _submit,
-                  ),
+                  _SubmitEmailButton(isChangingEmail: _isChangingEmail, onPressed: _submit),
                 ],
               ),
             ),
@@ -183,11 +154,8 @@ class _EmailIdentifierBottomSheetState
       final cubit = context.read<ChangeEmailCubit>()..prepareForSubmission();
       context.read<ChangeEmailBloc>().add(SubmitChangeEmailEvent(cubit.state));
     } else {
-      final cubit = context.read<AddEmailIdentifierCubit>()
-        ..prepareForSubmission();
-      context.read<AddEmailIdentifierBloc>().add(
-        SubmitAddEmailIdentifierEvent(cubit.state),
-      );
+      final cubit = context.read<AddEmailIdentifierCubit>()..prepareForSubmission();
+      context.read<AddEmailIdentifierBloc>().add(SubmitAddEmailIdentifierEvent(cubit.state));
     }
   }
 
@@ -201,10 +169,7 @@ class _EmailIdentifierBottomSheetState
     return null;
   }
 
-  void _onAddEmailState(
-    BuildContext context,
-    IAddEmailIdentifierState state,
-  ) {
+  void _onAddEmailState(BuildContext context, IAddEmailIdentifierState state) {
     if (state is AddEmailIdentifierLoaded) {
       _completeSuccessfully('تمت إضافة البريد الإلكتروني بنجاح');
     } else if (state is AddEmailIdentifierFailed) {
@@ -221,31 +186,18 @@ class _EmailIdentifierBottomSheetState
   }
 
   void _completeSuccessfully(String message) {
-    showCustomSnackBar(
-      context: context,
-      title: 'تم بنجاح',
-      message: message,
-      contentType: ContentType.success,
-    );
+    showCustomSnackBar(context: context, title: 'تم بنجاح', message: message, contentType: ContentType.success);
     widget.onSuccess?.call();
     context.pop();
   }
 
   void _showFailure(String message) {
-    showCustomSnackBar(
-      context: context,
-      title: 'خطأ',
-      message: message,
-      contentType: ContentType.failure,
-    );
+    showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
   }
 }
 
 class _SubmitEmailButton extends StatelessWidget {
-  const _SubmitEmailButton({
-    required this.isChangingEmail,
-    required this.onPressed,
-  });
+  const _SubmitEmailButton({required this.isChangingEmail, required this.onPressed});
 
   final bool isChangingEmail;
   final VoidCallback onPressed;
