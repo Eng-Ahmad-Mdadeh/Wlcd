@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wlcd/data/model/Catalog/categories/category_model.dart';
+import 'package:wlcd/data/model/catalog/categories/category_model.dart';
 
 part 'categories_model.g.dart';
 

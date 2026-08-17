@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wlcd/data/model/Catalog/course/course_price_model.dart';
-import 'package:wlcd/data/model/Catalog/course/course_thumbnail_model.dart';
+import 'package:wlcd/data/model/catalog/course/course_price_model.dart';
+import 'package:wlcd/data/model/catalog/course/course_thumbnail_model.dart';
 
 part 'course_model.g.dart';
 
