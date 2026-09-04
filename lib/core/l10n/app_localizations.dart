@@ -626,6 +626,24 @@ abstract class AppLocalizations {
   /// **'Continue Learning'**
   String get home_continue_learning;
 
+  /// No description provided for @home_categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get home_categories;
+
+  /// No description provided for @home_featured_courses.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured courses'**
+  String get home_featured_courses;
+
+  /// No description provided for @home_recommended_courses.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended courses'**
+  String get home_recommended_courses;
+
   /// No description provided for @home_recently_added.
   ///
   /// In en, this message translates to:

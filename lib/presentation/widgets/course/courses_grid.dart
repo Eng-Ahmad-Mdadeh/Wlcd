@@ -6,6 +6,7 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
+import 'package:wlcd/presentation/widgets/image_view.dart';
 
 class CoursesGrid extends StatelessWidget {
   const CoursesGrid({super.key, required this.courses});
@@ -62,7 +63,7 @@ class CourseGridCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CoursePoster(type: course.posterType),
+            CoursePoster(type: course.posterType, imageUrl: course.imageUrl),
             SizedBox(height: AppHeight.h12),
             Padding(
               padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p10),
@@ -113,9 +114,10 @@ class CourseGridCard extends StatelessWidget {
 }
 
 class CoursePoster extends StatelessWidget {
-  const CoursePoster({super.key, required this.type});
+  const CoursePoster({super.key, required this.type, this.imageUrl});
 
   final CoursePosterType type;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,16 @@ class CoursePoster extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: type == CoursePosterType.dark ? const DarkPosterArt() : const BookPosterArt(),
+      child: imageUrl != null
+          ? ImageView(
+              imagePath: imageUrl!,
+              width: double.infinity,
+              height: AppHeight.h130,
+              fit: BoxFit.cover,
+            )
+          : type == CoursePosterType.dark
+          ? const DarkPosterArt()
+          : const BookPosterArt(),
     );
   }
 }
@@ -272,6 +283,7 @@ class CourseData {
     required this.price,
     required this.duration,
     required this.posterType,
+    this.imageUrl,
   });
 
   final String category;
@@ -279,6 +291,7 @@ class CourseData {
   final String price;
   final String duration;
   final CoursePosterType posterType;
+  final String? imageUrl;
 }
 
 enum CoursePosterType { dark, book }
