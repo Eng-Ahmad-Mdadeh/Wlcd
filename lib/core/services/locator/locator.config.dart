@@ -27,7 +27,7 @@ import '../../../data/model/auth/session_model.dart' as _i695;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/model/catalog/categories/categories_model.dart' as _i1002;
-import '../../../data/model/catalog/course/courses_model.dart' as _i1003;
+import '../../../data/model/catalog/courses/courses_model.dart' as _i1003;
 import '../../../data/model/profile/email_identifier_model.dart' as _i737;
 import '../../../data/model/profile/phone_identifier_model.dart' as _i994;
 import '../../../data/model/profile/profile_model.dart' as _i967;

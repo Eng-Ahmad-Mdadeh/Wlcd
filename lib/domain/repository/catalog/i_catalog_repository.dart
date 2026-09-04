@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/data/model/catalog/categories/categories_model.dart';
-import 'package:wlcd/data/model/catalog/course/courses_model.dart';
+import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
 
 abstract interface class ICatalogRepository {

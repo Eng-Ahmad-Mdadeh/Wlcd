@@ -16,10 +16,3 @@ CoursesModel _$CoursesModelFromJson(Map<String, dynamic> json) => CoursesModel(
           json['pagination'] as Map<String, dynamic>,
         ),
 );
-
-CatalogPaginationModel _$CatalogPaginationModelFromJson(
-  Map<String, dynamic> json,
-) => CatalogPaginationModel(
-  nextCursor: json['nextCursor'] as String?,
-  hasMore: json['hasMore'] as bool,
-);

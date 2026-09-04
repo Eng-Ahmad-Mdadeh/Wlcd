@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
-import 'package:wlcd/data/model/catalog/course/courses_model.dart';
+import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
