@@ -21,7 +21,7 @@ final class RecommendedCoursesLoading extends IRecommendedCoursesState {
 final class RecommendedCoursesLoaded extends IRecommendedCoursesState {
   const RecommendedCoursesLoaded(this.courses);
 
-  final CoursesModel? courses;
+  final RecommendationsModel? courses;
 
   @override
   List<Object?> get props => [courses];

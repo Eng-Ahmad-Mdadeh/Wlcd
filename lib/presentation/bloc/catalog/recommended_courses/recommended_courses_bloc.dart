@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
-import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
+import 'package:wlcd/data/model/catalog/recommendations/recommendations_model.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'recommended_courses_event.dart';
@@ -23,7 +23,7 @@ class RecommendedCoursesBloc
   ) async {
     emit(const RecommendedCoursesLoading());
     try {
-      final usecase = locator<IUseCase<BaseModel<CoursesModel>?, Null>>(
+      final usecase = locator<IUseCase<BaseModel<RecommendationsModel>?, Null>>(
         instanceName: 'GetRecommendedCourses',
       );
       final response = await usecase(null);

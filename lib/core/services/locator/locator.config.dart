@@ -28,6 +28,8 @@ import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/model/catalog/categories/categories_model.dart' as _i1002;
 import '../../../data/model/catalog/courses/courses_model.dart' as _i1003;
+import '../../../data/model/catalog/recommendations/recommendations_model.dart'
+    as _i1010;
 import '../../../data/model/profile/email_identifier/email_identifier_model.dart' as _i737;
 import '../../../data/model/profile/phone_identifier/phone_identifier_model.dart' as _i994;
 import '../../../data/model/profile/profile/profile_model.dart' as _i967;
@@ -138,7 +140,7 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'GetFeaturedCourses',
     );
     gh.factory<
-      _i759.IUseCase<_i830.BaseModel<_i1003.CoursesModel>?, Null>
+      _i759.IUseCase<_i830.BaseModel<_i1010.RecommendationsModel>?, Null>
     >(
       () => _i1008.GetRecommendedCoursesUsecase(
         gh<_i1006.ICatalogRepository>(),

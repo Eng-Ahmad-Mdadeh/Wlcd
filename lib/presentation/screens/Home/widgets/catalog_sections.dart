@@ -101,7 +101,13 @@ class HomeRecommendedCoursesSection extends StatelessWidget {
               );
             }
             if (state is RecommendedCoursesLoaded) {
-              return CoursesGrid(courses: _toCourseData(state.courses?.data));
+              return CoursesGrid(
+                courses: _toCourseData(
+                  state.courses?.data
+                      .map((recommendation) => recommendation.card)
+                      .toList(),
+                ),
+              );
             }
             return const _CatalogLoading();
           },
