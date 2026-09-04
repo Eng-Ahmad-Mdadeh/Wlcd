@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
-import 'package:wlcd/data/model/profile/phone_identifier_model.dart';
+import 'package:wlcd/data/model/profile/phone_identifier/phone_identifier_model.dart';
 import 'package:wlcd/domain/entity/profile/change_phone_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 

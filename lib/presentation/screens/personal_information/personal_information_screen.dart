@@ -4,7 +4,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
-import 'package:wlcd/data/model/profile/profile_model.dart';
+import 'package:wlcd/data/model/profile/profile/profile_model.dart';
 import 'package:wlcd/domain/entity/profile/upload_avatar_entity.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/bloc/profile/add_email_identifier/add_email_identifier_bloc.dart';
