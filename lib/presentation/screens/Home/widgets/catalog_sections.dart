@@ -26,17 +26,13 @@ class HomeCategoriesSection extends StatelessWidget {
         BlocBuilder<CategoriesBloc, ICategoriesState>(
           builder: (context, state) {
             if (state is CategoriesFailed) {
-              return _CatalogRetry(
-                onRetry: () => context.read<CategoriesBloc>().add(
-                  const LoadCategoriesEvent(),
-                ),
-              );
+              return _CatalogRetry(onRetry: () => context.read<CategoriesBloc>().add(const LoadCategoriesEvent()));
             }
             if (state is CategoriesLoaded) {
               final categories = state.categories?.categories ?? const [];
               if (categories.isEmpty) return const SizedBox.shrink();
               return SizedBox(
-                height: AppHeight.h44,
+                height: AppHeight.h45,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
@@ -72,9 +68,7 @@ class HomeFeaturedCoursesSection extends StatelessWidget {
             if (state is FeaturedCoursesFailed) {
               return _CatalogRetry(
                 onRetry: () => context.read<FeaturedCoursesBloc>().add(
-                  LoadFeaturedCoursesEvent(
-                    context.read<FeaturedCoursesQueryCubit>().state,
-                  ),
+                  LoadFeaturedCoursesEvent(context.read<FeaturedCoursesQueryCubit>().state),
                 ),
               );
             }
@@ -103,9 +97,7 @@ class HomeRecommendedCoursesSection extends StatelessWidget {
           builder: (context, state) {
             if (state is RecommendedCoursesFailed) {
               return _CatalogRetry(
-                onRetry: () => context.read<RecommendedCoursesBloc>().add(
-                  const LoadRecommendedCoursesEvent(),
-                ),
+                onRetry: () => context.read<RecommendedCoursesBloc>().add(const LoadRecommendedCoursesEvent()),
               );
             }
             if (state is RecommendedCoursesLoaded) {
@@ -122,12 +114,12 @@ class HomeRecommendedCoursesSection extends StatelessWidget {
 List<CourseData> _toCourseData(List<CourseModel>? courses) => [
   for (final course in courses ?? const <CourseModel>[])
     CourseData(
-      category: course.primaryCategoryLabel,
-      title: course.title,
-      price: course.price.displayLabel,
-      duration: _formatDuration(course.estimatedDurationSeconds),
+      category: course.primaryCategoryLabel ?? '',
+      title: course.title ?? '',
+      price: course.price?.displayLabel ?? '',
+      duration: _formatDuration(course.estimatedDurationSeconds ?? 0),
       posterType: CoursePosterType.dark,
-      imageUrl: course.thumbnail.url,
+      imageUrl: course.thumbnail?.url ?? '',
     ),
 ];
 
@@ -141,10 +133,7 @@ class _CatalogLoading extends StatelessWidget {
   const _CatalogLoading();
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    height: AppHeight.h130,
-    child: const LoadingWidget(0),
-  );
+  Widget build(BuildContext context) => SizedBox(height: AppHeight.h130, child: const LoadingWidget(0));
 }
 
 class _CatalogRetry extends StatelessWidget {
