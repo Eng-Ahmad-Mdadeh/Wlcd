@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
+import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
+    as _i1001;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
 import '../../../data/model/auth/auth_model.dart' as _i49;
@@ -24,10 +26,13 @@ import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/session_model.dart' as _i695;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
+import '../../../data/model/catalog/categories/categories_model.dart' as _i1002;
+import '../../../data/model/catalog/courses/courses_model.dart' as _i1003;
 import '../../../data/model/profile/email_identifier_model.dart' as _i737;
 import '../../../data/model/profile/phone_identifier_model.dart' as _i994;
 import '../../../data/model/profile/profile_model.dart' as _i967;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
+import '../../../data/repository/catalog/catalog_repository.dart' as _i1004;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
 import '../../../domain/entity/auth/auth_entity.dart' as _i250;
 import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
@@ -41,6 +46,8 @@ import '../../../domain/entity/auth/request_phone_otp_entity.dart' as _i92;
 import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
 import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
+import '../../../domain/entity/catalog/get_featured_courses_entity.dart'
+    as _i1005;
 import '../../../domain/entity/profile/add_email_identifier_entity.dart'
     as _i202;
 import '../../../domain/entity/profile/add_phone_identifier_entity.dart'
@@ -51,6 +58,7 @@ import '../../../domain/entity/profile/complete_profile_entity.dart' as _i904;
 import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
+import '../../../domain/repository/catalog/i_catalog_repository.dart' as _i1006;
 import '../../../domain/repository/profile/i_profile_repository.dart' as _i950;
 import '../../../domain/usecase/auth/get_session_usecase.dart' as _i410;
 import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i446;
@@ -65,6 +73,11 @@ import '../../../domain/usecase/auth/request_phone_otp_usecase.dart' as _i784;
 import '../../../domain/usecase/auth/reset_password_usecase.dart' as _i888;
 import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i46;
 import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i827;
+import '../../../domain/usecase/catalog/get_featured_courses_usecase.dart'
+    as _i1007;
+import '../../../domain/usecase/catalog/get_recommended_courses_usecase.dart'
+    as _i1008;
+import '../../../domain/usecase/catalog/list_categories_usecase.dart' as _i1009;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
 import '../../../domain/usecase/profile/add_email_identifier_usecase.dart'
     as _i726;
@@ -89,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
     gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.factory<_i1001.CatalogRemoteDataSource>(
+      () => _i1001.CatalogRemoteDataSource(),
+    );
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
     );
@@ -100,6 +116,34 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i950.IProfileRepository>(
       () => _i732.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
+    );
+    gh.factory<_i1006.ICatalogRepository>(
+      () => _i1004.CatalogRepository(gh<_i1001.CatalogRemoteDataSource>()),
+    );
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i1002.CategoriesModel>?, Null>
+    >(
+      () => _i1009.ListCategoriesUsecase(gh<_i1006.ICatalogRepository>()),
+      instanceName: 'ListCategories',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1003.CoursesModel>?,
+        _i1005.GetFeaturedCoursesEntity
+      >
+    >(
+      () => _i1007.GetFeaturedCoursesUsecase(
+        gh<_i1006.ICatalogRepository>(),
+      ),
+      instanceName: 'GetFeaturedCourses',
+    );
+    gh.factory<
+      _i759.IUseCase<_i830.BaseModel<_i1003.CoursesModel>?, Null>
+    >(
+      () => _i1008.GetRecommendedCoursesUsecase(
+        gh<_i1006.ICatalogRepository>(),
+      ),
+      instanceName: 'GetRecommendedCourses',
     );
     gh.factory<
       _i759.IUseCase<

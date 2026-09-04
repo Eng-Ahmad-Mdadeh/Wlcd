@@ -24,6 +24,13 @@ class ApiEndpoints {
   static const String checkCode = '/check-code';
 //#endregion
 
+  //#region Catalog
+  static const String catalog = '/catalog';
+  static const String categories = '/categories';
+  static const String featuredCourses = '/featured';
+  static const String recommendedCourses = '/recommendations';
+  //#endregion
+
   //#region Profile
   static const String accounts = '/accounts';
   static const String   profile = '/me';
