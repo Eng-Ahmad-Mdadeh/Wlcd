@@ -281,6 +281,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home_continue_learning => 'واصل التعلّم';
 
   @override
+  String get home_categories => 'التصنيفات';
+
+  @override
+  String get home_featured_courses => 'الدورات المميزة';
+
+  @override
+  String get home_recommended_courses => 'الدورات المقترحة';
+
+  @override
   String get home_recently_added => 'أضيف حديثًا';
 
   @override

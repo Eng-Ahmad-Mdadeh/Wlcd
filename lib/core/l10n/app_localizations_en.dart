@@ -280,6 +280,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home_continue_learning => 'Continue Learning';
 
   @override
+  String get home_categories => 'Categories';
+
+  @override
+  String get home_featured_courses => 'Featured courses';
+
+  @override
+  String get home_recommended_courses => 'Recommended courses';
+
+  @override
   String get home_recently_added => 'Recently added';
 
   @override
