@@ -26,7 +26,7 @@ class CatalogRemoteDataSource extends BaseRemoteDataSource<Object> {
         wrappedResponse: false,
       );
 
-  Future<Either<AppException, BaseModel<CoursesModel>?>> getRecommendedCourses() => fetchDataAs<CoursesModel>(
+    Future<Either<AppException, BaseModel<CoursesModel>?>> getRecommendedCourses() => fetchDataAs<CoursesModel>(
     endpoint: ApiEndpoints.recommendedCourses,
     fromJsonT: _coursesFromJson,
     wrappedResponse: false,
