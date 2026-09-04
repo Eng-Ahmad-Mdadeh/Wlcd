@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlcd/data/model/profile/profile_model.dart';
+import 'package:wlcd/data/model/profile/profile/profile_model.dart';
 import 'package:wlcd/domain/entity/profile/update_profile_entity.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileEntity> {

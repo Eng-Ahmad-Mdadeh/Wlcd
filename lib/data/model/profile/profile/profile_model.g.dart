@@ -6,14 +6,6 @@ part of 'profile_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MediaProjectionModel _$MediaProjectionModelFromJson(
-  Map<String, dynamic> json,
-) => MediaProjectionModel(
-  url: json['url'] as String?,
-  mimeType: json['mimeType'] as String?,
-  altText: json['altText'] as String?,
-);
-
 ProfileModel _$ProfileModelFromJson(Map<String, dynamic> json) => ProfileModel(
   accountId: json['accountId'] as String,
   displayName: json['displayName'] as String,
