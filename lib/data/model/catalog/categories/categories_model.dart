@@ -10,8 +10,7 @@ class CategoriesModel extends Equatable {
 
   final List<CategoryModel> categories;
 
-  factory CategoriesModel.fromJson(Map<String, dynamic> json) =>
-      _$CategoriesModelFromJson(json);
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) => _$CategoriesModelFromJson(json);
 
   @override
   List<Object?> get props => [categories];
