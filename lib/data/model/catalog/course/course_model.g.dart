@@ -13,16 +13,22 @@ CourseModel _$CourseModelFromJson(Map<String, dynamic> json) => CourseModel(
   thumbnailMediaId: json['thumbnailMediaId'] as String?,
   primaryCategoryLabel: json['primaryCategoryLabel'] as String?,
   difficulty: json['difficulty'] as String?,
-  estimatedDurationSeconds: json['estimatedDurationSeconds'] != null
-      ? null
-      : (json['estimatedDurationSeconds'] as num).toInt(),
+  estimatedDurationSeconds: (json['estimatedDurationSeconds'] as num?)?.toInt(),
   instructorDisplayName: json['instructorDisplayName'] as String?,
-  publishedAt: json['publishedAt'] != null ? null : DateTime.parse(json['publishedAt'] as String),
-  thumbnail: CourseThumbnailModel.fromJson(json['thumbnail'] as Map<String, dynamic>),
-  price: CoursePriceModel.fromJson(json['price'] as Map<String, dynamic>),
-  isFree: json['isFree'] as bool,
+  publishedAt: json['publishedAt'] == null
+      ? null
+      : DateTime.parse(json['publishedAt'] as String),
+  thumbnail: json['thumbnail'] == null
+      ? null
+      : CourseThumbnailModel.fromJson(
+          json['thumbnail'] as Map<String, dynamic>,
+        ),
+  price: json['price'] == null
+      ? null
+      : CoursePriceModel.fromJson(json['price'] as Map<String, dynamic>),
+  isFree: json['isFree'] as bool?,
   ratingAverage: (json['ratingAverage'] as num?)?.toDouble(),
-  ratingCount: (json['ratingCount'] as num).toInt(),
-  instructorId: json['instructorId'] as String,
-  commercialAvailability: json['commercialAvailability'] as String,
+  ratingCount: (json['ratingCount'] as num?)?.toInt(),
+  instructorId: json['instructorId'] as String?,
+  commercialAvailability: json['commercialAvailability'] as String?,
 );
