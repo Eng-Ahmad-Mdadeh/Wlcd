@@ -42,4 +42,16 @@ class ApiEndpoints {
   static const String addPhoneIdentifier = '/me/identifiers/phone';
   static const String changePhone = '/me/identifiers/phone/change';
   //#endregion
+
+  //#region Favorites (API-OP-151..159)
+  static const String favoriteGroups = '/me/favorite-groups';
+  static String favoriteGroup(String favoriteGroupId) =>
+      '$favoriteGroups/$favoriteGroupId';
+  static String favoriteGroupMemberships(String favoriteGroupId) =>
+      '${favoriteGroup(favoriteGroupId)}/memberships';
+  static String favoriteMembership(String membershipId) =>
+      '/me/favorite-memberships/$membershipId';
+  static String courseFavorite(String courseId) =>
+      '/me/favorites/courses/$courseId';
+  //#endregion
 }
