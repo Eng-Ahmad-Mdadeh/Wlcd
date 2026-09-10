@@ -196,13 +196,17 @@ class FavoritesRoute extends GoRouteData with $FavoritesRoute {
 }
 
 class FavoriteCoursesRoute extends GoRouteData with $FavoriteCoursesRoute {
-  const FavoriteCoursesRoute({required this.groupName});
+  const FavoriteCoursesRoute({required this.groupName, required this.favoriteGroupId});
 
   final String groupName;
+  final String favoriteGroupId;
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return FavoriteCoursesScreen(groupName: groupName).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
+    return FavoriteCoursesScreen(
+      groupName: groupName,
+      favoriteGroupId: favoriteGroupId,
+    ).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 //#endregion
@@ -234,7 +238,11 @@ class MoreRoute extends GoRouteData with $MoreRoute {
       routes: [
         TypedGoRoute<FavoritesRoute>(
           path: '/favorites',
-          routes: [TypedGoRoute<FavoriteCoursesRoute>(path: 'groups/:groupName')],
+          routes: [
+            TypedGoRoute<FavoriteCoursesRoute>(
+              path: 'groups/:favoriteGroupId/:groupName',
+            ),
+          ],
         ),
       ],
     ),

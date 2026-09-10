@@ -416,7 +416,7 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           factory: $FavoritesRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'groups/:groupName',
+              path: 'groups/:favoriteGroupId/:groupName',
               factory: $FavoriteCoursesRoute._fromState,
             ),
           ],
@@ -485,13 +485,16 @@ mixin $FavoritesRoute on GoRouteData {
 
 mixin $FavoriteCoursesRoute on GoRouteData {
   static FavoriteCoursesRoute _fromState(GoRouterState state) =>
-      FavoriteCoursesRoute(groupName: state.pathParameters['groupName']!);
+      FavoriteCoursesRoute(
+        groupName: state.pathParameters['groupName']!,
+        favoriteGroupId: state.pathParameters['favoriteGroupId']!,
+      );
 
   FavoriteCoursesRoute get _self => this as FavoriteCoursesRoute;
 
   @override
   String get location => GoRouteData.$location(
-    '/favorites/groups/${Uri.encodeComponent(_self.groupName)}',
+    '/favorites/groups/${Uri.encodeComponent(_self.favoriteGroupId)}/${Uri.encodeComponent(_self.groupName)}',
   );
 
   @override
