@@ -1,95 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/core/routes/app_routes.dart';
-import 'package:wlcd/presentation/screens/favorites/favorites_store.dart';
-import 'package:wlcd/presentation/widgets/course/course_card.dart';
+import 'package:wlcd/domain/entity/favorites/favorites_entity.dart';
+import 'package:wlcd/presentation/bloc/favorites/favorite_memberships/favorite_memberships_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/no_result_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
-import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class FavoriteCoursesScreen extends StatelessWidget {
-  const FavoriteCoursesScreen({super.key, required this.groupName});
+  const FavoriteCoursesScreen({
+    super.key,
+    required this.groupName,
+    required this.favoriteGroupId,
+  });
 
   final String groupName;
-
-  FavoriteGroup? _findGroup(List<FavoriteGroup> groups) {
-    for (final group in groups) {
-      if (group.name == groupName) return group;
-    }
-    return null;
-  }
+  final String favoriteGroupId;
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<FavoriteGroup>>(
-      valueListenable: FavoritesStore.groups,
-      builder: (context, groups, _) {
-        final group = _findGroup(groups);
+    final entity = FavoritesEntity(favoriteGroupId: favoriteGroupId);
+    return BlocProvider(
+      create: (_) => FavoriteMembershipsBloc()
+        ..add(LoadFavoriteMembershipsEvent(entity)),
+      child: Scaffold(
+        backgroundColor: AppColors.backGround,
+        appBar: CustomAppBar(
+          title: groupName,
+          centerTitle: true,
+          showBackButton: true,
+        ),
+        body: _FavoriteCoursesBody(entity: entity),
+      ),
+    );
+  }
+}
 
-        return Scaffold(
-          backgroundColor: AppColors.backGround,
-          appBar: CustomAppBar(title: group?.name ?? groupName, centerTitle: true, showBackButton: true),
-          body: group == null ? const _MissingFavoriteGroupView() : _FavoriteCoursesList(group: group),
-        );
+class _FavoriteCoursesBody extends StatelessWidget {
+  const _FavoriteCoursesBody({required this.entity});
+
+  final FavoritesEntity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FavoriteMembershipsBloc, IFavoriteMembershipsState>(
+      builder: (context, state) {
+        if (state is FavoriteMembershipsFailed) {
+          return RetryWidget(
+            onReload: () => context.read<FavoriteMembershipsBloc>().add(
+              LoadFavoriteMembershipsEvent(entity),
+            ),
+          );
+        }
+        if (state is FavoriteMembershipsLoaded) {
+          final memberships = state.memberships?.data ?? const [];
+          if (memberships.isEmpty) {
+            return const NoResultWidget(title: 'لا توجد كورسات في هذه المجموعة');
+          }
+          return _FavoriteCoursesList(itemCount: memberships.length);
+        }
+        return const LoadingWidget(0);
       },
     );
   }
 }
 
+/// The memberships list item schema is not defined by the handoff yet. The
+/// screen therefore renders a neutral row per returned item without guessing
+/// course fields; richer cards can be introduced when that contract is known.
 class _FavoriteCoursesList extends StatelessWidget {
-  const _FavoriteCoursesList({required this.group});
+  const _FavoriteCoursesList({required this.itemCount});
 
-  final FavoriteGroup group;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsetsDirectional.only(
-            start: AppPaddingWidth.p18,
-            end: AppPaddingWidth.p18,
-            bottom: AppPaddingHeight.p110,
-            top: AppPaddingHeight.p10,
-          ),
-          sliver: SliverList.builder(
-            itemCount: group.courses.length,
-            itemBuilder: (context, index) {
-              final course = group.courses[index];
-              return Padding(
-                padding: EdgeInsets.only(bottom: AppPaddingHeight.p10),
-                child: CourseCard(
-                  onTap: () => CourseDetailsRoute().push(context),
-                  title: course.title,
-                  price: course.price,
-                  ratingCount: course.ratingCount,
-                  thumbnailColor: course.thumbnailColor,
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _MissingFavoriteGroupView extends StatelessWidget {
-  const _MissingFavoriteGroupView();
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SectionTitle(text: 'هذه المجموعة غير متاحة حالياً', color: AppColors.text, textAlign: TextAlign.center),
-            SizedBox(height: 8),
-            BodyTitle(text: 'قد تكون المجموعة حُذفت أو تغيّر اسمها.', color: AppColors.muted, textAlign: TextAlign.center),
-          ],
+    return ListView.separated(
+      padding: EdgeInsetsDirectional.only(
+        start: AppPaddingWidth.p18,
+        end: AppPaddingWidth.p18,
+        top: AppPaddingHeight.p10,
+        bottom: AppPaddingHeight.p110,
+      ),
+      itemCount: itemCount,
+      separatorBuilder: (_, __) => SizedBox(height: AppHeight.h10),
+      itemBuilder: (_, index) => Card(
+        color: AppColors.white,
+        child: ListTile(
+          leading: const Icon(Iconsax.book_1_outline, color: AppColors.primary),
+          title: BodyTitle(
+            text: 'كورس مفضل ${index + 1}',
+            color: AppColors.text,
+          ),
         ),
       ),
     );

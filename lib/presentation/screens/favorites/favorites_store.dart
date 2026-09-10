@@ -11,8 +11,9 @@ class FavoriteCourse {
 }
 
 class FavoriteGroup {
-  const FavoriteGroup({required this.name, required this.courses});
+  const FavoriteGroup({required this.favoriteGroupId, required this.name, required this.courses});
 
+  final String favoriteGroupId;
   final String name;
   final List<FavoriteCourse> courses;
 }
@@ -28,9 +29,9 @@ class FavoritesStore {
   );
 
   static final ValueNotifier<List<FavoriteGroup>> groups = ValueNotifier<List<FavoriteGroup>>([
-    FavoriteGroup(name: 'تصميم واجهات', courses: List.generate(4, (_) => demoCourse)),
-    FavoriteGroup(name: 'أريد تعلمها لاحقاً', courses: List.generate(3, (_) => demoCourse)),
-    FavoriteGroup(name: 'كورسات العمل', courses: List.generate(2, (_) => demoCourse)),
+    FavoriteGroup(favoriteGroupId: 'design', name: 'تصميم واجهات', courses: List.generate(4, (_) => demoCourse)),
+    FavoriteGroup(favoriteGroupId: 'learn-later', name: 'أريد تعلمها لاحقاً', courses: List.generate(3, (_) => demoCourse)),
+    FavoriteGroup(favoriteGroupId: 'work', name: 'كورسات العمل', courses: List.generate(2, (_) => demoCourse)),
   ]);
 
   static FavoriteGroup? findGroupByName(String name) {
@@ -47,10 +48,10 @@ class FavoritesStore {
     final updatedGroups = [...groups.value];
     final groupIndex = updatedGroups.indexWhere((group) => group.name == cleanName);
     if (groupIndex == -1) {
-      updatedGroups.insert(0, FavoriteGroup(name: cleanName, courses: [course]));
+      updatedGroups.insert(0, FavoriteGroup(favoriteGroupId: cleanName, name: cleanName, courses: [course]));
     } else {
       final group = updatedGroups[groupIndex];
-      updatedGroups[groupIndex] = FavoriteGroup(name: group.name, courses: [course, ...group.courses]);
+      updatedGroups[groupIndex] = FavoriteGroup(favoriteGroupId: group.favoriteGroupId, name: group.name, courses: [course, ...group.courses]);
     }
     groups.value = updatedGroups;
   }
