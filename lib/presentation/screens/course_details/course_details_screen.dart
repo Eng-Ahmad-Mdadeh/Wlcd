@@ -5,7 +5,7 @@ import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/forum_tab.dart';
-import 'package:wlcd/presentation/screens/favorites/favorites_screen.dart';
+import 'package:wlcd/presentation/screens/favorites/favorites_store.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';

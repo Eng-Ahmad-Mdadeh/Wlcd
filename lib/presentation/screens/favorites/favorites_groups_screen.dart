@@ -21,7 +21,6 @@ class FavoritesGroupsScreen extends StatelessWidget {
         valueListenable: FavoritesStore.groups,
         builder: (context, groups, _) {
           if (groups.isEmpty) return const _EmptyFavoritesView();
-
           return CustomScrollView(
             slivers: [
               SliverPadding(
@@ -72,7 +71,9 @@ class _FavoriteGroupCard extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppRadius.r18),
           border: Border.all(color: AppColors.searchCardBorder),
-          boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -2, blurRadius: 12, offset: Offset(0, 6))],
+          boxShadow: const [
+            BoxShadow(color: AppColors.greySec, spreadRadius: -2, blurRadius: 12, offset: Offset(0, 6)),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +89,11 @@ class _FavoriteGroupCard extends StatelessWidget {
                     return Container(
                       margin: EdgeInsets.all(AppWidth.w1),
                       color: index.isEven ? AppColors.searchThumbBlue : AppColors.searchThumbBeige,
-                      child: Icon(Iconsax.book_1_outline, color: AppColors.primary.withValues(alpha: .35), size: AppSize.s24),
+                      child: Icon(
+                        Iconsax.book_1_outline,
+                        color: AppColors.primary.withValues(alpha: .35),
+                        size: AppSize.s24,
+                      ),
                     );
                   }),
                 ),
@@ -99,7 +104,13 @@ class _FavoriteGroupCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionTitle(text: group.name, color: AppColors.text, fontSize: AppFontSize.s14, fontWeight: AppFontWeight.bold, maxLines: 1),
+                  SectionTitle(
+                    text: group.name,
+                    color: AppColors.text,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.bold,
+                    maxLines: 1,
+                  ),
                   SizedBox(height: AppHeight.h4),
                   BodyTitle(text: '${group.courses.length} كورسات', color: AppColors.muted, fontSize: AppFontSize.s12),
                 ],
