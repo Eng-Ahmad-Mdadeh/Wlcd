@@ -43,7 +43,10 @@ class FavoritesGroupsScreen extends StatelessWidget {
                     final group = groups[index];
                     return _FavoriteGroupCard(
                       group: group,
-                      onTap: () => FavoriteCoursesRoute(groupName: group.name).push(context),
+                      onTap: () => FavoriteCoursesRoute(
+                        groupName: group.name,
+                        favoriteGroupId: group.favoriteGroupId,
+                      ).push(context),
                     );
                   },
                 ),
