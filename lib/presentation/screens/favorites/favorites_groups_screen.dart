@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
-import 'package:wlcd/presentation/screens/favorites/favorites_store.dart';
+import 'package:wlcd/presentation/bloc/favorites/favorite_groups/favorite_groups_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -14,12 +17,33 @@ class FavoritesGroupsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backGround,
-      appBar: const CustomAppBar(title: 'المفضلة', centerTitle: true),
-      body: ValueListenableBuilder<List<FavoriteGroup>>(
-        valueListenable: FavoritesStore.groups,
-        builder: (context, groups, _) {
+    return BlocProvider(
+      create: (_) => FavoriteGroupsBloc()..add(const LoadFavoriteGroupsEvent()),
+      child: Scaffold(
+        backgroundColor: AppColors.backGround,
+        appBar: const CustomAppBar(title: 'المفضلة', centerTitle: true),
+        body: const _FavoriteGroupsBody(),
+      ),
+    );
+  }
+}
+
+class _FavoriteGroupsBody extends StatelessWidget {
+  const _FavoriteGroupsBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FavoriteGroupsBloc, IFavoriteGroupsState>(
+      builder: (context, state) {
+        if (state is FavoriteGroupsFailed) {
+          return RetryWidget(
+            onReload: () => context.read<FavoriteGroupsBloc>().add(
+              const LoadFavoriteGroupsEvent(),
+            ),
+          );
+        }
+        if (state is FavoriteGroupsLoaded) {
+          final groups = state.groups?.data ?? const <Map<String, dynamic>>[];
           if (groups.isEmpty) return const _EmptyFavoritesView();
 
           return CustomScrollView(
@@ -40,21 +64,55 @@ class FavoritesGroupsScreen extends StatelessWidget {
                     childAspectRatio: .9,
                   ),
                   itemBuilder: (context, index) {
-                    final group = groups[index];
+                    final group = _FavoriteGroupViewData.fromJson(
+                      groups[index],
+                      index,
+                    );
                     return _FavoriteGroupCard(
                       group: group,
-                      onTap: () => FavoriteCoursesRoute(
-                        groupName: group.name,
-                        favoriteGroupId: group.favoriteGroupId,
-                      ).push(context),
+                      onTap: group.favoriteGroupId == null
+                          ? null
+                          : () => FavoriteCoursesRoute(
+                              groupName: group.name,
+                              favoriteGroupId: group.favoriteGroupId!,
+                            ).push(context),
                     );
                   },
                 ),
               ),
             ],
           );
-        },
-      ),
+        }
+        return const LoadingWidget(0);
+      },
+    );
+  }
+}
+
+/// A defensive presentation adapter. API-OP-151 does not publish the list item
+/// schema, so no field is required and unknown payloads remain renderable.
+class _FavoriteGroupViewData {
+  const _FavoriteGroupViewData({
+    required this.name,
+    this.favoriteGroupId,
+  });
+
+  final String name;
+  final String? favoriteGroupId;
+
+  factory _FavoriteGroupViewData.fromJson(
+    Map<String, dynamic> json,
+    int index,
+  ) {
+    final name = json['name'];
+    final favoriteGroupId = json['favoriteGroupId'];
+    return _FavoriteGroupViewData(
+      name: name is String && name.isNotEmpty
+          ? name
+          : 'مجموعة مفضلة ${index + 1}',
+      favoriteGroupId: favoriteGroupId is String && favoriteGroupId.isNotEmpty
+          ? favoriteGroupId
+          : null,
     );
   }
 }
@@ -62,8 +120,8 @@ class FavoritesGroupsScreen extends StatelessWidget {
 class _FavoriteGroupCard extends StatelessWidget {
   const _FavoriteGroupCard({required this.group, required this.onTap});
 
-  final FavoriteGroup group;
-  final VoidCallback onTap;
+  final _FavoriteGroupViewData group;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +162,7 @@ class _FavoriteGroupCard extends StatelessWidget {
                 children: [
                   SectionTitle(text: group.name, color: AppColors.text, fontSize: AppFontSize.s14, fontWeight: AppFontWeight.bold, maxLines: 1),
                   SizedBox(height: AppHeight.h4),
-                  BodyTitle(text: '${group.courses.length} كورسات', color: AppColors.muted, fontSize: AppFontSize.s12),
+                  BodyTitle(text: 'مجموعة مفضلة', color: AppColors.muted, fontSize: AppFontSize.s12),
                 ],
               ),
             ),
