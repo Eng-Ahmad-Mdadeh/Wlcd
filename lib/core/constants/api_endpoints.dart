@@ -42,4 +42,11 @@ class ApiEndpoints {
   static const String addPhoneIdentifier = '/me/identifiers/phone';
   static const String changePhone = '/me/identifiers/phone/change';
   //#endregion
+
+  //#region Notifications
+  static const String notifications = '/me/notifications';
+  static const String unreadNotificationCount = '/unread-count';
+  static const String markAllNotificationsRead = '/mark-all-read';
+  static const String notificationPreferences = '/me/notification-preferences';
+  //#endregion
 }

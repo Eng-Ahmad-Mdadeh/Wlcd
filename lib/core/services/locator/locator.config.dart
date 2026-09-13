@@ -19,6 +19,8 @@ import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
     as _i1001;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
+import '../../../data/data_sources/notifications/notifications_remote_data_source.dart'
+    as _i1100;
 import '../../../data/model/auth/auth_model.dart' as _i49;
 import '../../../data/model/auth/operation_success_model.dart' as _i938;
 import '../../../data/model/auth/phone_otp_challenge_model.dart' as _i959;
@@ -36,6 +38,37 @@ import '../../../data/model/profile/profile/profile_model.dart' as _i967;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
 import '../../../data/repository/catalog/catalog_repository.dart' as _i1004;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
+import '../../../data/repository/notifications/notifications_repository.dart'
+    as _i1101;
+import '../../../domain/repository/notifications/i_notifications_repository.dart'
+    as _i1102;
+import '../../../data/model/notifications/notification/notification_model.dart'
+    as _i1103;
+import '../../../data/model/notifications/notification_preferences/notification_preferences_model.dart'
+    as _i1104;
+import '../../../data/model/pagination/pagination_model.dart' as _i1105;
+import '../../../data/model/notifications/unread_notification_count/unread_notification_count_model.dart'
+    as _i1106;
+import '../../../domain/entity/notifications/list_notifications_entity.dart'
+    as _i1108;
+import '../../../domain/entity/notifications/notification_command_entity.dart'
+    as _i1109;
+import '../../../domain/entity/notifications/update_notification_preferences_entity.dart'
+    as _i1110;
+import '../../../domain/usecase/notifications/get_notification_preferences_usecase.dart'
+    as _i1111;
+import '../../../domain/usecase/notifications/get_notification_usecase.dart'
+    as _i1112;
+import '../../../domain/usecase/notifications/get_unread_notification_count_usecase.dart'
+    as _i1113;
+import '../../../domain/usecase/notifications/list_notifications_usecase.dart'
+    as _i1114;
+import '../../../domain/usecase/notifications/mark_all_notifications_read_usecase.dart'
+    as _i1115;
+import '../../../domain/usecase/notifications/mark_notification_read_usecase.dart'
+    as _i1116;
+import '../../../domain/usecase/notifications/update_notification_preferences_usecase.dart'
+    as _i1117;
 import '../../../domain/entity/auth/auth_entity.dart' as _i250;
 import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
 import '../../../domain/entity/auth/login_with_password_entity.dart' as _i679;
@@ -110,6 +143,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
     );
+    gh.factory<_i1100.NotificationsRemoteDataSource>(
+      () => _i1100.NotificationsRemoteDataSource(),
+    );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
     );
@@ -121,6 +157,37 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1006.ICatalogRepository>(
       () => _i1004.CatalogRepository(gh<_i1001.CatalogRemoteDataSource>()),
+    );
+    gh.factory<_i1102.INotificationsRepository>(
+      () => _i1101.NotificationsRepository(gh<_i1100.NotificationsRemoteDataSource>()),
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1105.PaginationModel<_i1103.NotificationModel>>?, _i1108.ListNotificationsEntity>>(
+      () => _i1114.ListNotificationsUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'ListNotifications',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1106.UnreadNotificationCountModel>?, Null>>(
+      () => _i1113.GetUnreadNotificationCountUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetUnreadNotificationCount',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<Object>?, Null>>(
+      () => _i1115.MarkAllNotificationsReadUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'MarkAllNotificationsRead',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1103.NotificationModel>?, _i1109.NotificationCommandEntity>>(
+      () => _i1112.GetNotificationUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetNotification',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1103.NotificationModel>?, _i1109.NotificationCommandEntity>>(
+      () => _i1116.MarkNotificationReadUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'MarkNotificationRead',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1104.NotificationPreferencesModel>?, Null>>(
+      () => _i1111.GetNotificationPreferencesUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetNotificationPreferences',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1104.NotificationPreferencesModel>?, _i1110.UpdateNotificationPreferencesEntity>>(
+      () => _i1117.UpdateNotificationPreferencesUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'UpdateNotificationPreferences',
     );
     gh.factory<
       _i759.IUseCase<_i830.BaseModel<_i1002.CategoriesModel>?, Null>

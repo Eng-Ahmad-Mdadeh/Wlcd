@@ -9,7 +9,9 @@ part of 'pagination_model.dart';
 PaginationModel<T> _$PaginationModelFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) => PaginationModel<T>(
+) {
+  final pagination = json['pagination'] as Map<String, dynamic>?;
+  return PaginationModel<T>(
   currentPage: json['current_page'] as num?,
   data: (json['data'] as List<dynamic>?)?.map(fromJsonT).toList(),
   from: json['from'] as num?,
@@ -20,7 +22,12 @@ PaginationModel<T> _$PaginationModelFromJson<T>(
   meta: json['meta'] == null
       ? null
       : Meta.fromJson(json['meta'] as Map<String, dynamic>),
-);
+  nextCursor: pagination?['nextCursor'] as String?,
+  previousCursor: pagination?['previousCursor'] as String?,
+  hasMore: pagination?['hasMore'] as bool?,
+  limit: pagination?['limit'] as num?,
+  );
+}
 
 Meta _$MetaFromJson(Map<String, dynamic> json) =>
     Meta(nextCursor: json['next_cursor'] as String?);

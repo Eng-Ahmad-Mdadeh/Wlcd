@@ -3,17 +3,24 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pagination_model.g.dart';
 
+Object? _readCursorValue(Map<dynamic, dynamic> json, String key) =>
+    (json['pagination'] as Map<dynamic, dynamic>?)?[key];
+
 @JsonSerializable(genericArgumentFactories: true, createToJson: false)
 class PaginationModel<T> extends Equatable {
   const PaginationModel({
-    required this.currentPage,
-    required this.data,
-    required this.from,
-    required this.lastPage,
-    required this.perPage,
-    required this.to,
-    required this.total,
-    required this.meta,
+    this.currentPage,
+    this.data,
+    this.from,
+    this.lastPage,
+    this.perPage,
+    this.to,
+    this.total,
+    this.meta,
+    this.nextCursor,
+    this.previousCursor,
+    this.hasMore,
+    this.limit,
   });
 
   @JsonKey(name: 'current_page')
@@ -31,6 +38,14 @@ class PaginationModel<T> extends Equatable {
   final num? to;
   final num? total;
   final Meta? meta;
+  @JsonKey(readValue: _readCursorValue)
+  final String? nextCursor;
+  @JsonKey(readValue: _readCursorValue)
+  final String? previousCursor;
+  @JsonKey(readValue: _readCursorValue)
+  final bool? hasMore;
+  @JsonKey(readValue: _readCursorValue)
+  final num? limit;
 
   PaginationModel<T> copyWith({
     num? currentPage,
@@ -41,6 +56,10 @@ class PaginationModel<T> extends Equatable {
     num? to,
     num? total,
     Meta? meta,
+    String? nextCursor,
+    String? previousCursor,
+    bool? hasMore,
+    num? limit,
   }) {
     return PaginationModel<T>(
       currentPage: currentPage ?? this.currentPage,
@@ -51,6 +70,10 @@ class PaginationModel<T> extends Equatable {
       to: to ?? this.to,
       total: total ?? this.total,
       meta: meta ?? this.meta,
+      nextCursor: nextCursor ?? this.nextCursor,
+      previousCursor: previousCursor ?? this.previousCursor,
+      hasMore: hasMore ?? this.hasMore,
+      limit: limit ?? this.limit,
     );
   }
 
@@ -72,6 +95,10 @@ class PaginationModel<T> extends Equatable {
     to,
     total,
     meta,
+    nextCursor,
+    previousCursor,
+    hasMore,
+    limit,
   ];
 }
 
