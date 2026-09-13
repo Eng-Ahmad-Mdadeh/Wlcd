@@ -12,11 +12,7 @@ import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class FavoriteCoursesScreen extends StatelessWidget {
-  const FavoriteCoursesScreen({
-    super.key,
-    required this.groupName,
-    required this.favoriteGroupId,
-  });
+  const FavoriteCoursesScreen({super.key, required this.groupName, required this.favoriteGroupId});
 
   final String groupName;
   final String favoriteGroupId;
@@ -25,15 +21,10 @@ class FavoriteCoursesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final entity = FavoritesEntity(favoriteGroupId: favoriteGroupId);
     return BlocProvider(
-      create: (_) => FavoriteMembershipsBloc()
-        ..add(LoadFavoriteMembershipsEvent(entity)),
+      create: (_) => FavoriteMembershipsBloc()..add(LoadFavoriteMembershipsEvent(entity)),
       child: Scaffold(
         backgroundColor: AppColors.backGround,
-        appBar: CustomAppBar(
-          title: groupName,
-          centerTitle: true,
-          showBackButton: true,
-        ),
+        appBar: CustomAppBar(title: groupName, centerTitle: true, showBackButton: true),
         body: _FavoriteCoursesBody(entity: entity),
       ),
     );
@@ -51,9 +42,7 @@ class _FavoriteCoursesBody extends StatelessWidget {
       builder: (context, state) {
         if (state is FavoriteMembershipsFailed) {
           return RetryWidget(
-            onReload: () => context.read<FavoriteMembershipsBloc>().add(
-              LoadFavoriteMembershipsEvent(entity),
-            ),
+            onReload: () => context.read<FavoriteMembershipsBloc>().add(LoadFavoriteMembershipsEvent(entity)),
           );
         }
         if (state is FavoriteMembershipsLoaded) {
@@ -92,10 +81,7 @@ class _FavoriteCoursesList extends StatelessWidget {
         color: AppColors.white,
         child: ListTile(
           leading: const Icon(Iconsax.book_1_outline, color: AppColors.primary),
-          title: BodyTitle(
-            text: 'كورس مفضل ${index + 1}',
-            color: AppColors.text,
-          ),
+          title: BodyTitle(text: 'كورس مفضل ${index + 1}', color: AppColors.text),
         ),
       ),
     );

@@ -17,10 +17,10 @@ import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
 import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
     as _i1001;
-import '../../../data/data_sources/favorites/favorites_remote_data_source.dart'
-    as _i1101;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
+import '../../../data/data_sources/notifications/notifications_remote_data_source.dart'
+    as _i1100;
 import '../../../data/model/auth/auth_model.dart' as _i49;
 import '../../../data/model/auth/operation_success_model.dart' as _i938;
 import '../../../data/model/auth/phone_otp_challenge_model.dart' as _i959;
@@ -32,17 +32,43 @@ import '../../../data/model/catalog/categories/categories_model.dart' as _i1002;
 import '../../../data/model/catalog/courses/courses_model.dart' as _i1003;
 import '../../../data/model/catalog/recommendations/recommendations_model.dart'
     as _i1010;
-import '../../../data/model/favorites/favorite_group_model.dart' as _i1110;
-import '../../../data/model/favorites/favorite_groups_model.dart' as _i1111;
-import '../../../data/model/favorites/favorite_membership_model.dart' as _i1112;
-import '../../../data/model/favorites/favorite_memberships_model.dart' as _i1113;
 import '../../../data/model/profile/email_identifier/email_identifier_model.dart' as _i737;
 import '../../../data/model/profile/phone_identifier/phone_identifier_model.dart' as _i994;
 import '../../../data/model/profile/profile/profile_model.dart' as _i967;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
 import '../../../data/repository/catalog/catalog_repository.dart' as _i1004;
-import '../../../data/repository/favorites/favorites_repository.dart' as _i1102;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
+import '../../../data/repository/notifications/notifications_repository.dart'
+    as _i1101;
+import '../../../domain/repository/notifications/i_notifications_repository.dart'
+    as _i1102;
+import '../../../data/model/notifications/notification/notification_model.dart'
+    as _i1103;
+import '../../../data/model/notifications/notification_preferences/notification_preferences_model.dart'
+    as _i1104;
+import '../../../data/model/pagination/pagination_model.dart' as _i1105;
+import '../../../data/model/notifications/unread_notification_count/unread_notification_count_model.dart'
+    as _i1106;
+import '../../../domain/entity/notifications/list_notifications_entity.dart'
+    as _i1108;
+import '../../../domain/entity/notifications/notification_command_entity.dart'
+    as _i1109;
+import '../../../domain/entity/notifications/update_notification_preferences_entity.dart'
+    as _i1110;
+import '../../../domain/usecase/notifications/get_notification_preferences_usecase.dart'
+    as _i1111;
+import '../../../domain/usecase/notifications/get_notification_usecase.dart'
+    as _i1112;
+import '../../../domain/usecase/notifications/get_unread_notification_count_usecase.dart'
+    as _i1113;
+import '../../../domain/usecase/notifications/list_notifications_usecase.dart'
+    as _i1114;
+import '../../../domain/usecase/notifications/mark_all_notifications_read_usecase.dart'
+    as _i1115;
+import '../../../domain/usecase/notifications/mark_notification_read_usecase.dart'
+    as _i1116;
+import '../../../domain/usecase/notifications/update_notification_preferences_usecase.dart'
+    as _i1117;
 import '../../../domain/entity/auth/auth_entity.dart' as _i250;
 import '../../../domain/entity/auth/login_with_otp_entity.dart' as _i352;
 import '../../../domain/entity/auth/login_with_password_entity.dart' as _i679;
@@ -57,7 +83,6 @@ import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/entity/catalog/get_featured_courses_entity.dart'
     as _i1005;
-import '../../../domain/entity/favorites/favorites_entity.dart' as _i1103;
 import '../../../domain/entity/profile/add_email_identifier_entity.dart'
     as _i202;
 import '../../../domain/entity/profile/add_phone_identifier_entity.dart'
@@ -69,8 +94,6 @@ import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
 import '../../../domain/repository/catalog/i_catalog_repository.dart' as _i1006;
-import '../../../domain/repository/favorites/i_favorites_repository.dart'
-    as _i1104;
 import '../../../domain/repository/profile/i_profile_repository.dart' as _i950;
 import '../../../domain/usecase/auth/get_session_usecase.dart' as _i410;
 import '../../../domain/usecase/auth/login_with_otp_usecase.dart' as _i446;
@@ -90,14 +113,6 @@ import '../../../domain/usecase/catalog/get_featured_courses_usecase.dart'
 import '../../../domain/usecase/catalog/get_recommended_courses_usecase.dart'
     as _i1008;
 import '../../../domain/usecase/catalog/list_categories_usecase.dart' as _i1009;
-import '../../../domain/usecase/favorites/add_favorite_membership_usecase.dart'
-    as _i1105;
-import '../../../domain/usecase/favorites/create_favorite_group_usecase.dart'
-    as _i1106;
-import '../../../domain/usecase/favorites/list_favorite_groups_usecase.dart'
-    as _i1107;
-import '../../../domain/usecase/favorites/list_favorite_memberships_usecase.dart'
-    as _i1108;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
 import '../../../domain/usecase/profile/add_email_identifier_usecase.dart'
     as _i726;
@@ -125,11 +140,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1001.CatalogRemoteDataSource>(
       () => _i1001.CatalogRemoteDataSource(),
     );
-    gh.factory<_i1101.FavoritesRemoteDataSource>(
-      () => _i1101.FavoritesRemoteDataSource(),
-    );
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
+    );
+    gh.factory<_i1100.NotificationsRemoteDataSource>(
+      () => _i1100.NotificationsRemoteDataSource(),
     );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
@@ -143,24 +158,36 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1006.ICatalogRepository>(
       () => _i1004.CatalogRepository(gh<_i1001.CatalogRemoteDataSource>()),
     );
-    gh.factory<_i1104.IFavoritesRepository>(
-      () => _i1102.FavoritesRepository(gh<_i1101.FavoritesRemoteDataSource>()),
+    gh.factory<_i1102.INotificationsRepository>(
+      () => _i1101.NotificationsRepository(gh<_i1100.NotificationsRemoteDataSource>()),
     );
-    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1111.FavoriteGroupsModel>?, Null>>(
-      () => _i1107.ListFavoriteGroupsUsecase(gh<_i1104.IFavoritesRepository>()),
-      instanceName: 'ListFavoriteGroups',
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1105.PaginationModel<_i1103.NotificationModel>>?, _i1108.ListNotificationsEntity>>(
+      () => _i1114.ListNotificationsUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'ListNotifications',
     );
-    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1110.FavoriteGroupModel>?, _i1103.FavoritesEntity>>(
-      () => _i1106.CreateFavoriteGroupUsecase(gh<_i1104.IFavoritesRepository>()),
-      instanceName: 'CreateFavoriteGroup',
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1106.UnreadNotificationCountModel>?, Null>>(
+      () => _i1113.GetUnreadNotificationCountUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetUnreadNotificationCount',
     );
-    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1113.FavoriteMembershipsModel>?, _i1103.FavoritesEntity>>(
-      () => _i1108.ListFavoriteMembershipsUsecase(gh<_i1104.IFavoritesRepository>()),
-      instanceName: 'ListFavoriteMemberships',
+    gh.factory<_i759.IUseCase<_i830.BaseModel<Object>?, Null>>(
+      () => _i1115.MarkAllNotificationsReadUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'MarkAllNotificationsRead',
     );
-    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1112.FavoriteMembershipModel>?, _i1103.FavoritesEntity>>(
-      () => _i1105.AddFavoriteMembershipUsecase(gh<_i1104.IFavoritesRepository>()),
-      instanceName: 'AddFavoriteMembership',
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1103.NotificationModel>?, _i1109.NotificationCommandEntity>>(
+      () => _i1112.GetNotificationUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetNotification',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1103.NotificationModel>?, _i1109.NotificationCommandEntity>>(
+      () => _i1116.MarkNotificationReadUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'MarkNotificationRead',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1104.NotificationPreferencesModel>?, Null>>(
+      () => _i1111.GetNotificationPreferencesUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'GetNotificationPreferences',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1104.NotificationPreferencesModel>?, _i1110.UpdateNotificationPreferencesEntity>>(
+      () => _i1117.UpdateNotificationPreferencesUsecase(gh<_i1102.INotificationsRepository>()),
+      instanceName: 'UpdateNotificationPreferences',
     );
     gh.factory<
       _i759.IUseCase<_i830.BaseModel<_i1002.CategoriesModel>?, Null>
