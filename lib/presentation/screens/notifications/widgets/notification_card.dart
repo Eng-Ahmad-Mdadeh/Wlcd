@@ -8,32 +8,52 @@ import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class NotificationCard extends StatelessWidget {
-  const NotificationCard({super.key, required this.notification});
+  const NotificationCard({
+    super.key,
+    required this.notification,
+    this.onTap,
+  });
 
   final NotificationItemData notification;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(minHeight: AppHeight.h160),
-      padding: EdgeInsets.fromLTRB(AppWidth.w16, AppHeight.h17, AppWidth.w17, AppHeight.h17),
-      decoration: BoxDecoration(
-        boxShadow: const [BoxShadow(color: AppColors.lightGrey, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r13),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          NotificationCircleIcon(
-            type: notification.type,
-            dimension: AppWidth.w50,
-          ),
-          SizedBox(width: AppWidth.w12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppRadius.r13),
+      child: Container(
+        constraints: BoxConstraints(minHeight: AppHeight.h160),
+        padding: EdgeInsets.fromLTRB(
+          AppWidth.w16,
+          AppHeight.h17,
+          AppWidth.w17,
+          AppHeight.h17,
+        ),
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.lightGrey,
+              spreadRadius: -1,
+              blurRadius: 4,
+              offset: Offset(0, 3),
+            ),
+          ],
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r13),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            NotificationCircleIcon(
+              type: notification.type,
+              dimension: AppWidth.w50,
+            ),
+            SizedBox(width: AppWidth.w12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 SectionTitle(
                   text: notification.title,
                   color: AppColors.notificationTextPrimary,
@@ -65,10 +85,11 @@ class NotificationCard extends StatelessWidget {
                   fontWeight: AppFontWeight.regular,
                   maxLines: 1,
                 ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

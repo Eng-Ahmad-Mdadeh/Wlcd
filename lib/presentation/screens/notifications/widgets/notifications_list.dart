@@ -4,9 +4,14 @@ import 'package:wlcd/presentation/screens/notifications/widgets/notification_car
 import 'package:wlcd/presentation/screens/notifications/widgets/notification_data.dart';
 
 class NotificationsList extends StatelessWidget {
-  const NotificationsList({super.key, required this.notifications});
+  const NotificationsList({
+    super.key,
+    required this.notifications,
+    this.onNotificationTap,
+  });
 
   final List<NotificationItemData> notifications;
+  final ValueChanged<int>? onNotificationTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,12 @@ class NotificationsList extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: notifications.length,
       separatorBuilder: (context, index) => SizedBox(height: AppHeight.h16),
-      itemBuilder: (context, index) => NotificationCard(notification: notifications[index]),
+      itemBuilder: (context, index) => NotificationCard(
+        notification: notifications[index],
+        onTap: onNotificationTap == null
+            ? null
+            : () => onNotificationTap!(index),
+      ),
     );
   }
 }
