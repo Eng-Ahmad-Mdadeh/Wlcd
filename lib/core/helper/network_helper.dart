@@ -47,6 +47,9 @@ class NetworkHelper {
     final packageInfo = await PackageInfo.fromPlatform();
     _dio.options.headers.addAll({
       'Idempotency-Key': _generateIdempotencyKey(),
+      'Accept-Language' : 'ar',
+      'language' : 'ar',
+      'lang' : 'ar',
       // 'If-Match': packageInfo.version,
     });
     _applicationHeadersInitialized = true;

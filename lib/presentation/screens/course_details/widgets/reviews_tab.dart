@@ -37,6 +37,7 @@ class ReviewsTab extends StatelessWidget {
             text:
             'Merrill Kervin\n3 weeks ago\n\nPulvinar nisl blandit cras lacus diam posuere. Varius sem vestibulum egestas ultricies.',
             fontSize: 13,
+            overflow: TextOverflow.visible,
             color: AppColors.searchRatingText,
           ),
         ],

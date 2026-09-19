@@ -22,6 +22,7 @@ class CourseDetailsModel extends Equatable {
   final List<dynamic> availableTabs;
   final List<dynamic> availableActions;
   final JsonMap raw;
+
   factory CourseDetailsModel.fromJson(JsonMap json) => CourseDetailsModel(
     courseId: json['courseId'] as String, title: json['title'] as String,
     subtitle: json['subtitle'] as String?, description: json['description'] as String,

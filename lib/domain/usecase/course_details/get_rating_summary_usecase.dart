@@ -15,7 +15,6 @@ class GetRatingSummaryUsecase implements IUseCase<BaseModel<ContractJsonModel>?,
   final ICourseDetailsRepository _repository;
 
   @override
-  Future<Either<AppException, BaseModel<ContractJsonModel>?>> call(
-    CourseDetailsEntity data,
-  ) => _repository.getRatingSummary(data);
+  Future<Either<AppException, BaseModel<ContractJsonModel>?>> call(CourseDetailsEntity data) =>
+      _repository.getRatingSummary(data);
 }

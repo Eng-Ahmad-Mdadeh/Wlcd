@@ -10,6 +10,7 @@ import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'get_rating_summary_event.dart';
+
 part 'get_rating_summary_state.dart';
 
 class GetRatingSummaryBloc extends Bloc<IGetRatingSummaryEvent, IGetRatingSummaryState> {
@@ -17,10 +18,7 @@ class GetRatingSummaryBloc extends Bloc<IGetRatingSummaryEvent, IGetRatingSummar
     on<LoadGetRatingSummaryEvent>(_load);
   }
 
-  FutureOr<void> _load(
-    LoadGetRatingSummaryEvent event,
-    Emitter<IGetRatingSummaryState> emit,
-  ) async {
+  FutureOr<void> _load(LoadGetRatingSummaryEvent event, Emitter<IGetRatingSummaryState> emit) async {
     emit(const GetRatingSummaryLoading());
     try {
       final usecase = locator<IUseCase<BaseModel<ContractJsonModel>?, CourseDetailsEntity>>(

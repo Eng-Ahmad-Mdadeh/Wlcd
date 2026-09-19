@@ -149,9 +149,11 @@ mixin $CourseDetailsRoute on GoRouteData {
   static CourseDetailsRoute _fromState(GoRouterState state) =>
       CourseDetailsRoute(courseId: state.pathParameters['courseId']!);
 
+  CourseDetailsRoute get _self => this as CourseDetailsRoute;
+
   @override
   String get location => GoRouteData.$location(
-    '/course-details/${Uri.encodeComponent(courseId)}',
+    '/course-details/${Uri.encodeComponent(_self.courseId)}',
   );
 
   @override
