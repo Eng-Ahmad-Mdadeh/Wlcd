@@ -141,16 +141,18 @@ mixin $ProfileRoute on GoRouteData {
 }
 
 RouteBase get $courseDetailsRoute => GoRouteData.$route(
-  path: '/course-details',
+  path: '/course-details/:courseId',
   factory: $CourseDetailsRoute._fromState,
 );
 
 mixin $CourseDetailsRoute on GoRouteData {
   static CourseDetailsRoute _fromState(GoRouterState state) =>
-      CourseDetailsRoute();
+      CourseDetailsRoute(courseId: state.pathParameters['courseId']!);
 
   @override
-  String get location => GoRouteData.$location('/course-details');
+  String get location => GoRouteData.$location(
+    '/course-details/${Uri.encodeComponent(courseId)}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
