@@ -29,7 +29,7 @@ class SearchScreen extends StatelessWidget {
                   ResultHeader(),
                   SizedBox(height: 12),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().push(context),
+                    onTap: () => const CourseDetailsRoute(courseId: 'ux-design-essentials').push(context),
                     title: 'User Experience Design\nEssentials: Figma UI UX\nDesign',
                     price: '\$89.00',
                     ratingCount: '(31,882)',
@@ -37,7 +37,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().push(context),
+                    onTap: () => const CourseDetailsRoute(courseId: 'digital-product-design').push(context),
                     title: 'Master Digital Product\nDesign: UX Research & UI\nDesign',
                     price: '\$69.00',
                     ratingCount: '(7,765)',
@@ -45,7 +45,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 14),
                   CourseCard(
-                    onTap: () => CourseDetailsRoute().push(context),
+                    onTap: () => const CourseDetailsRoute(courseId: 'ux-design-for-beginners').push(context),
                     title: 'UX Design for Beginners:\nThe Essential of UX\nUsability',
                     price: '\$111.99',
                     ratingCount: '(4,536)',

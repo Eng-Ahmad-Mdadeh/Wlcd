@@ -120,6 +120,7 @@ class HomeRecommendedCoursesSection extends StatelessWidget {
 List<CourseData> _toCourseData(List<CourseModel>? courses) => [
   for (final course in courses ?? const <CourseModel>[])
     CourseData(
+      id: course.courseId ?? '',
       category: course.primaryCategoryLabel ?? '',
       title: course.title ?? '',
       price: course.price?.displayLabel ?? '',

@@ -53,7 +53,7 @@ class CourseGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => CourseDetailsRoute().push(context),
+      onTap: () => CourseDetailsRoute(courseId: course.id).push(context),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: const [BoxShadow(color: AppColors.greySec, spreadRadius: -1, blurRadius: 4, offset: Offset(0, 3))],
@@ -278,6 +278,7 @@ class BookPosterLabel extends StatelessWidget {
 
 class CourseData {
   const CourseData({
+    required this.id,
     required this.category,
     required this.title,
     required this.price,
@@ -286,6 +287,7 @@ class CourseData {
     this.imageUrl,
   });
 
+  final String id;
   final String category;
   final String title;
   final String price;

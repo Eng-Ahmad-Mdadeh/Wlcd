@@ -1,19 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/data/model/course_details/course_details_model.dart';
+import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
+import 'package:wlcd/presentation/bloc/course_details/get_access_status/get_access_status_bloc.dart';
+import 'package:wlcd/presentation/bloc/course_details/get_course_details/get_course_details_bloc.dart';
+import 'package:wlcd/presentation/bloc/course_details/get_enrollment/get_enrollment_bloc.dart';
+import 'package:wlcd/presentation/bloc/course_details/get_rating_summary/get_rating_summary_bloc.dart';
+import 'package:wlcd/presentation/bloc/course_details/is_favorited/is_favorited_bloc.dart';
+import 'package:wlcd/presentation/bloc/course_details/list_reviews/list_reviews_bloc.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/forum_tab.dart';
 import 'package:wlcd/presentation/screens/favorites/favorites_store.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 import 'widgets/about_tab.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
-  const CourseDetailsScreen({super.key});
+  const CourseDetailsScreen({super.key, required this.courseId});
+
+  final String courseId;
+
+  @override
+  Widget build(BuildContext context) {
+    final entity = CourseDetailsEntity(courseId: courseId);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => GetCourseDetailsBloc()..add(LoadGetCourseDetailsEvent(entity))),
+        BlocProvider(create: (_) => GetRatingSummaryBloc()..add(LoadGetRatingSummaryEvent(entity))),
+        BlocProvider(create: (_) => ListReviewsBloc()..add(LoadListReviewsEvent(entity))),
+        BlocProvider(create: (_) => GetEnrollmentBloc()..add(LoadGetEnrollmentEvent(entity))),
+        BlocProvider(create: (_) => GetAccessStatusBloc()..add(LoadGetAccessStatusEvent(entity))),
+        BlocProvider(create: (_) => IsFavoritedBloc()..add(LoadIsFavoritedEvent(entity))),
+      ],
+      child: _CourseDetailsBody(entity: entity),
+    );
+  }
+}
+
+class _CourseDetailsBody extends StatelessWidget {
+  const _CourseDetailsBody({required this.entity});
+
+  final CourseDetailsEntity entity;
 
   static const _tabs = [
     Tab(text: 'Lessons'),
@@ -23,10 +58,40 @@ class CourseDetailsScreen extends StatelessWidget {
     Tab(text: 'Resources'),
   ];
 
-  static const _pages = [LessonsTab(), AboutTab(), ForumTab(), DownloadedTab(), ResourcesTab()];
-
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<GetCourseDetailsBloc, IGetCourseDetailsState>(
+      builder: (context, state) {
+        if (state is GetCourseDetailsFailed) {
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            body: RetryWidget(
+              onReload: () => context.read<GetCourseDetailsBloc>().add(LoadGetCourseDetailsEvent(entity)),
+            ),
+          );
+        }
+        if (state is! GetCourseDetailsLoaded || state.getCourseDetails == null) {
+          return const Scaffold(backgroundColor: AppColors.white, body: LoadingWidget(0));
+        }
+        return _buildDetails(context, state.getCourseDetails!);
+      },
+    );
+  }
+
+  Widget _buildDetails(BuildContext context, CourseDetailsModel course) {
+    final thumbnailUrl = course.thumbnail?['url']?.toString();
+    final priceLabel = course.price?['displayLabel']?.toString();
+    final rating = course.raw['ratingAverage']?.toString() ?? '—';
+    final ratingCount = course.raw['ratingCount']?.toString() ?? '0';
+    final enrolledCount = course.raw['enrollmentCount']?.toString() ?? '0';
+    final lessonCount = course.raw['lessonCount']?.toString() ?? '0';
+    final pages = [
+      const LessonsTab(),
+      AboutTab(description: course.description),
+      const ForumTab(),
+      const DownloadedTab(),
+      const ResourcesTab(),
+    ];
     return DefaultTabController(
       length: _tabs.length,
       child: SafeArea(
@@ -63,7 +128,11 @@ class CourseDetailsScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
                       ),
                       onPressed: () {},
-                      child: const BodyTitle(text: 'Buy \$69.00', color: AppColors.white, fontSize: 16),
+                      child: BodyTitle(
+                        text: priceLabel == null || priceLabel.isEmpty ? 'Start learning' : 'Buy $priceLabel',
+                        color: AppColors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
@@ -102,7 +171,7 @@ class CourseDetailsScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             ImageView(
-                              imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
+                              imagePath: thumbnailUrl ?? '',
                               height: double.infinity,
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -139,17 +208,25 @@ class CourseDetailsScreen extends StatelessWidget {
                                 color: AppColors.searchTagBackground,
                                 borderRadius: BorderRadius.circular(AppRadius.r8),
                               ),
-                              child: const BodyTitle(text: 'UX Design', fontSize: 10, color: AppColors.searchTagText),
+                              child: BodyTitle(
+                                text: course.raw['primaryCategoryLabel']?.toString() ?? course.language ?? '',
+                                fontSize: 10,
+                                color: AppColors.searchTagText,
+                              ),
                             ),
                             const Spacer(),
-                            const BodyTitle(text: '00', fontSize: 12, color: AppColors.searchRatingText),
+                            BodyTitle(
+                              text: _formatDuration(course.estimatedDurationSeconds),
+                              fontSize: 12,
+                              color: AppColors.searchRatingText,
+                            ),
                             SizedBox(width: AppWidth.w8),
-                            const BodyTitle(text: 'All Levels', fontSize: 12, color: AppColors.searchCardTitle),
+                            BodyTitle(text: course.difficulty, fontSize: 12, color: AppColors.searchCardTitle),
                           ],
                         ),
                         SizedBox(height: AppHeight.h10),
-                        const SectionTitle(
-                          text: 'Master Digital Product Design:\nUX Research & UI Design',
+                        SectionTitle(
+                          text: course.title,
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
                           color: AppColors.searchCardTitle,
@@ -161,17 +238,17 @@ class CourseDetailsScreen extends StatelessWidget {
                           children: [
                             const Icon(Icons.star, size: 16, color: AppColors.searchStar),
                             SizedBox(width: AppWidth.w5),
-                            const BodyTitle(text: '4.5 (7,765)', fontSize: 12, color: AppColors.searchRatingText),
+                            BodyTitle(text: '$rating ($ratingCount)', fontSize: 12, color: AppColors.searchRatingText),
                             SizedBox(
                               height: AppHeight.h15,
                               child: const VerticalDivider(color: AppColors.grey),
                             ),
-                            const BodyTitle(text: '1,768 enrolled', fontSize: 12, color: AppColors.searchRatingText),
+                            BodyTitle(text: '$enrolledCount enrolled', fontSize: 12, color: AppColors.searchRatingText),
                             SizedBox(
                               height: AppHeight.h15,
                               child: const VerticalDivider(color: AppColors.grey),
                             ),
-                            const BodyTitle(text: '30+ Lessons', fontSize: 12, color: AppColors.searchRatingText),
+                            BodyTitle(text: '$lessonCount Lessons', fontSize: 12, color: AppColors.searchRatingText),
                           ],
                         ),
                         SizedBox(height: AppHeight.h14),
@@ -233,12 +310,20 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: const TabBarView(physics: NeverScrollableScrollPhysics(), children: _pages),
+            body: TabBarView(physics: const NeverScrollableScrollPhysics(), children: pages),
           ),
         ),
       ),
     );
   }
+}
+
+String _formatDuration(int? totalSeconds) {
+  if (totalSeconds == null || totalSeconds <= 0) return '—';
+  final hours = totalSeconds ~/ Duration.secondsPerHour;
+  final minutes = (totalSeconds % Duration.secondsPerHour) ~/ Duration.secondsPerMinute;
+  if (hours == 0) return '${minutes}m';
+  return '${hours}h ${minutes.toString().padLeft(2, '0')}m';
 }
 
 void _showFavoriteGroupsSheet(BuildContext context) {
