@@ -13,6 +13,6 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
       version: (json['version'] as num).toInt(),
       parentCategoryId: json['parentCategoryId'] as String?,
       children: (json['children'] as List<dynamic>?)
-          ?.map((item) => CategoryModel.fromJson(item as Map<String, dynamic>))
+          ?.map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

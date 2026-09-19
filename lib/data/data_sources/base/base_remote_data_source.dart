@@ -98,12 +98,16 @@ class BaseRemoteDataSource<T> {
     Map<String, dynamic>? data,
     required R Function(Object? json) fromJsonT,
     bool wrappedResponse = true,
+    Map<String, dynamic>? headers,
+    bool includeAuthorization = true,
   }) async {
     try {
       final response = await _networkHelper.get(
         baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
+        headers: headers,
+        includeAuthorization: includeAuthorization,
       );
       return response.fold(
         (e) => Left(e),

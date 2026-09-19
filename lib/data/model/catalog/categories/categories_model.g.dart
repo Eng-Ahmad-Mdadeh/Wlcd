@@ -9,6 +9,6 @@ part of 'categories_model.dart';
 CategoriesModel _$CategoriesModelFromJson(Map<String, dynamic> json) =>
     CategoriesModel(
       categories: (json['categories'] as List<dynamic>)
-          .map((item) => CategoryModel.fromJson(item as Map<String, dynamic>))
+          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

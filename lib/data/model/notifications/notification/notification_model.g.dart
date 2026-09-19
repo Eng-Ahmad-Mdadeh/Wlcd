@@ -1,5 +1,10 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'notification_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
     NotificationModel(
@@ -11,8 +16,11 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       body: json['body'] as String,
       deepLinkRef: json['deepLinkRef'] as String?,
-      navigationTarget: json['navigationTarget'] == null ? null :
-          NavigationTargetModel.fromJson(json['navigationTarget'] as Map<String, dynamic>),
+      navigationTarget: json['navigationTarget'] == null
+          ? null
+          : NavigationTargetModel.fromJson(
+              json['navigationTarget'] as Map<String, dynamic>,
+            ),
       createdAt: DateTime.parse(json['createdAt'] as String),
       version: (json['version'] as num).toInt(),
     );

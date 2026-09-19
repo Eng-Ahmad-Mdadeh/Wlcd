@@ -98,6 +98,8 @@ class NetworkHelper {
     String url, {
     Map<String, dynamic>? queryParams,
     dynamic data,
+    Map<String, dynamic>? headers,
+    bool includeAuthorization = true,
   }) async {
     final token = await getToken();
 
@@ -106,7 +108,10 @@ class NetworkHelper {
         url,
         data: data,
         queryParameters: queryParams,
-        options: Options(headers: _buildHeaders(token)),
+        options: Options(headers: {
+          ..._buildHeaders(includeAuthorization ? token : null),
+          ...?headers,
+        }),
       );
     });
   }

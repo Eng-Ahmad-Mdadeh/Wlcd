@@ -32,20 +32,13 @@ class NotificationsScreen extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => NotificationsCubit()),
         BlocProvider(
-          create: (_) => ListNotificationsBloc()
-            ..add(const LoadNotificationsEvent(ListNotificationsEntity())),
+          create: (_) => ListNotificationsBloc()..add(const LoadNotificationsEvent(ListNotificationsEntity())),
         ),
-        BlocProvider(
-          create: (_) => UnreadNotificationCountBloc()
-            ..add(const LoadUnreadNotificationCountEvent()),
-        ),
+        BlocProvider(create: (_) => UnreadNotificationCountBloc()..add(const LoadUnreadNotificationCountEvent())),
         BlocProvider(create: (_) => MarkAllNotificationsReadBloc()),
         BlocProvider(create: (_) => GetNotificationBloc()),
         BlocProvider(create: (_) => MarkNotificationReadBloc()),
-        BlocProvider(
-          create: (_) => GetNotificationPreferencesBloc()
-            ..add(const LoadNotificationPreferencesEvent()),
-        ),
+        BlocProvider(create: (_) => GetNotificationPreferencesBloc()..add(const LoadNotificationPreferencesEvent())),
         BlocProvider(create: (_) => UpdateNotificationPreferencesBloc()),
       ],
       child: const _NotificationsBody(),
@@ -57,20 +50,15 @@ class _NotificationsBody extends StatelessWidget {
   const _NotificationsBody();
 
   void _reload(BuildContext context) {
-    context.read<ListNotificationsBloc>().add(
-      LoadNotificationsEvent(context.read<NotificationsCubit>().state),
-    );
-    context.read<UnreadNotificationCountBloc>().add(
-      const LoadUnreadNotificationCountEvent(),
-    );
+    context.read<ListNotificationsBloc>().add(LoadNotificationsEvent(context.read<NotificationsCubit>().state));
+    context.read<UnreadNotificationCountBloc>().add(const LoadUnreadNotificationCountEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<MarkAllNotificationsReadBloc,
-            IMarkAllNotificationsReadState>(
+        BlocListener<MarkAllNotificationsReadBloc, IMarkAllNotificationsReadState>(
           listenWhen: (_, state) => state is MarkAllNotificationsReadLoaded,
           listener: (context, _) => _reload(context),
         ),
@@ -82,14 +70,9 @@ class _NotificationsBody extends StatelessWidget {
           listenWhen: (_, state) => state is GetNotificationLoaded,
           listener: (context, state) {
             final notification = (state as GetNotificationLoaded).notification;
-            if (notification != null &&
-                notification.readState.toLowerCase() == 'unread') {
+            if (notification != null && notification.readState.toLowerCase() == 'unread') {
               context.read<MarkNotificationReadBloc>().add(
-                MarkNotificationReadEvent(
-                  NotificationCommandEntity(
-                    notificationId: notification.notificationId,
-                  ),
-                ),
+                MarkNotificationReadEvent(NotificationCommandEntity(notificationId: notification.notificationId)),
               );
             }
           },
@@ -100,20 +83,14 @@ class _NotificationsBody extends StatelessWidget {
           title: 'الإشعارات',
           centerTitle: true,
           customActions: [
-            BlocBuilder<MarkAllNotificationsReadBloc,
-                IMarkAllNotificationsReadState>(
+            BlocBuilder<MarkAllNotificationsReadBloc, IMarkAllNotificationsReadState>(
               builder: (context, state) => IconButton(
                 tooltip: 'تحديد الكل كمقروء',
                 onPressed: state is MarkAllNotificationsReadLoading
                     ? null
-                    : () => context.read<MarkAllNotificationsReadBloc>().add(
-                          const MarkAllNotificationsReadEvent(),
-                        ),
+                    : () => context.read<MarkAllNotificationsReadBloc>().add(const MarkAllNotificationsReadEvent()),
                 icon: state is MarkAllNotificationsReadLoading
-                    ? const SizedBox.square(
-                        dimension: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
+                    ? const SizedBox.square(dimension: 20, child: LoadingWidget(0))
                     : const Icon(Icons.done_all),
               ),
             ),
@@ -125,9 +102,9 @@ class _NotificationsBody extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: AppWidth.w428),
             child: Column(
               children: [
-                const NotificationsHeader(filters: notificationFilters),
+                // const NotificationsHeader(filters: notificationFilters),
                 Expanded(child: _buildNotifications(context)),
-                const NotificationsHomeIndicator(),
+
               ],
             ),
           ),
@@ -151,11 +128,7 @@ class _NotificationsBody extends StatelessWidget {
             notifications: notifications.map(_toItemData).toList(),
             onNotificationTap: (index) {
               context.read<GetNotificationBloc>().add(
-                LoadNotificationEvent(
-                  NotificationCommandEntity(
-                    notificationId: notifications[index].notificationId,
-                  ),
-                ),
+                LoadNotificationEvent(NotificationCommandEntity(notificationId: notifications[index].notificationId)),
               );
             },
           );
@@ -165,16 +138,13 @@ class _NotificationsBody extends StatelessWidget {
     );
   }
 
-  NotificationItemData _toItemData(NotificationModel notification) =>
-      NotificationItemData(
-        title: notification.title,
-        category: notification.category,
-        type: _notificationType(notification.category),
-        description: notification.body,
-        date: notification.createdAt.toLocal().formatWithPattern(
-          'MMM dd, yyyy hh:mm a',
-        ),
-      );
+  NotificationItemData _toItemData(NotificationModel notification) => NotificationItemData(
+    title: notification.title,
+    category: notification.category,
+    type: _notificationType(notification.category),
+    description: notification.body,
+    date: notification.createdAt.toLocal().formatWithPattern('MMM dd, yyyy hh:mm a'),
+  );
 
   NotificationType _notificationType(String category) {
     return switch (category.toLowerCase()) {
