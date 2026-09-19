@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -301,9 +299,6 @@ class _FavoriteGroupsSheet extends StatefulWidget {
 
 class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
   final _groupController = TextEditingController();
-  final Map<String, String> _membershipKeys = {};
-  String? _createGroupKey;
-  String? _createGroupName;
 
   @override
   void dispose() {
@@ -377,10 +372,6 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
             TextField(
               controller: _groupController,
               textInputAction: TextInputAction.done,
-              onChanged: (_) {
-                _createGroupKey = null;
-                _createGroupName = null;
-              },
               decoration: InputDecoration(
                 hintText: 'اسم مجموعة جديدة',
                 filled: true,
@@ -509,25 +500,19 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
       _showMessage('يرجى إدخال اسم المجموعة');
       return;
     }
-    if (_createGroupName != name || _createGroupKey == null) {
-      _createGroupName = name;
-      _createGroupKey = _newIdempotencyKey();
-    }
     context.read<CreateFavoriteGroupBloc>().add(
       SubmitCreateFavoriteGroupEvent(
-        FavoritesEntity(name: name, idempotencyKey: _createGroupKey),
+        FavoritesEntity(name: name),
       ),
     );
   }
 
   void _addCourseToGroup(BuildContext context, String favoriteGroupId) {
-    final key = _membershipKeys.putIfAbsent(favoriteGroupId, _newIdempotencyKey);
     context.read<AddFavoriteMembershipBloc>().add(
       SubmitAddFavoriteMembershipEvent(
         FavoritesEntity(
           favoriteGroupId: favoriteGroupId,
           courseId: widget.courseId,
-          idempotencyKey: key,
         ),
       ),
     );
@@ -536,14 +521,4 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
   void _showMessage(String message) {
     widget.messenger.showSnackBar(SnackBar(content: Text(message)));
   }
-}
-
-String _newIdempotencyKey() {
-  final random = Random.secure();
-  final bytes = List<int>.generate(16, (_) => random.nextInt(256));
-  bytes[6] = (bytes[6] & 0x0f) | 0x40;
-  bytes[8] = (bytes[8] & 0x3f) | 0x80;
-  final hex = bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
-  return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-'
-      '${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}';
 }

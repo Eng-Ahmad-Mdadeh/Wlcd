@@ -24,7 +24,7 @@ class FavoritesRemoteDataSource extends BaseRemoteDataSource<Object> {
     endpoint: ApiEndpoints.favoriteGroups,
     data: entity.createGroupBody(),
     isFormDate: false,
-    headers: {'Idempotency-Key': entity.idempotencyKey},
+    headers: {if (entity.idempotencyKey != null) 'Idempotency-Key': entity.idempotencyKey},
     fromJsonT: (json) => FavoriteGroupModel.fromJson(json as Map<String, dynamic>),
     wrappedResponse: false,
   );
@@ -39,7 +39,7 @@ class FavoritesRemoteDataSource extends BaseRemoteDataSource<Object> {
     endpoint: ApiEndpoints.favoriteGroupMemberships(entity.favoriteGroupId!),
     data: entity.addMembershipBody(),
     isFormDate: false,
-    headers: {'Idempotency-Key': entity.idempotencyKey},
+    headers: {if (entity.idempotencyKey != null) 'Idempotency-Key': entity.idempotencyKey},
     fromJsonT: (json) => FavoriteMembershipModel.fromJson(json as Map<String, dynamic>),
     wrappedResponse: false,
   );
