@@ -88,11 +88,15 @@ class ProfileRoute extends GoRouteData with $ProfileRoute {
   }
 }
 
-@TypedGoRoute<CourseDetailsRoute>(path: '/course-details')
+@TypedGoRoute<CourseDetailsRoute>(path: '/course-details/:courseId')
 class CourseDetailsRoute extends GoRouteData with $CourseDetailsRoute {
+  const CourseDetailsRoute({required this.courseId});
+
+  final String courseId;
+
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return const CourseDetailsScreen().buildPage(pageAnimation: PageAnimation.sharedAxisScale);
+    return CourseDetailsScreen(courseId: courseId).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 
