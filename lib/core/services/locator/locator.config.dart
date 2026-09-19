@@ -17,6 +17,8 @@ import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
 import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
     as _i344;
+import '../../../data/data_sources/course_details/course_details_remote_data_source.dart'
+    as _i647;
 import '../../../data/data_sources/favorites/favorites_remote_data_source.dart'
     as _i492;
 import '../../../data/data_sources/notifications/notifications_remote_data_source.dart'
@@ -34,6 +36,7 @@ import '../../../data/model/catalog/categories/categories_model.dart' as _i621;
 import '../../../data/model/catalog/courses/courses_model.dart' as _i102;
 import '../../../data/model/catalog/recommendations/recommendations_model.dart'
     as _i874;
+import '../../../data/model/course_details/course_details_model.dart' as _i102;
 import '../../../data/model/favorites/favorite_group_model.dart' as _i388;
 import '../../../data/model/favorites/favorite_groups_model.dart' as _i214;
 import '../../../data/model/favorites/favorite_membership_model.dart' as _i955;
@@ -52,6 +55,8 @@ import '../../../data/model/profile/phone_identifier/phone_identifier_model.dart
 import '../../../data/model/profile/profile/profile_model.dart' as _i228;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
 import '../../../data/repository/catalog/catalog_repository.dart' as _i601;
+import '../../../data/repository/course_details/course_details_repository.dart'
+    as _i783;
 import '../../../data/repository/favorites/favorites_repository.dart' as _i433;
 import '../../../data/repository/notifications/notifications_repository.dart'
     as _i639;
@@ -70,6 +75,8 @@ import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/entity/catalog/get_featured_courses_entity.dart'
     as _i734;
+import '../../../domain/entity/course_details/course_details_entity.dart'
+    as _i707;
 import '../../../domain/entity/favorites/favorites_entity.dart' as _i197;
 import '../../../domain/entity/notifications/list_notifications_entity.dart'
     as _i964;
@@ -88,6 +95,8 @@ import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
 import '../../../domain/repository/catalog/i_catalog_repository.dart' as _i981;
+import '../../../domain/repository/course_details/i_course_details_repository.dart'
+    as _i971;
 import '../../../domain/repository/favorites/i_favorites_repository.dart'
     as _i774;
 import '../../../domain/repository/notifications/i_notifications_repository.dart'
@@ -111,6 +120,46 @@ import '../../../domain/usecase/catalog/get_featured_courses_usecase.dart'
 import '../../../domain/usecase/catalog/get_recommended_courses_usecase.dart'
     as _i205;
 import '../../../domain/usecase/catalog/list_categories_usecase.dart' as _i193;
+import '../../../domain/usecase/course_details/complete_lesson_usecase.dart'
+    as _i665;
+import '../../../domain/usecase/course_details/create_download_grant_usecase.dart'
+    as _i976;
+import '../../../domain/usecase/course_details/enroll_free_usecase.dart'
+    as _i249;
+import '../../../domain/usecase/course_details/get_access_status_usecase.dart'
+    as _i421;
+import '../../../domain/usecase/course_details/get_checkout_quote_usecase.dart'
+    as _i878;
+import '../../../domain/usecase/course_details/get_completion_usecase.dart'
+    as _i116;
+import '../../../domain/usecase/course_details/get_course_details_usecase.dart'
+    as _i350;
+import '../../../domain/usecase/course_details/get_curriculum_usecase.dart'
+    as _i755;
+import '../../../domain/usecase/course_details/get_enrollment_usecase.dart'
+    as _i102;
+import '../../../domain/usecase/course_details/get_learning_state_usecase.dart'
+    as _i1033;
+import '../../../domain/usecase/course_details/get_lesson_progress_usecase.dart'
+    as _i736;
+import '../../../domain/usecase/course_details/get_lesson_usecase.dart'
+    as _i627;
+import '../../../domain/usecase/course_details/get_rating_summary_usecase.dart'
+    as _i756;
+import '../../../domain/usecase/course_details/is_favorited_usecase.dart'
+    as _i185;
+import '../../../domain/usecase/course_details/list_resources_usecase.dart'
+    as _i808;
+import '../../../domain/usecase/course_details/list_reviews_usecase.dart'
+    as _i216;
+import '../../../domain/usecase/course_details/record_progress_usecase.dart'
+    as _i629;
+import '../../../domain/usecase/course_details/resolve_playback_usecase.dart'
+    as _i707;
+import '../../../domain/usecase/course_details/start_learning_usecase.dart'
+    as _i198;
+import '../../../domain/usecase/course_details/update_resume_usecase.dart'
+    as _i828;
 import '../../../domain/usecase/favorites/add_favorite_membership_usecase.dart'
     as _i531;
 import '../../../domain/usecase/favorites/create_favorite_group_usecase.dart'
@@ -160,6 +209,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i344.CatalogRemoteDataSource>(
       () => _i344.CatalogRemoteDataSource(),
     );
+    gh.factory<_i647.CourseDetailsRemoteDataSource>(
+      () => _i647.CourseDetailsRemoteDataSource(),
+    );
     gh.factory<_i492.FavoritesRemoteDataSource>(
       () => _i492.FavoritesRemoteDataSource(),
     );
@@ -171,6 +223,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
+    );
+    gh.factory<_i971.ICourseDetailsRepository>(
+      () => _i783.CourseDetailsRepository(
+        gh<_i647.CourseDetailsRemoteDataSource>(),
+      ),
     );
     gh.factory<_i981.ICatalogRepository>(
       () => _i601.CatalogRepository(gh<_i344.CatalogRemoteDataSource>()),
@@ -202,8 +259,107 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i334.NotificationsRemoteDataSource>(),
       ),
     );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i185.IsFavoritedUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'IsFavorited',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i116.GetCompletionUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetCompletion',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.CurriculumModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i755.GetCurriculumUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetCurriculum',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.CourseDetailsModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i350.GetCourseDetailsUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetCourseDetails',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i756.GetRatingSummaryUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetRatingSummary',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ResumePositionModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i828.UpdateResumeUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'UpdateResume',
+    );
     gh.factory<_i774.IFavoritesRepository>(
       () => _i433.FavoritesRepository(gh<_i492.FavoritesRemoteDataSource>()),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.EnrollmentModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i249.EnrollFreeUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'EnrollFree',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i878.GetCheckoutQuoteUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetCheckoutQuote',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.EnrollmentModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i102.GetEnrollmentUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetEnrollment',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ProgressEventModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i629.RecordProgressUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'RecordProgress',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i421.GetAccessStatusUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetAccessStatus',
     );
     gh.factory<_i950.IProfileRepository>(
       () => _i732.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
@@ -217,6 +373,25 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i911.UploadAvatarUsecase(gh<_i950.IProfileRepository>()),
       instanceName: 'UploadAvatar',
     );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.PlaybackModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i707.ResolvePlaybackUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'ResolvePlayback',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.LearningStateModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () =>
+          _i1033.GetLearningStateUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetLearningState',
+    );
     gh.factory<_i250.AuthEntity>(
       () => _i250.AuthEntity(
         phone: gh<String>(),
@@ -228,12 +403,78 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i216.ListReviewsUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'ListReviews',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i198.StartLearningUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'StartLearning',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () =>
+          _i736.GetLessonProgressUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetLessonProgress',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.LessonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i627.GetLessonUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'GetLesson',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i808.ListResourcesUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'ListResources',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i665.CompleteLessonUsecase(gh<_i971.ICourseDetailsRepository>()),
+      instanceName: 'CompleteLesson',
+    );
+    gh.factory<
+      _i759.IUseCase<
         _i830.BaseModel<_i868.PhoneIdentifierModel>?,
         _i828.AddPhoneIdentifierEntity
       >
     >(
       () => _i469.AddPhoneIdentifierUsecase(gh<_i950.IProfileRepository>()),
       instanceName: 'AddPhoneIdentifier',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.DownloadGrantModel>?,
+        _i707.CourseDetailsEntity
+      >
+    >(
+      () => _i976.CreateDownloadGrantUsecase(
+        gh<_i971.ICourseDetailsRepository>(),
+      ),
+      instanceName: 'CreateDownloadGrant',
     );
     gh.factory<_i154.IAuthRepository>(
       () => _i728.AuthRepository(
