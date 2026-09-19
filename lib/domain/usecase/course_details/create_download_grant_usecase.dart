@@ -1,0 +1,21 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:wlcd/core/exceptions/app_exception.dart';
+import 'package:wlcd/data/model/base/base_model.dart';
+import 'package:wlcd/data/model/course_details/course_details_model.dart';
+import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
+import 'package:wlcd/domain/repository/course_details/i_course_details_repository.dart';
+import 'package:wlcd/domain/usecase/i_use_case.dart';
+
+@Injectable(as: IUseCase<BaseModel<DownloadGrantModel>?, CourseDetailsEntity>)
+@Named('CreateDownloadGrant')
+class CreateDownloadGrantUsecase implements IUseCase<BaseModel<DownloadGrantModel>?, CourseDetailsEntity> {
+  const CreateDownloadGrantUsecase(this._repository);
+
+  final ICourseDetailsRepository _repository;
+
+  @override
+  Future<Either<AppException, BaseModel<DownloadGrantModel>?>> call(
+    CourseDetailsEntity data,
+  ) => _repository.createDownloadGrant(data);
+}

@@ -92,6 +92,31 @@ import '../../../domain/usecase/profile/get_profile_usecase.dart' as _i406;
 import '../../../domain/usecase/profile/update_profile_usecase.dart' as _i999;
 import '../../../domain/usecase/profile/upload_avatar_usecase.dart' as _i911;
 import '../../helper/network_helper.dart' as _i779;
+import '../../../data/data_sources/course_details/course_details_remote_data_source.dart' as _i1100;
+import '../../../data/model/course_details/course_details_model.dart' as _i1101;
+import '../../../data/repository/course_details/course_details_repository.dart' as _i1102;
+import '../../../domain/entity/course_details/course_details_entity.dart' as _i1103;
+import '../../../domain/repository/course_details/i_course_details_repository.dart' as _i1104;
+import '../../../domain/usecase/course_details/complete_lesson_usecase.dart' as _i1110;
+import '../../../domain/usecase/course_details/create_download_grant_usecase.dart' as _i1111;
+import '../../../domain/usecase/course_details/enroll_free_usecase.dart' as _i1112;
+import '../../../domain/usecase/course_details/get_access_status_usecase.dart' as _i1113;
+import '../../../domain/usecase/course_details/get_checkout_quote_usecase.dart' as _i1114;
+import '../../../domain/usecase/course_details/get_completion_usecase.dart' as _i1115;
+import '../../../domain/usecase/course_details/get_course_details_usecase.dart' as _i1116;
+import '../../../domain/usecase/course_details/get_curriculum_usecase.dart' as _i1117;
+import '../../../domain/usecase/course_details/get_enrollment_usecase.dart' as _i1118;
+import '../../../domain/usecase/course_details/get_learning_state_usecase.dart' as _i1119;
+import '../../../domain/usecase/course_details/get_lesson_progress_usecase.dart' as _i1120;
+import '../../../domain/usecase/course_details/get_lesson_usecase.dart' as _i1121;
+import '../../../domain/usecase/course_details/get_rating_summary_usecase.dart' as _i1122;
+import '../../../domain/usecase/course_details/is_favorited_usecase.dart' as _i1123;
+import '../../../domain/usecase/course_details/list_resources_usecase.dart' as _i1124;
+import '../../../domain/usecase/course_details/list_reviews_usecase.dart' as _i1125;
+import '../../../domain/usecase/course_details/record_progress_usecase.dart' as _i1126;
+import '../../../domain/usecase/course_details/resolve_playback_usecase.dart' as _i1127;
+import '../../../domain/usecase/course_details/start_learning_usecase.dart' as _i1128;
+import '../../../domain/usecase/course_details/update_resume_usecase.dart' as _i1129;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -104,6 +129,9 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
     gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.factory<_i1100.CourseDetailsRemoteDataSource>(
+      () => _i1100.CourseDetailsRemoteDataSource(),
+    );
     gh.factory<_i1001.CatalogRemoteDataSource>(
       () => _i1001.CatalogRemoteDataSource(),
     );
@@ -121,6 +149,89 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1006.ICatalogRepository>(
       () => _i1004.CatalogRepository(gh<_i1001.CatalogRemoteDataSource>()),
+    );
+    gh.factory<_i1104.ICourseDetailsRepository>(
+      () => _i1102.CourseDetailsRepository(gh<_i1100.CourseDetailsRemoteDataSource>()),
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1110.CompleteLessonUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'CompleteLesson',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.DownloadGrantModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1111.CreateDownloadGrantUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'CreateDownloadGrant',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.EnrollmentModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1112.EnrollFreeUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'EnrollFree',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1113.GetAccessStatusUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetAccessStatus',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1114.GetCheckoutQuoteUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetCheckoutQuote',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1115.GetCompletionUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetCompletion',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.CourseDetailsModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1116.GetCourseDetailsUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetCourseDetails',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.CurriculumModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1117.GetCurriculumUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetCurriculum',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.EnrollmentModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1118.GetEnrollmentUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetEnrollment',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.LearningStateModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1119.GetLearningStateUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetLearningState',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1120.GetLessonProgressUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetLessonProgress',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.LessonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1121.GetLessonUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetLesson',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1122.GetRatingSummaryUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'GetRatingSummary',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1123.IsFavoritedUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'IsFavorited',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1124.ListResourcesUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'ListResources',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1125.ListReviewsUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'ListReviews',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ProgressEventModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1126.RecordProgressUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'RecordProgress',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.PlaybackModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1127.ResolvePlaybackUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'ResolvePlayback',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ContractJsonModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1128.StartLearningUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'StartLearning',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.ResumePositionModel>?, _i1103.CourseDetailsEntity>>(
+      () => _i1129.UpdateResumeUsecase(gh<_i1104.ICourseDetailsRepository>()),
+      instanceName: 'UpdateResume',
     );
     gh.factory<
       _i759.IUseCase<_i830.BaseModel<_i1002.CategoriesModel>?, Null>
