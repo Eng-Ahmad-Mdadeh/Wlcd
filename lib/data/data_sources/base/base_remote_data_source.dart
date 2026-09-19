@@ -202,12 +202,12 @@ class BaseRemoteDataSource<T> {
     }
   }
 
-  Future<Either<AppException, BaseModel<T>?>> patchData({
+  Future<Either<AppException, BaseModel<R>?>> patchData<R>({
     String endpoint = '',
     Map<String, dynamic>? data,
     bool isFormData = true,
     List<Map<String, dynamic>>? files,
-    T Function(Object? json)? fromJsonT,
+    R Function(Object? json)? fromJsonT,
     Map<String, dynamic>? headers,
     bool wrappedResponse = true,
   }) async {
@@ -224,9 +224,9 @@ class BaseRemoteDataSource<T> {
             (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
-            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+            return Right(BaseModel<R>(data: fromJsonT(r.data)));
           }
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
         },
       );
     } on AppException catch (e, s) {
