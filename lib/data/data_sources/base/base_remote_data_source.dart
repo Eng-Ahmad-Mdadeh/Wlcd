@@ -206,6 +206,26 @@ class BaseRemoteDataSource<T> {
     T Function(Object? json)? fromJsonT,
     Map<String, dynamic>? headers,
     bool wrappedResponse = true,
+  }) {
+    return patchDataAs<T>(
+      endpoint: endpoint,
+      data: data,
+      isFormData: isFormData,
+      files: files,
+      fromJsonT: fromJsonT,
+      headers: headers,
+      wrappedResponse: wrappedResponse,
+    );
+  }
+
+  Future<Either<AppException, BaseModel<R>?>> patchDataAs<R>({
+    String endpoint = '',
+    Map<String, dynamic>? data,
+    bool isFormData = true,
+    List<Map<String, dynamic>>? files,
+    R Function(Object? json)? fromJsonT,
+    Map<String, dynamic>? headers,
+    bool wrappedResponse = true,
   }) async {
     try {
       final response = await _networkHelper.patch(
@@ -220,9 +240,9 @@ class BaseRemoteDataSource<T> {
         (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
-            return Right(BaseModel<T>(data: fromJsonT(r.data)));
+            return Right(BaseModel<R>(data: fromJsonT(r.data)));
           }
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
         },
       );
     } on AppException catch (e, s) {
