@@ -13,6 +13,7 @@ import 'package:wlcd/presentation/bloc/favorites/create_favorite_group/create_fa
 import 'package:wlcd/presentation/bloc/favorites/favorite_groups/favorite_groups_bloc.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/reviews_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
@@ -231,27 +232,35 @@ class _CourseDetailsBody extends StatelessWidget {
       // The current contract only proves the `overview` projection used by
       // the model fixture. Other values stay opaque until the generated
       // OpenAPI model defines their structure and enum values.
-      if (availableTab.toString() == 'overview') {
+      if (_tabType(availableTab) == 'overview') {
         tabs.add(
           _CourseDetailsTab(
             tab: const Tab(text: 'overview'),
-            page: LessonsTab(),
+            page: LessonsTab(entity: entity),
           ),
         );
       }
-      if (availableTab.toString() == 'reviews') {
+      if (_tabType(availableTab) == 'reviews') {
         tabs.add(
           _CourseDetailsTab(
             tab: const Tab(text: 'reviews'),
-            page: ReviewsTab(),
+            page: ReviewsTab(entity: entity),
           ),
         );
       }
-      if (availableTab.toString() == 'forum') {
+      if (_tabType(availableTab) == 'forum') {
         tabs.add(
           _CourseDetailsTab(
             tab: const Tab(text: 'forum'),
             page: ForumTab(),
+          ),
+        );
+      }
+      if (_tabType(availableTab) == 'resources') {
+        tabs.add(
+          _CourseDetailsTab(
+            tab: const Tab(text: 'resources'),
+            page: ResourcesTab(entity: entity),
           ),
         );
       }
@@ -268,6 +277,12 @@ class _CourseDetailsBody extends StatelessWidget {
       );
     }
     return tabs;
+  }
+
+  String? _tabType(dynamic tab) {
+    if (tab is String) return tab.toLowerCase();
+    if (tab is Map) return tab['type']?.toString().toLowerCase();
+    return null;
   }
 }
 
