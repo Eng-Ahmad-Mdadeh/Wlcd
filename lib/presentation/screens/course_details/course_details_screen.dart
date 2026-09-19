@@ -14,6 +14,7 @@ import 'package:wlcd/presentation/screens/course_details/widgets/downloaded_tab.
 import 'package:wlcd/presentation/screens/course_details/widgets/lessons_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/resources_tab.dart';
 import 'package:wlcd/presentation/screens/course_details/widgets/forum_tab.dart';
+import 'package:wlcd/presentation/screens/course_details/widgets/reviews_tab.dart';
 import 'package:wlcd/presentation/screens/favorites/favorites_store.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
@@ -50,14 +51,6 @@ class _CourseDetailsBody extends StatelessWidget {
 
   final CourseDetailsEntity entity;
 
-  static const _tabs = [
-    Tab(text: 'Lessons'),
-    Tab(text: 'About'),
-    Tab(text: 'المنتدى'),
-    Tab(text: 'Downloaded'),
-    Tab(text: 'Resources'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetCourseDetailsBloc, IGetCourseDetailsState>(
@@ -85,15 +78,9 @@ class _CourseDetailsBody extends StatelessWidget {
     final ratingCount = course.raw['ratingCount']?.toString() ?? '0';
     final enrolledCount = course.raw['enrollmentCount']?.toString() ?? '0';
     final lessonCount = course.raw['lessonCount']?.toString() ?? '0';
-    final pages = [
-      const LessonsTab(),
-      AboutTab(description: course.description),
-      const ForumTab(),
-      const DownloadedTab(),
-      const ResourcesTab(),
-    ];
+    final availableTabs = _buildAvailableTabs(course);
     return DefaultTabController(
-      length: _tabs.length,
+      length: availableTabs.length,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.white,
@@ -288,7 +275,7 @@ class _CourseDetailsBody extends StatelessWidget {
                           borderRadius: BorderRadius.circular(AppRadius.r12),
                         ),
                         child: TabBar(
-                          tabs: _tabs,
+                          tabs: [for (final item in availableTabs) item.tab],
                           isScrollable: true,
                           tabAlignment: TabAlignment.start,
                           dividerColor: Colors.transparent,
@@ -310,12 +297,77 @@ class _CourseDetailsBody extends StatelessWidget {
                 ),
               ];
             },
-            body: TabBarView(physics: const NeverScrollableScrollPhysics(), children: pages),
+            body: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: [for (final item in availableTabs) item.page],
+            ),
           ),
         ),
       ),
     );
   }
+
+  List<_CourseDetailsTab> _buildAvailableTabs(CourseDetailsModel course) {
+    final tabs = <_CourseDetailsTab>[];
+    final addedTypes = <String>{};
+
+    for (final availableTab in course.availableTabs) {
+      final type = switch (availableTab) {
+        String value => value,
+        Map value => value['type']?.toString(),
+        _ => null,
+      };
+      final normalizedType = type?.trim().toLowerCase();
+      if (normalizedType == null || !addedTypes.add(normalizedType)) continue;
+
+      final tab = switch (normalizedType) {
+        'lessons' || 'curriculum' => const _CourseDetailsTab(
+          tab: Tab(text: 'Lessons'),
+          page: LessonsTab(),
+        ),
+        'overview' || 'about' => _CourseDetailsTab(
+          tab: const Tab(text: 'About'),
+          page: AboutTab(description: course.description),
+        ),
+        'forum' || 'discussion' || 'discussions' => const _CourseDetailsTab(
+          tab: Tab(text: 'المنتدى'),
+          page: ForumTab(),
+        ),
+        'downloads' || 'downloaded' => const _CourseDetailsTab(
+          tab: Tab(text: 'Downloaded'),
+          page: DownloadedTab(),
+        ),
+        'resources' => const _CourseDetailsTab(
+          tab: Tab(text: 'Resources'),
+          page: ResourcesTab(),
+        ),
+        'reviews' || 'ratings' => const _CourseDetailsTab(
+          tab: Tab(text: 'Reviews'),
+          page: ReviewsTab(),
+        ),
+        _ => null,
+      };
+      if (tab != null) tabs.add(tab);
+    }
+
+    // Keep the tab controller valid if the backend returns no supported tabs.
+    if (tabs.isEmpty) {
+      tabs.add(
+        _CourseDetailsTab(
+          tab: const Tab(text: 'About'),
+          page: AboutTab(description: course.description),
+        ),
+      );
+    }
+    return tabs;
+  }
+}
+
+class _CourseDetailsTab {
+  const _CourseDetailsTab({required this.tab, required this.page});
+
+  final Tab tab;
+  final Widget page;
 }
 
 String _formatDuration(int? totalSeconds) {
