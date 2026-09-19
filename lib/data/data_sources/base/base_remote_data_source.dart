@@ -18,11 +18,11 @@ class BaseRemoteDataSource<T> {
     try {
       final response = await _networkHelper.get('$baseEndpoint${page != null ? '?per_page=$page' : ''}');
       return response.fold(
-        (error) => Left(error),
-        (right) {
+            (error) => Left(error),
+            (right) {
           return Right(BaseModel<PaginationModel<T>>.fromJson(
             right.data!,
-            (json) => PaginationModel<T>.fromJson(json as Map<String, dynamic>, fromJsonT),
+                (json) => PaginationModel<T>.fromJson(json as Map<String, dynamic>, fromJsonT),
           ).data);
         },
       );
@@ -55,8 +55,8 @@ class BaseRemoteDataSource<T> {
         data: data,
       );
       return response.fold(
-        (error) => Left(error),
-        (right) {
+            (error) => Left(error),
+            (right) {
           return Right(BaseModel<PaginationModel<T>>.fromJson(
               right.data!, (json) => PaginationModel<T>.fromJson(json as Map<String, dynamic>, fromJsonT)));
         },
@@ -110,8 +110,8 @@ class BaseRemoteDataSource<T> {
         includeAuthorization: includeAuthorization,
       );
       return response.fold(
-        (e) => Left(e),
-        (r) {
+            (e) => Left(e),
+            (r) {
           if (!wrappedResponse) {
             return Right(BaseModel<R>(data: fromJsonT(r.data)));
           }
@@ -133,7 +133,7 @@ class BaseRemoteDataSource<T> {
     }
   }
 
-  
+
 
 
   Future<Either<AppException, BaseModel<T>?>> postData({
@@ -178,8 +178,8 @@ class BaseRemoteDataSource<T> {
         includeAuthorization: includeAuthorization,
       );
       return response.fold(
-        (e) => Left(e),
-        (r) {
+            (e) => Left(e),
+            (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
             return Right(BaseModel<R>(data: fromJsonT(r.data)));
@@ -210,26 +210,6 @@ class BaseRemoteDataSource<T> {
     T Function(Object? json)? fromJsonT,
     Map<String, dynamic>? headers,
     bool wrappedResponse = true,
-  }) {
-    return patchDataAs<T>(
-      endpoint: endpoint,
-      data: data,
-      isFormData: isFormData,
-      files: files,
-      fromJsonT: fromJsonT,
-      headers: headers,
-      wrappedResponse: wrappedResponse,
-    );
-  }
-
-  Future<Either<AppException, BaseModel<R>?>> patchDataAs<R>({
-    String endpoint = '',
-    Map<String, dynamic>? data,
-    bool isFormData = true,
-    List<Map<String, dynamic>>? files,
-    R Function(Object? json)? fromJsonT,
-    Map<String, dynamic>? headers,
-    bool wrappedResponse = true,
   }) async {
     try {
       final response = await _networkHelper.patch(
@@ -240,13 +220,13 @@ class BaseRemoteDataSource<T> {
         headers: headers,
       );
       return response.fold(
-        (e) => Left(e),
-        (r) {
+            (e) => Left(e),
+            (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
-            return Right(BaseModel<R>(data: fromJsonT(r.data)));
+            return Right(BaseModel<T>(data: fromJsonT(r.data)));
           }
-          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
         },
       );
     } on AppException catch (e, s) {
@@ -274,7 +254,7 @@ class BaseRemoteDataSource<T> {
   }) async {
     try {
       final response = await _networkHelper.patchPagination(
-      url:   baseEndpoint + endpoint,
+        url:   baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
         isFormData: isFormData,
@@ -307,8 +287,8 @@ class BaseRemoteDataSource<T> {
     try {
       final response = await _networkHelper.delete('$baseEndpoint$endpoint', data: data);
       return response.fold(
-        (e) => Left(e),
-        (r) {
+            (e) => Left(e),
+            (r) {
           if (fromJsonT == null) return const Right(null);
           return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
         },
@@ -337,7 +317,7 @@ class BaseRemoteDataSource<T> {
   }) async {
     try {
       final response = await _networkHelper.deletePagination(
-      url:   baseEndpoint + endpoint,
+        url:   baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
         isFormData: isFormData,
@@ -398,8 +378,8 @@ class BaseRemoteDataSource<T> {
         headers: headers,
       );
       return response.fold(
-        (e) => Left(e),
-        (r) {
+            (e) => Left(e),
+            (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
             return Right(BaseModel<R>(data: fromJsonT(r.data)));
