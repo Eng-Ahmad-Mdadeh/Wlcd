@@ -33,6 +33,9 @@ import '../../../data/model/auth/session_model.dart' as _i695;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
 import '../../../data/model/catalog/categories/categories_model.dart' as _i621;
+import '../../../data/model/catalog/banners/banners_model.dart' as _i1100;
+import '../../../data/model/catalog/course_filters/course_filters_model.dart' as _i1101;
+import '../../../data/model/catalog/global_platforms/global_platforms_model.dart' as _i1102;
 import '../../../data/model/catalog/courses/courses_model.dart' as _i102;
 import '../../../data/model/catalog/recommendations/recommendations_model.dart'
     as _i874;
@@ -120,6 +123,9 @@ import '../../../domain/usecase/catalog/get_featured_courses_usecase.dart'
 import '../../../domain/usecase/catalog/get_recommended_courses_usecase.dart'
     as _i205;
 import '../../../domain/usecase/catalog/list_categories_usecase.dart' as _i193;
+import '../../../domain/usecase/catalog/get_banners_usecase.dart' as _i1103;
+import '../../../domain/usecase/catalog/get_course_filters_usecase.dart' as _i1104;
+import '../../../domain/usecase/catalog/get_global_platforms_usecase.dart' as _i1105;
 import '../../../domain/usecase/course_details/complete_lesson_usecase.dart'
     as _i665;
 import '../../../domain/usecase/course_details/create_download_grant_usecase.dart'
@@ -253,6 +259,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i759.IUseCase<_i830.BaseModel<_i621.CategoriesModel>?, Null>>(
       () => _i193.ListCategoriesUsecase(gh<_i981.ICatalogRepository>()),
       instanceName: 'ListCategories',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1100.BannersModel>?, Null>>(
+      () => _i1103.GetBannersUsecase(gh<_i981.ICatalogRepository>()),
+      instanceName: 'GetBanners',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1101.CourseFiltersModel>?, Null>>(
+      () => _i1104.GetCourseFiltersUsecase(gh<_i981.ICatalogRepository>()),
+      instanceName: 'GetCourseFilters',
+    );
+    gh.factory<_i759.IUseCase<_i830.BaseModel<_i1102.GlobalPlatformsModel>?, Null>>(
+      () => _i1105.GetGlobalPlatformsUsecase(gh<_i981.ICatalogRepository>()),
+      instanceName: 'GetGlobalPlatforms',
     );
     gh.factory<_i919.INotificationsRepository>(
       () => _i639.NotificationsRepository(
