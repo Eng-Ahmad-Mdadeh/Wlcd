@@ -111,21 +111,14 @@ class _RegisterEmailSheetState extends State<_RegisterEmailSheet> {
     if (_challengeId == null) {
       context.read<RegisterWithEmailBloc>().add(SubmitRegisterWithEmailEvent(RegisterWithEmailEntity(displayName: _name.text.trim(), email: _email.text.trim(), password: _password.text, locale: Localizations.localeOf(context).languageCode)));
     } else {
-      context.read<VerifyEmailBloc>().add(SubmitVerifyEmailEvent(VerifyEmailEntity(token: _code.text.trim(), challengeId: _challengeId!)));
+      context.read<VerifyEmailBloc>().add(SubmitVerifyEmailEvent(VerifyEmailEntity(otpCode: _code.text.trim(), challengeId: _challengeId!)));
     }
   }
 
   void _onRegisterState(BuildContext context, IRegisterWithEmailState state) {
     if (state is RegisterWithEmailFailed) return _failure(state.message);
     if (state is! RegisterWithEmailLoaded) return;
-    final headers = state.authModel?.responseHeaders ?? const <String, List<String>>{};
-    String? challenge;
-    for (final entry in headers.entries) {
-      final headerName = entry.key.toLowerCase();
-      if (headerName.contains('challenge') && headerName.contains('id')) {
-        challenge = entry.value.isEmpty ? null : entry.value.first;
-      }
-    }
+    final challenge = state.authModel?.data?.emailVerification?.challengeId;
     if ((challenge ?? '').isEmpty) return _failure('لم يتم استلام معرّف التحقق من الخادم');
     setState(() => _challengeId = challenge);
   }

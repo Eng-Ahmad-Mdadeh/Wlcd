@@ -19,6 +19,21 @@ AuthModel _$AuthModelFromJson(Map<String, dynamic> json) => AuthModel(
   effectivePermissions: (json['effectivePermissions'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
+  emailVerification: json['emailVerification'] == null
+      ? null
+      : EmailVerificationModel.fromJson(
+          json['emailVerification'] as Map<String, dynamic>,
+        ),
+);
+
+EmailVerificationModel _$EmailVerificationModelFromJson(
+  Map<String, dynamic> json,
+) => EmailVerificationModel(
+  challengeId: json['challengeId'] as String?,
+  expiresAt: json['expiresAt'] == null
+      ? null
+      : DateTime.parse(json['expiresAt'] as String),
+  cooldownSeconds: (json['cooldownSeconds'] as num?)?.toInt(),
 );
 
 AuthAccountModel _$AuthAccountModelFromJson(Map<String, dynamic> json) =>

@@ -79,7 +79,7 @@ class CustomElevatedButton extends StatelessWidget {
             ),
           ),
           child: loading ?? false
-              ? LoadingWidget(
+              ? LoadingWidget2(
                   0,
                   color: colorLoading ?? AppColors.white,
                   size: AppSize.s35,

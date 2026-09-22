@@ -12,6 +12,7 @@ class AuthModel extends Equatable {
     required this.sessionId,
     required this.account,
     required this.effectivePermissions,
+    this.emailVerification,
   });
 
   final String? accessToken;
@@ -20,6 +21,7 @@ class AuthModel extends Equatable {
   final String? sessionId;
   final AuthAccountModel? account;
   final List<String> effectivePermissions;
+  final EmailVerificationModel? emailVerification;
 
   factory AuthModel.fromJson(Map<String, dynamic> json) =>
       _$AuthModelFromJson(json);
@@ -32,7 +34,27 @@ class AuthModel extends Equatable {
     sessionId,
     account,
     effectivePermissions,
+    emailVerification,
   ];
+}
+
+@JsonSerializable(createToJson: false)
+class EmailVerificationModel extends Equatable {
+  const EmailVerificationModel({
+    required this.challengeId,
+    required this.expiresAt,
+    required this.cooldownSeconds,
+  });
+
+  final String? challengeId;
+  final DateTime? expiresAt;
+  final int? cooldownSeconds;
+
+  factory EmailVerificationModel.fromJson(Map<String, dynamic> json) =>
+      _$EmailVerificationModelFromJson(json);
+
+  @override
+  List<Object?> get props => [challengeId, expiresAt, cooldownSeconds];
 }
 
 @JsonSerializable(createToJson: false)
