@@ -30,6 +30,9 @@ class ApiEndpoints {
   static const String categories = '/categories';
   static const String featuredCourses = '/featured';
   static const String recommendedCourses = '/recommendations';
+  static const String courseFilters = '/course-filters';
+  static const String banners = '/banners';
+  static const String globalPlatforms = '/global-platforms';
   static const String courses = '/courses';
   static const String enrollments = '/enrollments';
   static const String learningResources = '/learning/resources';

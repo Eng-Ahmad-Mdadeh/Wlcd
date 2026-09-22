@@ -5,8 +5,10 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
+import 'package:wlcd/presentation/bloc/catalog/banners/banners_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/categories/categories_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/featured_courses/featured_courses_bloc.dart';
+import 'package:wlcd/presentation/bloc/catalog/global_platforms/global_platforms_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/recommended_courses/recommended_courses_bloc.dart';
 import 'package:wlcd/presentation/cubit/catalog/featured_courses_query_cubit.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
@@ -40,6 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => FeaturedCoursesQueryCubit()),
+        BlocProvider(
+          create: (_) => BannersBloc()..add(const LoadBannersEvent()),
+        ),
+        BlocProvider(
+          create: (_) => GlobalPlatformsBloc()
+            ..add(const LoadGlobalPlatformsEvent()),
+        ),
         BlocProvider(
           create: (_) => CategoriesBloc()..add(const LoadCategoriesEvent()),
         ),
@@ -113,7 +122,7 @@ class _HomeBody extends StatelessWidget {
             ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                BannersWidget(),
+                const BannersWidget(),
                 SizedBox(height: AppHeight.h28),
                 const HomeCategoriesSection(),
                 SizedBox(height: AppHeight.h28),
