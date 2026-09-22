@@ -316,13 +316,13 @@ class _MethodPickerView extends StatelessWidget {
           subtitle: context.loc.enter_your_email,
           onPressed: onEmailPressed,
         ),
-        SizedBox(height: AppHeight.h14),
-        _MethodCard(
-          icon: Icons.phone_outlined,
-          title: context.loc.phone_number,
-          subtitle: context.loc.enter_your_phone_number,
-          onPressed: onPhonePressed,
-        ),
+        SizedBox(height: AppHeight.h97),
+        // _MethodCard(
+        //   icon: Icons.phone_outlined,
+        //   title: context.loc.phone_number,
+        //   subtitle: context.loc.enter_your_phone_number,
+        //   onPressed: onPhonePressed,
+        // ),
       ],
     );
   }
@@ -444,13 +444,13 @@ class _PasswordResetView extends StatelessWidget {
           _SheetTitle(text: context.loc.forgot_password),
           SizedBox(height: AppHeight.h8),
           const _SheetDescription(
-            text: 'Enter the reset token from your email and choose a new password.',
+            text: 'أدخل رمز إعادة التعيين المرسل إلى بريدك الإلكتروني واختر كلمة مرور جديدة.',
           ),
           SizedBox(height: AppHeight.h22),
           LoginTextField(
             controller: tokenController,
             icon: Icons.key_outlined,
-            hintText: 'Reset token',
+            hintText: 'رمز إعادة التعيين',
             keyboardType: TextInputType.text,
             validator: tokenValidator,
           ),

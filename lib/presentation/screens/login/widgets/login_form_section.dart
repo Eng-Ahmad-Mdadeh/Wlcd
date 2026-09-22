@@ -119,7 +119,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
             SizedBox(height: AppHeight.h26),
             const _LoginOrDivider(),
             SizedBox(height: AppHeight.h22),
-            const _CreateAccountButton(),
+              const _CreateAccountButton(),
           ],
         ),
       ),

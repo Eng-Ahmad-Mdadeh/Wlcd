@@ -10,6 +10,7 @@ import 'package:wlcd/domain/entity/auth/verify_email_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'verify_email_event.dart';
+
 part 'verify_email_state.dart';
 
 class VerifyEmailBloc extends Bloc<IVerifyEmailEvent, IVerifyEmailState> {
@@ -17,15 +18,10 @@ class VerifyEmailBloc extends Bloc<IVerifyEmailEvent, IVerifyEmailState> {
     on<SubmitVerifyEmailEvent>(_verifyEmail);
   }
 
-  FutureOr<void> _verifyEmail(
-    SubmitVerifyEmailEvent event,
-    Emitter<IVerifyEmailState> emit,
-  ) async {
+  FutureOr<void> _verifyEmail(SubmitVerifyEmailEvent event, Emitter<IVerifyEmailState> emit) async {
     emit(VerifyEmailLoading());
     try {
-      final usecase = locator<
-        IUseCase<BaseModel<VerifyEmailModel>?, VerifyEmailEntity>
-      >(instanceName: 'VerifyEmail');
+      final usecase = locator<IUseCase<BaseModel<VerifyEmailModel>?, VerifyEmailEntity>>(instanceName: 'VerifyEmail');
       final result = await usecase(event.entity);
       result.fold(
         (failure) => emit(VerifyEmailFailed(failure.message)),
