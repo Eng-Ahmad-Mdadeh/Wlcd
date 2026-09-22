@@ -23,8 +23,21 @@ class BannersModel {
   final List<BannerModel> banners;
 
   factory BannersModel.fromJson(Object? json) => BannersModel(
-    banners: (json as List<dynamic>)
+    banners: _bannersJson(json)
         .map((item) => BannerModel.fromJson(item as Map<String, dynamic>))
         .toList(),
   );
+
+  static List<dynamic> _bannersJson(Object? json) {
+    if (json is List<dynamic>) return json;
+
+    if (json is Map<String, dynamic>) {
+      final banners = json['data'] ?? json['banners'];
+      if (banners is List<dynamic>) return banners;
+    }
+
+    throw const FormatException(
+      'Banners response must contain a list of banners',
+    );
+  }
 }

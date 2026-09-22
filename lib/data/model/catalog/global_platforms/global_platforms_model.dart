@@ -24,8 +24,24 @@ class GlobalPlatformsModel {
   final List<GlobalPlatformModel> platforms;
 
   factory GlobalPlatformsModel.fromJson(Object? json) => GlobalPlatformsModel(
-    platforms: (json as List<dynamic>)
+    platforms: _platformsJson(json)
         .map((item) => GlobalPlatformModel.fromJson(item as Map<String, dynamic>))
         .toList(),
   );
+
+  static List<dynamic> _platformsJson(Object? json) {
+    if (json is List<dynamic>) return json;
+
+    if (json is Map<String, dynamic>) {
+      final platforms = json['data'] ??
+          json['globalPlatforms'] ??
+          json['global_platforms'] ??
+          json['platforms'];
+      if (platforms is List<dynamic>) return platforms;
+    }
+
+    throw const FormatException(
+      'Global platforms response must contain a list of platforms',
+    );
+  }
 }
