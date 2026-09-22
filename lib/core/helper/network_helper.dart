@@ -27,6 +27,7 @@ class NetworkHelper {
   bool _archiveFlowHandled = false;
   bool _sessionExpiredFlowHandled = false;
   bool _applicationHeadersInitialized = false;
+  String? _transientToken;
 
   // Singleton pattern
   static final NetworkHelper _instance = NetworkHelper._internal();
@@ -91,10 +92,14 @@ class NetworkHelper {
 
   /// Fetches the token from the local data source.
   Future<String?> getToken() async {
+    if ((_transientToken ?? '').isNotEmpty) return _transientToken;
     return locator<AuthStorageDataSource>()
         .getToken()
         .then((result) => result.fold((l) => null, (r) => r));
   }
+
+  /// Keeps a non-remembered login usable until the current app process ends.
+  void setTransientToken(String? token) => _transientToken = token;
 
   /// Executes a GET request with optional query parameters.
   Future<Either<ApiException, Response<Map<String, dynamic>>>> get(

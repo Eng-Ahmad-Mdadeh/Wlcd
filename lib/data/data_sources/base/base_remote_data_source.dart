@@ -113,9 +113,9 @@ class BaseRemoteDataSource<T> {
             (e) => Left(e),
             (r) {
           if (!wrappedResponse) {
-            return Right(BaseModel<R>(data: fromJsonT(r.data)));
+            return Right(BaseModel<R>(data: fromJsonT(r.data), responseHeaders: r.headers.map));
           }
-          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT).copyWith(responseHeaders: r.headers.map));
         },
       );
     } on AppException catch (e, s) {
@@ -182,9 +182,9 @@ class BaseRemoteDataSource<T> {
             (r) {
           if (fromJsonT == null) return const Right(null);
           if (!wrappedResponse) {
-            return Right(BaseModel<R>(data: fromJsonT(r.data)));
+            return Right(BaseModel<R>(data: fromJsonT(r.data), responseHeaders: r.headers.map));
           }
-          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT));
+          return Right(BaseModel<R>.fromJson(r.data!, fromJsonT).copyWith(responseHeaders: r.headers.map));
         },
       );
     } on AppException catch (e, s) {

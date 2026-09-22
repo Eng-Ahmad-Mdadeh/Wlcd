@@ -18,6 +18,8 @@ import 'package:wlcd/presentation/bloc/auth/login_with_password/login_with_passw
 import 'package:wlcd/presentation/bloc/auth/request_login_otp/request_login_otp_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_snack_bar.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:wlcd/presentation/cubit/remember_me/remember_me_cubit.dart';
+import 'package:wlcd/presentation/screens/login/widgets/register_email_bottom_sheet.dart';
 
 class LoginFormSection extends StatefulWidget {
   const LoginFormSection({super.key, required this.formKey, required this.isPhoneLogin});
@@ -82,6 +84,17 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               validator: (value) => _validatePassword(context, value),
             ),
             SizedBox(height: AppHeight.h14),
+            BlocBuilder<RememberMeCubit, bool>(
+              builder: (context, rememberMe) => CheckboxListTile(
+                value: rememberMe,
+                onChanged: (value) => context.read<RememberMeCubit>().toggleRememberMe(value ?? false),
+                title: const Text('تذكرني'),
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+                activeColor: AppColors.loginPrimary,
+                dense: true,
+              ),
+            ),
             TextButton(
               onPressed: () => showForgotPasswordBottomSheet(context),
               style: TextButton.styleFrom(
@@ -138,7 +151,13 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     context.read<LoginWithPasswordBloc>().add(
-      SubmitLoginWithPasswordEvent(LoginWithPasswordEntity(email: email, password: password, rememberMe: false)),
+      SubmitLoginWithPasswordEvent(
+        LoginWithPasswordEntity(
+          email: email,
+          password: password,
+          rememberMe: context.read<RememberMeCubit>().state,
+        ),
+      ),
     );
   }
 
@@ -228,7 +247,7 @@ class _CreateAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomElevatedButton(
-      onPressed: () {},
+      onPressed: () => showRegisterEmailBottomSheet(context),
       width: double.infinity,
       borderRadius: AppRadius.r24,
       color: AppColors.loginPrimary,

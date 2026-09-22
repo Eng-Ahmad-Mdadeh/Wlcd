@@ -11,6 +11,7 @@ class BaseModel<T> extends Equatable {
     this.code,
     this.isArchived,
     this.data,
+    this.responseHeaders = const {},
   });
 
   final bool? success;
@@ -19,6 +20,8 @@ class BaseModel<T> extends Equatable {
   @JsonKey(name: 'is_archived')
   final bool? isArchived;
   final T? data;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final Map<String, List<String>> responseHeaders;
 
   BaseModel copyWith({
     bool? success,
@@ -26,6 +29,7 @@ class BaseModel<T> extends Equatable {
     String? code,
     bool? isArchived,
     T? data,
+    Map<String, List<String>>? responseHeaders,
   }) {
     return BaseModel(
       success: success ?? this.success,
@@ -33,6 +37,7 @@ class BaseModel<T> extends Equatable {
       code: code ?? this.code,
       isArchived: isArchived ?? this.isArchived,
       data: data ?? this.data,
+      responseHeaders: responseHeaders ?? this.responseHeaders,
     );
   }
 
@@ -46,5 +51,6 @@ class BaseModel<T> extends Equatable {
     code,
     isArchived,
     data,
+    responseHeaders,
   ];
 }

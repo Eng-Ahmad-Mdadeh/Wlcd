@@ -4,6 +4,7 @@ class AppStoragePaths {
   //#region Auth
   static const String token = 'token';
   static const String sessionId = 'sessionId';
+  static const String accountId = 'accountId';
   //#endregion
 
   //#region Ad Comparison
