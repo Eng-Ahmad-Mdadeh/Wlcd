@@ -4,22 +4,34 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_search.dart';
 
 class SearchHeader extends StatelessWidget {
-  const SearchHeader({super.key});
+  const SearchHeader({super.key, this.onSubmitted, this.onClose});
+
+  final ValueChanged<String>? onSubmitted;
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-         Expanded(
+        Expanded(
           child: CustomSearch(
             color: AppColors.searchColor,
             prefixIconColor: AppColors.searchIcon,
             hintColor: AppColors.searchHeaderText,
             borderRadius: AppRadius.r12,
+            onFieldSubmitted: onSubmitted,
           ),
         ),
         SizedBox(width: AppWidth.w12),
-        const Icon(Icons.close, size: 24, color: AppColors.searchCloseIcon),
+        IconButton(
+          tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+          onPressed: onClose,
+          icon: const Icon(
+            Icons.close,
+            size: 24,
+            color: AppColors.searchCloseIcon,
+          ),
+        ),
       ],
     );
   }
