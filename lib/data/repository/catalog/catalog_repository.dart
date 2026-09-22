@@ -10,6 +10,7 @@ import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
 import 'package:wlcd/data/model/catalog/global_platforms/global_platforms_model.dart';
 import 'package:wlcd/data/model/catalog/recommendations/recommendations_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
+import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 import 'package:wlcd/domain/repository/catalog/i_catalog_repository.dart';
 
 @Injectable(as: ICatalogRepository)
@@ -42,4 +43,9 @@ class CatalogRepository implements ICatalogRepository {
   @override
   Future<Either<AppException, BaseModel<CourseFiltersModel>?>>
   getCourseFilters() => _remoteDataSource.getCourseFilters();
+
+  @override
+  Future<Either<AppException, BaseModel<CoursesModel>?>> getCourses(
+    GetCoursesEntity entity,
+  ) => _remoteDataSource.getCourses(entity);
 }

@@ -78,6 +78,7 @@ import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
 import '../../../domain/entity/catalog/get_featured_courses_entity.dart'
     as _i734;
+import '../../../domain/entity/catalog/get_courses_entity.dart' as _i1107;
 import '../../../domain/entity/course_details/course_details_entity.dart'
     as _i707;
 import '../../../domain/entity/favorites/favorites_entity.dart' as _i197;
@@ -120,6 +121,7 @@ import '../../../domain/usecase/auth/verify_email_usecase.dart' as _i46;
 import '../../../domain/usecase/auth/verify_phone_otp_usecase.dart' as _i827;
 import '../../../domain/usecase/catalog/get_featured_courses_usecase.dart'
     as _i942;
+import '../../../domain/usecase/catalog/get_courses_usecase.dart' as _i1108;
 import '../../../domain/usecase/catalog/get_recommended_courses_usecase.dart'
     as _i205;
 import '../../../domain/usecase/catalog/list_categories_usecase.dart' as _i193;
@@ -246,6 +248,15 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i942.GetFeaturedCoursesUsecase(gh<_i981.ICatalogRepository>()),
       instanceName: 'GetFeaturedCourses',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i102.CoursesModel>?,
+        _i1107.GetCoursesEntity
+      >
+    >(
+      () => _i1108.GetCoursesUsecase(gh<_i981.ICatalogRepository>()),
+      instanceName: 'GetCourses',
     );
     gh.factory<_i244.AuthStorageDataSource>(
       () => _i244.AuthStorageDataSource(gh<_i558.FlutterSecureStorage>()),
