@@ -23,7 +23,7 @@ class BaseModel<T> extends Equatable {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final Map<String, List<String>> responseHeaders;
 
-  BaseModel copyWith({
+  BaseModel<T> copyWith({
     bool? success,
     String? message,
     String? code,
@@ -31,7 +31,7 @@ class BaseModel<T> extends Equatable {
     T? data,
     Map<String, List<String>>? responseHeaders,
   }) {
-    return BaseModel(
+    return BaseModel<T>(
       success: success ?? this.success,
       message: message ?? this.message,
       code: code ?? this.code,
