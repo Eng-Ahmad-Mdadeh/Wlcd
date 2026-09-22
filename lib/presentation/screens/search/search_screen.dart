@@ -6,10 +6,10 @@ import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/catalog/course/course_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 import 'package:wlcd/presentation/bloc/catalog/courses/courses_bloc.dart';
-import 'package:wlcd/presentation/widgets/course/course_card.dart';
 import 'package:wlcd/presentation/screens/search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/search/widgets/search_header.dart';
+import 'package:wlcd/presentation/widgets/course/course_card.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/no_result_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
@@ -42,65 +42,164 @@ class _SearchBodyState extends State<_SearchBody> {
     context.read<CoursesBloc>().add(LoadCoursesEvent(_query));
   }
 
+  void _reload() {
+    context.read<CoursesBloc>().add(LoadCoursesEvent(_query));
+  }
+
+  Future<void> _refresh() async {
+    final bloc = context.read<CoursesBloc>();
+    bloc.add(LoadCoursesEvent(_query));
+    await bloc.stream.firstWhere((state) => state is! CoursesLoading);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18, vertical: AppPaddingHeight.p8),
-                children: [
-                  SizedBox(height: 8),
-                  SearchHeader(onSubmitted: _search),
-                  SizedBox(height: 12),
-                  FilterRow(),
-                  SizedBox(height: 18),
-                  BlocBuilder<CoursesBloc, ICoursesState>(
-                    builder: (context, state) {
-                      if (state is CoursesFailed) {
-                        return SizedBox(
-                          height: AppHeight.h300,
-                          child: RetryWidget(
-                            onReload: () => context.read<CoursesBloc>().add(
-                              LoadCoursesEvent(_query),
-                            ),
-                          ),
-                        );
-                      }
-                      if (state is! CoursesLoaded) {
-                        return SizedBox(
-                          height: AppHeight.h300,
-                          child: const LoadingWidget(0),
-                        );
-                      }
-
-                      final courses = state.courses?.data ?? const [];
-                      return Column(
-                        children: [
-                          ResultHeader(resultCount: courses.length),
-                          SizedBox(height: AppHeight.h12),
-                          if (courses.isEmpty)
-                            const NoResultWidget(title: 'No courses found')
-                          else
-                            for (var index = 0; index < courses.length; index++) ...[
-                              _CourseResult(course: courses[index]),
-                              if (index < courses.length - 1)
-                                SizedBox(height: AppHeight.h14),
-                            ],
-                        ],
-                      );
-                    },
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body: SafeArea(
+        child: BlocBuilder<CoursesBloc, ICoursesState>(
+          builder: (context, state) {
+            return RefreshIndicator(
+              onRefresh: _refresh,
+              child: CustomScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                slivers: [
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SearchControlsDelegate(
+                      onSubmitted: _search,
+                      onClose: () => Navigator.maybePop(context),
+                    ),
+                  ),
+                  ..._resultSlivers(state),
+                  SliverToBoxAdapter(
+                    child: SizedBox(height: AppHeight.h30),
                   ),
                 ],
               ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _resultSlivers(ICoursesState state) {
+    if (state is CoursesFailed) {
+      return [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: RetryWidget(onReload: _reload),
+        ),
+      ];
+    }
+
+    if (state is! CoursesLoaded) {
+      return const [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: LoadingWidget(0),
+        ),
+      ];
+    }
+
+    final courses = state.courses?.data ?? const <CourseModel>[];
+    return [
+      SliverPadding(
+        padding: EdgeInsetsDirectional.fromSTEB(
+          AppPaddingWidth.p18,
+          AppPaddingHeight.p18,
+          AppPaddingWidth.p18,
+          AppPaddingHeight.p12,
+        ),
+        sliver: SliverToBoxAdapter(
+          child: ResultHeader(resultCount: courses.length),
+        ),
+      ),
+      if (courses.isEmpty)
+        const SliverFillRemaining(
+          hasScrollBody: false,
+          child: NoResultWidget(title: 'No courses found'),
+        )
+      else
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index.isOdd) return SizedBox(height: AppHeight.h14);
+                return _CourseResult(course: courses[index ~/ 2]);
+              },
+              childCount: courses.length * 2 - 1,
             ),
+          ),
+        ),
+    ];
+  }
+}
+
+class _SearchControlsDelegate extends SliverPersistentHeaderDelegate {
+  const _SearchControlsDelegate({
+    required this.onSubmitted,
+    required this.onClose,
+  });
+
+  final ValueChanged<String> onSubmitted;
+  final VoidCallback onClose;
+
+  @override
+  double get minExtent => AppHeight.h120;
+
+  @override
+  double get maxExtent => AppHeight.h120;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        boxShadow: overlapsContent
+            ? const [
+                BoxShadow(
+                  color: AppColors.greySec,
+                  blurRadius: 8,
+                  offset: Offset(0, 3),
+                ),
+              ]
+            : null,
+      ),
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(
+          AppPaddingWidth.p18,
+          AppPaddingHeight.p8,
+          AppPaddingWidth.p18,
+          AppPaddingHeight.p8,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SearchHeader(
+              onSubmitted: onSubmitted,
+              onClose: onClose,
+            ),
+            const FilterRow(),
           ],
         ),
       ),
     );
   }
+
+  @override
+  bool shouldRebuild(covariant _SearchControlsDelegate oldDelegate) =>
+      oldDelegate.onSubmitted != onSubmitted || oldDelegate.onClose != onClose;
 }
 
 class _CourseResult extends StatelessWidget {
