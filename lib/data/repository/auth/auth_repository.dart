@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
+import 'package:wlcd/core/helper/network_helper.dart';
+import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/data/data_sources/auth/auth_remote_data_source.dart';
 import 'package:wlcd/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:wlcd/data/model/auth/auth_model.dart';
@@ -30,12 +32,19 @@ class AuthRepository implements IAuthRepository {
   final AuthStorageDataSource _storageDataSource;
 
   Future<Either<AppException, BaseModel<AuthModel>?>> _cacheAuth(
-    Future<Either<AppException, BaseModel<AuthModel>?>> request,
-  ) async {
+    Future<Either<AppException, BaseModel<AuthModel>?>> request, {
+    bool rememberMe = true,
+  }) async {
     final result = await request;
     await result.fold((error) async {}, (response) async {
       final auth = response?.data;
-      await _storageDataSource.storeToken(auth?.accessToken);
+      locator<NetworkHelper>().setTransientToken(auth?.accessToken);
+      if (rememberMe) {
+        await _storageDataSource.storeToken(auth?.accessToken);
+      } else {
+        await _storageDataSource.clearToken();
+      }
+      await _storageDataSource.storeRememberMe(rememberMe);
       await _storageDataSource.storeSessionId(auth?.sessionId);
     });
     return result;
@@ -53,7 +62,22 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<Either<AppException, BaseModel<VerifyEmailModel>?>> verifyEmail(VerifyEmailEntity data) {
-    return _remoteDataSource.verifyEmail(data);
+    return _verifyEmailAndCacheAccount(data);
+  }
+
+  Future<Either<AppException, BaseModel<VerifyEmailModel>?>> _verifyEmailAndCacheAccount(
+    VerifyEmailEntity data,
+  ) async {
+    final result = await _remoteDataSource.verifyEmail(data);
+    await result.fold(
+      (_) async {},
+      (response) async {
+        if (response?.data?.verified == true) {
+          await _storageDataSource.storeAccountId(response?.data?.accountId);
+        }
+      },
+    );
+    return result;
   }
 
   @override
@@ -67,7 +91,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<Either<AppException, BaseModel<AuthModel>?>> loginWithPassword(LoginWithPasswordEntity data) =>
-      _cacheAuth(_remoteDataSource.loginWithPassword(data));
+      _cacheAuth(_remoteDataSource.loginWithPassword(data), rememberMe: data.rememberMe);
 
   @override
   Future<Either<AppException, BaseModel<PhoneOtpChallengeModel>?>> requestLoginOtp(RequestLoginOtpEntity data) =>
@@ -89,6 +113,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Either<AppException, BaseModel<OperationSuccessModel>?>> logout() async {
     final result = await _remoteDataSource.logout();
+    locator<NetworkHelper>().setTransientToken(null);
     await _storageDataSource.logout();
     return result;
   }

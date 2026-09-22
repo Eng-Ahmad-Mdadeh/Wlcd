@@ -14,6 +14,7 @@ class AuthStorageDataSource {
     try {
       await _storage.delete(key: AppStoragePaths.token);
       await _storage.delete(key: AppStoragePaths.sessionId);
+      await _storage.delete(key: AppStoragePaths.accountId);
       await _storage.delete(key: AppStoragePaths.profileComplete);
       await _storage.delete(key: AppStoragePaths.onboardingComplete);
       return const Right(null);
@@ -32,6 +33,24 @@ class AuthStorageDataSource {
     }
   }
 
+  Future<Either<AppException, void>> clearToken() async {
+    try {
+      await _storage.delete(key: AppStoragePaths.token);
+      return const Right(null);
+    } catch (e) {
+      return Left(UnKnownException(e.toString()));
+    }
+  }
+
+  Future<Either<AppException, void>> storeRememberMe(bool rememberMe) async {
+    try {
+      await _storage.write(key: AppStoragePaths.rememberMe, value: rememberMe.toString());
+      return const Right(null);
+    } catch (e) {
+      return Left(UnKnownException(e.toString()));
+    }
+  }
+
   Future<Either<AppException, String?>> getToken() async {
     try {
       return Right(await _storage.read(key: AppStoragePaths.token));
@@ -44,6 +63,16 @@ class AuthStorageDataSource {
     try {
       if ((sessionId ?? '').isEmpty) return const Right(null);
       await _storage.write(key: AppStoragePaths.sessionId, value: sessionId);
+      return const Right(null);
+    } catch (e) {
+      return Left(UnKnownException(e.toString()));
+    }
+  }
+
+  Future<Either<AppException, void>> storeAccountId(String? accountId) async {
+    try {
+      if ((accountId ?? '').isEmpty) return const Right(null);
+      await _storage.write(key: AppStoragePaths.accountId, value: accountId);
       return const Right(null);
     } catch (e) {
       return Left(UnKnownException(e.toString()));

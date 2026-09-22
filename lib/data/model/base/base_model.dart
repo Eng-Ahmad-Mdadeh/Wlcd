@@ -20,14 +20,14 @@ class BaseModel<T> extends Equatable {
   final bool? isArchived;
   final T? data;
 
-  BaseModel copyWith({
+  BaseModel<T> copyWith({
     bool? success,
     String? message,
     String? code,
     bool? isArchived,
     T? data,
   }) {
-    return BaseModel(
+    return BaseModel<T>(
       success: success ?? this.success,
       message: message ?? this.message,
       code: code ?? this.code,
