@@ -14,8 +14,7 @@ class GlobalPlatformModel extends GlobalPlatformEntity {
     required super.link,
   });
 
-  factory GlobalPlatformModel.fromJson(Map<String, dynamic> json) =>
-      _$GlobalPlatformModelFromJson(json);
+  factory GlobalPlatformModel.fromJson(Map<String, dynamic> json) => _$GlobalPlatformModelFromJson(json);
 }
 
 class GlobalPlatformsModel {

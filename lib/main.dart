@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
     navigatorKey: navigatorKey,
     debugLogDiagnostics: kDebugMode,
     // observers: [FirebaseAnalyticsObserver(analytics: _firebaseAnalytics)],
-    initialLocation: SplashRoute().location,
+    initialLocation: HomeRoute().location,
     // redirect: _guard,
   );
 
