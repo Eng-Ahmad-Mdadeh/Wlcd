@@ -5,15 +5,17 @@ import 'package:wlcd/data/model/catalog/global_platforms/global_platforms_model.
 
 void main() {
   test('parses banners response', () {
-    final result = BannersModel.fromJson([
-      {
-        'bannerId': 'banner-id',
-        'image': 'https://example.com/banner.png',
-        'categoryId': 'category-id',
-        'courseId': null,
-        'link': null,
-      },
-    ]);
+    final result = BannersModel.fromJson({
+      'data': [
+        {
+          'bannerId': 'banner-id',
+          'image': 'https://example.com/banner.png',
+          'categoryId': 'category-id',
+          'courseId': null,
+          'link': null,
+        },
+      ],
+    });
 
     expect(result.banners.single.bannerId, 'banner-id');
     expect(result.banners.single.categoryId, 'category-id');
@@ -21,19 +23,33 @@ void main() {
   });
 
   test('parses global platforms response', () {
-    final result = GlobalPlatformsModel.fromJson([
-      {
-        'id': 'platform-id',
-        'title': 'Coursera',
-        'tag': 'منصة عالمية',
-        'image': 'https://example.com/coursera.png',
-        'description': 'Description',
-        'link': 'https://www.coursera.org',
-      },
-    ]);
+    final result = GlobalPlatformsModel.fromJson({
+      'data': [
+        {
+          'id': 'platform-id',
+          'title': 'Coursera',
+          'tag': 'منصة عالمية',
+          'image': 'https://example.com/coursera.png',
+          'description': 'Description',
+          'link': 'https://www.coursera.org',
+        },
+      ],
+    });
 
     expect(result.platforms.single.title, 'Coursera');
     expect(result.platforms.single.link, 'https://www.coursera.org');
+  });
+
+  test('also parses named and direct list collection responses', () {
+    final banners = BannersModel.fromJson({'banners': <dynamic>[]});
+    final platforms = GlobalPlatformsModel.fromJson({
+      'globalPlatforms': <dynamic>[],
+    });
+    final directPlatforms = GlobalPlatformsModel.fromJson(<dynamic>[]);
+
+    expect(banners.banners, isEmpty);
+    expect(platforms.platforms, isEmpty);
+    expect(directPlatforms.platforms, isEmpty);
   });
 
   test('normalizes category and tag identifiers in course filters', () {
