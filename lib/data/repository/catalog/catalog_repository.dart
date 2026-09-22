@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/data_sources/catalog/catalog_remote_data_source.dart';
-import 'package:wlcd/data/data_sources/catalog/courses_remote_data_source.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/data/model/catalog/categories/categories_model.dart';
 import 'package:wlcd/data/model/catalog/banners/banners_model.dart';
@@ -16,10 +15,9 @@ import 'package:wlcd/domain/repository/catalog/i_catalog_repository.dart';
 
 @Injectable(as: ICatalogRepository)
 class CatalogRepository implements ICatalogRepository {
-  const CatalogRepository(this._remoteDataSource, this._coursesRemoteDataSource);
+  const CatalogRepository(this._remoteDataSource);
 
   final CatalogRemoteDataSource _remoteDataSource;
-  final CoursesRemoteDataSource _coursesRemoteDataSource;
 
   @override
   Future<Either<AppException, BaseModel<CategoriesModel>?>> listCategories() =>
@@ -49,5 +47,5 @@ class CatalogRepository implements ICatalogRepository {
   @override
   Future<Either<AppException, BaseModel<CoursesModel>?>> getCourses(
     GetCoursesEntity entity,
-  ) => _coursesRemoteDataSource.getCourses(entity);
+  ) => _remoteDataSource.getCourses(entity);
 }

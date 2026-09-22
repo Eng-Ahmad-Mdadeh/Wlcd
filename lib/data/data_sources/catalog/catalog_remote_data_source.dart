@@ -11,20 +11,21 @@ import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
 import 'package:wlcd/data/model/catalog/global_platforms/global_platforms_model.dart';
 import 'package:wlcd/data/model/catalog/recommendations/recommendations_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
+import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 
 @injectable
 class CatalogRemoteDataSource extends BaseRemoteDataSource<Object> {
-  CatalogRemoteDataSource() : super(ApiEndpoints.catalog);
+  CatalogRemoteDataSource() : super('');
 
   Future<Either<AppException, BaseModel<CategoriesModel>?>> listCategories() => fetchDataAs<CategoriesModel>(
-    endpoint: ApiEndpoints.categories,
+    endpoint: _catalogEndpoint(ApiEndpoints.categories),
     fromJsonT: _categoriesFromJson,
     wrappedResponse: false,
   );
 
   Future<Either<AppException, BaseModel<CoursesModel>?>> getFeaturedCourses(GetFeaturedCoursesEntity entity) =>
       fetchDataAs<CoursesModel>(
-        endpoint: ApiEndpoints.featuredCourses,
+        endpoint: _catalogEndpoint(ApiEndpoints.featuredCourses),
         queryParams: entity.toQueryParameters(),
         fromJsonT: _coursesFromJson,
         wrappedResponse: false,
@@ -32,14 +33,14 @@ class CatalogRemoteDataSource extends BaseRemoteDataSource<Object> {
 
   Future<Either<AppException, BaseModel<RecommendationsModel>?>> getRecommendedCourses() =>
       fetchDataAs<RecommendationsModel>(
-        endpoint: ApiEndpoints.recommendedCourses,
+        endpoint: _catalogEndpoint(ApiEndpoints.recommendedCourses),
         fromJsonT: _recommendationsFromJson,
         wrappedResponse: false,
       );
 
   Future<Either<AppException, BaseModel<BannersModel>?>> getBanners() =>
       fetchDataAs<BannersModel>(
-        endpoint: ApiEndpoints.banners,
+        endpoint: _catalogEndpoint(ApiEndpoints.banners),
         fromJsonT: BannersModel.fromJson,
         wrappedResponse: false,
       );
@@ -47,7 +48,7 @@ class CatalogRemoteDataSource extends BaseRemoteDataSource<Object> {
   Future<Either<AppException, BaseModel<GlobalPlatformsModel>?>>
   getGlobalPlatforms() =>
       fetchDataAs<GlobalPlatformsModel>(
-        endpoint: ApiEndpoints.globalPlatforms,
+        endpoint: _catalogEndpoint(ApiEndpoints.globalPlatforms),
         fromJsonT: GlobalPlatformsModel.fromJson,
         wrappedResponse: false,
       );
@@ -55,10 +56,22 @@ class CatalogRemoteDataSource extends BaseRemoteDataSource<Object> {
   Future<Either<AppException, BaseModel<CourseFiltersModel>?>>
   getCourseFilters() =>
       fetchDataAs<CourseFiltersModel>(
-        endpoint: ApiEndpoints.courseFilters,
+        endpoint: _catalogEndpoint(ApiEndpoints.courseFilters),
         fromJsonT: _courseFiltersFromJson,
         wrappedResponse: false,
       );
+
+  Future<Either<AppException, BaseModel<CoursesModel>?>> getCourses(
+    GetCoursesEntity entity,
+  ) => fetchDataAs<CoursesModel>(
+    endpoint: ApiEndpoints.courses,
+    queryParams: entity.toQueryParameters(),
+    fromJsonT: _coursesFromJson,
+    wrappedResponse: false,
+  );
+
+  static String _catalogEndpoint(String endpoint) =>
+      '${ApiEndpoints.catalog}$endpoint';
 
   static CategoriesModel _categoriesFromJson(Object? json) => CategoriesModel.fromJson(json as Map<String, dynamic>);
 

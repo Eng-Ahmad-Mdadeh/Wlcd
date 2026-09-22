@@ -17,8 +17,6 @@ import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
 import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
     as _i344;
-import '../../../data/data_sources/catalog/courses_remote_data_source.dart'
-    as _i1106;
 import '../../../data/data_sources/course_details/course_details_remote_data_source.dart'
     as _i647;
 import '../../../data/data_sources/favorites/favorites_remote_data_source.dart'
@@ -219,9 +217,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i344.CatalogRemoteDataSource>(
       () => _i344.CatalogRemoteDataSource(),
     );
-    gh.factory<_i1106.CoursesRemoteDataSource>(
-      () => _i1106.CoursesRemoteDataSource(),
-    );
     gh.factory<_i647.CourseDetailsRemoteDataSource>(
       () => _i647.CourseDetailsRemoteDataSource(),
     );
@@ -243,10 +238,7 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i981.ICatalogRepository>(
-      () => _i601.CatalogRepository(
-        gh<_i344.CatalogRemoteDataSource>(),
-        gh<_i1106.CoursesRemoteDataSource>(),
-      ),
+      () => _i601.CatalogRepository(gh<_i344.CatalogRemoteDataSource>()),
     );
     gh.factory<
       _i759.IUseCase<
