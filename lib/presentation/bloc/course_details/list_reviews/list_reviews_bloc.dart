@@ -10,6 +10,7 @@ import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'list_reviews_event.dart';
+
 part 'list_reviews_state.dart';
 
 class ListReviewsBloc extends Bloc<IListReviewsEvent, IListReviewsState> {
@@ -17,10 +18,7 @@ class ListReviewsBloc extends Bloc<IListReviewsEvent, IListReviewsState> {
     on<LoadListReviewsEvent>(_load);
   }
 
-  FutureOr<void> _load(
-    LoadListReviewsEvent event,
-    Emitter<IListReviewsState> emit,
-  ) async {
+  FutureOr<void> _load(LoadListReviewsEvent event, Emitter<IListReviewsState> emit) async {
     emit(const ListReviewsLoading());
     try {
       final usecase = locator<IUseCase<BaseModel<ContractJsonModel>?, CourseDetailsEntity>>(

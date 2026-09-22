@@ -77,7 +77,7 @@ class _BodyLoginScreenState extends State<BodyLoginScreen> with SingleTickerProv
                     padding: EdgeInsets.fromLTRB(AppWidth.w20, 0, AppWidth.w20, AppHeight.h8),
                     child: Column(
                       children: [
-                        LoginTabs(controller: _tabController),
+                        // LoginTabs(controller: _tabController),
                         SizedBox(height: AppHeight.h25),
                         LoginFormSection(formKey: loginFormKey, isPhoneLogin: _isPhoneLogin),
                         SizedBox(height: AppHeight.h24),

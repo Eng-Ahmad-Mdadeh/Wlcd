@@ -46,27 +46,24 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<LoginWithPasswordBloc, ILoginWithPasswordState>(
-          listener: _onPasswordLoginState,
-        ),
-        BlocListener<RequestLoginOtpBloc, IRequestLoginOtpState>(
-          listener: _onLoginOtpRequestState,
-        ),
+        BlocListener<LoginWithPasswordBloc, ILoginWithPasswordState>(listener: _onPasswordLoginState),
+        BlocListener<RequestLoginOtpBloc, IRequestLoginOtpState>(listener: _onLoginOtpRequestState),
       ],
       child: Form(
         key: widget.formKey,
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.isPhoneLogin) ...[
-            LoginTextField(
-              controller: _phoneController,
-              icon: Icons.phone_outlined,
-              hintText: context.loc.enter_phone_number,
-              keyboardType: TextInputType.phone,
-              validator: (value) => _validatePhone(context, value),
-            ),
-          ] else ...[
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // if (widget.isPhoneLogin) ...[
+            //   LoginTextField(
+            //     controller: _phoneController,
+            //     icon: Icons.phone_outlined,
+            //     hintText: context.loc.enter_phone_number,
+            //     keyboardType: TextInputType.phone,
+            //     validator: (value) => _validatePhone(context, value),
+            //   ),
+            // ]
+            // else ...[
             LoginTextField(
               controller: _emailController,
               icon: Icons.email_outlined,
@@ -100,32 +97,30 @@ class _LoginFormSectionState extends State<LoginFormSection> {
                 fontWeight: AppFontWeight.bold,
               ),
             ),
+            // ],
+            BlocBuilder<LoginWithPasswordBloc, ILoginWithPasswordState>(
+              builder: (context, passwordState) {
+                return BlocBuilder<RequestLoginOtpBloc, IRequestLoginOtpState>(
+                  builder: (context, otpState) {
+                    final isLoading = passwordState is LoginWithPasswordLoading || otpState is RequestLoginOtpLoading;
+                    return CustomSubmitButton(
+                      title: context.loc.sign_in,
+                      marginTop: AppMarginHeight.m30,
+                      borderRadius: AppRadius.r24,
+                      buttonColor: AppColors.loginPrimary,
+                      isLoading: isLoading,
+                      verification: !isLoading,
+                      onPressed: _submit,
+                    );
+                  },
+                );
+              },
+            ),
+            SizedBox(height: AppHeight.h26),
+            const _LoginOrDivider(),
+            SizedBox(height: AppHeight.h22),
+            const _CreateAccountButton(),
           ],
-          BlocBuilder<LoginWithPasswordBloc, ILoginWithPasswordState>(
-            builder: (context, passwordState) {
-              return BlocBuilder<RequestLoginOtpBloc, IRequestLoginOtpState>(
-                builder: (context, otpState) {
-                  final isLoading =
-                      passwordState is LoginWithPasswordLoading ||
-                      otpState is RequestLoginOtpLoading;
-                  return CustomSubmitButton(
-                    title: context.loc.sign_in,
-                    marginTop: AppMarginHeight.m30,
-                    borderRadius: AppRadius.r24,
-                    buttonColor: AppColors.loginPrimary,
-                    isLoading: isLoading,
-                    verification: !isLoading,
-                    onPressed: _submit,
-                  );
-                },
-              );
-            },
-          ),
-          SizedBox(height: AppHeight.h26),
-          const _LoginOrDivider(),
-          SizedBox(height: AppHeight.h22),
-          const _CreateAccountButton(),
-        ],
         ),
       ),
     );
@@ -135,9 +130,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     if (!(widget.formKey.currentState?.validate() ?? false)) return;
     if (widget.isPhoneLogin) {
       context.read<RequestLoginOtpBloc>().add(
-        SubmitRequestLoginOtpEvent(
-          RequestLoginOtpEntity(phone: _phoneController.text.trim()),
-        ),
+        SubmitRequestLoginOtpEvent(RequestLoginOtpEntity(phone: _phoneController.text.trim())),
       );
       return;
     }
@@ -145,20 +138,11 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     context.read<LoginWithPasswordBloc>().add(
-      SubmitLoginWithPasswordEvent(
-        LoginWithPasswordEntity(
-          email: email,
-          password: password,
-          rememberMe: false,
-        ),
-      ),
+      SubmitLoginWithPasswordEvent(LoginWithPasswordEntity(email: email, password: password, rememberMe: false)),
     );
   }
 
-  void _onPasswordLoginState(
-    BuildContext context,
-    ILoginWithPasswordState state,
-  ) {
+  void _onPasswordLoginState(BuildContext context, ILoginWithPasswordState state) {
     if (state is LoginWithPasswordLoaded) {
       HomeRoute().go(context);
     } else if (state is LoginWithPasswordFailed) {
@@ -166,10 +150,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
     }
   }
 
-  void _onLoginOtpRequestState(
-    BuildContext context,
-    IRequestLoginOtpState state,
-  ) {
+  void _onLoginOtpRequestState(BuildContext context, IRequestLoginOtpState state) {
     if (state is RequestLoginOtpLoaded) {
       final challengeId = state.challenge?.data?.challengeId;
       if (challengeId == null || challengeId.isEmpty) {
@@ -187,12 +168,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   }
 
   void _showFailure(BuildContext context, String message) {
-    showCustomSnackBar(
-      context: context,
-      title: 'خطأ',
-      message: message,
-      contentType: ContentType.failure,
-    );
+    showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
   }
 
   String? _validateEmail(BuildContext context, String? value) {

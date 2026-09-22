@@ -256,7 +256,8 @@ class _CourseDetailsBody extends StatelessWidget {
           ),
         );
       }
-      if (_tabType(availableTab) == 'resources') {
+      // if (_tabType(availableTab) == 'resources') {
+      if (_tabType(availableTab) == 'overview') {
         tabs.add(
           _CourseDetailsTab(
             tab: const Tab(text: 'resources'),

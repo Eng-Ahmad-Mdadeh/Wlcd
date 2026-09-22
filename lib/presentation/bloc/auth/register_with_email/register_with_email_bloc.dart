@@ -10,23 +10,20 @@ import 'package:wlcd/domain/entity/auth/register_with_email_entity.dart';
 import 'package:wlcd/domain/usecase/i_use_case.dart';
 
 part 'register_with_email_event.dart';
+
 part 'register_with_email_state.dart';
 
-class RegisterWithEmailBloc
-    extends Bloc<IRegisterWithEmailEvent, IRegisterWithEmailState> {
+class RegisterWithEmailBloc extends Bloc<IRegisterWithEmailEvent, IRegisterWithEmailState> {
   RegisterWithEmailBloc() : super(RegisterWithEmailInitial()) {
     on<SubmitRegisterWithEmailEvent>(_registerWithEmail);
   }
 
-  FutureOr<void> _registerWithEmail(
-    SubmitRegisterWithEmailEvent event,
-    Emitter<IRegisterWithEmailState> emit,
-  ) async {
+  FutureOr<void> _registerWithEmail(SubmitRegisterWithEmailEvent event, Emitter<IRegisterWithEmailState> emit) async {
     emit(RegisterWithEmailLoading());
     try {
-      final usecase = locator<
-        IUseCase<BaseModel<AuthModel>?, RegisterWithEmailEntity>
-      >(instanceName: 'RegisterWithEmail');
+      final usecase = locator<IUseCase<BaseModel<AuthModel>?, RegisterWithEmailEntity>>(
+        instanceName: 'RegisterWithEmail',
+      );
       final result = await usecase(event.entity);
       result.fold(
         (failure) => emit(RegisterWithEmailFailed(failure.message)),
