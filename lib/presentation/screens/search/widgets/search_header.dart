@@ -4,7 +4,9 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/custom_search.dart';
 
 class SearchHeader extends StatelessWidget {
-  const SearchHeader({super.key});
+  const SearchHeader({super.key, this.onSubmitted});
+
+  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class SearchHeader extends StatelessWidget {
             prefixIconColor: AppColors.searchIcon,
             hintColor: AppColors.searchHeaderText,
             borderRadius: AppRadius.r12,
+            onFieldSubmitted: onSubmitted,
           ),
         ),
         SizedBox(width: AppWidth.w12),

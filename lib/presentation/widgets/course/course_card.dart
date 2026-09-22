@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
@@ -13,6 +12,9 @@ class CourseCard extends StatelessWidget {
     required this.price,
     required this.ratingCount,
     required this.thumbnailColor,
+    this.imageUrl,
+    this.category,
+    this.ratingAverage,
     this.onTap,
   });
 
@@ -20,6 +22,9 @@ class CourseCard extends StatelessWidget {
   final String price;
   final String ratingCount;
   final Color thumbnailColor;
+  final String? imageUrl;
+  final String? category;
+  final double? ratingAverage;
   final VoidCallback? onTap;
 
   @override
@@ -44,13 +49,15 @@ class CourseCard extends StatelessWidget {
                 color: thumbnailColor,
                 borderRadius: BorderRadius.circular(AppRadius.r10),
               ),
-              child: ImageView(
-                imagePath: 'https://cdn.pixabay.com/photo/2019/08/09/06/12/car-racing-4394450_1280.jpg',
-                radius: BorderRadius.circular(AppRadius.r10),
-                fit: BoxFit.cover,
-                width: AppWidth.w110,
-                height: AppHeight.h110,
-              ),
+              child: imageUrl?.isNotEmpty ?? false
+                  ? ImageView(
+                      imagePath: imageUrl!,
+                      radius: BorderRadius.circular(AppRadius.r10),
+                      fit: BoxFit.cover,
+                      width: AppWidth.w110,
+                      height: AppHeight.h110,
+                    )
+                  : const Icon(Icons.school_outlined, color: AppColors.white),
             ),
             SizedBox(width: AppWidth.w10),
             Expanded(
@@ -72,7 +79,11 @@ class CourseCard extends StatelessWidget {
                     children: [
                       const Icon(Icons.star, size: 14, color: AppColors.searchStar),
                       SizedBox(width: AppWidth.w4),
-                      BodyTitle(text: '4.8 $ratingCount', fontSize: 12, color: AppColors.searchRatingText),
+                      BodyTitle(
+                        text: '${ratingAverage?.toStringAsFixed(1) ?? '0.0'} $ratingCount',
+                        fontSize: 12,
+                        color: AppColors.searchRatingText,
+                      ),
                       Spacer(),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p7, vertical: AppPaddingHeight.p3),
@@ -80,8 +91,8 @@ class CourseCard extends StatelessWidget {
                           color: AppColors.searchTagBackground,
                           borderRadius: BorderRadius.circular(AppRadius.r6),
                         ),
-                        child: const BodyTitle(
-                          text: 'UX Design',
+                        child: BodyTitle(
+                          text: category ?? '',
                           fontSize: 10,
                           color: AppColors.searchTagText,
                           fontWeight: FontWeight.w500,
