@@ -382,7 +382,7 @@ mixin $TeachersRoute on GoRouteData {
 
 mixin $TeacherProfileRoute on GoRouteData {
   static TeacherProfileRoute _fromState(GoRouterState state) =>
-      TeacherProfileRoute($extra: state.extra as TeacherData);
+      TeacherProfileRoute($extra: state.extra as InstructorModel);
 
   TeacherProfileRoute get _self => this as TeacherProfileRoute;
 

@@ -5,7 +5,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -13,7 +14,7 @@ import 'package:wlcd/presentation/widgets/text/section_title.dart';
 class TeacherBookingSheet extends StatefulWidget {
   const TeacherBookingSheet({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   State<TeacherBookingSheet> createState() => _TeacherBookingSheetState();

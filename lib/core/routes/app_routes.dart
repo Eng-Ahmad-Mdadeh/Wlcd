@@ -23,7 +23,7 @@ import 'package:wlcd/presentation/screens/more/more_screen.dart';
 import 'package:wlcd/presentation/screens/notifications/notifications_screen.dart';
 import 'package:wlcd/presentation/screens/order_history/order_history_screen.dart';
 import 'package:wlcd/presentation/screens/personal_information/personal_information_screen.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/data/model/instructor/instructor_model.dart';
 
 import 'package:wlcd/presentation/screens/profile/profile_screen.dart';
 import 'package:wlcd/presentation/screens/progress_history/progress_history_screen.dart';
@@ -173,7 +173,7 @@ class TeachersRoute extends GoRouteData with $TeachersRoute {
 class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
   const TeacherProfileRoute({required this.$extra});
 
-  final TeacherData $extra;
+  final InstructorModel $extra;
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {

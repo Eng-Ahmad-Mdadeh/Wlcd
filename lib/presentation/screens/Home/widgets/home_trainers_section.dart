@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
 import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
 import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
@@ -51,7 +50,7 @@ class HomeTrainersSection extends StatelessWidget {
             itemCount: trainers.length,
             separatorBuilder: (_, __) => SizedBox(width: AppWidth.w14),
             itemBuilder: (context, index) => HomeTrainerCard(
-              trainer: _toTeacherData(trainers[index], index),
+              trainer: trainers[index],
             ),
           ),
         );
@@ -60,32 +59,10 @@ class HomeTrainersSection extends StatelessWidget {
   }
 }
 
-TeacherData _toTeacherData(InstructorModel instructor, int index) {
-  const accentColors = [
-    AppColors.teacherPurple,
-    AppColors.teacherCyan,
-    AppColors.teacherAmber,
-    AppColors.teacherGreen,
-  ];
-  final mediaId = instructor.mediaId;
-
-  return TeacherData(
-    name: instructor.displayName ?? '',
-    specialty: instructor.specialty?.title ?? '',
-    bio: instructor.biography ?? '',
-    rating: instructor.rating ?? 0,
-    students: (instructor.studentsCount ?? 0).toString(),
-    imageUrl: mediaId == null || mediaId.isEmpty
-        ? ''
-        : '${ApiEndpoints.baseUrl.replaceFirst('/api/v1', '')}/media/public/$mediaId',
-    accentColor: accentColors[index % accentColors.length],
-  );
-}
-
 class HomeTrainerCard extends StatelessWidget {
   const HomeTrainerCard({super.key, required this.trainer});
 
-  final TeacherData trainer;
+  final InstructorModel trainer;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +109,7 @@ class HomeTrainerCard extends StatelessWidget {
                   ),
                   SizedBox(height: AppHeight.h6),
                   BodyTitle(
-                    text: trainer.specialty,
+                    text: trainer.specialtyName,
                     color: trainer.accentColor,
                     fontSize: AppSize.s11,
                     fontWeight: FontWeight.w700,
@@ -144,7 +121,7 @@ class HomeTrainerCard extends StatelessWidget {
                       Icon(Icons.star_rounded, size: AppSize.s15, color: AppColors.searchStar),
                       SizedBox(width: AppWidth.w3),
                       BodyTitle(
-                        text: trainer.rating.toStringAsFixed(1),
+                        text: trainer.ratingValue.toStringAsFixed(1),
                         color: AppColors.seeMore,
                         fontSize: AppSize.s11,
                         fontWeight: FontWeight.w700,

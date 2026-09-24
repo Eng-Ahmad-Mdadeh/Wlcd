@@ -3,7 +3,8 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
@@ -12,7 +13,7 @@ import 'package:wlcd/presentation/widgets/text/section_title.dart';
 class TeacherProfileHero extends StatelessWidget {
   const TeacherProfileHero({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class TeacherProfileHero extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h6),
           BodyTitle(
-            text: teacher.specialty,
+            text: teacher.specialtyName,
             color: teacher.accentColor,
             fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.extraBold,
@@ -104,7 +105,7 @@ class TeacherSocialButton extends StatelessWidget {
 class TeacherProfileStats extends StatelessWidget {
   const TeacherProfileStats({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +122,7 @@ class TeacherProfileStats extends StatelessWidget {
         SizedBox(width: AppWidth.w12),
         Expanded(
           child: TeacherStatCard(
-            value: teacher.rating.toStringAsFixed(1),
+            value: teacher.ratingValue.toStringAsFixed(1),
             label: 'تقييم',
             icon: Icons.star_rounded,
             color: AppColors.teacherAmber,
@@ -179,7 +180,7 @@ class TeacherStatCard extends StatelessWidget {
 class TeacherProfileActions extends StatelessWidget {
   const TeacherProfileActions({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +280,7 @@ class TeacherTabChip extends StatelessWidget {
 class TeacherAboutCard extends StatelessWidget {
   const TeacherAboutCard({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +304,7 @@ class TeacherAboutCard extends StatelessWidget {
 class TeacherCoursesCard extends StatelessWidget {
   const TeacherCoursesCard({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -320,7 +321,7 @@ class TeacherCoursesCard extends StatelessWidget {
           SizedBox(height: AppHeight.h12),
           TeacherCourseTile(
             color: AppColors.teacherGreen,
-            title: teacher.specialty,
+            title: teacher.specialtyName,
             subtitle: 'دروس قصيرة، تمارين، ومتابعة تساعدك على تحقيق نتائج واضحة.',
           ),
         ],

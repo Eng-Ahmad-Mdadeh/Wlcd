@@ -4,13 +4,14 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/rating_badge.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/specialty_chip.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
+import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_photo.dart';
 
 class TeacherCard extends StatelessWidget {
   const TeacherCard({super.key, required this.teacher});
 
-  final TeacherData teacher;
+  final InstructorModel teacher;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +55,11 @@ class TeacherCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      RatingBadge(rating: teacher.rating),
+                      RatingBadge(rating: teacher.ratingValue),
                     ],
                   ),
                   SizedBox(height: AppHeight.h8),
-                  SpecialtyChip(label: teacher.specialty, color: teacher.accentColor),
+                  SpecialtyChip(label: teacher.specialtyName, color: teacher.accentColor),
                   SizedBox(height: AppHeight.h10),
                   Text(
                     teacher.bio,
