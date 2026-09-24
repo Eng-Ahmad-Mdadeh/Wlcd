@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
+import 'package:wlcd/core/routes/app_routes.dart';
+import 'package:wlcd/data/model/catalog/course/course_model.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
@@ -311,21 +313,25 @@ class TeacherCoursesCard extends StatelessWidget {
     return TeacherSectionCard(
       title: 'دوراتي',
       icon: Icons.menu_book_outlined,
-      child: Column(
-        children: [
-          TeacherCourseTile(
-            color: teacher.accentColor,
-            title: 'رحلة التعلم معي',
-            subtitle: 'مسار تطبيقي يبدأ من الأساسيات حتى بناء مشروع عملي.',
-          ),
-          SizedBox(height: AppHeight.h12),
-          TeacherCourseTile(
-            color: AppColors.teacherGreen,
-            title: teacher.specialtyName,
-            subtitle: 'دروس قصيرة، تمارين، ومتابعة تساعدك على تحقيق نتائج واضحة.',
-          ),
-        ],
-      ),
+      child: teacher.courses.isEmpty
+          ? Center(
+              child: BodyTitle(
+                text: 'لا توجد دورات متاحة حالياً',
+                color: AppColors.muted,
+                fontSize: AppFontSize.s14,
+                fontWeight: AppFontWeight.semiBold,
+              ),
+            )
+          : ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: teacher.courses.length,
+              separatorBuilder: (_, __) => SizedBox(height: AppHeight.h12),
+              itemBuilder: (context, index) => TeacherCourseTile(
+                course: teacher.courses[index],
+                color: teacher.accentColor,
+              ),
+            ),
     );
   }
 }
@@ -374,59 +380,98 @@ class TeacherSectionCard extends StatelessWidget {
 }
 
 class TeacherCourseTile extends StatelessWidget {
-  const TeacherCourseTile({super.key, required this.color, required this.title, required this.subtitle});
+  const TeacherCourseTile({
+    super.key,
+    required this.course,
+    required this.color,
+  });
 
+  final CourseModel course;
   final Color color;
-  final String title;
-  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppSize.s12),
-      decoration: BoxDecoration(
-        color: AppColors.teacherBackground,
-        borderRadius: BorderRadius.circular(AppRadius.r20),
-        border: Border.all(color: AppColors.teacherCardBorder),
-      ),
-      child: Row(
-        textDirection: TextDirection.rtl,
-        children: [
-          Container(
-            width: AppWidth.w70,
-            height: AppHeight.h70,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(AppRadius.r18),
+    final courseId = course.courseId;
+
+    return InkWell(
+      onTap: courseId == null || courseId.isEmpty
+          ? null
+          : () => CourseDetailsRoute(courseId: courseId).push(context),
+      borderRadius: BorderRadius.circular(AppRadius.r20),
+      child: Container(
+        padding: EdgeInsets.all(AppSize.s12),
+        decoration: BoxDecoration(
+          color: AppColors.teacherBackground,
+          borderRadius: BorderRadius.circular(AppRadius.r20),
+          border: Border.all(color: AppColors.teacherCardBorder),
+        ),
+        child: Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            Container(
+              width: AppWidth.w70,
+              height: AppHeight.h70,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: .14),
+                borderRadius: BorderRadius.circular(AppRadius.r18),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: course.thumbnail == null
+                  ? Icon(Icons.school_rounded, color: color, size: AppSize.s30)
+                  : ImageView(
+                      imagePath: course.thumbnail!.url,
+                      fit: BoxFit.cover,
+                    ),
             ),
-            child: Icon(Icons.school_rounded, color: color, size: AppSize.s30),
-          ),
-          SizedBox(width: AppWidth.w12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SectionTitle(
-                  text: title,
-                  textAlign: TextAlign.right,
-                  color: AppColors.text,
-                  fontSize: AppFontSize.s16,
-                  maxLines: 1,
-                ),
-                SizedBox(height: AppHeight.h6),
-                BodyTitle(
-                  text: subtitle,
-                  textAlign: TextAlign.right,
-                  color: AppColors.muted,
-                  fontSize: AppFontSize.s12,
-                  fontWeight: AppFontWeight.semiBold,
-                  height: 1.45,
-                  maxLines: 2,
-                ),
-              ],
+            SizedBox(width: AppWidth.w12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SectionTitle(
+                    text: course.title ?? '',
+                    textAlign: TextAlign.right,
+                    color: AppColors.text,
+                    fontSize: AppFontSize.s16,
+                    maxLines: 1,
+                  ),
+                  SizedBox(height: AppHeight.h6),
+                  BodyTitle(
+                    text: course.subtitle ?? '',
+                    textAlign: TextAlign.right,
+                    color: AppColors.muted,
+                    fontSize: AppFontSize.s12,
+                    fontWeight: AppFontWeight.semiBold,
+                    height: 1.45,
+                    maxLines: 2,
+                  ),
+                  SizedBox(height: AppHeight.h6),
+                  Row(
+                    children: [
+                      BodyTitle(
+                        text: course.price?.displayLabel ?? '',
+                        color: AppColors.accent,
+                        fontSize: AppFontSize.s11,
+                        fontWeight: AppFontWeight.bold,
+                      ),
+                      SizedBox(width: AppWidth.w8),
+                      Expanded(
+                        child: BodyTitle(
+                          text: course.primaryCategoryLabel ?? '',
+                          textAlign: TextAlign.end,
+                          color: color,
+                          fontSize: AppFontSize.s11,
+                          fontWeight: AppFontWeight.bold,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
