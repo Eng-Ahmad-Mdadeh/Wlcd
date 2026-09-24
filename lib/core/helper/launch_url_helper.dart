@@ -22,6 +22,10 @@ class LaunchUrlHelper {
     await launchUrl(Uri(scheme: 'tel', path: phone));
   }
 
+  static Future<void> email(String address) async {
+    await launchUrl(Uri(scheme: 'mailto', path: address));
+  }
+
   static Future<void> launchUrlPage(String url) async {
     final Uri uri = Uri.parse(url);
 

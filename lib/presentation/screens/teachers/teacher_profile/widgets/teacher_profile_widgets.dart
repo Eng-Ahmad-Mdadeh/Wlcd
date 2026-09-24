@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/helper/launch_url_helper.dart';
 import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
@@ -19,6 +20,11 @@ class TeacherProfileHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contactChannels = teacher.publicContactConfig?.channels
+            .where((channel) => channel.value?.trim().isNotEmpty ?? false)
+            .toList() ??
+        const [];
+
     return Container(
       padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, AppPaddingHeight.p50, AppPaddingWidth.p20, AppPaddingHeight.p24),
       decoration: BoxDecoration(
@@ -68,38 +74,84 @@ class TeacherProfileHero extends StatelessWidget {
             fontWeight: AppFontWeight.extraBold,
           ),
           SizedBox(height: AppHeight.h12),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TeacherSocialButton(icon: Icons.link_rounded),
-              TeacherSocialButton(icon: Icons.camera_alt_outlined),
-              TeacherSocialButton(icon: Icons.business_center_outlined),
-              TeacherSocialButton(icon: Icons.more_horiz_rounded),
-            ],
-          ),
+          if (contactChannels.isNotEmpty)
+            Wrap(
+              alignment: WrapAlignment.center,
+              children: contactChannels
+                  .map(
+                    (channel) => TeacherSocialButton(
+                      icon: _contactIcon(channel.type),
+                      onTap: () => _launchContact(channel.type, channel.value!.trim()),
+                    ),
+                  )
+                  .toList(),
+            ),
         ],
       ),
     );
   }
+
+  IconData _contactIcon(String? type) {
+    switch (type?.toLowerCase()) {
+      case 'email':
+        return Icons.email_outlined;
+      case 'phone':
+      case 'tel':
+        return Icons.phone_outlined;
+      case 'whatsapp':
+        return Icons.chat_outlined;
+      case 'instagram':
+        return Icons.camera_alt_outlined;
+      case 'linkedin':
+        return Icons.business_center_outlined;
+      case 'website':
+      case 'url':
+      case 'link':
+        return Icons.link_rounded;
+      default:
+        return Icons.open_in_new_rounded;
+    }
+  }
+
+  Future<void> _launchContact(String? type, String value) {
+    switch (type?.toLowerCase()) {
+      case 'email':
+        return LaunchUrlHelper.email(value);
+      case 'phone':
+      case 'tel':
+        return LaunchUrlHelper.call(value);
+      case 'whatsapp':
+        return LaunchUrlHelper.whatsapp(value);
+      default:
+        return LaunchUrlHelper.launchUrlPage(value);
+    }
+  }
 }
 
 class TeacherSocialButton extends StatelessWidget {
-  const TeacherSocialButton({super.key, required this.icon});
+  const TeacherSocialButton({super.key, required this.icon, required this.onTap});
 
   final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppWidth.w40,
-      height: AppHeight.h40,
-      margin: EdgeInsets.symmetric(horizontal: AppMarginWidth.m5),
-      decoration: BoxDecoration(
-        color: AppColors.white,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppMarginWidth.m5),
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.r14),
-        border: Border.all(color: AppColors.teacherCardBorder),
+        child: Container(
+          width: AppWidth.w40,
+          height: AppHeight.h40,
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppRadius.r14),
+            border: Border.all(color: AppColors.teacherCardBorder),
+          ),
+          child: Icon(icon, color: AppColors.teacherPurple, size: AppSize.s22),
+        ),
       ),
-      child: Icon(icon, color: AppColors.teacherPurple, size: AppSize.s22),
     );
   }
 }
