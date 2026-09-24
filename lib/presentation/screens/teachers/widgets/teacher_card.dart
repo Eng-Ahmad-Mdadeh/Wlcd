@@ -5,7 +5,6 @@ import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/rating_badge.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/specialty_chip.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_photo.dart';
 
 class TeacherCard extends StatelessWidget {
@@ -45,7 +44,7 @@ class TeacherCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          teacher.name,
+                          teacher.displayName ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -55,14 +54,17 @@ class TeacherCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      RatingBadge(rating: teacher.ratingValue),
+                      RatingBadge(rating: teacher.rating ?? 0),
                     ],
                   ),
                   SizedBox(height: AppHeight.h8),
-                  SpecialtyChip(label: teacher.specialtyName, color: teacher.accentColor),
+                  SpecialtyChip(
+                    label: teacher.specialty?.title ?? '',
+                    color: AppColors.teacherPurple,
+                  ),
                   SizedBox(height: AppHeight.h10),
                   Text(
-                    teacher.bio,
+                    teacher.biography ?? '',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -77,7 +79,7 @@ class TeacherCard extends StatelessWidget {
                       Icon(Icons.groups_rounded, size: AppSize.s16, color: AppColors.accent),
                       SizedBox(width: AppWidth.w5),
                       Text(
-                        '${teacher.students} طالب',
+                        '${teacher.studentsCount ?? 0} طالب',
                         style: TextStyle(
                           color: AppColors.seeMore,
                           fontSize: AppSize.s12,

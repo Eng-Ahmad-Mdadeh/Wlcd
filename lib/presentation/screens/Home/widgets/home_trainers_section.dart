@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
 import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
 import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
@@ -86,7 +86,7 @@ class HomeTrainerCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageView(
-              imagePath: trainer.imageUrl,
+              imagePath: ApiEndpoints.publicMedia(trainer.mediaId ?? ''),
               fit: BoxFit.fill,
               width: double.infinity,
               height: AppHeight.h135,
@@ -101,7 +101,7 @@ class HomeTrainerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SectionTitle(
-                    text: trainer.name,
+                    text: trainer.displayName ?? '',
                     color: AppColors.text,
                     fontSize: AppSize.s14,
                     fontWeight: FontWeight.w800,
@@ -109,8 +109,8 @@ class HomeTrainerCard extends StatelessWidget {
                   ),
                   SizedBox(height: AppHeight.h6),
                   BodyTitle(
-                    text: trainer.specialtyName,
-                    color: trainer.accentColor,
+                    text: trainer.specialty?.title ?? '',
+                    color: AppColors.teacherPurple,
                     fontSize: AppSize.s11,
                     fontWeight: FontWeight.w700,
                     maxLines: 1,
@@ -121,7 +121,7 @@ class HomeTrainerCard extends StatelessWidget {
                       Icon(Icons.star_rounded, size: AppSize.s15, color: AppColors.searchStar),
                       SizedBox(width: AppWidth.w3),
                       BodyTitle(
-                        text: trainer.ratingValue.toStringAsFixed(1),
+                        text: (trainer.rating ?? 0).toStringAsFixed(1),
                         color: AppColors.seeMore,
                         fontSize: AppSize.s11,
                         fontWeight: FontWeight.w700,
@@ -130,7 +130,7 @@ class HomeTrainerCard extends StatelessWidget {
                       Icon(Icons.groups_rounded, size: AppSize.s14, color: AppColors.accent),
                       SizedBox(width: AppWidth.w3),
                       BodyTitle(
-                        text: trainer.students,
+                        text: (trainer.studentsCount ?? 0).toString(),
                         color: AppColors.muted,
                         fontSize: AppSize.s10,
                         fontWeight: FontWeight.w600,

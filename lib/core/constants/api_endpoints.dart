@@ -39,6 +39,8 @@ class ApiEndpoints {
   static const String instructors = '/instructors';
 
   static String instructor(String instructorId) => '$instructors/$instructorId';
+  static String publicMedia(String mediaId) =>
+      mediaId.isEmpty ? '' : '${baseUrl.replaceFirst('/api/v1', '')}/media/public/$mediaId';
   //#endregion
 
   //#region Profile

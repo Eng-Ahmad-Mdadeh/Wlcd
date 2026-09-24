@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -6,7 +7,6 @@ import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/catalog/course/course_model.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
@@ -25,7 +25,7 @@ class TeacherProfileHero extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [teacher.accentColor.withValues(alpha: .18), AppColors.white, AppColors.white],
+          colors: [AppColors.teacherPurple.withValues(alpha: .18), AppColors.white, AppColors.white],
         ),
       ),
       child: Column(
@@ -38,7 +38,7 @@ class TeacherProfileHero extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: teacher.accentColor.withValues(alpha: .22),
+                  color: AppColors.teacherPurple.withValues(alpha: .22),
                   blurRadius: 30,
                   offset: const Offset(0, 14),
                 ),
@@ -46,7 +46,7 @@ class TeacherProfileHero extends StatelessWidget {
             ),
             child: ClipOval(
               child: ImageView(
-                imagePath: teacher.imageUrl,
+                imagePath: ApiEndpoints.publicMedia(teacher.mediaId ?? ''),
                 width: AppWidth.w110,
                 height: AppHeight.h110,
                 fit: BoxFit.cover,
@@ -55,15 +55,15 @@ class TeacherProfileHero extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h14),
           SectionTitle(
-            text: teacher.name,
+            text: teacher.displayName ?? '',
             color: AppColors.text,
             fontSize: AppFontSize.s24,
             fontWeight: AppFontWeight.extraBold,
           ),
           SizedBox(height: AppHeight.h6),
           BodyTitle(
-            text: teacher.specialtyName,
-            color: teacher.accentColor,
+            text: teacher.specialty?.title ?? '',
+            color: AppColors.teacherPurple,
             fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.extraBold,
           ),
@@ -115,16 +115,16 @@ class TeacherProfileStats extends StatelessWidget {
       children: [
         Expanded(
           child: TeacherStatCard(
-            value: teacher.students,
+            value: (teacher.studentsCount ?? 0).toString(),
             label: 'طالب',
             icon: Icons.groups_rounded,
-            color: teacher.accentColor,
+            color: AppColors.teacherPurple,
           ),
         ),
         SizedBox(width: AppWidth.w12),
         Expanded(
           child: TeacherStatCard(
-            value: teacher.ratingValue.toStringAsFixed(1),
+            value: (teacher.rating ?? 0).toStringAsFixed(1),
             label: 'تقييم',
             icon: Icons.star_rounded,
             color: AppColors.teacherAmber,
@@ -291,7 +291,7 @@ class TeacherAboutCard extends StatelessWidget {
       icon: Icons.person_outline_rounded,
       child: BodyTitle(
         text:
-            '${teacher.bio}\n\nأقدم تجربة تعليمية عملية تساعد المتعلمين على تحويل المعرفة إلى خطوات قابلة للتطبيق، مع تبسيط المفاهيم وبناء خطة واضحة للتطور المهني.',
+            '${teacher.biography ?? ''}\n\nأقدم تجربة تعليمية عملية تساعد المتعلمين على تحويل المعرفة إلى خطوات قابلة للتطبيق، مع تبسيط المفاهيم وبناء خطة واضحة للتطور المهني.',
         textAlign: TextAlign.right,
         color: AppColors.muted,
         fontSize: AppFontSize.s15,
@@ -329,7 +329,7 @@ class TeacherCoursesCard extends StatelessWidget {
               separatorBuilder: (_, __) => SizedBox(height: AppHeight.h12),
               itemBuilder: (context, index) => TeacherCourseTile(
                 course: teacher.courses[index],
-                color: teacher.accentColor,
+                color: AppColors.teacherPurple,
               ),
             ),
     );

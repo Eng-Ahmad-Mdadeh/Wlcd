@@ -6,7 +6,6 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
@@ -47,7 +46,7 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
         _BookingCalendar(
           selectedDate: _selectedDate,
           focusedDate: _focusedDate,
-          color: widget.teacher.accentColor,
+          color: AppColors.teacherPurple,
           availableDays: _availableSlots.keys.toSet(),
           onDateSelected: (selectedDate, focusedDate) {
             setState(() {
@@ -65,13 +64,19 @@ class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
           date: _selectedDate,
           slots: selectedSlots,
           selectedSlot: _selectedSlot,
-          color: widget.teacher.accentColor,
+          color: AppColors.teacherPurple,
           onSlotSelected: (slot) => setState(() => _selectedSlot = slot),
           onChatPressed: () {
             context.pop();
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text('سيتم الانتقال إلى المحادثة مع ${widget.teacher.name} قريباً')));
+            ).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'سيتم الانتقال إلى المحادثة مع ${widget.teacher.displayName ?? ''} قريباً',
+                ),
+              ),
+            );
           },
         ),
         SizedBox(height: AppHeight.h16),
