@@ -21,6 +21,8 @@ import '../../../data/data_sources/course_details/course_details_remote_data_sou
     as _i647;
 import '../../../data/data_sources/favorites/favorites_remote_data_source.dart'
     as _i492;
+import '../../../data/data_sources/instructor/instructor_remote_data_source.dart'
+    as _i1201;
 import '../../../data/data_sources/notifications/notifications_remote_data_source.dart'
     as _i334;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
@@ -44,6 +46,7 @@ import '../../../data/model/favorites/favorite_group_model.dart' as _i388;
 import '../../../data/model/favorites/favorite_groups_model.dart' as _i214;
 import '../../../data/model/favorites/favorite_membership_model.dart' as _i955;
 import '../../../data/model/favorites/favorite_memberships_model.dart' as _i939;
+import '../../../data/model/instructor/instructor_model.dart' as _i1202;
 import '../../../data/model/notifications/notification/notification_model.dart'
     as _i758;
 import '../../../data/model/notifications/notification_preferences/notification_preferences_model.dart'
@@ -61,6 +64,8 @@ import '../../../data/repository/catalog/catalog_repository.dart' as _i601;
 import '../../../data/repository/course_details/course_details_repository.dart'
     as _i783;
 import '../../../data/repository/favorites/favorites_repository.dart' as _i433;
+import '../../../data/repository/instructor/instructor_repository.dart'
+    as _i1204;
 import '../../../data/repository/notifications/notifications_repository.dart'
     as _i639;
 import '../../../data/repository/profile/profile_repository.dart' as _i732;
@@ -82,6 +87,8 @@ import '../../../domain/entity/catalog/get_courses_entity.dart' as _i1107;
 import '../../../domain/entity/course_details/course_details_entity.dart'
     as _i707;
 import '../../../domain/entity/favorites/favorites_entity.dart' as _i197;
+import '../../../domain/entity/instructor/get_instructor_entity.dart' as _i1205;
+import '../../../domain/entity/instructor/get_instructors_entity.dart' as _i1206;
 import '../../../domain/entity/notifications/list_notifications_entity.dart'
     as _i964;
 import '../../../domain/entity/notifications/notification_command_entity.dart'
@@ -103,6 +110,8 @@ import '../../../domain/repository/course_details/i_course_details_repository.da
     as _i971;
 import '../../../domain/repository/favorites/i_favorites_repository.dart'
     as _i774;
+import '../../../domain/repository/instructor/i_instructor_repository.dart'
+    as _i1207;
 import '../../../domain/repository/notifications/i_notifications_repository.dart'
     as _i919;
 import '../../../domain/repository/profile/i_profile_repository.dart' as _i950;
@@ -176,6 +185,9 @@ import '../../../domain/usecase/favorites/list_favorite_groups_usecase.dart'
     as _i974;
 import '../../../domain/usecase/favorites/list_favorite_memberships_usecase.dart'
     as _i779;
+import '../../../domain/usecase/instructor/get_instructor_usecase.dart' as _i1208;
+import '../../../domain/usecase/instructor/get_instructors_usecase.dart'
+    as _i1209;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
 import '../../../domain/usecase/notifications/get_notification_preferences_usecase.dart'
     as _i440;
@@ -223,6 +235,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i492.FavoritesRemoteDataSource>(
       () => _i492.FavoritesRemoteDataSource(),
     );
+    gh.factory<_i1201.InstructorRemoteDataSource>(
+      () => _i1201.InstructorRemoteDataSource(),
+    );
     gh.factory<_i334.NotificationsRemoteDataSource>(
       () => _i334.NotificationsRemoteDataSource(),
     );
@@ -239,6 +254,33 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i981.ICatalogRepository>(
       () => _i601.CatalogRepository(gh<_i344.CatalogRemoteDataSource>()),
+    );
+    gh.factory<_i1207.IInstructorRepository>(
+      () => _i1204.InstructorRepository(
+        gh<_i1201.InstructorRemoteDataSource>(),
+      ),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1202.InstructorModel>?,
+        _i1206.GetInstructorsEntity
+      >
+    >(
+      () => _i1209.GetInstructorsUsecase(
+        gh<_i1207.IInstructorRepository>(),
+      ),
+      instanceName: 'GetInstructors',
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1202.InstructorModel>?,
+        _i1205.GetInstructorEntity
+      >
+    >(
+      () => _i1208.GetInstructorUsecase(
+        gh<_i1207.IInstructorRepository>(),
+      ),
+      instanceName: 'GetInstructor',
     );
     gh.factory<
       _i759.IUseCase<

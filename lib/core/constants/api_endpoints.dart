@@ -36,6 +36,9 @@ class ApiEndpoints {
   static const String courses = '/courses';
   static const String enrollments = '/enrollments';
   static const String learningResources = '/learning/resources';
+  static const String instructors = '/instructors';
+
+  static String instructor(String instructorId) => '$instructors/$instructorId';
   //#endregion
 
   //#region Profile

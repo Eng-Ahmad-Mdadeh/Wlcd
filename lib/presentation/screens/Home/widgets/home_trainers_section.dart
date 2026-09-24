@@ -1,31 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/constants/api_endpoints.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
+import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
+import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 class HomeTrainersSection extends StatelessWidget {
-  const HomeTrainersSection({super.key, required this.trainers});
-
-  final List<TeacherData> trainers;
+  const HomeTrainersSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppHeight.h225,
-      child: ListView.separated(
-        clipBehavior: Clip.none,
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        itemCount: trainers.length,
-        separatorBuilder: (_, __) => SizedBox(width: AppWidth.w14),
-        itemBuilder: (context, index) => HomeTrainerCard(trainer: trainers[index]),
-      ),
+    return BlocBuilder<InstructorsBloc, IInstructorsState>(
+      builder: (context, state) {
+        if (state is InstructorsFailed) {
+          return SizedBox(
+            height: AppHeight.h225,
+            child: RetryWidget(
+              onReload: () => context.read<InstructorsBloc>().add(
+                const LoadInstructorsEvent(GetInstructorsEntity()),
+              ),
+            ),
+          );
+        }
+
+        if (state is! InstructorsLoaded) {
+          return SizedBox(
+            height: AppHeight.h225,
+            child: const LoadingWidget(0),
+          );
+        }
+
+        final trainers = state.instructors?.data ?? const <InstructorModel>[];
+        if (trainers.isEmpty) return const SizedBox.shrink();
+
+        return SizedBox(
+          height: AppHeight.h225,
+          child: ListView.separated(
+            clipBehavior: Clip.none,
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemCount: trainers.length,
+            separatorBuilder: (_, __) => SizedBox(width: AppWidth.w14),
+            itemBuilder: (context, index) => HomeTrainerCard(
+              trainer: _toTeacherData(trainers[index], index),
+            ),
+          ),
+        );
+      },
     );
   }
+}
+
+TeacherData _toTeacherData(InstructorModel instructor, int index) {
+  const accentColors = [
+    AppColors.teacherPurple,
+    AppColors.teacherCyan,
+    AppColors.teacherAmber,
+    AppColors.teacherGreen,
+  ];
+  final mediaId = instructor.mediaId;
+
+  return TeacherData(
+    name: instructor.displayName ?? '',
+    specialty: instructor.specialty?.title ?? '',
+    bio: instructor.biography ?? '',
+    rating: instructor.rating ?? 0,
+    students: (instructor.studentsCount ?? 0).toString(),
+    imageUrl: mediaId == null || mediaId.isEmpty
+        ? ''
+        : '${ApiEndpoints.baseUrl.replaceFirst('/api/v1', '')}/media/public/$mediaId',
+    accentColor: accentColors[index % accentColors.length],
+  );
 }
 
 class HomeTrainerCard extends StatelessWidget {

@@ -5,11 +5,13 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/domain/entity/catalog/get_featured_courses_entity.dart';
+import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
 import 'package:wlcd/presentation/bloc/catalog/banners/banners_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/categories/categories_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/featured_courses/featured_courses_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/global_platforms/global_platforms_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/recommended_courses/recommended_courses_bloc.dart';
+import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
 import 'package:wlcd/presentation/cubit/catalog/featured_courses_query_cubit.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/catalog_sections.dart';
@@ -18,7 +20,6 @@ import 'package:wlcd/presentation/screens/Home/widgets/external_courses_section.
 import 'package:wlcd/presentation/screens/Home/widgets/home_header.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/home_trainers_section.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/section_header.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/teacher_data.dart';
 import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,6 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider(
           create: (_) => RecommendedCoursesBloc()
             ..add(const LoadRecommendedCoursesEvent()),
+        ),
+        BlocProvider(
+          create: (_) => InstructorsBloc()
+            ..add(const LoadInstructorsEvent(GetInstructorsEntity())),
         ),
       ],
       child: _HomeBody(searchController: _searchController),
@@ -139,7 +144,7 @@ class _HomeBody extends StatelessWidget {
                   onActionPressed: () => TeachersRoute().push(context),
                 ),
                 SizedBox(height: AppHeight.h14),
-                const HomeTrainersSection(trainers: teachers),
+                const HomeTrainersSection(),
 
                 SizedBox(height: AppHeight.h28),
                 const HomeRecommendedCoursesSection(),
