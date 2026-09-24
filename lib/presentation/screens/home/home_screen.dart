@@ -128,8 +128,8 @@ class _HomeBody extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 const BannersWidget(),
-                SizedBox(height: AppHeight.h28),
-                const HomeCategoriesSection(),
+                // SizedBox(height: AppHeight.h28),
+                // const HomeCategoriesSection(),
                 SizedBox(height: AppHeight.h28),
                 const HomeFeaturedCoursesSection(),
                 SizedBox(height: AppHeight.h28),

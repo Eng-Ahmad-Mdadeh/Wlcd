@@ -382,27 +382,26 @@ mixin $TeachersRoute on GoRouteData {
 
 mixin $TeacherProfileRoute on GoRouteData {
   static TeacherProfileRoute _fromState(GoRouterState state) =>
-      TeacherProfileRoute($extra: state.extra as InstructorModel);
+      TeacherProfileRoute(id: state.uri.queryParameters['id']!);
 
   TeacherProfileRoute get _self => this as TeacherProfileRoute;
 
   @override
-  String get location => GoRouteData.$location('/teachers/profile');
+  String get location =>
+      GoRouteData.$location('/teachers/profile', queryParams: {'id': _self.id});
 
   @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+  void go(BuildContext context) => context.go(location);
 
   @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
+      context.pushReplacement(location);
 
   @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(

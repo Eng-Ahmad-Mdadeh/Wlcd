@@ -2,6 +2,10 @@
 
 part of 'public_contact_config_model.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 PublicContactChannelModel _$PublicContactChannelModelFromJson(
   Map<String, dynamic> json,
 ) => PublicContactChannelModel(
@@ -12,8 +16,12 @@ PublicContactChannelModel _$PublicContactChannelModelFromJson(
 PublicContactConfigModel _$PublicContactConfigModelFromJson(
   Map<String, dynamic> json,
 ) => PublicContactConfigModel(
-  channels: (json['channels'] as List<dynamic>?)
-          ?.map((e) => PublicContactChannelModel.fromJson(e as Map<String, dynamic>))
+  channels:
+      (json['channels'] as List<dynamic>?)
+          ?.map(
+            (e) =>
+                PublicContactChannelModel.fromJson(e as Map<String, dynamic>),
+          )
           .toList() ??
       const [],
 );

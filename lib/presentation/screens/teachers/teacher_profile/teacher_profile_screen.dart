@@ -13,13 +13,13 @@ import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
-  const TeacherProfileScreen({super.key, required this.teacher});
+  const TeacherProfileScreen({super.key, required this.id});
 
-  final InstructorModel teacher;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    final entity = GetInstructorEntity(instructorId: teacher.instructorId ?? '');
+    final entity = GetInstructorEntity(instructorId: id ?? '');
 
     return BlocProvider(
       create: (_) => InstructorBloc()..add(LoadInstructorEvent(entity)),

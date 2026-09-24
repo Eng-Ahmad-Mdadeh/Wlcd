@@ -2,6 +2,10 @@
 
 part of 'banners_model.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 BannerModel _$BannerModelFromJson(Map<String, dynamic> json) => BannerModel(
   bannerId: json['bannerId'] as String,
   image: json['image'] as String,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/constants/api_endpoints.dart';
+import 'package:wlcd/core/resources/app_assets.dart';
+import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
-import 'package:wlcd/presentation/screens/teachers/widgets/instructor_presentation.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
 
 class TeacherPhoto extends StatelessWidget {
@@ -18,13 +20,16 @@ class TeacherPhoto extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.r22),
         gradient: LinearGradient(
           colors: [
-            teacher.accentColor.withValues(alpha: .22),
-            teacher.accentColor.withValues(alpha: .06),
+            AppColors.teacherPurple.withValues(alpha: .22),
+            AppColors.teacherPurple.withValues(alpha: .06),
           ],
         ),
       ),
       clipBehavior: Clip.antiAlias,
-      child: ImageView(imagePath: teacher.imageUrl, fit: BoxFit.cover),
+      child: ImageView(
+        imagePath: AppAssets.defaultImage,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

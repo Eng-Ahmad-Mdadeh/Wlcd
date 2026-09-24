@@ -171,18 +171,18 @@ class TeachersRoute extends GoRouteData with $TeachersRoute {
 }
 
 class TeacherProfileRoute extends GoRouteData with $TeacherProfileRoute {
-  const TeacherProfileRoute({required this.$extra});
+  const TeacherProfileRoute({required this.id});
 
-  final InstructorModel $extra;
+  final String id;
 
   @override
   CustomTransitionPage<void> buildPage(context, state) {
-    return TeacherProfileScreen(teacher: $extra).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
+    return TeacherProfileScreen(id: id).buildPage(pageAnimation: PageAnimation.sharedAxisScale);
   }
 }
 //#endregion
 
-//#region Home
+//#region home
 class HomeRoute extends GoRouteData with $HomeRoute {
   @override
   CustomTransitionPage<void> buildPage(context, state) {

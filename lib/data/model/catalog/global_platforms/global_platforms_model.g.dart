@@ -2,6 +2,10 @@
 
 part of 'global_platforms_model.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 GlobalPlatformModel _$GlobalPlatformModelFromJson(Map<String, dynamic> json) =>
     GlobalPlatformModel(
       id: json['id'] as String,

@@ -2,6 +2,10 @@
 
 part of 'instructor_model.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 InstructorModel _$InstructorModelFromJson(Map<String, dynamic> json) =>
     InstructorModel(
       instructorId: json['instructorId'] as String?,
@@ -14,8 +18,7 @@ InstructorModel _$InstructorModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      primarySpecialtyCategoryId:
-          json['primarySpecialtyCategoryId'] as String?,
+      primarySpecialtyCategoryId: json['primarySpecialtyCategoryId'] as String?,
       mediaId: json['mediaId'] as String?,
       publicContactConfig: json['publicContactConfig'] == null
           ? null

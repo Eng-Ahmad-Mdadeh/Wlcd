@@ -2,6 +2,10 @@
 
 part of 'instructor_specialty_model.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 InstructorSpecialtyModel _$InstructorSpecialtyModelFromJson(
   Map<String, dynamic> json,
 ) => InstructorSpecialtyModel(
