@@ -248,8 +248,6 @@ class TeacherActionButton extends StatelessWidget {
   }
 }
 
-
-
 class TeacherTabChip extends StatelessWidget {
   const TeacherTabChip({super.key, required this.label, required this.selected});
 
@@ -288,8 +286,7 @@ class TeacherAboutCard extends StatelessWidget {
       title: 'نبذة عني',
       icon: Icons.person_outline_rounded,
       child: BodyTitle(
-        text:
-            '${teacher.bio}\n\nأقدم تجربة تعليمية عملية تساعد المتعلمين على تحويل المعرفة إلى خطوات قابلة للتطبيق، مع تبسيط المفاهيم وبناء خطة واضحة للتطور المهني.',
+        text: teacher.bio,
         textAlign: TextAlign.right,
         color: AppColors.muted,
         fontSize: AppFontSize.s15,

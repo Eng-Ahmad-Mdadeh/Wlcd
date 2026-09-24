@@ -24,18 +24,13 @@ class HomeTrainersSection extends StatelessWidget {
           return SizedBox(
             height: AppHeight.h225,
             child: RetryWidget(
-              onReload: () => context.read<InstructorsBloc>().add(
-                const LoadInstructorsEvent(GetInstructorsEntity()),
-              ),
+              onReload: () => context.read<InstructorsBloc>().add(const LoadInstructorsEvent(GetInstructorsEntity())),
             ),
           );
         }
 
         if (state is! InstructorsLoaded) {
-          return SizedBox(
-            height: AppHeight.h225,
-            child: const LoadingWidget(0),
-          );
+          return SizedBox(height: AppHeight.h225, child: const LoadingWidget(0));
         }
 
         final trainers = state.instructors?.data ?? const <InstructorModel>[];
@@ -49,9 +44,7 @@ class HomeTrainersSection extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: trainers.length,
             separatorBuilder: (_, __) => SizedBox(width: AppWidth.w14),
-            itemBuilder: (context, index) => HomeTrainerCard(
-              trainer: trainers[index],
-            ),
+            itemBuilder: (context, index) => HomeTrainerCard(trainer: trainers[index]),
           ),
         );
       },

@@ -61,7 +61,7 @@ class CustomSearch extends StatelessWidget {
           hintColor: hintColor,
           onTap: onTap,
           borderRadius: borderRadius ?? AppRadius.r45,
-          hintText: "search_hint",
+          hintText: "مالذي تبحث عنه",
           color: color,
         ),
       ),

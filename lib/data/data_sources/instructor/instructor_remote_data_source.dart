@@ -12,20 +12,18 @@ import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
 class InstructorRemoteDataSource extends BaseRemoteDataSource<Object> {
   InstructorRemoteDataSource() : super('');
 
-  Future<Either<AppException, BaseModel<InstructorModel>?>> getInstructors(
-    GetInstructorsEntity entity,
-  ) => fetchDataAs<InstructorModel>(
-    endpoint: ApiEndpoints.instructors,
-    queryParams: entity.toQueryParameters(),
-    fromJsonT: (json) => InstructorModel.fromJson(json as Map<String, dynamic>),
-    wrappedResponse: false,
-  );
+  Future<Either<AppException, BaseModel<InstructorModel>?>> getInstructors(GetInstructorsEntity entity) =>
+      fetchDataAs<InstructorModel>(
+        endpoint: ApiEndpoints.instructors,
+        queryParams: entity.toQueryParameters(),
+        fromJsonT: (json) => InstructorModel.fromJson(json as Map<String, dynamic>),
+        wrappedResponse: false,
+      );
 
-  Future<Either<AppException, BaseModel<InstructorModel>?>> getInstructor(
-    GetInstructorEntity entity,
-  ) => fetchDataAs<InstructorModel>(
-    endpoint: ApiEndpoints.instructor(entity.instructorId),
-    fromJsonT: (json) => InstructorModel.fromJson(json as Map<String, dynamic>),
-    wrappedResponse: false,
-  );
+  Future<Either<AppException, BaseModel<InstructorModel>?>> getInstructor(GetInstructorEntity entity) =>
+      fetchDataAs<InstructorModel>(
+        endpoint: ApiEndpoints.instructor(entity.instructorId),
+        fromJsonT: (json) => InstructorModel.fromJson(json as Map<String, dynamic>),
+        wrappedResponse: false,
+      );
 }

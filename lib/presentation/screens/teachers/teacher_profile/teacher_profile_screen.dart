@@ -19,9 +19,7 @@ class TeacherProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final entity = GetInstructorEntity(
-      instructorId: teacher.instructorId ?? '',
-    );
+    final entity = GetInstructorEntity(instructorId: teacher.instructorId ?? '');
 
     return BlocProvider(
       create: (_) => InstructorBloc()..add(LoadInstructorEvent(entity)),
@@ -42,19 +40,12 @@ class _TeacherProfileBody extends StatelessWidget {
         if (state is InstructorFailed) {
           return Scaffold(
             backgroundColor: AppColors.teacherBackground,
-            body: RetryWidget(
-              onReload: () => context.read<InstructorBloc>().add(
-                LoadInstructorEvent(entity),
-              ),
-            ),
+            body: RetryWidget(onReload: () => context.read<InstructorBloc>().add(LoadInstructorEvent(entity))),
           );
         }
 
         if (state is! InstructorLoaded || state.instructor == null) {
-          return const Scaffold(
-            backgroundColor: AppColors.teacherBackground,
-            body: LoadingWidget(0),
-          );
+          return const Scaffold(backgroundColor: AppColors.teacherBackground, body: LoadingWidget(0));
         }
 
         return _buildProfile(context, state.instructor!);

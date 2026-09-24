@@ -10,6 +10,7 @@ import 'package:wlcd/presentation/screens/search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/search/widgets/search_header.dart';
 import 'package:wlcd/presentation/widgets/course/course_card.dart';
+import 'package:wlcd/presentation/widgets/custom_app_bar.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/no_result_widget.dart';
 import 'package:wlcd/presentation/widgets/retry_widget.dart';
@@ -54,27 +55,25 @@ class _SearchBodyState extends State<_SearchBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
-      body: SafeArea(
-        child: BlocBuilder<CoursesBloc, ICoursesState>(
-          builder: (context, state) {
-            return RefreshIndicator(
-              onRefresh: _refresh,
-              child: CustomScrollView(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-                slivers: [
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _SearchControlsDelegate(onSubmitted: _search, onClose: () => Navigator.maybePop(context)),
-                  ),
-                  ..._resultSlivers(state),
-                  SliverToBoxAdapter(child: SizedBox(height: AppHeight.h30)),
-                ],
-              ),
-            );
-          },
-        ),
+      appBar: CustomAppBar(title: "جميع الكورسات", showBackButton: true),
+      body: BlocBuilder<CoursesBloc, ICoursesState>(
+        builder: (context, state) {
+          return RefreshIndicator(
+            onRefresh: _refresh,
+            child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SearchControlsDelegate(onSubmitted: _search, onClose: () => Navigator.maybePop(context)),
+                ),
+                ..._resultSlivers(state),
+                SliverToBoxAdapter(child: SizedBox(height: AppHeight.h30)),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -129,27 +128,19 @@ class _SearchControlsDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        boxShadow: overlapsContent
-            ? const [BoxShadow(color: AppColors.greySec, blurRadius: 8, offset: Offset(0, 3))]
-            : null,
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(
+        AppPaddingWidth.p18,
+        AppPaddingHeight.p8,
+        AppPaddingWidth.p18,
+        AppPaddingHeight.p8,
       ),
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(
-          AppPaddingWidth.p18,
-          AppPaddingHeight.p8,
-          AppPaddingWidth.p18,
-          AppPaddingHeight.p8,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SearchHeader(onSubmitted: onSubmitted, onClose: onClose),
-            const FilterRow(),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SearchHeader(onSubmitted: onSubmitted, onClose: onClose),
+          const FilterRow(),
+        ],
       ),
     );
   }

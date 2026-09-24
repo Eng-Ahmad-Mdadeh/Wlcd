@@ -15,7 +15,7 @@ class SearchHeader extends StatelessWidget {
       children: [
         Expanded(
           child: CustomSearch(
-            color: AppColors.searchColor,
+            color: AppColors.iconBackGround,
             prefixIconColor: AppColors.searchIcon,
             hintColor: AppColors.searchHeaderText,
             borderRadius: AppRadius.r12,
@@ -24,13 +24,11 @@ class SearchHeader extends StatelessWidget {
         ),
         SizedBox(width: AppWidth.w12),
         IconButton(
+          color: AppColors.searchHeaderText,
+
           tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
           onPressed: onClose,
-          icon: const Icon(
-            Icons.close,
-            size: 24,
-            color: AppColors.searchCloseIcon,
-          ),
+          icon: const Icon(Icons.close, size: 24, color: AppColors.searchCloseIcon),
         ),
       ],
     );
