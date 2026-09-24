@@ -20,8 +20,7 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CoursesBloc()
-        ..add(const LoadCoursesEvent(GetCoursesEntity())),
+      create: (_) => CoursesBloc()..add(const LoadCoursesEvent(GetCoursesEntity(limit: 10))),
       child: const _SearchBody(),
     );
   }
@@ -62,23 +61,15 @@ class _SearchBodyState extends State<_SearchBody> {
             return RefreshIndicator(
               onRefresh: _refresh,
               child: CustomScrollView(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics(),
-                ),
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
                 slivers: [
                   SliverPersistentHeader(
                     pinned: true,
-                    delegate: _SearchControlsDelegate(
-                      onSubmitted: _search,
-                      onClose: () => Navigator.maybePop(context),
-                    ),
+                    delegate: _SearchControlsDelegate(onSubmitted: _search, onClose: () => Navigator.maybePop(context)),
                   ),
                   ..._resultSlivers(state),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: AppHeight.h30),
-                  ),
+                  SliverToBoxAdapter(child: SizedBox(height: AppHeight.h30)),
                 ],
               ),
             );
@@ -90,21 +81,11 @@ class _SearchBodyState extends State<_SearchBody> {
 
   List<Widget> _resultSlivers(ICoursesState state) {
     if (state is CoursesFailed) {
-      return [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: RetryWidget(onReload: _reload),
-        ),
-      ];
+      return [SliverFillRemaining(hasScrollBody: false, child: RetryWidget(onReload: _reload))];
     }
 
     if (state is! CoursesLoaded) {
-      return const [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: LoadingWidget(0),
-        ),
-      ];
+      return const [SliverFillRemaining(hasScrollBody: false, child: LoadingWidget(0))];
     }
 
     final courses = state.courses?.data ?? const <CourseModel>[];
@@ -116,26 +97,18 @@ class _SearchBodyState extends State<_SearchBody> {
           AppPaddingWidth.p18,
           AppPaddingHeight.p12,
         ),
-        sliver: SliverToBoxAdapter(
-          child: ResultHeader(resultCount: courses.length),
-        ),
+        sliver: SliverToBoxAdapter(child: ResultHeader(resultCount: courses.length)),
       ),
       if (courses.isEmpty)
-        const SliverFillRemaining(
-          hasScrollBody: false,
-          child: NoResultWidget(title: 'No courses found'),
-        )
+        const SliverFillRemaining(hasScrollBody: false, child: NoResultWidget(title: 'No courses found'))
       else
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
           sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                if (index.isOdd) return SizedBox(height: AppHeight.h14);
-                return _CourseResult(course: courses[index ~/ 2]);
-              },
-              childCount: courses.length * 2 - 1,
-            ),
+            delegate: SliverChildBuilderDelegate((context, index) {
+              if (index.isOdd) return SizedBox(height: AppHeight.h14);
+              return _CourseResult(course: courses[index ~/ 2]);
+            }, childCount: courses.length * 2 - 1),
           ),
         ),
     ];
@@ -143,10 +116,7 @@ class _SearchBodyState extends State<_SearchBody> {
 }
 
 class _SearchControlsDelegate extends SliverPersistentHeaderDelegate {
-  const _SearchControlsDelegate({
-    required this.onSubmitted,
-    required this.onClose,
-  });
+  const _SearchControlsDelegate({required this.onSubmitted, required this.onClose});
 
   final ValueChanged<String> onSubmitted;
   final VoidCallback onClose;
@@ -158,22 +128,12 @@ class _SearchControlsDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => AppHeight.h120;
 
   @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: overlapsContent
-            ? const [
-                BoxShadow(
-                  color: AppColors.greySec,
-                  blurRadius: 8,
-                  offset: Offset(0, 3),
-                ),
-              ]
+            ? const [BoxShadow(color: AppColors.greySec, blurRadius: 8, offset: Offset(0, 3))]
             : null,
       ),
       child: Padding(
@@ -186,10 +146,7 @@ class _SearchControlsDelegate extends SliverPersistentHeaderDelegate {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SearchHeader(
-              onSubmitted: onSubmitted,
-              onClose: onClose,
-            ),
+            SearchHeader(onSubmitted: onSubmitted, onClose: onClose),
             const FilterRow(),
           ],
         ),
@@ -210,9 +167,7 @@ class _CourseResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CourseCard(
-      onTap: course.courseId == null
-          ? null
-          : () => CourseDetailsRoute(courseId: course.courseId!).push(context),
+      onTap: course.courseId == null ? null : () => CourseDetailsRoute(courseId: course.courseId!).push(context),
       title: course.title ?? '',
       price: course.price?.displayLabel ?? '',
       ratingCount: '(${course.ratingCount ?? 0})',
