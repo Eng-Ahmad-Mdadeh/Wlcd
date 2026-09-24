@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart' show Iconsax;
 import 'package:share_plus/share_plus.dart' show ShareParams, SharePlus;
-import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/domain/entity/instructor/get_instructor_entity.dart';
+import 'package:wlcd/presentation/bloc/instructor/instructor/instructor_bloc.dart';
 import 'package:wlcd/presentation/screens/teachers/teacher_profile/widgets/teacher_profile_widgets.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 
 class TeacherProfileScreen extends StatelessWidget {
   const TeacherProfileScreen({super.key, required this.teacher});
@@ -15,6 +19,50 @@ class TeacherProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final entity = GetInstructorEntity(
+      instructorId: teacher.instructorId ?? '',
+    );
+
+    return BlocProvider(
+      create: (_) => InstructorBloc()..add(LoadInstructorEvent(entity)),
+      child: _TeacherProfileBody(entity: entity),
+    );
+  }
+}
+
+class _TeacherProfileBody extends StatelessWidget {
+  const _TeacherProfileBody({required this.entity});
+
+  final GetInstructorEntity entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<InstructorBloc, IInstructorState>(
+      builder: (context, state) {
+        if (state is InstructorFailed) {
+          return Scaffold(
+            backgroundColor: AppColors.teacherBackground,
+            body: RetryWidget(
+              onReload: () => context.read<InstructorBloc>().add(
+                LoadInstructorEvent(entity),
+              ),
+            ),
+          );
+        }
+
+        if (state is! InstructorLoaded || state.instructor == null) {
+          return const Scaffold(
+            backgroundColor: AppColors.teacherBackground,
+            body: LoadingWidget(0),
+          );
+        }
+
+        return _buildProfile(context, state.instructor!);
+      },
+    );
+  }
+
+  Widget _buildProfile(BuildContext context, InstructorModel teacher) {
     return Scaffold(
       backgroundColor: AppColors.teacherBackground,
       body: CustomScrollView(
