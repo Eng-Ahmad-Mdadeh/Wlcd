@@ -115,7 +115,7 @@ class TeacherProfileStats extends StatelessWidget {
       children: [
         Expanded(
           child: TeacherStatCard(
-            value: teacher.students,
+            value: teacher.studentsCount.toString(),
             label: 'طالب',
             icon: Icons.groups_rounded,
             color: teacher.accentColor,
@@ -131,9 +131,9 @@ class TeacherProfileStats extends StatelessWidget {
           ),
         ),
         SizedBox(width: AppWidth.w12),
-        const Expanded(
+         Expanded(
           child: TeacherStatCard(
-            value: '12',
+            value: teacher.coursesCount.toString() ?? "0",
             label: 'دورة',
             icon: Icons.play_lesson_rounded,
             color: AppColors.teacherGreen,
@@ -324,10 +324,8 @@ class TeacherCoursesCard extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: teacher.courses.length,
               separatorBuilder: (_, __) => SizedBox(height: AppHeight.h12),
-              itemBuilder: (context, index) => TeacherCourseTile(
-                course: teacher.courses[index],
-                color: teacher.accentColor,
-              ),
+              itemBuilder: (context, index) =>
+                  TeacherCourseTile(course: teacher.courses[index], color: teacher.accentColor),
             ),
     );
   }
@@ -353,19 +351,19 @@ class TeacherSectionCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            spacing: AppWidth.w10,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Icon(icon, color: AppColors.seeMore, size: AppSize.s24),
               SectionTitle(
                 text: title,
                 color: AppColors.text,
                 fontSize: AppFontSize.s20,
                 fontWeight: AppFontWeight.extraBold,
               ),
-              SizedBox(width: AppWidth.w10),
-              Icon(icon, color: AppColors.seeMore, size: AppSize.s24),
             ],
           ),
           SizedBox(height: AppHeight.h16),
@@ -377,11 +375,7 @@ class TeacherSectionCard extends StatelessWidget {
 }
 
 class TeacherCourseTile extends StatelessWidget {
-  const TeacherCourseTile({
-    super.key,
-    required this.course,
-    required this.color,
-  });
+  const TeacherCourseTile({super.key, required this.course, required this.color});
 
   final CourseModel course;
   final Color color;
@@ -391,9 +385,7 @@ class TeacherCourseTile extends StatelessWidget {
     final courseId = course.courseId;
 
     return InkWell(
-      onTap: courseId == null || courseId.isEmpty
-          ? null
-          : () => CourseDetailsRoute(courseId: courseId).push(context),
+      onTap: courseId == null || courseId.isEmpty ? null : () => CourseDetailsRoute(courseId: courseId).push(context),
       borderRadius: BorderRadius.circular(AppRadius.r20),
       child: Container(
         padding: EdgeInsets.all(AppSize.s12),
@@ -415,19 +407,15 @@ class TeacherCourseTile extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               child: course.thumbnail == null
                   ? Icon(Icons.school_rounded, color: color, size: AppSize.s30)
-                  : ImageView(
-                      imagePath: course.thumbnail!.url,
-                      fit: BoxFit.cover,
-                    ),
+                  : ImageView(imagePath: course.thumbnail!.url, fit: BoxFit.cover),
             ),
             SizedBox(width: AppWidth.w12),
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SectionTitle(
                     text: course.title ?? '',
-                    textAlign: TextAlign.right,
                     color: AppColors.text,
                     fontSize: AppFontSize.s16,
                     maxLines: 1,
@@ -435,7 +423,6 @@ class TeacherCourseTile extends StatelessWidget {
                   SizedBox(height: AppHeight.h6),
                   BodyTitle(
                     text: course.subtitle ?? '',
-                    textAlign: TextAlign.right,
                     color: AppColors.muted,
                     fontSize: AppFontSize.s12,
                     fontWeight: AppFontWeight.semiBold,
