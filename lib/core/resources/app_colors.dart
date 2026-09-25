@@ -80,6 +80,11 @@ class AppColors {
   static const Color searchHeaderText = Color(0xFF343A46);
   static const Color searchCloseIcon = Color(0xFF2A2F3A);
   static const Color searchFilterBorder = Color(0xFFE5E6EA);
+  static const Color searchFilterBackground = Color(0xFFF8F9FC);
+  static const Color searchFilterTitle = Color(0xFF171B2C);
+  static const Color searchFilterMuted = Color(0xFF7B8191);
+  static const Color searchFilterControl = Color(0xFFF0F2F6);
+  static const Color searchFilterChip = Color(0xFFF1F3F7);
   static const Color searchResultTitle = Color(0xFF4A5261);
   static const Color searchInactiveView = Color(0xFFB8BDC8);
   static const Color searchCardBorder = Color(0xFFE9EAEE);

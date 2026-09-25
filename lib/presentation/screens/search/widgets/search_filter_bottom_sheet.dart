@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_fonts.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/catalog/course_filters/course_filters_model.dart';
 import 'package:wlcd/domain/entity/catalog/course_filters/course_filters_entity.dart';
 import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 import 'package:wlcd/presentation/bloc/catalog/course_filters/course_filters_bloc.dart';
+import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
+import 'package:wlcd/presentation/widgets/custom_filter_chip.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 enum SearchFilterSheetMode { filters, sort, difficulty }
-
-abstract final class _FilterSheetColors {
-  static const background = Color(0xFFF8F9FC);
-  static const title = Color(0xFF171B2C);
-  static const muted = Color(0xFF7B8191);
-  static const border = Color(0xFFE8EAF0);
-  static const control = Color(0xFFF0F2F6);
-  static const chip = Color(0xFFF1F3F7);
-  static const selectedChip = Color(0xFF1F275D);
-}
 
 class SearchFilterBottomSheet extends StatefulWidget {
   const SearchFilterBottomSheet({
@@ -110,7 +106,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           maxHeight: MediaQuery.sizeOf(context).height * _heightFactor,
         ),
         decoration: const BoxDecoration(
-          color: _FilterSheetColors.background,
+          color: AppColors.searchFilterBackground,
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
         ),
         child: Column(
@@ -135,23 +131,20 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          _title,
-                          style: const TextStyle(
-                            color: _FilterSheetColors.title,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            height: 1.3,
-                          ),
+                        BodyTitle(
+                          text: _title,
+                          color: AppColors.searchFilterTitle,
+                          fontSize: AppFontSize.s20,
+                          fontWeight: AppFontWeight.bold,
+                          height: 1.3,
                         ),
                         const SizedBox(height: 3),
-                        Text(
-                          _subtitle,
-                          style: const TextStyle(
-                            color: _FilterSheetColors.muted,
-                            fontSize: 12.5,
-                            height: 1.35,
-                          ),
+                        BodyTitle(
+                          text: _subtitle,
+                          color: AppColors.searchFilterMuted,
+                          fontSize: AppFontSize.s13,
+                          fontWeight: AppFontWeight.regular,
+                          height: 1.35,
                         ),
                       ],
                     ),
@@ -168,19 +161,23 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     style: IconButton.styleFrom(
-                      backgroundColor: _FilterSheetColors.control,
+                      backgroundColor: AppColors.searchFilterControl,
                     ),
                     icon: const Icon(Icons.close_rounded, size: 20),
                   ),
                 ],
               ),
             ),
-            const Divider(height: 1, color: _FilterSheetColors.border),
+            const Divider(height: 1, color: AppColors.searchFilterBorder),
             Expanded(
               child: BlocBuilder<CourseFiltersBloc, ICourseFiltersState>(
                 builder: (context, state) {
                   if (state is CourseFiltersLoading || state is CourseFiltersInitial) {
-                    return const Center(child: CircularProgressIndicator());
+                    return LoadingWidget2(
+                      0,
+                      size: AppSize.s35,
+                      color: AppColors.primary,
+                    );
                   }
                   if (state is CourseFiltersFailed) {
                     return _FilterError(
@@ -346,13 +343,29 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
     children: [section],
   );
 
+  void _apply() {
+    final price = _price;
+    final shouldApplyPrice = widget.mode == SearchFilterSheetMode.filters &&
+        (_priceChanged ||
+            _value.priceMin != null ||
+            _value.priceMax != null);
+    final result = price == null || !shouldApplyPrice
+        ? _value
+        : _value.copyWith(
+            priceMin: price.start,
+            priceMax: price.end,
+            currency: _value.currency ?? _priceCurrency,
+          );
+    Navigator.pop(context, result);
+  }
+
   Widget _footer() => SafeArea(
     top: false,
     child: Container(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: _FilterSheetColors.border)),
+        border: Border(top: BorderSide(color: AppColors.searchFilterBorder)),
         boxShadow: [
           BoxShadow(
             color: Color(0x120F172A),
@@ -361,36 +374,27 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           ),
         ],
       ),
-      child: FilledButton.icon(
-        onPressed: () {
-          final price = _price;
-          final shouldApplyPrice = widget.mode == SearchFilterSheetMode.filters &&
-              (_priceChanged ||
-                  _value.priceMin != null ||
-                  _value.priceMax != null);
-          final result = price == null || !shouldApplyPrice
-              ? _value
-              : _value.copyWith(
-                  priceMin: price.start,
-                  priceMax: price.end,
-                  currency: _value.currency ?? _priceCurrency,
-                );
-          Navigator.pop(context, result);
-        },
-        icon: const Icon(Icons.check_rounded),
-        label: Text(
-          widget.mode == SearchFilterSheetMode.filters
-              ? 'عرض النتائج'
-              : 'تطبيق الاختيار',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-        style: FilledButton.styleFrom(
-          minimumSize: const Size.fromHeight(54),
-          backgroundColor: AppColors.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 0,
+      child: CustomElevatedButton(
+        borderRadius: AppRadius.r16,
+        height: AppHeight.h55,
+        width: double.infinity,
+        color: AppColors.primary,
+        elevation: 0,
+        onPressed: _apply,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.check_rounded, color: AppColors.white),
+            SizedBox(width: AppWidth.w8),
+            BodyTitle(
+              text: widget.mode == SearchFilterSheetMode.filters
+                  ? 'عرض النتائج'
+                  : 'تطبيق الاختيار',
+              color: AppColors.white,
+              fontSize: AppFontSize.s16,
+              fontWeight: AppFontWeight.bold,
+            ),
+          ],
         ),
       ),
     ),
@@ -424,7 +428,7 @@ class _PriceValue extends StatelessWidget {
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: _FilterSheetColors.control,
+        color: AppColors.searchFilterControl,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -432,7 +436,7 @@ class _PriceValue extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              color: _FilterSheetColors.muted,
+              color: AppColors.searchFilterMuted,
               fontSize: 12,
             ),
           ),
@@ -440,7 +444,7 @@ class _PriceValue extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              color: _FilterSheetColors.title,
+              color: AppColors.searchFilterTitle,
               fontSize: 13,
               fontWeight: FontWeight.w700,
             ),
@@ -469,7 +473,7 @@ class _Section extends StatelessWidget {
       color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: _FilterSheetColors.border),
+        side: const BorderSide(color: AppColors.searchFilterBorder),
       ),
       clipBehavior: Clip.antiAlias,
       child: Theme(
@@ -480,7 +484,7 @@ class _Section extends StatelessWidget {
           tilePadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
           childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 16),
           iconColor: AppColors.primary,
-          collapsedIconColor: _FilterSheetColors.muted,
+          collapsedIconColor: AppColors.searchFilterMuted,
           leading: Container(
             width: 36,
             height: 36,
@@ -493,13 +497,13 @@ class _Section extends StatelessWidget {
           title: Text(
             title,
             style: const TextStyle(
-              color: _FilterSheetColors.title,
+              color: AppColors.searchFilterTitle,
               fontSize: 15.5,
               fontWeight: FontWeight.w700,
             ),
           ),
           children: [
-            const Divider(height: 1, color: _FilterSheetColors.border),
+            const Divider(height: 1, color: AppColors.searchFilterBorder),
             const SizedBox(height: 14),
             Align(
               alignment: AlignmentDirectional.centerStart,
@@ -557,13 +561,13 @@ class _SelectionTile extends StatelessWidget {
   Widget build(BuildContext context) => Material(
     color: selected
         ? AppColors.primary.withValues(alpha: .07)
-        : _FilterSheetColors.background,
+        : AppColors.searchFilterBackground,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
       side: BorderSide(
         color: selected
             ? AppColors.primary.withValues(alpha: .28)
-            : _FilterSheetColors.border,
+            : AppColors.searchFilterBorder,
       ),
     ),
     child: InkWell(
@@ -579,7 +583,7 @@ class _SelectionTile extends StatelessWidget {
                 style: TextStyle(
                   color: selected
                       ? AppColors.primary
-                      : _FilterSheetColors.title,
+                      : AppColors.searchFilterTitle,
                   fontSize: 14,
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 ),
@@ -595,7 +599,7 @@ class _SelectionTile extends StatelessWidget {
                 border: Border.all(
                   color: selected
                       ? AppColors.primary
-                      : _FilterSheetColors.muted,
+                      : AppColors.searchFilterMuted,
                 ),
               ),
               child: selected
@@ -624,25 +628,21 @@ class _SingleChoiceWrap extends StatelessWidget {
     runSpacing: 8,
     children: options.map((option) {
       final isSelected = selected == option.id;
-      return ChoiceChip(
-        label: Text(option.label),
+      return CustomFilterChip(
+        text: option.label,
         selected: isSelected,
         onSelected: (active) => onSelected(active ? option.id : null),
         showCheckmark: false,
-        selectedColor: _FilterSheetColors.selectedChip,
-        backgroundColor: _FilterSheetColors.chip,
+        selectedColor: AppColors.primary,
+        backgroundColor: AppColors.searchFilterChip,
+        textColor: AppColors.searchFilterMuted,
+        selectedTextColor: AppColors.white,
+        fontSize: AppFontSize.s13,
+        borderRadius: AppRadius.r10,
         side: BorderSide(
           color: isSelected
-              ? _FilterSheetColors.selectedChip
+              ? AppColors.primary
               : Colors.transparent,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelStyle: TextStyle(
-          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
-          fontSize: 13,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
         ),
       );
     }).toList(),
@@ -660,26 +660,22 @@ class _MultiChoiceWrap extends StatelessWidget {
     runSpacing: 8,
     children: options.map((option) {
       final isSelected = selected.contains(option.id);
-      return FilterChip(
-        label: Text(option.label),
+      return CustomFilterChip(
+        text: option.label,
         selected: isSelected,
         onSelected: (active) {
           final updated = [...selected];
           active ? updated.add(option.id) : updated.remove(option.id);
           onChanged(updated);
         },
-        checkmarkColor: AppColors.white,
-        selectedColor: _FilterSheetColors.selectedChip,
-        backgroundColor: _FilterSheetColors.chip,
+        showCheckmark: true,
+        selectedColor: AppColors.primary,
+        backgroundColor: AppColors.searchFilterChip,
+        textColor: AppColors.searchFilterMuted,
+        selectedTextColor: AppColors.white,
+        fontSize: AppFontSize.s13,
+        borderRadius: AppRadius.r10,
         side: BorderSide.none,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelStyle: TextStyle(
-          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
-          fontSize: 13,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-        ),
       );
     }).toList(),
   );
@@ -697,25 +693,18 @@ class _StringChoices extends StatelessWidget {
     runSpacing: 8,
     children: values.map((value) {
       final isSelected = selected == value;
-      return ChoiceChip(
-        label: Text(labels[value] ?? value),
+      return CustomFilterChip(
+        text: labels[value] ?? value,
         selected: isSelected,
         onSelected: (active) => onSelected(active ? value : null),
-        showCheckmark: false,
-        avatar: isSelected
-            ? const Icon(Icons.check_rounded, size: 17, color: AppColors.white)
-            : null,
-        selectedColor: _FilterSheetColors.selectedChip,
-        backgroundColor: _FilterSheetColors.chip,
+        showCheckmark: true,
+        selectedColor: AppColors.primary,
+        backgroundColor: AppColors.searchFilterChip,
+        textColor: AppColors.searchFilterMuted,
+        selectedTextColor: AppColors.white,
+        fontSize: AppFontSize.s13,
+        borderRadius: AppRadius.r10,
         side: BorderSide.none,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelStyle: TextStyle(
-          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
-          fontSize: 13,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-        ),
       );
     }).toList(),
   );
