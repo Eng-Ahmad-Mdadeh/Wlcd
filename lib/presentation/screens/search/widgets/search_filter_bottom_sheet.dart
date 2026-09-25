@@ -6,10 +6,17 @@ import 'package:wlcd/domain/entity/catalog/course_filters/course_filters_entity.
 import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 import 'package:wlcd/presentation/bloc/catalog/course_filters/course_filters_bloc.dart';
 
+enum SearchFilterSheetMode { filters, sort, difficulty }
+
 class SearchFilterBottomSheet extends StatefulWidget {
-  const SearchFilterBottomSheet({required this.initialValue, super.key});
+  const SearchFilterBottomSheet({
+    required this.initialValue,
+    this.mode = SearchFilterSheetMode.filters,
+    super.key,
+  });
 
   final GetCoursesEntity initialValue;
+  final SearchFilterSheetMode mode;
 
   @override
   State<SearchFilterBottomSheet> createState() => _SearchFilterBottomSheetState();
@@ -23,12 +30,61 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
 
   void _update(GetCoursesEntity value) => setState(() => _value = value);
 
+  String get _title => switch (widget.mode) {
+    SearchFilterSheetMode.filters => 'تصفية الكورسات',
+    SearchFilterSheetMode.sort => 'ترتيب النتائج',
+    SearchFilterSheetMode.difficulty => 'المستوى',
+  };
+
+  bool get _showReset => switch (widget.mode) {
+    SearchFilterSheetMode.filters => _hasGeneralFilters,
+    SearchFilterSheetMode.sort => _value.sort != null,
+    SearchFilterSheetMode.difficulty => _value.difficulty != null,
+  };
+
+  bool get _hasGeneralFilters =>
+      _value.categoryId != null ||
+      _value.tagIds.isNotEmpty ||
+      _value.language != null ||
+      _value.isFree != null ||
+      _value.priceMin != null ||
+      _value.priceMax != null;
+
+  double get _heightFactor => switch (widget.mode) {
+    SearchFilterSheetMode.filters => .9,
+    SearchFilterSheetMode.sort || SearchFilterSheetMode.difficulty => .48,
+  };
+
+  void _resetCurrentSection() {
+    setState(() {
+      _value = switch (widget.mode) {
+        SearchFilterSheetMode.filters => _value.copyWith(
+          categoryId: null,
+          tagIds: const [],
+          language: null,
+          isFree: null,
+          priceMin: null,
+          priceMax: null,
+          currency: null,
+        ),
+        SearchFilterSheetMode.sort => _value.copyWith(sort: null),
+        SearchFilterSheetMode.difficulty => _value.copyWith(difficulty: null),
+      };
+      if (widget.mode == SearchFilterSheetMode.filters) {
+        _price = null;
+        _priceChanged = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * .9),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * _heightFactor,
+        ),
         decoration: const BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
@@ -40,16 +96,19 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
               child: Row(
                 children: [
-                  const Text('تصفية الكورسات', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700)),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () => setState(() {
-                      _value = GetCoursesEntity(q: _value.q, limit: _value.limit);
-                      _price = null;
-                      _priceChanged = false;
-                    }),
-                    child: const Text('مسح الكل'),
+                  Text(
+                    _title,
+                    style: const TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
+                  const Spacer(),
+                  if (_showReset)
+                    TextButton(
+                      onPressed: _resetCurrentSection,
+                      child: const Text('مسح'),
+                    ),
                   IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
                 ],
               ),
@@ -80,6 +139,46 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   }
 
   Widget _content(CourseFiltersModel filters) {
+    if (widget.mode == SearchFilterSheetMode.sort) {
+      return _singleSectionContent(
+        _Section(
+          title: 'ترتيب النتائج',
+          icon: Icons.swap_vert_rounded,
+          child: _StringChoices(
+            values: filters.sortOptions,
+            selected: _value.sort,
+            labels: const {
+              '-publishedAt': 'الأحدث',
+              'publishedAt': 'الأقدم',
+              'title': 'العنوان أ-ي',
+              '-title': 'العنوان ي-أ',
+            },
+            onSelected: (value) => _update(_value.copyWith(sort: value)),
+          ),
+        ),
+      );
+    }
+
+    if (widget.mode == SearchFilterSheetMode.difficulty) {
+      return _singleSectionContent(
+        _Section(
+          title: 'اختر المستوى المناسب',
+          icon: Icons.signal_cellular_alt_rounded,
+          child: _StringChoices(
+            values: filters.difficulties,
+            selected: _value.difficulty,
+            labels: const {
+              'beginner': 'مبتدئ',
+              'intermediate': 'متوسط',
+              'advanced': 'متقدم',
+            },
+            onSelected: (value) =>
+                _update(_value.copyWith(difficulty: value)),
+          ),
+        ),
+      );
+    }
+
     _priceCurrency = filters.priceCurrency;
     final min = double.tryParse(filters.priceMin) ?? 0;
     final max = double.tryParse(filters.priceMax) ?? min;
@@ -106,16 +205,6 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
             options: filters.tags,
             selected: _value.tagIds,
             onChanged: (tags) => _update(_value.copyWith(tagIds: tags)),
-          ),
-        ),
-        _Section(
-          title: 'المستوى',
-          icon: Icons.signal_cellular_alt_rounded,
-          child: _StringChoices(
-            values: filters.difficulties,
-            selected: _value.difficulty,
-            labels: const {'beginner': 'مبتدئ', 'intermediate': 'متوسط', 'advanced': 'متقدم'},
-            onSelected: (value) => _update(_value.copyWith(difficulty: value)),
           ),
         ),
         _Section(
@@ -161,19 +250,14 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
               onSelected: (value) => _update(_value.copyWith(language: value)),
             ),
           ),
-        _Section(
-          title: 'ترتيب النتائج',
-          icon: Icons.swap_vert_rounded,
-          child: _StringChoices(
-            values: filters.sortOptions,
-            selected: _value.sort,
-            labels: const {'-publishedAt': 'الأحدث', 'publishedAt': 'الأقدم', 'title': 'العنوان أ-ي', '-title': 'العنوان ي-أ'},
-            onSelected: (value) => _update(_value.copyWith(sort: value)),
-          ),
-        ),
       ],
     );
   }
+
+  Widget _singleSectionContent(Widget section) => ListView(
+    padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+    children: [section],
+  );
 
   Widget _footer() => SafeArea(
     top: false,
@@ -186,7 +270,10 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
       child: FilledButton.icon(
         onPressed: () {
           final price = _price;
-          final shouldApplyPrice = _priceChanged || _value.priceMin != null || _value.priceMax != null;
+          final shouldApplyPrice = widget.mode == SearchFilterSheetMode.filters &&
+              (_priceChanged ||
+                  _value.priceMin != null ||
+                  _value.priceMax != null);
           final result = price == null || !shouldApplyPrice
               ? _value
               : _value.copyWith(

@@ -13,7 +13,10 @@ import 'package:wlcd/presentation/widgets/text/body_title.dart';
 class FilterRow extends StatelessWidget {
   const FilterRow({super.key});
 
-  Future<void> _showFilters(BuildContext context) async {
+  Future<void> _showFilters(
+    BuildContext context,
+    SearchFilterSheetMode mode,
+  ) async {
     final queryCubit = context.read<CoursesQueryCubit>();
     final filtersBloc = context.read<CourseFiltersBloc>();
     final result = await showModalBottomSheet<GetCoursesEntity>(
@@ -23,7 +26,10 @@ class FilterRow extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (_) => BlocProvider.value(
         value: filtersBloc,
-        child: SearchFilterBottomSheet(initialValue: queryCubit.state),
+        child: SearchFilterBottomSheet(
+          initialValue: queryCubit.state,
+          mode: mode,
+        ),
       ),
     );
     if (result == null || !context.mounted) return;
@@ -41,7 +47,10 @@ class FilterRow extends StatelessWidget {
           children: [
             Expanded(
               child: _FilterBox(
-                onTap: () => _showFilters(context),
+                onTap: () => _showFilters(
+                  context,
+                  SearchFilterSheetMode.filters,
+                ),
                 isActive: count > 0,
                 icon: Icons.tune_rounded,
                 label: count == 0 ? 'تصفية' : 'تصفية ($count)',
@@ -50,7 +59,10 @@ class FilterRow extends StatelessWidget {
             SizedBox(width: AppWidth.w5),
             Expanded(
               child: _FilterBox(
-                onTap: () => _showFilters(context),
+                onTap: () => _showFilters(
+                  context,
+                  SearchFilterSheetMode.sort,
+                ),
                 isActive: query.sort != null,
                 icon: Icons.swap_vert_rounded,
                 label: _sortLabel(query.sort),
@@ -59,7 +71,10 @@ class FilterRow extends StatelessWidget {
             SizedBox(width: AppWidth.w5),
             Expanded(
               child: _FilterBox(
-                onTap: () => _showFilters(context),
+                onTap: () => _showFilters(
+                  context,
+                  SearchFilterSheetMode.difficulty,
+                ),
                 isActive: query.difficulty != null,
                 icon: Icons.signal_cellular_alt_rounded,
                 label: _difficultyLabel(query.difficulty),
@@ -74,7 +89,6 @@ class FilterRow extends StatelessWidget {
   int _activeFilterCount(GetCoursesEntity value) => [
     value.categoryId,
     if (value.tagIds.isNotEmpty) value.tagIds,
-    value.difficulty,
     value.language,
     value.isFree,
     value.priceMin,
