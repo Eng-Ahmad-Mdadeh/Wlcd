@@ -206,7 +206,8 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         _Section(
           title: 'ترتيب النتائج',
           icon: Icons.swap_vert_rounded,
-          child: _StringChoices(
+          initiallyExpanded: true,
+          child: _SelectionList(
             values: filters.sortOptions,
             selected: _value.sort,
             labels: const {
@@ -226,7 +227,8 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         _Section(
           title: 'اختر المستوى المناسب',
           icon: Icons.signal_cellular_alt_rounded,
-          child: _StringChoices(
+          initiallyExpanded: true,
+          child: _SelectionList(
             values: filters.difficulties,
             selected: _value.difficulty,
             labels: const {
@@ -263,6 +265,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         _Section(
           title: 'المواضيع والمهارات',
           icon: Icons.local_offer_outlined,
+          initiallyExpanded: true,
           child: _MultiChoiceWrap(
             options: filters.tags,
             selected: _value.tagIds,
@@ -449,54 +452,163 @@ class _PriceValue extends StatelessWidget {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.icon, required this.child});
+  const _Section({
+    required this.title,
+    required this.icon,
+    required this.child,
+    this.initiallyExpanded = false,
+  });
   final String title;
   final IconData icon;
   final Widget child;
+  final bool initiallyExpanded;
   @override
-  Widget build(BuildContext context) => Container(
-    margin: const EdgeInsets.only(bottom: 14),
-    padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 12),
+    child: Material(
       color: AppColors.white,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: _FilterSheetColors.border),
-      boxShadow: const [
-        BoxShadow(
-          color: Color(0x080F172A),
-          blurRadius: 12,
-          offset: Offset(0, 4),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: .07),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(icon, size: 18, color: AppColors.primary),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: _FilterSheetColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          initiallyExpanded: initiallyExpanded,
+          maintainState: true,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+          childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 16),
+          iconColor: AppColors.primary,
+          collapsedIconColor: _FilterSheetColors.muted,
+          leading: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: .07),
+              borderRadius: BorderRadius.circular(11),
             ),
-            const SizedBox(width: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                color: _FilterSheetColors.title,
-                fontSize: 15.5,
-                fontWeight: FontWeight.w700,
-              ),
+            child: Icon(icon, size: 18, color: AppColors.primary),
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: _FilterSheetColors.title,
+              fontSize: 15.5,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          children: [
+            const Divider(height: 1, color: _FilterSheetColors.border),
+            const SizedBox(height: 14),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: child,
             ),
           ],
         ),
-        const SizedBox(height: 14),
-        child,
+      ),
+    ),
+  );
+}
+
+class _SelectionList extends StatelessWidget {
+  const _SelectionList({
+    required this.values,
+    required this.selected,
+    required this.labels,
+    required this.onSelected,
+  });
+
+  final List<String> values;
+  final String? selected;
+  final Map<String, String> labels;
+  final ValueChanged<String?> onSelected;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      for (var index = 0; index < values.length; index++) ...[
+        _SelectionTile(
+          label: labels[values[index]] ?? values[index],
+          selected: selected == values[index],
+          onTap: () => onSelected(
+            selected == values[index] ? null : values[index],
+          ),
+        ),
+        if (index != values.length - 1) const SizedBox(height: 8),
       ],
+    ],
+  );
+}
+
+class _SelectionTile extends StatelessWidget {
+  const _SelectionTile({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: selected
+        ? AppColors.primary.withValues(alpha: .07)
+        : _FilterSheetColors.background,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(
+        color: selected
+            ? AppColors.primary.withValues(alpha: .28)
+            : _FilterSheetColors.border,
+      ),
+    ),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: selected
+                      ? AppColors.primary
+                      : _FilterSheetColors.title,
+                  fontSize: 14,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                ),
+              ),
+            ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: selected ? AppColors.primary : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected
+                      ? AppColors.primary
+                      : _FilterSheetColors.muted,
+                ),
+              ),
+              child: selected
+                  ? const Icon(
+                      Icons.check_rounded,
+                      size: 15,
+                      color: AppColors.white,
+                    )
+                  : null,
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }
