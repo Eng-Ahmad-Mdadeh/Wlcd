@@ -39,6 +39,9 @@ class ApiEndpoints {
   static const String instructors = '/instructors';
 
   static String instructor(String instructorId) => '$instructors/$instructorId/published-profile';
+
+  static String availableSlots(String instructorId) =>
+      '$instructors/$instructorId/available-slots';
   //#endregion
 
   //#region Profile
