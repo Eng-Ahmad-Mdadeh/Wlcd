@@ -8,6 +8,16 @@ import 'package:wlcd/presentation/bloc/catalog/course_filters/course_filters_blo
 
 enum SearchFilterSheetMode { filters, sort, difficulty }
 
+abstract final class _FilterSheetColors {
+  static const background = Color(0xFFF8F9FC);
+  static const title = Color(0xFF171B2C);
+  static const muted = Color(0xFF7B8191);
+  static const border = Color(0xFFE8EAF0);
+  static const control = Color(0xFFF0F2F6);
+  static const chip = Color(0xFFF1F3F7);
+  static const selectedChip = Color(0xFF1F275D);
+}
+
 class SearchFilterBottomSheet extends StatefulWidget {
   const SearchFilterBottomSheet({
     required this.initialValue,
@@ -34,6 +44,20 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
     SearchFilterSheetMode.filters => 'تصفية الكورسات',
     SearchFilterSheetMode.sort => 'ترتيب النتائج',
     SearchFilterSheetMode.difficulty => 'المستوى',
+  };
+
+  String get _subtitle => switch (widget.mode) {
+    SearchFilterSheetMode.filters =>
+      'خصص النتائج حسب اهتماماتك وميزانيتك',
+    SearchFilterSheetMode.sort => 'اختر الطريقة الأنسب لعرض الكورسات',
+    SearchFilterSheetMode.difficulty =>
+      'اختر المستوى المتوافق مع خبرتك الحالية',
+  };
+
+  IconData get _headerIcon => switch (widget.mode) {
+    SearchFilterSheetMode.filters => Icons.tune_rounded,
+    SearchFilterSheetMode.sort => Icons.swap_vert_rounded,
+    SearchFilterSheetMode.difficulty => Icons.signal_cellular_alt_rounded,
   };
 
   bool get _showReset => switch (widget.mode) {
@@ -86,34 +110,72 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           maxHeight: MediaQuery.sizeOf(context).height * _heightFactor,
         ),
         decoration: const BoxDecoration(
-          color: AppColors.white,
+          color: _FilterSheetColors.background,
           borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
         ),
         child: Column(
           children: [
             const _Handle(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+              padding: const EdgeInsets.fromLTRB(20, 4, 12, 18),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _title,
-                    style: const TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w700,
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: .08),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Icon(_headerIcon, color: AppColors.primary, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _title,
+                          style: const TextStyle(
+                            color: _FilterSheetColors.title,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            height: 1.3,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          _subtitle,
+                          style: const TextStyle(
+                            color: _FilterSheetColors.muted,
+                            fontSize: 12.5,
+                            height: 1.35,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const Spacer(),
                   if (_showReset)
                     TextButton(
                       onPressed: _resetCurrentSection,
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.danger,
+                        visualDensity: VisualDensity.compact,
+                      ),
                       child: const Text('مسح'),
                     ),
-                  IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: IconButton.styleFrom(
+                      backgroundColor: _FilterSheetColors.control,
+                    ),
+                    icon: const Icon(Icons.close_rounded, size: 20),
+                  ),
                 ],
               ),
             ),
-            const Divider(height: 1),
+            const Divider(height: 1, color: _FilterSheetColors.border),
             Expanded(
               child: BlocBuilder<CourseFiltersBloc, ICourseFiltersState>(
                 builder: (context, state) {
@@ -187,7 +249,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
     _price ??= RangeValues(initialStart, initialEnd);
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+    padding: const EdgeInsets.fromLTRB(18, 18, 18, 28),
       children: [
         _Section(
           title: 'التصنيف',
@@ -221,10 +283,32 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                 selected: {_value.isFree},
                 onSelectionChanged: (selection) => _update(_value.copyWith(isFree: selection.first)),
                 showSelectedIcon: false,
+                style: ButtonStyle(
+                  visualDensity: VisualDensity.comfortable,
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
               ),
               if (max > min) ...[
-                const SizedBox(height: 14),
-                Row(children: [Text('${_price!.start.round()} ${filters.priceCurrency}'), const Spacer(), Text('${_price!.end.round()} ${filters.priceCurrency}')]),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    _PriceValue(
+                      label: 'من',
+                      value:
+                          '${_price!.start.round()} ${filters.priceCurrency}',
+                    ),
+                    const SizedBox(width: 10),
+                    _PriceValue(
+                      label: 'إلى',
+                      value: '${_price!.end.round()} ${filters.priceCurrency}',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
                 RangeSlider(
                   min: min,
                   max: max,
@@ -255,7 +339,7 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   }
 
   Widget _singleSectionContent(Widget section) => ListView(
-    padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+    padding: const EdgeInsets.fromLTRB(18, 18, 18, 24),
     children: [section],
   );
 
@@ -265,7 +349,14 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: AppColors.searchFilterBorder)),
+        border: Border(top: BorderSide(color: _FilterSheetColors.border)),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x120F172A),
+            blurRadius: 18,
+            offset: Offset(0, -5),
+          ),
+        ],
       ),
       child: FilledButton.icon(
         onPressed: () {
@@ -284,8 +375,20 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
           Navigator.pop(context, result);
         },
         icon: const Icon(Icons.check_rounded),
-        label: const Text('عرض النتائج', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-        style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54), backgroundColor: AppColors.primary),
+        label: Text(
+          widget.mode == SearchFilterSheetMode.filters
+              ? 'عرض النتائج'
+              : 'تطبيق الاختيار',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        style: FilledButton.styleFrom(
+          minimumSize: const Size.fromHeight(54),
+          backgroundColor: AppColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+        ),
       ),
     ),
   );
@@ -299,7 +402,48 @@ class _Handle extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: 44,
       height: 5,
-      decoration: BoxDecoration(color: const Color(0xFFD7D8DD), borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+        color: const Color(0xFFCDD1DA),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+  );
+}
+
+class _PriceValue extends StatelessWidget {
+  const _PriceValue({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: _FilterSheetColors.control,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              color: _FilterSheetColors.muted,
+              fontSize: 12,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            value,
+            style: const TextStyle(
+              color: _FilterSheetColors.title,
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -310,13 +454,47 @@ class _Section extends StatelessWidget {
   final IconData icon;
   final Widget child;
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 24),
+  Widget build(BuildContext context) => Container(
+    margin: const EdgeInsets.only(bottom: 14),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(color: _FilterSheetColors.border),
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0x080F172A),
+          blurRadius: 12,
+          offset: Offset(0, 4),
+        ),
+      ],
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(children: [Icon(icon, size: 20, color: AppColors.primary), const SizedBox(width: 8), Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700))]),
-        const SizedBox(height: 12),
+        Row(
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: .07),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, size: 18, color: AppColors.primary),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              title,
+              style: const TextStyle(
+                color: _FilterSheetColors.title,
+                fontSize: 15.5,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 14),
         child,
       ],
     ),
@@ -332,11 +510,30 @@ class _SingleChoiceWrap extends StatelessWidget {
   Widget build(BuildContext context) => Wrap(
     spacing: 8,
     runSpacing: 8,
-    children: options.map((option) => ChoiceChip(
-      label: Text(option.label),
-      selected: selected == option.id,
-      onSelected: (active) => onSelected(active ? option.id : null),
-    )).toList(),
+    children: options.map((option) {
+      final isSelected = selected == option.id;
+      return ChoiceChip(
+        label: Text(option.label),
+        selected: isSelected,
+        onSelected: (active) => onSelected(active ? option.id : null),
+        showCheckmark: false,
+        selectedColor: _FilterSheetColors.selectedChip,
+        backgroundColor: _FilterSheetColors.chip,
+        side: BorderSide(
+          color: isSelected
+              ? _FilterSheetColors.selectedChip
+              : Colors.transparent,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: TextStyle(
+          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
+          fontSize: 13,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+        ),
+      );
+    }).toList(),
   );
 }
 
@@ -349,15 +546,30 @@ class _MultiChoiceWrap extends StatelessWidget {
   Widget build(BuildContext context) => Wrap(
     spacing: 8,
     runSpacing: 8,
-    children: options.map((option) => FilterChip(
-      label: Text(option.label),
-      selected: selected.contains(option.id),
-      onSelected: (active) {
-        final updated = [...selected];
-        active ? updated.add(option.id) : updated.remove(option.id);
-        onChanged(updated);
-      },
-    )).toList(),
+    children: options.map((option) {
+      final isSelected = selected.contains(option.id);
+      return FilterChip(
+        label: Text(option.label),
+        selected: isSelected,
+        onSelected: (active) {
+          final updated = [...selected];
+          active ? updated.add(option.id) : updated.remove(option.id);
+          onChanged(updated);
+        },
+        checkmarkColor: AppColors.white,
+        selectedColor: _FilterSheetColors.selectedChip,
+        backgroundColor: _FilterSheetColors.chip,
+        side: BorderSide.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: TextStyle(
+          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
+          fontSize: 13,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+        ),
+      );
+    }).toList(),
   );
 }
 
@@ -371,11 +583,29 @@ class _StringChoices extends StatelessWidget {
   Widget build(BuildContext context) => Wrap(
     spacing: 8,
     runSpacing: 8,
-    children: values.map((value) => ChoiceChip(
-      label: Text(labels[value] ?? value),
-      selected: selected == value,
-      onSelected: (active) => onSelected(active ? value : null),
-    )).toList(),
+    children: values.map((value) {
+      final isSelected = selected == value;
+      return ChoiceChip(
+        label: Text(labels[value] ?? value),
+        selected: isSelected,
+        onSelected: (active) => onSelected(active ? value : null),
+        showCheckmark: false,
+        avatar: isSelected
+            ? const Icon(Icons.check_rounded, size: 17, color: AppColors.white)
+            : null,
+        selectedColor: _FilterSheetColors.selectedChip,
+        backgroundColor: _FilterSheetColors.chip,
+        side: BorderSide.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: TextStyle(
+          color: isSelected ? AppColors.white : _FilterSheetColors.muted,
+          fontSize: 13,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+        ),
+      );
+    }).toList(),
   );
 }
 
