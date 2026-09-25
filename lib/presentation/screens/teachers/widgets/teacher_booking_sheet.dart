@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/data/model/booking/available_slots_model.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/domain/entity/booking/get_available_slots_entity.dart';
+import 'package:wlcd/presentation/bloc/booking/available_slots/available_slots_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_submit_button.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
@@ -20,78 +26,110 @@ class TeacherBookingSheet extends StatefulWidget {
 }
 
 class _TeacherBookingSheetState extends State<TeacherBookingSheet> {
-  late DateTime _selectedDate;
-  late DateTime _focusedDate;
-  String? _selectedSlot;
-
-  late final Map<DateTime, List<String>> _availableSlots = _buildAvailableSlots(DateTime.now());
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedDate = _dateOnly(DateTime.now());
-    _focusedDate = _selectedDate;
-    _selectedSlot = _slotsFor(_selectedDate).firstOrNull;
-  }
+  DateTime? _selectedDate;
+  DateTime? _focusedDate;
+  String? _selectedSlotId;
 
   @override
   Widget build(BuildContext context) {
-    final selectedSlots = _slotsFor(_selectedDate);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(text: 'اختر التاريخ المناسب لك', color: AppColors.text, fontSize: AppSize.s18),
-        SizedBox(height: AppHeight.h16),
-        _BookingCalendar(
-          selectedDate: _selectedDate,
-          focusedDate: _focusedDate,
-          color: AppColors.teacherPurple,
-          availableDays: _availableSlots.keys.toSet(),
-          onDateSelected: (selectedDate, focusedDate) {
-            setState(() {
-              _selectedDate = _dateOnly(selectedDate);
-              _focusedDate = _dateOnly(focusedDate);
-              _selectedSlot = _slotsFor(_selectedDate).firstOrNull;
-            });
-          },
-          onPageChanged: (focusedDate) {
-            setState(() => _focusedDate = _dateOnly(focusedDate));
-          },
-        ),
-        SizedBox(height: AppHeight.h16),
-        _SelectedDaySchedule(
-          date: _selectedDate,
-          slots: selectedSlots,
-          selectedSlot: _selectedSlot,
-          color: AppColors.teacherPurple,
-          onSlotSelected: (slot) => setState(() => _selectedSlot = slot),
-          onChatPressed: () {
-            context.pop();
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'سيتم الانتقال إلى المحادثة مع ${widget.teacher.displayName ?? ''} قريباً',
+    return BlocBuilder<AvailableSlotsBloc, IAvailableSlotsState>(
+      builder: (context, state) {
+        if (state is AvailableSlotsFailed) {
+          return SizedBox(
+            height: AppHeight.h300,
+            child: RetryWidget(
+              onReload: () => context.read<AvailableSlotsBloc>().add(
+                LoadAvailableSlotsEvent(
+                  GetAvailableSlotsEntity(
+                    instructorId: widget.teacher.instructorId ?? '',
+                  ),
                 ),
               ),
-            );
-          },
-        ),
-        SizedBox(height: AppHeight.h16),
-        if (selectedSlots.isNotEmpty)
-          CustomSubmitButton(
-            title: 'تأكيد الحجز',
-            onPressed: () {
-              context.pop();
-            },
-          ),
-      ],
+            ),
+          );
+        }
+
+        if (state is! AvailableSlotsLoaded) {
+          return SizedBox(
+            height: AppHeight.h300,
+            child: const LoadingWidget(0),
+          );
+        }
+
+        final availableSlots = _groupSlotsByDate(state.availableSlots);
+        final availableDays = availableSlots.keys.toSet();
+        final firstAvailableDay = availableDays.firstOrNull;
+        final selectedDate = _selectedDate != null &&
+                availableDays.contains(_selectedDate)
+            ? _selectedDate!
+            : firstAvailableDay ?? _dateOnly(DateTime.now());
+        final focusedDate = _focusedDate ?? selectedDate;
+        final selectedSlots = availableSlots[selectedDate] ?? const [];
+        final selectedSlotId = selectedSlots.any(
+          (slot) => slot.availabilitySlotId == _selectedSlotId,
+        )
+            ? _selectedSlotId
+            : selectedSlots.firstOrNull?.availabilitySlotId;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SectionTitle(
+              text: 'اختر التاريخ المناسب لك',
+              color: AppColors.text,
+              fontSize: AppSize.s18,
+            ),
+            SizedBox(height: AppHeight.h16),
+            _BookingCalendar(
+              selectedDate: selectedDate,
+              focusedDate: focusedDate,
+              color: AppColors.teacherPurple,
+              availableDays: availableDays,
+              onDateSelected: (selectedDate, focusedDate) {
+                setState(() {
+                  _selectedDate = _dateOnly(selectedDate);
+                  _focusedDate = _dateOnly(focusedDate);
+                  _selectedSlotId = availableSlots[_selectedDate]
+                      ?.firstOrNull
+                      ?.availabilitySlotId;
+                });
+              },
+              onPageChanged: (focusedDate) {
+                setState(() => _focusedDate = _dateOnly(focusedDate));
+              },
+            ),
+            SizedBox(height: AppHeight.h16),
+            _SelectedDaySchedule(
+              date: selectedDate,
+              slots: selectedSlots,
+              selectedSlotId: selectedSlotId,
+              color: AppColors.teacherPurple,
+              onSlotSelected: (slot) =>
+                  setState(() => _selectedSlotId = slot.availabilitySlotId),
+              onChatPressed: () {
+                context.pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'سيتم الانتقال إلى المحادثة مع ${widget.teacher.displayName ?? ''} قريباً',
+                    ),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: AppHeight.h16),
+            if (selectedSlots.isNotEmpty)
+              CustomSubmitButton(
+                title: 'تأكيد الحجز',
+                onPressed: () {
+                  context.pop();
+                },
+              ),
+          ],
+        );
+      },
     );
   }
-
-  List<String> _slotsFor(DateTime date) => _availableSlots[_dateOnly(date)] ?? const [];
 }
 
 class _BookingCalendar extends StatelessWidget {
@@ -127,6 +165,7 @@ class _BookingCalendar extends StatelessWidget {
         focusedDay: focusedDate,
         selectedDayPredicate: (day) => isSameDay(day, selectedDate),
         eventLoader: (day) => availableDays.contains(_dateOnly(day)) ? const ['available'] : const [],
+        enabledDayPredicate: (day) => availableDays.contains(_dateOnly(day)),
         onDaySelected: onDateSelected,
         onPageChanged: onPageChanged,
         calendarFormat: CalendarFormat.month,
@@ -169,17 +208,17 @@ class _SelectedDaySchedule extends StatelessWidget {
   const _SelectedDaySchedule({
     required this.date,
     required this.slots,
-    required this.selectedSlot,
+    required this.selectedSlotId,
     required this.color,
     required this.onSlotSelected,
     required this.onChatPressed,
   });
 
   final DateTime date;
-  final List<String> slots;
-  final String? selectedSlot;
+  final List<AvailableSlotModel> slots;
+  final String? selectedSlotId;
   final Color color;
-  final ValueChanged<String> onSlotSelected;
+  final ValueChanged<AvailableSlotModel> onSlotSelected;
   final VoidCallback onChatPressed;
 
   @override
@@ -254,9 +293,9 @@ class _SelectedDaySchedule extends StatelessWidget {
               runSpacing: AppHeight.h10,
               alignment: WrapAlignment.end,
               children: slots.map((slot) {
-                final selected = slot == selectedSlot;
+                final selected = slot.availabilitySlotId == selectedSlotId;
                 return ChoiceChip(
-                  label: Text(slot),
+                  label: Text(_formatSlotTime(slot)),
                   selected: selected,
                   onSelected: (_) => onSlotSelected(slot),
                   selectedColor: color,
@@ -280,15 +319,22 @@ class _SelectedDaySchedule extends StatelessWidget {
   }
 }
 
-Map<DateTime, List<String>> _buildAvailableSlots(DateTime startDate) {
-  final today = _dateOnly(startDate);
+Map<DateTime, List<AvailableSlotModel>> _groupSlotsByDate(
+  AvailableSlotsModel? model,
+) => {
+  for (final day in model?.data ?? const <AvailableSlotsDayModel>[])
+    if (day.date != null) _dateOnly(day.date!): day.slots,
+};
 
-  return {
-    today.add(const Duration(days: 1)): const ['09:00 ص', '11:30 ص', '05:00 م'],
-    today.add(const Duration(days: 3)): const ['10:00 ص', '01:00 م'],
-    today.add(const Duration(days: 5)): const ['04:00 م', '07:30 م'],
-    today.add(const Duration(days: 8)): const ['12:00 م', '06:00 م'],
-  };
+String _formatSlotTime(AvailableSlotModel slot) {
+  final startsAt = slot.startsAt;
+  final endsAt = slot.endsAt;
+  if (startsAt == null) return '';
+
+  final formatter = DateFormat('hh:mm a', 'ar');
+  final start = formatter.format(startsAt.toLocal());
+  if (endsAt == null) return start;
+  return '$start - ${formatter.format(endsAt.toLocal())}';
 }
 
 DateTime _dateOnly(DateTime date) => DateTime(date.year, date.month, date.day);
