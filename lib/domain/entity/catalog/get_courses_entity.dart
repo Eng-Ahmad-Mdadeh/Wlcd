@@ -33,6 +33,40 @@ class GetCoursesEntity extends Equatable {
   final String? cursor;
   final int limit;
 
+  static const _unset = Object();
+
+  GetCoursesEntity copyWith({
+    Object? q = _unset,
+    Object? categoryId = _unset,
+    List<String>? tagIds,
+    Object? difficulty = _unset,
+    Object? language = _unset,
+    Object? isFree = _unset,
+    Object? priceMin = _unset,
+    Object? priceMax = _unset,
+    Object? currency = _unset,
+    Object? sort = _unset,
+    Object? cursor = _unset,
+    int? limit,
+  }) => GetCoursesEntity(
+    q: identical(q, _unset) ? this.q : q as String?,
+    categoryId: identical(categoryId, _unset)
+        ? this.categoryId
+        : categoryId as String?,
+    tagIds: tagIds ?? this.tagIds,
+    difficulty: identical(difficulty, _unset)
+        ? this.difficulty
+        : difficulty as String?,
+    language: identical(language, _unset) ? this.language : language as String?,
+    isFree: identical(isFree, _unset) ? this.isFree : isFree as bool?,
+    priceMin: identical(priceMin, _unset) ? this.priceMin : priceMin as num?,
+    priceMax: identical(priceMax, _unset) ? this.priceMax : priceMax as num?,
+    currency: identical(currency, _unset) ? this.currency : currency as String?,
+    sort: identical(sort, _unset) ? this.sort : sort as String?,
+    cursor: identical(cursor, _unset) ? this.cursor : cursor as String?,
+    limit: limit ?? this.limit,
+  );
+
   Map<String, dynamic> toQueryParameters() => {
     if (q?.isNotEmpty ?? false) 'q': q,
     if (categoryId?.isNotEmpty ?? false) 'categoryId': categoryId,

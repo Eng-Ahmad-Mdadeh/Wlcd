@@ -6,6 +6,8 @@ import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/catalog/course/course_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 import 'package:wlcd/presentation/bloc/catalog/courses/courses_bloc.dart';
+import 'package:wlcd/presentation/bloc/catalog/course_filters/course_filters_bloc.dart';
+import 'package:wlcd/presentation/cubit/catalog/courses_query_cubit.dart';
 import 'package:wlcd/presentation/screens/search/widgets/filter_row.dart';
 import 'package:wlcd/presentation/screens/search/widgets/result_header.dart';
 import 'package:wlcd/presentation/screens/search/widgets/search_header.dart';
@@ -20,8 +22,13 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CoursesBloc()..add(const LoadCoursesEvent(GetCoursesEntity(limit: 10))),
+    const initialQuery = GetCoursesEntity(limit: 10);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => CoursesBloc()..add(const LoadCoursesEvent(initialQuery))),
+        BlocProvider(create: (_) => CourseFiltersBloc()..add(const LoadCourseFiltersEvent())),
+        BlocProvider(create: (_) => CoursesQueryCubit(initial: initialQuery)),
+      ],
       child: const _SearchBody(),
     );
   }
@@ -35,20 +42,22 @@ class _SearchBody extends StatefulWidget {
 }
 
 class _SearchBodyState extends State<_SearchBody> {
-  GetCoursesEntity _query = const GetCoursesEntity();
-
   void _search(String value) {
-    _query = GetCoursesEntity(q: value.trim());
-    context.read<CoursesBloc>().add(LoadCoursesEvent(_query));
+    context.read<CoursesQueryCubit>().setSearch(value);
+    context.read<CoursesBloc>().add(
+      LoadCoursesEvent(context.read<CoursesQueryCubit>().state),
+    );
   }
 
   void _reload() {
-    context.read<CoursesBloc>().add(LoadCoursesEvent(_query));
+    context.read<CoursesBloc>().add(
+      LoadCoursesEvent(context.read<CoursesQueryCubit>().state),
+    );
   }
 
   Future<void> _refresh() async {
     final bloc = context.read<CoursesBloc>();
-    bloc.add(LoadCoursesEvent(_query));
+    bloc.add(LoadCoursesEvent(context.read<CoursesQueryCubit>().state));
     await bloc.stream.firstWhere((state) => state is! CoursesLoading);
   }
 
