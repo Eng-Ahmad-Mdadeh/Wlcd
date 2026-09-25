@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/helper/launch_url_helper.dart';
 import 'package:wlcd/core/resources/app_assets.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -7,6 +8,7 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/data/model/catalog/course/course_model.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/presentation/bloc/booking/available_slots/available_slots_bloc.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teacher_booking_sheet.dart';
 import 'package:wlcd/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:wlcd/presentation/widgets/image_view.dart';
@@ -247,12 +249,16 @@ class TeacherProfileActions extends StatelessWidget {
   }
 
   void _showBooking(BuildContext context) {
+    final availableSlotsBloc = context.read<AvailableSlotsBloc>();
     CustomBottomSheet.show(
       context,
       title: 'حجز جلسة',
       heightFactor: .85,
       borderRadius: AppRadius.r30,
-      body: TeacherBookingSheet(teacher: teacher),
+      body: BlocProvider.value(
+        value: availableSlotsBloc,
+        child: TeacherBookingSheet(teacher: teacher),
+      ),
     );
   }
 }
