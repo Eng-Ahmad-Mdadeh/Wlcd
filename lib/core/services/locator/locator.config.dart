@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
+import '../../../data/data_sources/booking/booking_remote_data_source.dart'
+    as _i1100;
 import '../../../data/data_sources/catalog/catalog_remote_data_source.dart'
     as _i344;
 import '../../../data/data_sources/course_details/course_details_remote_data_source.dart'
@@ -34,6 +36,7 @@ import '../../../data/model/auth/phone_otp_verification_model.dart' as _i248;
 import '../../../data/model/auth/session_model.dart' as _i695;
 import '../../../data/model/auth/verify_email_model.dart' as _i638;
 import '../../../data/model/base/base_model.dart' as _i830;
+import '../../../data/model/booking/available_slots_model.dart' as _i1101;
 import '../../../data/model/catalog/banners/banners_model.dart' as _i508;
 import '../../../data/model/catalog/categories/categories_model.dart' as _i621;
 import '../../../data/model/catalog/course_filters/course_filters_model.dart'
@@ -62,6 +65,7 @@ import '../../../data/model/profile/phone_identifier/phone_identifier_model.dart
     as _i868;
 import '../../../data/model/profile/profile/profile_model.dart' as _i228;
 import '../../../data/repository/auth/auth_repository.dart' as _i728;
+import '../../../data/repository/booking/booking_repository.dart' as _i1102;
 import '../../../data/repository/catalog/catalog_repository.dart' as _i601;
 import '../../../data/repository/course_details/course_details_repository.dart'
     as _i783;
@@ -83,6 +87,8 @@ import '../../../domain/entity/auth/request_phone_otp_entity.dart' as _i92;
 import '../../../domain/entity/auth/reset_password_entity.dart' as _i394;
 import '../../../domain/entity/auth/verify_email_entity.dart' as _i853;
 import '../../../domain/entity/auth/verify_phone_otp_entity.dart' as _i982;
+import '../../../domain/entity/booking/get_available_slots_entity.dart'
+    as _i1103;
 import '../../../domain/entity/catalog/get_courses_entity.dart' as _i921;
 import '../../../domain/entity/catalog/get_featured_courses_entity.dart'
     as _i734;
@@ -107,6 +113,7 @@ import '../../../domain/entity/profile/complete_profile_entity.dart' as _i904;
 import '../../../domain/entity/profile/update_profile_entity.dart' as _i233;
 import '../../../domain/entity/profile/upload_avatar_entity.dart' as _i82;
 import '../../../domain/repository/auth/i_auth_repository.dart' as _i154;
+import '../../../domain/repository/booking/i_booking_repository.dart' as _i1104;
 import '../../../domain/repository/catalog/i_catalog_repository.dart' as _i981;
 import '../../../domain/repository/course_details/i_course_details_repository.dart'
     as _i971;
@@ -190,6 +197,8 @@ import '../../../domain/usecase/favorites/list_favorite_groups_usecase.dart'
 import '../../../domain/usecase/favorites/list_favorite_memberships_usecase.dart'
     as _i779;
 import '../../../domain/usecase/i_use_case.dart' as _i759;
+import '../../../domain/usecase/booking/get_available_slots_usecase.dart'
+    as _i1105;
 import '../../../domain/usecase/instructor/get_instructor_usecase.dart'
     as _i487;
 import '../../../domain/usecase/instructor/get_instructors_usecase.dart'
@@ -231,6 +240,9 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
     gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.factory<_i1100.BookingRemoteDataSource>(
+      () => _i1100.BookingRemoteDataSource(),
+    );
     gh.factory<_i344.CatalogRemoteDataSource>(
       () => _i344.CatalogRemoteDataSource(),
     );
@@ -438,6 +450,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i831.IInstructorRepository>(
       () => _i138.InstructorRepository(gh<_i538.InstructorRemoteDataSource>()),
+    );
+    gh.factory<_i1104.IBookingRepository>(
+      () => _i1102.BookingRepository(gh<_i1100.BookingRemoteDataSource>()),
+    );
+    gh.factory<
+      _i759.IUseCase<
+        _i830.BaseModel<_i1101.AvailableSlotsModel>?,
+        _i1103.GetAvailableSlotsEntity
+      >
+    >(
+      () => _i1105.GetAvailableSlotsUsecase(gh<_i1104.IBookingRepository>()),
+      instanceName: 'GetAvailableSlots',
     );
     gh.factory<_i250.AuthEntity>(
       () => _i250.AuthEntity(

@@ -6,7 +6,9 @@ import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/instructor/instructor_model.dart';
+import 'package:wlcd/domain/entity/booking/get_available_slots_entity.dart';
 import 'package:wlcd/domain/entity/instructor/get_instructor_entity.dart';
+import 'package:wlcd/presentation/bloc/booking/available_slots/available_slots_bloc.dart';
 import 'package:wlcd/presentation/bloc/instructor/instructor/instructor_bloc.dart';
 import 'package:wlcd/presentation/screens/teachers/teacher_profile/widgets/teacher_profile_widgets.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
@@ -19,10 +21,22 @@ class TeacherProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final entity = GetInstructorEntity(instructorId: id ?? '');
+    final entity = GetInstructorEntity(instructorId: id);
 
-    return BlocProvider(
-      create: (_) => InstructorBloc()..add(LoadInstructorEvent(entity)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => InstructorBloc()..add(LoadInstructorEvent(entity)),
+        ),
+        BlocProvider(
+          create: (_) => AvailableSlotsBloc()
+            ..add(
+              LoadAvailableSlotsEvent(
+                GetAvailableSlotsEntity(instructorId: id),
+              ),
+            ),
+        ),
+      ],
       child: _TeacherProfileBody(entity: entity),
     );
   }
