@@ -1,6 +1,7 @@
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:flutter/material.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/resources/app_values.dart';
 
 class CustomFilterChip extends StatelessWidget {
   final String text;
@@ -48,7 +49,6 @@ class CustomFilterChip extends StatelessWidget {
       onSelected: onSelected,
       side: side,
       showCheckmark: showCheckmark,
-      // Keep the same behavior you had: primary when selected, searchColor otherwise
       color: WidgetStateProperty.resolveWith<Color?>((states) {
         return selected
             ? selectedColor ?? AppColors.primary
@@ -56,10 +56,10 @@ class CustomFilterChip extends StatelessWidget {
       }),
       selectedColor: selectedColor ?? AppColors.primary,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius ?? 8),
+        borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r8),
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      padding: padding, // optional, null keeps default density
+      padding: padding,
     );
   }
 }

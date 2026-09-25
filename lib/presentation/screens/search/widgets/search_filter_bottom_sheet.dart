@@ -11,6 +11,8 @@ import 'package:wlcd/presentation/widgets/custom_elevated_button.dart';
 import 'package:wlcd/presentation/widgets/custom_filter_chip.dart';
 import 'package:wlcd/presentation/widgets/loading_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
+import 'package:wlcd/presentation/widgets/text/page_title.dart';
+import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
 enum SearchFilterSheetMode { filters, sort, difficulty }
 
@@ -105,40 +107,52 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.sizeOf(context).height * _heightFactor,
         ),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.searchFilterBackground,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppRadius.r28),
+          ),
         ),
         child: Column(
           children: [
             const _Handle(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 12, 18),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                AppPaddingWidth.p20,
+                AppPaddingHeight.p4,
+                AppPaddingWidth.p12,
+                AppPaddingHeight.p18,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 44,
-                    height: 44,
+                    width: AppWidth.w45,
+                    height: AppHeight.h45,
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: .08),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(AppRadius.r14),
                     ),
-                    child: Icon(_headerIcon, color: AppColors.primary, size: 22),
+                    child: Icon(
+                      _headerIcon,
+                      color: AppColors.primary,
+                      size: AppSize.s22,
+                    ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: AppWidth.w12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BodyTitle(
+                        PageTitle(
                           text: _title,
+                          textAlign: TextAlign.start,
                           color: AppColors.searchFilterTitle,
                           fontSize: AppFontSize.s20,
                           fontWeight: AppFontWeight.bold,
                           height: 1.3,
                         ),
-                        const SizedBox(height: 3),
+                        SizedBox(height: AppHeight.h3),
                         BodyTitle(
                           text: _subtitle,
                           color: AppColors.searchFilterMuted,
@@ -156,14 +170,17 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                         foregroundColor: AppColors.danger,
                         visualDensity: VisualDensity.compact,
                       ),
-                      child: const Text('مسح'),
+                      child: const BodyTitle(
+                        text: 'مسح',
+                        color: AppColors.danger,
+                      ),
                     ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     style: IconButton.styleFrom(
                       backgroundColor: AppColors.searchFilterControl,
                     ),
-                    icon: const Icon(Icons.close_rounded, size: 20),
+                    icon: Icon(Icons.close_rounded, size: AppSize.s20),
                   ),
                 ],
               ),
@@ -185,7 +202,14 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                     );
                   }
                   final filters = (state as CourseFiltersLoaded).filters;
-                  if (filters == null) return const Center(child: Text('لا توجد خيارات تصفية متاحة'));
+                  if (filters == null) {
+                    return const Center(
+                      child: BodyTitle(
+                        text: 'لا توجد خيارات تصفية متاحة',
+                        color: AppColors.searchFilterMuted,
+                      ),
+                    );
+                  }
                   return _content(filters);
                 },
               ),
@@ -248,7 +272,12 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
     _price ??= RangeValues(initialStart, initialEnd);
 
     return ListView(
-    padding: const EdgeInsets.fromLTRB(18, 18, 18, 28),
+    padding: EdgeInsetsDirectional.fromSTEB(
+      AppPaddingWidth.p18,
+      AppPaddingHeight.p18,
+      AppPaddingWidth.p18,
+      AppHeight.h28,
+    ),
       children: [
         _Section(
           title: 'التصنيف',
@@ -276,9 +305,18 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
             children: [
               SegmentedButton<bool?>(
                 segments: const [
-                  ButtonSegment(value: null, label: Text('الكل')),
-                  ButtonSegment(value: true, label: Text('مجاني')),
-                  ButtonSegment(value: false, label: Text('مدفوع')),
+                  ButtonSegment(
+                    value: null,
+                    label: BodyTitle(text: 'الكل'),
+                  ),
+                  ButtonSegment(
+                    value: true,
+                    label: BodyTitle(text: 'مجاني'),
+                  ),
+                  ButtonSegment(
+                    value: false,
+                    label: BodyTitle(text: 'مدفوع'),
+                  ),
                 ],
                 selected: {_value.isFree},
                 onSelectionChanged: (selection) => _update(_value.copyWith(isFree: selection.first)),
@@ -287,13 +325,13 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                   visualDensity: VisualDensity.comfortable,
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(AppRadius.r10),
                     ),
                   ),
                 ),
               ),
               if (max > min) ...[
-                const SizedBox(height: 18),
+                SizedBox(height: AppHeight.h18),
                 Row(
                   children: [
                     _PriceValue(
@@ -301,14 +339,14 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
                       value:
                           '${_price!.start.round()} ${filters.priceCurrency}',
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: AppWidth.w10),
                     _PriceValue(
                       label: 'إلى',
                       value: '${_price!.end.round()} ${filters.priceCurrency}',
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: AppHeight.h4),
                 RangeSlider(
                   min: min,
                   max: max,
@@ -339,7 +377,12 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   }
 
   Widget _singleSectionContent(Widget section) => ListView(
-    padding: const EdgeInsets.fromLTRB(18, 18, 18, 24),
+    padding: EdgeInsetsDirectional.fromSTEB(
+      AppPaddingWidth.p18,
+      AppPaddingHeight.p18,
+      AppPaddingWidth.p18,
+      AppPaddingHeight.p24,
+    ),
     children: [section],
   );
 
@@ -362,7 +405,12 @@ class _SearchFilterBottomSheetState extends State<SearchFilterBottomSheet> {
   Widget _footer() => SafeArea(
     top: false,
     child: Container(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+      padding: EdgeInsetsDirectional.fromSTEB(
+        AppPaddingWidth.p20,
+        AppPaddingHeight.p12,
+        AppPaddingWidth.p20,
+        AppPaddingHeight.p16,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(top: BorderSide(color: AppColors.searchFilterBorder)),
@@ -406,12 +454,12 @@ class _Handle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
     child: Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      width: 44,
-      height: 5,
+      margin: EdgeInsets.symmetric(vertical: AppMarginHeight.m10),
+      width: AppWidth.w45,
+      height: AppHeight.h5,
       decoration: BoxDecoration(
         color: const Color(0xFFCDD1DA),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppRadius.r20),
       ),
     ),
   );
@@ -426,28 +474,28 @@ class _PriceValue extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
     child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p12,
+        vertical: AppPaddingHeight.p10,
+      ),
       decoration: BoxDecoration(
         color: AppColors.searchFilterControl,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AppRadius.r10),
       ),
       child: Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(
-              color: AppColors.searchFilterMuted,
-              fontSize: 12,
-            ),
+          BodyTitle(
+            text: label,
+            color: AppColors.searchFilterMuted,
+            fontSize: AppFontSize.s12,
+            fontWeight: AppFontWeight.regular,
           ),
           const Spacer(),
-          Text(
-            value,
-            style: const TextStyle(
-              color: AppColors.searchFilterTitle,
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-            ),
+          BodyTitle(
+            text: value,
+            color: AppColors.searchFilterTitle,
+            fontSize: AppFontSize.s13,
+            fontWeight: AppFontWeight.bold,
           ),
         ],
       ),
@@ -468,11 +516,11 @@ class _Section extends StatelessWidget {
   final bool initiallyExpanded;
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 12),
+    padding: EdgeInsets.only(bottom: AppPaddingHeight.p12),
     child: Material(
       color: AppColors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.r16),
         side: const BorderSide(color: AppColors.searchFilterBorder),
       ),
       clipBehavior: Clip.antiAlias,
@@ -481,30 +529,40 @@ class _Section extends StatelessWidget {
         child: ExpansionTile(
           initiallyExpanded: initiallyExpanded,
           maintainState: true,
-          tilePadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-          childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 16),
+          tilePadding: EdgeInsets.symmetric(
+            horizontal: AppPaddingWidth.p14,
+            vertical: AppPaddingHeight.p4,
+          ),
+          childrenPadding: EdgeInsetsDirectional.fromSTEB(
+            AppPaddingWidth.p14,
+            0,
+            AppPaddingWidth.p14,
+            AppPaddingHeight.p16,
+          ),
           iconColor: AppColors.primary,
           collapsedIconColor: AppColors.searchFilterMuted,
           leading: Container(
-            width: 36,
-            height: 36,
+            width: AppWidth.w35,
+            height: AppHeight.h35,
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: .07),
-              borderRadius: BorderRadius.circular(11),
+              borderRadius: BorderRadius.circular(AppRadius.r10),
             ),
-            child: Icon(icon, size: 18, color: AppColors.primary),
+            child: Icon(
+              icon,
+              size: AppSize.s18,
+              color: AppColors.primary,
+            ),
           ),
-          title: Text(
-            title,
-            style: const TextStyle(
-              color: AppColors.searchFilterTitle,
-              fontSize: 15.5,
-              fontWeight: FontWeight.w700,
-            ),
+          title: SectionTitle(
+            text: title,
+            color: AppColors.searchFilterTitle,
+            fontSize: AppFontSize.s16,
+            fontWeight: AppFontWeight.bold,
           ),
           children: [
             const Divider(height: 1, color: AppColors.searchFilterBorder),
-            const SizedBox(height: 14),
+            SizedBox(height: AppHeight.h14),
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: child,
@@ -540,7 +598,7 @@ class _SelectionList extends StatelessWidget {
             selected == values[index] ? null : values[index],
           ),
         ),
-        if (index != values.length - 1) const SizedBox(height: 8),
+        if (index != values.length - 1) SizedBox(height: AppHeight.h8),
       ],
     ],
   );
@@ -563,7 +621,7 @@ class _SelectionTile extends StatelessWidget {
         ? AppColors.primary.withValues(alpha: .07)
         : AppColors.searchFilterBackground,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppRadius.r12),
       side: BorderSide(
         color: selected
             ? AppColors.primary.withValues(alpha: .28)
@@ -572,27 +630,30 @@ class _SelectionTile extends StatelessWidget {
     ),
     child: InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppRadius.r12),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppPaddingWidth.p14,
+          vertical: AppPaddingHeight.p13,
+        ),
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                label,
-                style: TextStyle(
-                  color: selected
-                      ? AppColors.primary
-                      : AppColors.searchFilterTitle,
-                  fontSize: 14,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                ),
+              child: BodyTitle(
+                text: label,
+                color: selected
+                    ? AppColors.primary
+                    : AppColors.searchFilterTitle,
+                fontSize: AppFontSize.s14,
+                fontWeight: selected
+                    ? AppFontWeight.bold
+                    : AppFontWeight.medium,
               ),
             ),
             AnimatedContainer(
               duration: const Duration(milliseconds: 180),
-              width: 22,
-              height: 22,
+              width: AppWidth.w22,
+              height: AppHeight.h22,
               decoration: BoxDecoration(
                 color: selected ? AppColors.primary : Colors.transparent,
                 shape: BoxShape.circle,
@@ -603,9 +664,9 @@ class _SelectionTile extends StatelessWidget {
                 ),
               ),
               child: selected
-                  ? const Icon(
+                  ? Icon(
                       Icons.check_rounded,
-                      size: 15,
+                      size: AppSize.s15,
                       color: AppColors.white,
                     )
                   : null,
@@ -718,10 +779,24 @@ class _FilterError extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(Icons.cloud_off_rounded, size: 44, color: AppColors.greyText),
-        const SizedBox(height: 12),
-        const Text('تعذر تحميل خيارات التصفية'),
-        TextButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh_rounded), label: const Text('إعادة المحاولة')),
+        Icon(
+          Icons.cloud_off_rounded,
+          size: AppSize.s42,
+          color: AppColors.greyText,
+        ),
+        SizedBox(height: AppHeight.h12),
+        const BodyTitle(
+          text: 'تعذر تحميل خيارات التصفية',
+          color: AppColors.searchFilterTitle,
+        ),
+        TextButton.icon(
+          onPressed: onRetry,
+          icon: const Icon(Icons.refresh_rounded),
+          label: const BodyTitle(
+            text: 'إعادة المحاولة',
+            color: AppColors.primary,
+          ),
+        ),
       ],
     ),
   );
