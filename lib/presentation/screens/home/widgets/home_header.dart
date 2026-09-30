@@ -122,6 +122,10 @@ class HeaderActions extends StatelessWidget {
   Future<void> _showLanguageSelector(BuildContext context) {
     return showModalBottomSheet<void>(
       context: context,
+      // Home lives inside the StatefulShellRoute's nested navigator. Presenting
+      // on the root navigator keeps the modal barrier and sheet above the shell
+      // scaffold, including its persistent bottom navigation bar.
+      useRootNavigator: true,
       useSafeArea: true,
       showDragHandle: true,
       backgroundColor: AppColors.white,
