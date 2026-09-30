@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
+import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
@@ -56,32 +58,39 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-    onTap: () => ProfileRoute().push(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          RichText(
-            text: TextSpan(
-              text: context.loc.home_welcome_user,
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: AppFontSize.s16,
-                fontWeight: AppFontWeight.extraBold,
-                fontFamily: AppFontFamily.rubik,
+    return BlocBuilder<GetProfileBloc, IGetProfileState>(
+      buildWhen: (previous, current) => current is GetProfileLoaded || current is GetProfileFailed,
+      builder: (context, state) {
+        final displayName = state is GetProfileLoaded ? state.profileModel?.data?.displayName : null;
+
+        return InkWell(
+          onTap: () => ProfileRoute().push(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: '${context.loc.home_welcome_user}${displayName ?? ''}',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: AppFontSize.s16,
+                    fontWeight: AppFontWeight.extraBold,
+                    fontFamily: AppFontFamily.rubik,
+                  ),
+                  children: const [TextSpan(text: ' 👋')],
+                ),
               ),
-              children: const [TextSpan(text: '👋')],
-            ),
+              SizedBox(height: AppHeight.h7),
+              BodyTitle(
+                text: context.loc.home_upgrade_skill,
+                color: AppColors.white.withOpacity(.72),
+                fontSize: AppFontSize.s12,
+                fontWeight: AppFontWeight.medium,
+              ),
+            ],
           ),
-          SizedBox(height: AppHeight.h7),
-          BodyTitle(
-            text: context.loc.home_upgrade_skill,
-            color: AppColors.white.withOpacity(.72),
-            fontSize: AppFontSize.s12,
-            fontWeight: AppFontWeight.medium,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

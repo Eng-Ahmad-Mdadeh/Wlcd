@@ -12,6 +12,7 @@ import 'package:wlcd/presentation/bloc/catalog/featured_courses/featured_courses
 import 'package:wlcd/presentation/bloc/catalog/global_platforms/global_platforms_bloc.dart';
 import 'package:wlcd/presentation/bloc/catalog/recommended_courses/recommended_courses_bloc.dart';
 import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
+import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/cubit/catalog/featured_courses_query_cubit.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/banners.dart';
 import 'package:wlcd/presentation/screens/Home/widgets/catalog_sections.dart';
@@ -43,6 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => FeaturedCoursesQueryCubit()),
+        BlocProvider(
+          create: (_) => GetProfileBloc()..add(const SubmitGetProfileEvent()),
+        ),
         BlocProvider(
           create: (_) => BannersBloc()..add(const LoadBannersEvent()),
         ),

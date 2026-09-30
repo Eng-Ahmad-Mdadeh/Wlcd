@@ -268,7 +268,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password_reset_link_sent => 'Password reset link sent!';
 
   @override
-  String get home_welcome_user => 'Welcome, Jason ';
+  String get home_welcome_user => 'Welcome, ';
 
   @override
   String get home_upgrade_skill => 'Upgrade your skill for better futures.';
