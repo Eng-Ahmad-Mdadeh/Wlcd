@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wlcd/data/model/catalog/course_thumbnail/course_thumbnail_model.dart';
 
 part 'category_model.g.dart';
 
@@ -10,6 +11,10 @@ class CategoryModel extends Equatable {
     required this.label,
     required this.version,
     this.parentCategoryId,
+    this.color,
+    this.iconMediaId,
+    this.icon,
+    this.isInterested = false,
     this.children,
   });
 
@@ -17,6 +22,11 @@ class CategoryModel extends Equatable {
   final String label;
   final int version;
   final String? parentCategoryId;
+  final String? color;
+  final String? iconMediaId;
+  final CourseThumbnailModel? icon;
+  @JsonKey(defaultValue: false)
+  final bool isInterested;
   final List<CategoryModel>? children;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -28,6 +38,10 @@ class CategoryModel extends Equatable {
     label,
     version,
     parentCategoryId,
+    color,
+    iconMediaId,
+    icon,
+    isInterested,
     children,
   ];
 }

@@ -1,28 +1,35 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
+import 'package:wlcd/data/model/catalog/category/category_model.dart';
+import 'package:wlcd/presentation/bloc/catalog/categories/categories_bloc.dart';
+import 'package:wlcd/presentation/widgets/loading_widget.dart';
+import 'package:wlcd/presentation/widgets/retry_widget.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 import 'package:wlcd/presentation/widgets/text/section_title.dart';
 
-class LearningInterestsWidget extends StatefulWidget {
+class LearningInterestsWidget extends StatelessWidget {
   const LearningInterestsWidget({super.key});
 
   @override
-  State<LearningInterestsWidget> createState() => _LearningInterestsWidgetState();
+  Widget build(BuildContext context) => BlocProvider(
+    create: (_) => CategoriesBloc()..add(const LoadCategoriesEvent()),
+    child: const _LearningInterestsContent(),
+  );
 }
 
-class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
-  final Set<String> _selectedInterests = {'تطوير الذات', 'البرمجة'};
+class _LearningInterestsContent extends StatefulWidget {
+  const _LearningInterestsContent();
 
-  static const List<_InterestOption> _interests = [
-    _InterestOption(title: 'البرمجة', icon: Icons.code_rounded, color: Color(0xFF3B82F6)),
-    _InterestOption(title: 'التصميم', icon: Icons.palette_rounded, color: Color(0xFF8B5CF6)),
-    _InterestOption(title: 'اللغات', icon: Icons.translate_rounded, color: Color(0xFF14B8A6)),
-    _InterestOption(title: 'الأعمال', icon: Icons.business_center_rounded, color: Color(0xFFF59E0B)),
-    _InterestOption(title: 'التسويق', icon: Icons.campaign_rounded, color: Color(0xFFEF4444)),
-    _InterestOption(title: 'تطوير الذات', icon: Icons.psychology_rounded, color: Color(0xFF22C55E)),
-  ];
+  @override
+  State<_LearningInterestsContent> createState() => _LearningInterestsContentState();
+}
+
+class _LearningInterestsContentState extends State<_LearningInterestsContent> {
+  final Map<String, bool> _selectionOverrides = {};
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +53,40 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
         children: [
           _buildHeader(),
           SizedBox(height: AppHeight.h16),
-          Wrap(spacing: AppWidth.w10, runSpacing: AppHeight.h10, children: _interests.map(_buildInterestChip).toList()),
-          SizedBox(height: AppHeight.h18),
-          _buildFooter(),
+          BlocBuilder<CategoriesBloc, ICategoriesState>(builder: _buildCategories),
         ],
       ),
+    );
+  }
+
+  Widget _buildCategories(BuildContext context, ICategoriesState state) {
+    if (state is CategoriesFailed) {
+      return SizedBox(
+        height: AppHeight.h100,
+        child: RetryWidget(
+          onReload: () => context.read<CategoriesBloc>().add(const LoadCategoriesEvent()),
+        ),
+      );
+    }
+    if (state is! CategoriesLoaded) {
+      return SizedBox(height: AppHeight.h100, child: const LoadingWidget(0));
+    }
+
+    final categories = state.categories?.categories ?? const <CategoryModel>[];
+    if (categories.isEmpty) return const SizedBox.shrink();
+    final selectedCount = categories.where(_isSelected).length;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: AppWidth.w10,
+          runSpacing: AppHeight.h10,
+          children: categories.map(_buildInterestChip).toList(),
+        ),
+        SizedBox(height: AppHeight.h18),
+        _buildFooter(selectedCount),
+      ],
     );
   }
 
@@ -96,36 +132,37 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
     );
   }
 
-  Widget _buildInterestChip(_InterestOption interest) {
-    final bool isSelected = _selectedInterests.contains(interest.title);
+  Widget _buildInterestChip(CategoryModel category) {
+    final isSelected = _isSelected(category);
+    final color = _parseColor(category.color);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOut,
       child: InkWell(
-        onTap: () => _toggleInterest(interest.title),
+        onTap: () => setState(() => _selectionOverrides[category.categoryId] = !isSelected),
         borderRadius: BorderRadius.circular(AppRadius.r100),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p10),
           decoration: BoxDecoration(
-            color: isSelected ? interest.color.withOpacity(0.12) : AppColors.greyButton,
+            color: isSelected ? color.withOpacity(0.12) : AppColors.greyButton,
             borderRadius: BorderRadius.circular(AppRadius.r100),
-            border: Border.all(color: isSelected ? interest.color : AppColors.notificationBorder, width: AppWidth.w1),
+            border: Border.all(color: isSelected ? color : AppColors.notificationBorder, width: AppWidth.w1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(interest.icon, color: isSelected ? interest.color : AppColors.profileIcon, size: AppSize.s18),
+              _CategoryIcon(category: category, color: isSelected ? color : AppColors.profileIcon),
               SizedBox(width: AppWidth.w6),
               SectionTitle(
-                text: interest.title,
+                text: category.label,
                 color: isSelected ? AppColors.text : AppColors.seeMore,
                 fontSize: AppFontSize.s13,
                 fontWeight: isSelected ? AppFontWeight.bold : AppFontWeight.medium,
               ),
               if (isSelected) ...[
                 SizedBox(width: AppWidth.w6),
-                Icon(Icons.check_circle_rounded, color: interest.color, size: AppSize.s16),
+                Icon(Icons.check_circle_rounded, color: color, size: AppSize.s16),
               ],
             ],
           ),
@@ -134,7 +171,7 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(int selectedCount) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12, vertical: AppPaddingHeight.p12),
       decoration: BoxDecoration(color: AppColors.lightBlue, borderRadius: BorderRadius.circular(AppRadius.r16)),
@@ -145,7 +182,7 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
           Expanded(
             child: BodyTitle(
               overflow: TextOverflow.visible,
-              text: 'تم اختيار ${_selectedInterests.length} مجالات — يمكنك تعديلها في أي وقت لتحسين تجربة التعلم.',
+              text: 'تم اختيار $selectedCount مجالات — يمكنك تعديلها في أي وقت لتحسين تجربة التعلم.',
               color: AppColors.seeMore,
               fontSize: AppFontSize.s12,
               height: 1.35,
@@ -156,21 +193,34 @@ class _LearningInterestsWidgetState extends State<LearningInterestsWidget> {
     );
   }
 
-  void _toggleInterest(String interest) {
-    setState(() {
-      if (_selectedInterests.contains(interest)) {
-        _selectedInterests.remove(interest);
-      } else {
-        _selectedInterests.add(interest);
-      }
-    });
+  bool _isSelected(CategoryModel category) => _selectionOverrides[category.categoryId] ?? category.isInterested;
+
+  Color _parseColor(String? hex) {
+    final value = hex?.replaceFirst('#', '');
+    if (value == null || !RegExp(r'^[0-9a-fA-F]{6}$').hasMatch(value)) return AppColors.accent;
+    return Color(int.parse('FF$value', radix: 16));
   }
 }
 
-class _InterestOption {
-  const _InterestOption({required this.title, required this.icon, required this.color});
+class _CategoryIcon extends StatelessWidget {
+  const _CategoryIcon({required this.category, required this.color});
 
-  final String title;
-  final IconData icon;
+  final CategoryModel category;
   final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final iconUrl = category.icon?.url;
+    if (iconUrl == null || iconUrl.isEmpty) {
+      return Icon(Icons.category_rounded, color: color, size: AppSize.s18);
+    }
+    return CachedNetworkImage(
+      imageUrl: iconUrl,
+      width: AppSize.s18,
+      height: AppSize.s18,
+      fit: BoxFit.contain,
+      placeholder: (_, __) => SizedBox(width: AppSize.s18, height: AppSize.s18),
+      errorWidget: (_, __, ___) => Icon(Icons.category_rounded, color: color, size: AppSize.s18),
+    );
+  }
 }
