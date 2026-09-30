@@ -74,7 +74,7 @@ class _TeacherProfileBody extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: AppHeight.h300,
+            expandedHeight: AppHeight.h315,
             actionsPadding: EdgeInsets.zero,
             backgroundColor: AppColors.white,
             actions: [

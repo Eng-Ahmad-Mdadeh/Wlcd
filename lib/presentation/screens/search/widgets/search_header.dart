@@ -22,14 +22,14 @@ class SearchHeader extends StatelessWidget {
             onFieldSubmitted: onSubmitted,
           ),
         ),
-        SizedBox(width: AppWidth.w12),
-        IconButton(
-          color: AppColors.searchHeaderText,
-
-          tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-          onPressed: onClose,
-          icon: const Icon(Icons.close, size: 24, color: AppColors.searchCloseIcon),
-        ),
+        // SizedBox(width: AppWidth.w12),
+        // IconButton(
+        //   color: AppColors.searchHeaderText,
+        //
+        //   tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+        //   onPressed: onClose,
+        //   icon: const Icon(Icons.close, size: 24, color: AppColors.searchCloseIcon),
+        // ),
       ],
     );
   }

@@ -605,7 +605,7 @@ abstract class AppLocalizations {
   /// No description provided for @home_welcome_user.
   ///
   /// In en, this message translates to:
-  /// **'Welcome, Jason '**
+  /// **'Welcome, '**
   String get home_welcome_user;
 
   /// No description provided for @home_upgrade_skill.

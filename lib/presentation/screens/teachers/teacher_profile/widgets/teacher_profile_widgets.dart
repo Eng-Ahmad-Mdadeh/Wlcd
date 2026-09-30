@@ -28,7 +28,7 @@ class TeacherProfileHero extends StatelessWidget {
         const [];
 
     return Container(
-      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, AppPaddingHeight.p50, AppPaddingWidth.p20, AppPaddingHeight.p24),
+      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p20, AppPaddingHeight.p75, AppPaddingWidth.p20, 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
