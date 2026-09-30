@@ -35,6 +35,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -78,8 +79,9 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               controller: _passwordController,
               icon: Icons.lock,
               hintText: context.loc.your_password,
-              obscureText: true,
-              suffixIcon: Icons.visibility_off_outlined,
+              obscureText: _obscurePassword,
+              suffixIcon: _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+              onSuffixIconPressed: () => setState(() => _obscurePassword = !_obscurePassword),
               keyboardType: TextInputType.visiblePassword,
               validator: (value) => _validatePassword(context, value),
             ),

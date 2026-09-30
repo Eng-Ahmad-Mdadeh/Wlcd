@@ -13,6 +13,7 @@ class LoginTextField extends StatelessWidget {
     this.validator,
     this.obscureText = false,
     this.suffixIcon,
+    this.onSuffixIconPressed,
     this.controller,
   });
 
@@ -22,6 +23,7 @@ class LoginTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final IconData? suffixIcon;
+  final VoidCallback? onSuffixIconPressed;
   final TextEditingController? controller;
 
   @override
@@ -43,7 +45,10 @@ class LoginTextField extends StatelessWidget {
       prefixIcon: Icon(icon, size: AppSize.s20, color: AppColors.loginFieldIcon),
       suffixIcon: suffixIcon == null
           ? null
-          : Icon(suffixIcon, size: AppSize.s20, color: AppColors.loginFieldIcon),
+          : IconButton(
+              onPressed: onSuffixIconPressed,
+              icon: Icon(suffixIcon, size: AppSize.s20, color: AppColors.loginFieldIcon),
+            ),
       enableInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.r8),
         borderSide: const BorderSide(color: AppColors.lightGrey),
