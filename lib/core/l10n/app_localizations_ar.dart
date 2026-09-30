@@ -269,7 +269,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'تم إرسال رابط إعادة تعيين كلمة المرور!';
 
   @override
-  String get home_welcome_user => 'مرحبًا، جيسون ';
+  String get home_welcome_user => 'مرحبًا، ';
 
   @override
   String get home_upgrade_skill => 'طوّر مهاراتك لمستقبل أفضل.';
