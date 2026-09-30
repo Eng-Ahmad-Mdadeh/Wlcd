@@ -1,11 +1,44 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wlcd/data/model/catalog/banners/banners_model.dart';
+import 'package:wlcd/data/model/catalog/category/category_model.dart';
 import 'package:wlcd/data/model/catalog/course_filters/course_filters_model.dart';
 import 'package:wlcd/data/model/catalog/global_platforms/global_platforms_model.dart';
 import 'package:wlcd/data/model/catalog/courses/courses_model.dart';
 import 'package:wlcd/domain/entity/catalog/get_courses_entity.dart';
 
 void main() {
+  test('parses category presentation and interest fields', () {
+    final category = CategoryModel.fromJson({
+      'categoryId': 'parent-id',
+      'label': 'البرمجة وتطوير البرمجيات',
+      'version': 1,
+      'color': '#1E88E5',
+      'iconMediaId': 'media-id',
+      'icon': {
+        'mediaId': 'media-id',
+        'url': 'https://example.com/icon.png',
+        'deliveryType': 'public',
+        'mimeType': 'image/png',
+        'expiresAt': null,
+        'cachePolicy': 'public-immutable',
+        'fileName': 'icon.png',
+        'sizeBytes': 4096,
+        'width': 1280,
+        'height': 720,
+      },
+      'isInterested': true,
+      'children': [
+        {'categoryId': 'child-id', 'label': 'تطوير الويب', 'parentCategoryId': 'parent-id', 'version': 1},
+      ],
+    });
+
+    expect(category.color, '#1E88E5');
+    expect(category.icon?.mediaId, 'media-id');
+    expect(category.isInterested, isTrue);
+    expect(category.children?.single.parentCategoryId, 'parent-id');
+    expect(category.children?.single.isInterested, isFalse);
+  });
+
   test('parses banners response', () {
     final result = BannersModel.fromJson({
       'data': [
