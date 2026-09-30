@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
@@ -51,7 +52,7 @@ class _ResourcesView extends StatelessWidget {
             separatorBuilder: (_, __) => SizedBox(height: AppHeight.h10),
             itemBuilder: (context, index) {
               if (index == 0) {
-                return const SectionTitle(text: 'Resources', fontSize: 18, color: AppColors.searchCardTitle);
+                return SectionTitle(text: context.loc.resources, fontSize: 18, color: AppColors.searchCardTitle);
               }
               final resource = resources[index - 1];
               final title = resource['fileName'] ?? resource['title'] ?? resource['name'] ?? 'Resource $index';

@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
+import 'package:wlcd/core/helper/network_helper.dart';
 import 'package:wlcd/core/services/locator/locator.dart';
 import 'package:wlcd/core/services/app_lifecycle_tracker.dart';
 
@@ -39,6 +41,7 @@ void main() async {
   ConnectionService().initialize(navigatorKey);
   await AppServices.init();
   final initialLocale = await _loadInitialLocale();
+  NetworkHelper().setLanguage(initialLocale.languageCode);
   runApp(MyApp(initialLocale: initialLocale));
 }
 
@@ -163,15 +166,16 @@ class _MyAppState extends State<MyApp> {
 
 Future<Locale> _loadInitialLocale() async {
   const fallback = Locale('ar');
-//   // final storage = locator<LocalStorageHelper>();
-//   final response = await storage.getValue(LanguageCubit.boxName, LanguageCubit.localeKey);
-//   return response.fold((_) => fallback, (value) {
-//     final code = value?.toString();
-//     if (code != null && LanguageCubit.supportedLocales.contains(code)) {
-//       return Locale(code);
-//     }
-    return fallback;
-//   });
+  try {
+    const storage = FlutterSecureStorage();
+    final code = await storage.read(key: LanguageCubit.localeKey);
+    if (code != null && LanguageCubit.supportedLocales.contains(code)) {
+      return Locale(code);
+    }
+  } catch (_) {
+    // Keep the fallback locale when secure storage is unavailable.
+  }
+  return fallback;
 }
 
 

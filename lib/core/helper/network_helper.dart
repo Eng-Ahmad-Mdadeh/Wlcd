@@ -48,12 +48,23 @@ class NetworkHelper {
     final packageInfo = await PackageInfo.fromPlatform();
     _dio.options.headers.addAll({
       'Idempotency-Key': _generateIdempotencyKey(),
-      'Accept-Language' : 'ar',
-      'language' : 'ar',
-      'lang' : 'ar',
+      'Accept-Language': 'ar',
+      'language': 'ar',
+      'lang': 'ar',
       // 'If-Match': packageInfo.version,
     });
     _applicationHeadersInitialized = true;
+  }
+
+  /// Updates the language metadata used by every subsequent request.
+  void setLanguage(String languageCode) {
+    const supportedLanguages = {'ar', 'en'};
+    final language = supportedLanguages.contains(languageCode) ? languageCode : 'ar';
+    _dio.options.headers.addAll({
+      'Accept-Language': language,
+      'language': language,
+      'lang': language,
+    });
   }
 
   void setOnUserArchived(void Function() handler) {
@@ -405,6 +416,9 @@ class NetworkHelper {
   Map<String, String> _buildHeaders(String? token, {bool isMultipart = false}) {
     final headers = {
       'Accept': 'application/json',
+      'Accept-Language': _dio.options.headers['Accept-Language']?.toString() ?? 'ar',
+      'language': _dio.options.headers['language']?.toString() ?? 'ar',
+      'lang': _dio.options.headers['lang']?.toString() ?? 'ar',
       if (isMultipart) 'Content-Type': 'multipart/form-data',
       if ((token ?? '').isNotEmpty) 'Authorization': 'Bearer $token',
     };

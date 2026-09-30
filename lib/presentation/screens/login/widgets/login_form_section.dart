@@ -90,7 +90,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               builder: (context, rememberMe) => CheckboxListTile(
                 value: rememberMe,
                 onChanged: (value) => context.read<RememberMeCubit>().toggleRememberMe(value ?? false),
-                title: const Text('تذكرني'),
+                title: Text(context.loc.remember_me),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
                 activeColor: AppColors.loginPrimary,
@@ -189,7 +189,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   }
 
   void _showFailure(BuildContext context, String message) {
-    showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
+    showCustomSnackBar(context: context, title: context.loc.error_title, message: message, contentType: ContentType.failure);
   }
 
   String? _validateEmail(BuildContext context, String? value) {
@@ -231,7 +231,7 @@ class _LoginOrDivider extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppWidth.w12),
           child: SectionTitle(
-            text: 'أو',
+            text: context.loc.or,
             color: AppColors.loginDarkText,
             fontSize: AppFontSize.s18,
             fontWeight: AppFontWeight.bold,
@@ -255,10 +255,10 @@ class _CreateAccountButton extends StatelessWidget {
       color: AppColors.loginPrimary,
       child: Text.rich(
         TextSpan(
-          text: 'هل أنت جديد على WLCD؟ ',
+          text: context.loc.new_to_wlcd,
           children: [
             TextSpan(
-              text: 'إنشاء حساب!',
+              text: context.loc.create_account,
               style: TextStyle(fontWeight: AppFontWeight.extraBold),
             ),
           ],

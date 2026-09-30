@@ -8,6 +8,7 @@ import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
+import 'package:wlcd/presentation/widgets/language_selector_bottom_sheet.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -102,11 +103,15 @@ class HeaderActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const HeaderIconButton(icon: Icons.language_rounded, semanticLabel: 'search'),
+        HeaderIconButton(
+          icon: Icons.language_rounded,
+          semanticLabel: context.loc.choose_language,
+          onTap: () => showLanguageSelector(context),
+        ),
         SizedBox(width: AppWidth.w8),
         HeaderIconButton(
           icon: Icons.notifications_none_outlined,
-          semanticLabel: 'Notifications',
+          semanticLabel: context.loc.notifications,
           showDot: true,
           onTap: () => NotificationsRoute().push(context),
         ),

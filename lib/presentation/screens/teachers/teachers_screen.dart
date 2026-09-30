@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/domain/entity/instructor/get_instructors_entity.dart';
 import 'package:wlcd/presentation/bloc/instructor/instructors/instructors_bloc.dart';
 import 'package:wlcd/presentation/screens/teachers/widgets/teachers_list.dart';
@@ -17,7 +18,7 @@ class TeachersScreen extends StatelessWidget {
         ..add(const LoadInstructorsEvent(GetInstructorsEntity())),
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'المدرسون',
+          title: context.loc.teachers,
           showBackButton: true,
         ),
         body: BlocBuilder<InstructorsBloc, IInstructorsState>(

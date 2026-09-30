@@ -381,4 +381,240 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get order_date_third => '10 يناير 2023 03:15 ص';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get more => 'المزيد';
+
+  @override
+  String get personal_information => 'المعلومات الشخصية';
+
+  @override
+  String get progress_history => 'سجل التقدم';
+
+  @override
+  String get privacy_policy => 'سياسة الخصوصية';
+
+  @override
+  String get frequently_asked_questions => 'الأسئلة الشائعة';
+
+  @override
+  String get teachers => 'المدرسون';
+
+  @override
+  String get book_lesson => 'احجز درساً';
+
+  @override
+  String get all_courses => 'جميع الدورات';
+
+  @override
+  String get no_courses_found => 'لا توجد دورات';
+
+  @override
+  String get remember_me => 'تذكرني';
+
+  @override
+  String get or => 'أو';
+
+  @override
+  String get new_to_wlcd => 'هل أنت جديد على WLCD؟ ';
+
+  @override
+  String get create_account => 'إنشاء حساب!';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get personal_details => 'البيانات الشخصية';
+
+  @override
+  String get learning_interests => 'اهتماماتك التعليمية';
+
+  @override
+  String get learning_interests_description => 'اختر المجالات التي تهمك لنقترح لك محتوى يناسب أهدافك.';
+
+  @override
+  String get filter => 'تصفية';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get apply_filter => 'تطبيق التصفية';
+
+  @override
+  String get ratings => 'التقييمات';
+
+  @override
+  String get level => 'المستوى';
+
+  @override
+  String get topics => 'المواضيع';
+
+  @override
+  String get sort => 'ترتيب';
+
+  @override
+  String get all_levels => 'جميع المستويات';
+
+  @override
+  String get overview => 'نظرة عامة';
+
+  @override
+  String get reviews => 'المراجعات';
+
+  @override
+  String get forum => 'المنتدى';
+
+  @override
+  String get resources => 'المصادر';
+
+  @override
+  String get about => 'حول';
+
+  @override
+  String get descriptions => 'الوصف';
+
+  @override
+  String get no_reviews_yet => 'لا توجد مراجعات حتى الآن.';
+
+  @override
+  String get no_lessons_available => 'لا توجد دروس متاحة.';
+
+  @override
+  String get failed_loading_try_again => 'فشل التحميل. حاول مرة أخرى';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get error_title => 'خطأ';
+
+  @override
+  String get success_title => 'تم بنجاح';
+
+  @override
+  String get category_selection => 'اختيار التصنيف';
+
+  @override
+  String get next => 'التالي';
+
+
+  @override
+  String get phone => 'رقم الهاتف';
+
+  @override
+  String get send_verification_code => 'إرسال رمز التحقق';
+
+  @override
+  String get verification_code => 'رمز التحقق';
+
+  @override
+  String get edit_phone => 'تعديل رقم الهاتف';
+
+  @override
+  String get change_phone => 'تغيير رقم الهاتف';
+
+  @override
+  String get add_phone => 'إضافة رقم الهاتف';
+
+  @override
+  String get change_email => 'تغيير البريد الإلكتروني';
+
+  @override
+  String get add_email => 'إضافة البريد الإلكتروني';
+
+  @override
+  String get alert => 'تنبيه';
+
+  @override
+  String get reset_password_instructions => 'أدخل رمز إعادة التعيين المرسل إلى بريدك الإلكتروني واختر كلمة مرور جديدة.';
+
+  @override
+  String get reset_code => 'رمز إعادة التعيين';
+
+  @override
+  String get reset_password => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get active_progress => 'التقدم النشط';
+
+  @override
+  String get watching_time => 'وقت المشاهدة';
+
+  @override
+  String get last_7_days => 'آخر 7 أيام';
+
+  @override
+  String get favorites => 'المفضلة';
+
+  @override
+  String get favorite_group => 'مجموعة مفضلة';
+
+  @override
+  String get no_favorite_groups => 'لا توجد مجموعات مفضلة حالياً';
+
+  @override
+  String get favorite_groups_description => 'عند إضافة دورة للمفضلة يمكنك وضعها داخل مجموعة حالية أو إنشاء مجموعة جديدة.';
+
+  @override
+  String get share_teacher_profile => 'شارك ملف المعلم الشخصي';
+
+  @override
+  String get book_session => 'حجز جلسة';
+
+  @override
+  String get about_me => 'نبذة عني';
+
+  @override
+  String get my_courses => 'دوراتي';
+
+  @override
+  String get no_courses_available => 'لا توجد دورات متاحة حالياً';
+
+  @override
+  String get choose_suitable_date => 'اختر التاريخ المناسب لك';
+
+  @override
+  String get confirm_booking => 'تأكيد الحجز';
+
+  @override
+  String get contact_teacher => 'تواصل مع المعلم';
+
+  @override
+  String get questions => 'الأسئلة';
+
+  @override
+  String get search_answers => 'ابحث عن الإجابات هنا';
+
+  @override
+  String get no_questions_yet => 'لا توجد أسئلة بعد';
+
+  @override
+  String get start_discussion => 'ابدأ النقاش بطرح أول سؤال في المنتدى.';
+
+  @override
+  String get question => 'سؤال';
+
+  @override
+  String get title_label => 'العنوان';
+
+  @override
+  String get reply => 'رد';
+
+  @override
+  String get no_notifications => 'لا توجد إشعارات';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get help_center => 'مركز المساعدة';
+
 }

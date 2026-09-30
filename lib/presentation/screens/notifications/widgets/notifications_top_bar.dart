@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -26,7 +27,7 @@ class NotificationsTopBar extends StatelessWidget {
             ),
           ),
           SectionTitle(
-            text: 'Notifications',
+            text: context.loc.notifications,
             color: AppColors.notificationTextPrimary,
             fontSize: AppFontSize.s16,
             fontWeight: AppFontWeight.bold,

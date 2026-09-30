@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
@@ -55,7 +56,7 @@ class _SearchBodyState extends State<_SearchBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "جميع الكورسات", showBackButton: true),
+      appBar: CustomAppBar(title: context.loc.all_courses, showBackButton: true),
       body: BlocBuilder<CoursesBloc, ICoursesState>(
         builder: (context, state) {
           return RefreshIndicator(
@@ -99,7 +100,7 @@ class _SearchBodyState extends State<_SearchBody> {
         sliver: SliverToBoxAdapter(child: ResultHeader(resultCount: courses.length)),
       ),
       if (courses.isEmpty)
-        const SliverFillRemaining(hasScrollBody: false, child: NoResultWidget(title: 'No courses found'))
+        SliverFillRemaining(hasScrollBody: false, child: NoResultWidget(title: context.loc.no_courses_found))
       else
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),

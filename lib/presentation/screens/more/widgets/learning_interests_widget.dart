@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -112,12 +113,12 @@ class _LearningInterestsContentState extends State<_LearningInterestsContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'اهتماماتك التعليمية',
+                context.loc.learning_interests,
                 style: TextStyle(color: AppColors.text, fontSize: AppFontSize.s17, fontWeight: AppFontWeight.bold),
               ),
               SizedBox(height: AppHeight.h4),
               Text(
-                'اختر المجالات التي تهمك لنقترح لك محتوى يناسب أهدافك.',
+                context.loc.learning_interests_description,
                 style: TextStyle(
                   color: AppColors.muted,
                   fontSize: AppFontSize.s12,

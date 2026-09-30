@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -18,7 +19,7 @@ class WatchingTimeSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SectionTitle(
-              text: 'وقت المشاهدة',
+              text: context.loc.watching_time,
               color: AppColors.text,
               fontSize: AppFontSize.s16,
               fontWeight: AppFontWeight.extraBold,
@@ -48,7 +49,7 @@ class _DateRangeChip extends StatelessWidget {
       child: Row(
         children: [
           BodyTitle(
-            text: 'آخر 7 أيام',
+            text: context.loc.last_7_days,
             color: AppColors.muted,
             fontSize: AppFontSize.s10,
             fontWeight: AppFontWeight.bold,

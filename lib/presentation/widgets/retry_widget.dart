@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 
 import 'text/body_title.dart';
 
@@ -21,8 +22,8 @@ class RetryWidget extends StatelessWidget {
             onPressed: onReload,
           ),
           if (showText)
-            const BodyTitle(
-              text: "Failed Loading Try Again",
+            BodyTitle(
+              text: context.loc.failed_loading_try_again,
             ),
         ],
       ),

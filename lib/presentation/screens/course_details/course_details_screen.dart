@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/course_details/course_details_model.dart';
@@ -235,7 +236,7 @@ class _CourseDetailsBody extends StatelessWidget {
       if (_tabType(availableTab) == 'overview') {
         tabs.add(
           _CourseDetailsTab(
-            tab: const Tab(text: 'overview'),
+            tab: Tab(text: context.loc.overview),
             page: LessonsTab(entity: entity),
           ),
         );
@@ -243,7 +244,7 @@ class _CourseDetailsBody extends StatelessWidget {
       if (_tabType(availableTab) == 'reviews') {
         tabs.add(
           _CourseDetailsTab(
-            tab: const Tab(text: 'reviews'),
+            tab: Tab(text: context.loc.reviews),
             page: ReviewsTab(entity: entity),
           ),
         );
@@ -251,7 +252,7 @@ class _CourseDetailsBody extends StatelessWidget {
       if (_tabType(availableTab) == 'forum') {
         tabs.add(
           _CourseDetailsTab(
-            tab: const Tab(text: 'forum'),
+            tab: Tab(text: context.loc.forum),
             page: ForumTab(),
           ),
         );
@@ -260,7 +261,7 @@ class _CourseDetailsBody extends StatelessWidget {
       if (_tabType(availableTab) == 'overview') {
         tabs.add(
           _CourseDetailsTab(
-            tab: const Tab(text: 'resources'),
+            tab: Tab(text: context.loc.resources),
             page: ResourcesTab(entity: entity),
           ),
         );
@@ -272,7 +273,7 @@ class _CourseDetailsBody extends StatelessWidget {
     if (tabs.isEmpty) {
       tabs.add(
         _CourseDetailsTab(
-          tab: const Tab(text: 'About'),
+          tab: Tab(text: context.loc.about),
           page: AboutTab(description: course.description),
         ),
       );

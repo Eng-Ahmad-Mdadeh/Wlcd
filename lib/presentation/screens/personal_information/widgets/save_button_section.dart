@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -37,7 +38,7 @@ class SaveButtonSection extends StatelessWidget {
       ),
       child: CustomSubmitButton(
         elevation: 0,
-        title: "حفظ",
+        title: context.loc.save,
         isLoading: isLoading,
         loadingColor: AppColors.white,
         onPressed: onPressed ?? () {},

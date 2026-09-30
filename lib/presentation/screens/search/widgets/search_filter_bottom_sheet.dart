@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -37,7 +38,7 @@ class SearchFilterBottomSheet extends StatelessWidget {
             child: Row(
               children: [
                  BodyTitle(
-                  text: 'Filter',
+                  text: context.loc.filter,
                   fontSize: AppFontSize.s20,
                   color: AppColors.black,
                 ),
@@ -45,7 +46,7 @@ class SearchFilterBottomSheet extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child:  BodyTitle(
-                    text: 'Cancel',
+                    text: context.loc.cancel,
                     fontSize: AppFontSize.s15,
                     color: AppColors.primary,
                     fontWeight: FontWeight.w500,
@@ -62,13 +63,13 @@ class SearchFilterBottomSheet extends StatelessWidget {
                 end: AppPaddingWidth.p18,
                 top: AppPaddingHeight.p16,
               ),
-              child: const Column(
+              child: Column(
                 children: [
-                  _BottomSheetTile(title: 'Ratings', icon: Icons.star_border_rounded),
-                  SizedBox(height: 12),
-                  _TopicsBox(),
-                  SizedBox(height: 12),
-                  _BottomSheetTile(title: 'Level', icon: Icons.tune),
+                  _BottomSheetTile(title: context.loc.ratings, icon: Icons.star_border_rounded),
+                  const SizedBox(height: 12),
+                  const _TopicsBox(),
+                  const SizedBox(height: 12),
+                  _BottomSheetTile(title: context.loc.level, icon: Icons.tune),
                 ],
               ),
             ),
@@ -89,7 +90,7 @@ class SearchFilterBottomSheet extends StatelessWidget {
                 color: AppColors.primary,
                 onPressed: () => Navigator.pop(context),
                 child:  BodyTitle(
-                  text: 'Apply Filter',
+                  text: context.loc.apply_filter,
                   color: AppColors.white,
                   fontSize: AppFontSize.s17,
                   fontWeight: FontWeight.w500,
@@ -167,7 +168,7 @@ class _TopicsBox extends StatelessWidget {
               Icon(Icons.grid_view_rounded, size: AppSize.s18, color: AppColors.black),
               SizedBox(width: 10),
               BodyTitle(
-                text: 'Topics',
+                text: context.loc.topics,
                 fontSize: AppFontSize.s16,
                 color: AppColors.black,
                 fontWeight: FontWeight.w500,

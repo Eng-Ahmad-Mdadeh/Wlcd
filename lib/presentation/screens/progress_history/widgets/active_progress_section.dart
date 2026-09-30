@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -15,7 +16,7 @@ class ActiveProgressSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionTitle(
-          text: 'التقدم النشط',
+          text: context.loc.active_progress,
           color: AppColors.text,
           fontSize: AppFontSize.s16,
           fontWeight: AppFontWeight.extraBold,

@@ -48,13 +48,13 @@ class ProfileMenuTile extends StatelessWidget {
   String _title(BuildContext context) {
     return switch (item.action) {
       ProfileMenuAction.orderHistory => context.loc.order_history,
-      ProfileMenuAction.progressHistory => 'سجل التقدم',
-      ProfileMenuAction.personalInformation => 'المعلومات الشخصية',
-      ProfileMenuAction.categorySelection => 'إحجز درساً',
+      ProfileMenuAction.progressHistory => context.loc.progress_history,
+      ProfileMenuAction.personalInformation => context.loc.personal_information,
+      ProfileMenuAction.categorySelection => context.loc.book_lesson,
       // ProfileMenuAction.teachers => 'المدرسون',
-      ProfileMenuAction.privacyPolicy => 'سياسة الخصوصية',
-      ProfileMenuAction.faqs => 'الأسئلة الشائعة',
-      ProfileMenuAction.termsAndConditions => 'الشروط والأحكام',
+      ProfileMenuAction.privacyPolicy => context.loc.privacy_policy,
+      ProfileMenuAction.faqs => context.loc.frequently_asked_questions,
+      ProfileMenuAction.termsAndConditions => context.loc.terms_and_conditions,
       null => item.title,
     };
   }

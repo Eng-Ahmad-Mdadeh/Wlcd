@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
@@ -43,7 +44,7 @@ class _ReviewsView extends StatelessWidget {
         key: const PageStorageKey('reviews-tab-scroll'),
         padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
         children: [
-          const SectionTitle(text: 'Ratings', fontSize: 18, color: AppColors.searchCardTitle),
+          SectionTitle(text: context.loc.ratings, fontSize: 18, color: AppColors.searchCardTitle),
           SizedBox(height: AppHeight.h12),
           BlocBuilder<GetRatingSummaryBloc, IGetRatingSummaryState>(
             builder: (context, state) {
@@ -61,7 +62,7 @@ class _ReviewsView extends StatelessWidget {
             },
           ),
           SizedBox(height: AppHeight.h18),
-          const SectionTitle(text: 'User reviews', fontSize: 18, color: AppColors.searchCardTitle),
+          SectionTitle(text: context.loc.reviews, fontSize: 18, color: AppColors.searchCardTitle),
           SizedBox(height: AppHeight.h10),
           BlocBuilder<ListReviewsBloc, IListReviewsState>(
             builder: (context, state) {
@@ -74,7 +75,7 @@ class _ReviewsView extends StatelessWidget {
               final json = state.listReviews?.value ?? const <String, dynamic>{};
               final reviews = _items(json, const ['items', 'reviews', 'data']);
               if (reviews.isEmpty) {
-                return const BodyTitle(text: 'No reviews yet.', fontSize: 13, color: AppColors.searchRatingText);
+                return BodyTitle(text: context.loc.no_reviews_yet, fontSize: 13, color: AppColors.searchRatingText);
               }
               return Column(
                 children: [

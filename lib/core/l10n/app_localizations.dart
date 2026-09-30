@@ -811,6 +811,164 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Jan 10, 2023 03:15 AM'**
   String get order_date_third;
+
+  String get notifications;
+
+  String get more;
+
+  String get personal_information;
+
+  String get progress_history;
+
+  String get privacy_policy;
+
+  String get frequently_asked_questions;
+
+  String get teachers;
+
+  String get book_lesson;
+
+  String get all_courses;
+
+  String get no_courses_found;
+
+  String get remember_me;
+
+  String get or;
+
+  String get new_to_wlcd;
+
+  String get create_account;
+
+  String get profile;
+
+  String get personal_details;
+
+  String get learning_interests;
+
+  String get learning_interests_description;
+
+  String get filter;
+
+  String get cancel;
+
+  String get apply_filter;
+
+  String get ratings;
+
+  String get level;
+
+  String get topics;
+
+  String get sort;
+
+  String get all_levels;
+
+  String get overview;
+
+  String get reviews;
+
+  String get forum;
+
+  String get resources;
+
+  String get about;
+
+  String get descriptions;
+
+  String get no_reviews_yet;
+
+  String get no_lessons_available;
+
+  String get failed_loading_try_again;
+
+  String get save;
+
+  String get error_title;
+
+  String get success_title;
+
+  String get category_selection;
+
+  String get next;
+
+  String get phone;
+
+  String get send_verification_code;
+
+  String get verification_code;
+
+  String get edit_phone;
+
+  String get change_phone;
+
+  String get add_phone;
+
+  String get change_email;
+
+  String get add_email;
+
+  String get alert;
+
+  String get reset_password_instructions;
+
+  String get reset_code;
+
+  String get reset_password;
+
+  String get name;
+
+  String get active_progress;
+
+  String get watching_time;
+
+  String get last_7_days;
+
+  String get favorites;
+
+  String get favorite_group;
+
+  String get no_favorite_groups;
+
+  String get favorite_groups_description;
+
+  String get share_teacher_profile;
+
+  String get book_session;
+
+  String get about_me;
+
+  String get my_courses;
+
+  String get no_courses_available;
+
+  String get choose_suitable_date;
+
+  String get confirm_booking;
+
+  String get contact_teacher;
+
+  String get questions;
+
+  String get search_answers;
+
+  String get no_questions_yet;
+
+  String get start_discussion;
+
+  String get question;
+
+  String get title_label;
+
+  String get reply;
+
+  String get no_notifications;
+
+  String get language;
+
+  String get help_center;
+
+
 }
 
 class _AppLocalizationsDelegate

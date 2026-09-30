@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_fonts.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -32,7 +33,7 @@ class FilterRow extends StatelessWidget {
               children:  [
                 Icon(Icons.tune, size: AppSize.s16, color: AppColors.grey),
                 Spacer(),
-                BodyTitle(text: 'Filter', fontSize: AppFontSize.s15, color: AppColors.greyText),
+                BodyTitle(text: context.loc.filter, fontSize: AppFontSize.s15, color: AppColors.greyText),
               ],
             ),
           ),
@@ -45,7 +46,7 @@ class FilterRow extends StatelessWidget {
               children:  [
                 Icon(Icons.keyboard_arrow_down_rounded, size: AppSize.s16, color: AppColors.grey),
                 Spacer(),
-                BodyTitle(text: 'Sort', fontSize: AppFontSize.s15, color: AppColors.greyText),
+                BodyTitle(text: context.loc.sort, fontSize: AppFontSize.s15, color: AppColors.greyText),
               ],
             ),
           ),
@@ -59,7 +60,7 @@ class FilterRow extends StatelessWidget {
               children:  [
                 Icon(Icons.keyboard_arrow_down_rounded,  size: AppSize.s16, color: AppColors.grey),
                 Spacer(),
-                BodyTitle(text: 'All levels', fontSize: AppFontSize.s15, color: AppColors.greyText),
+                BodyTitle(text: context.loc.all_levels, fontSize: AppFontSize.s15, color: AppColors.greyText),
               ],
             ),
           ),

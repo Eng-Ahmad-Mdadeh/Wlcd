@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
@@ -15,7 +16,7 @@ class AboutTab extends StatelessWidget {
       key: const PageStorageKey('about-tab-scroll'),
       padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p90),
       children: [
-        const SectionTitle(text: 'Descriptions', fontSize: 18, color: AppColors.searchCardTitle),
+        SectionTitle(text: context.loc.descriptions, fontSize: 18, color: AppColors.searchCardTitle),
         const SizedBox(height: 8),
         BodyTitle(
           text: description,

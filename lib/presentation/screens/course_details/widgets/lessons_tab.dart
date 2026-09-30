@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/course_details/course_details_model.dart';
@@ -51,8 +52,8 @@ class _LessonsView extends StatelessWidget {
           if (state is! GetCurriculumLoaded) return const LoadingWidget(0);
           final lessons = _curriculumLessons(state.getCurriculum);
           if (lessons.isEmpty) {
-            return const Center(
-              child: BodyTitle(text: 'No lessons available.', fontSize: 13, color: AppColors.searchRatingText),
+            return Center(
+              child: BodyTitle(text: context.loc.no_lessons_available, fontSize: 13, color: AppColors.searchRatingText),
             );
           }
           return RefreshIndicator(

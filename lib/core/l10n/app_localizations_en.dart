@@ -381,4 +381,240 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_date_third => 'Jan 10, 2023 03:15 AM';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get personal_information => 'Personal information';
+
+  @override
+  String get progress_history => 'Progress history';
+
+  @override
+  String get privacy_policy => 'Privacy policy';
+
+  @override
+  String get frequently_asked_questions => 'Frequently asked questions';
+
+  @override
+  String get teachers => 'Teachers';
+
+  @override
+  String get book_lesson => 'Book a lesson';
+
+  @override
+  String get all_courses => 'All courses';
+
+  @override
+  String get no_courses_found => 'No courses found';
+
+  @override
+  String get remember_me => 'Remember me';
+
+  @override
+  String get or => 'OR';
+
+  @override
+  String get new_to_wlcd => 'New to WLCD? ';
+
+  @override
+  String get create_account => 'Create account!';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get personal_details => 'Personal details';
+
+  @override
+  String get learning_interests => 'Your learning interests';
+
+  @override
+  String get learning_interests_description => 'Choose the fields that interest you so we can recommend content suited to your goals.';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get apply_filter => 'Apply filter';
+
+  @override
+  String get ratings => 'Ratings';
+
+  @override
+  String get level => 'Level';
+
+  @override
+  String get topics => 'Topics';
+
+  @override
+  String get sort => 'Sort';
+
+  @override
+  String get all_levels => 'All levels';
+
+  @override
+  String get overview => 'Overview';
+
+  @override
+  String get reviews => 'Reviews';
+
+  @override
+  String get forum => 'Forum';
+
+  @override
+  String get resources => 'Resources';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get descriptions => 'Descriptions';
+
+  @override
+  String get no_reviews_yet => 'No reviews yet.';
+
+  @override
+  String get no_lessons_available => 'No lessons available.';
+
+  @override
+  String get failed_loading_try_again => 'Failed loading. Try again';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get error_title => 'Error';
+
+  @override
+  String get success_title => 'Success';
+
+  @override
+  String get category_selection => 'Category selection';
+
+  @override
+  String get next => 'Next';
+
+
+  @override
+  String get phone => 'Phone number';
+
+  @override
+  String get send_verification_code => 'Send verification code';
+
+  @override
+  String get verification_code => 'Verification code';
+
+  @override
+  String get edit_phone => 'Edit phone number';
+
+  @override
+  String get change_phone => 'Change phone number';
+
+  @override
+  String get add_phone => 'Add phone number';
+
+  @override
+  String get change_email => 'Change email';
+
+  @override
+  String get add_email => 'Add email';
+
+  @override
+  String get alert => 'Alert';
+
+  @override
+  String get reset_password_instructions => 'Enter the reset code sent to your email and choose a new password.';
+
+  @override
+  String get reset_code => 'Reset code';
+
+  @override
+  String get reset_password => 'Reset password';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get active_progress => 'Active progress';
+
+  @override
+  String get watching_time => 'Watching time';
+
+  @override
+  String get last_7_days => 'Last 7 days';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get favorite_group => 'Favorite group';
+
+  @override
+  String get no_favorite_groups => 'No favorite groups yet';
+
+  @override
+  String get favorite_groups_description => 'When adding a course to favorites, place it in an existing group or create a new one.';
+
+  @override
+  String get share_teacher_profile => "Share teacher's profile";
+
+  @override
+  String get book_session => 'Book a session';
+
+  @override
+  String get about_me => 'About me';
+
+  @override
+  String get my_courses => 'My courses';
+
+  @override
+  String get no_courses_available => 'No courses are currently available';
+
+  @override
+  String get choose_suitable_date => 'Choose a suitable date';
+
+  @override
+  String get confirm_booking => 'Confirm booking';
+
+  @override
+  String get contact_teacher => 'Contact teacher';
+
+  @override
+  String get questions => 'Questions';
+
+  @override
+  String get search_answers => 'Search for answers here';
+
+  @override
+  String get no_questions_yet => 'No questions yet';
+
+  @override
+  String get start_discussion => 'Start the discussion by asking the first question in the forum.';
+
+  @override
+  String get question => 'Question';
+
+  @override
+  String get title_label => 'Title';
+
+  @override
+  String get reply => 'Reply';
+
+  @override
+  String get no_notifications => 'No notifications';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get help_center => 'Help center';
+
 }

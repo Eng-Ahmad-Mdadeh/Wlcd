@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -21,7 +22,7 @@ class FavoritesGroupsScreen extends StatelessWidget {
       create: (_) => FavoriteGroupsBloc()..add(const LoadFavoriteGroupsEvent()),
       child: Scaffold(
         backgroundColor: AppColors.backGround,
-        appBar: const CustomAppBar(title: 'المفضلة', centerTitle: true),
+        appBar: CustomAppBar(title: context.loc.favorites, centerTitle: true),
         body: const _FavoriteGroupsBody(),
       ),
     );
@@ -173,7 +174,7 @@ class _FavoriteGroupCard extends StatelessWidget {
                     maxLines: 1,
                   ),
                   SizedBox(height: AppHeight.h4),
-                  BodyTitle(text: 'مجموعة مفضلة', color: AppColors.muted, fontSize: AppFontSize.s12),
+                  BodyTitle(text: context.loc.favorite_group, color: AppColors.muted, fontSize: AppFontSize.s12),
                 ],
               ),
             ),
@@ -205,7 +206,7 @@ class _EmptyFavoritesView extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h20),
               SectionTitle(
-                text: 'لا توجد مجموعات مفضلة حالياً',
+                text: context.loc.no_favorite_groups,
                 color: AppColors.text,
                 fontSize: AppFontSize.s18,
                 fontWeight: AppFontWeight.bold,
@@ -213,7 +214,7 @@ class _EmptyFavoritesView extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h10),
               BodyTitle(
-                text: 'عند إضافة كورس للمفضلة يمكنك وضعه داخل مجموعة حالية أو إنشاء مجموعة جديدة.',
+                text: context.loc.favorite_groups_description,
                 color: AppColors.muted,
                 fontSize: AppFontSize.s14,
                 textAlign: TextAlign.center,
