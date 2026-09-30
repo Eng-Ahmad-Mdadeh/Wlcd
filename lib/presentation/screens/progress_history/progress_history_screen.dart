@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/progress_history/widgets/active_progress_section.dart';
@@ -11,7 +12,7 @@ class ProgressHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'سجل التقدم',  showBackButton: true),
+      appBar: CustomAppBar(title: context.loc.progress_history,  showBackButton: true),
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(AppPaddingWidth.p17, 0, AppPaddingWidth.p17, AppPaddingHeight.p110),
         child: Column(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -20,6 +21,7 @@ import 'package:wlcd/core/utils/connection_network_service.dart';
 import 'package:wlcd/presentation/cubit/bottom_bar/bottom_bar_cubit.dart';
 
 import 'core/services/app_services.dart';
+import 'core/constants/app_storage_paths.dart';
 import 'core/constants/app_theme.dart';
 import 'core/routes/app_routes.dart';
 
@@ -105,7 +107,10 @@ class _MyAppState extends State<MyApp> {
         // Bottom Nav Bar
         BlocProvider<BottomBarCubit>(create: (context) => BottomBarCubit()),
         BlocProvider<LanguageCubit>(
-          create: (context) => LanguageCubit(initialLocale: widget.initialLocale),
+          create: (context) => LanguageCubit(
+            storage: locator<FlutterSecureStorage>(),
+            initialLocale: widget.initialLocale,
+          ),
         ),
 
         // AUTH
@@ -163,15 +168,17 @@ class _MyAppState extends State<MyApp> {
 
 Future<Locale> _loadInitialLocale() async {
   const fallback = Locale('ar');
-//   // final storage = locator<LocalStorageHelper>();
-//   final response = await storage.getValue(LanguageCubit.boxName, LanguageCubit.localeKey);
-//   return response.fold((_) => fallback, (value) {
-//     final code = value?.toString();
-//     if (code != null && LanguageCubit.supportedLocales.contains(code)) {
-//       return Locale(code);
-//     }
-    return fallback;
-//   });
+  try {
+    final code = await locator<FlutterSecureStorage>().read(
+      key: AppStoragePaths.lang,
+    );
+    if (code != null && LanguageCubit.supportedLocales.contains(code)) {
+      return Locale(code);
+    }
+  } catch (_) {
+    // A storage failure must never prevent the application from starting.
+  }
+  return fallback;
 }
 
 

@@ -1,5 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -170,7 +171,7 @@ class _PhoneIdentifierBottomSheetState
           CustomTextFromField(
             controller: _phoneController,
             textInputType: TextInputType.phone,
-            hintText: 'رقم الهاتف',
+            hintText: context.loc.phone_number_hint,
             prefixIcon: const Icon(Icons.phone_outlined),
             contentPaddingStart: AppPaddingWidth.p12,
             contentPaddingEnd: AppPaddingWidth.p12,
@@ -182,7 +183,7 @@ class _PhoneIdentifierBottomSheetState
           SizedBox(height: AppHeight.h20),
           BlocBuilder<RequestPhoneOtpBloc, IRequestPhoneOtpState>(
             builder: (context, state) => CustomSubmitButton(
-              title: 'إرسال رمز التحقق',
+              title: context.loc.send_verification_code,
               isLoading: state is RequestPhoneOtpLoading,
               verification: state is! RequestPhoneOtpLoading,
               onPressed: _requestPhoneOtp,
@@ -203,7 +204,7 @@ class _PhoneIdentifierBottomSheetState
           CustomTextFromField(
             controller: _otpController,
             textInputType: TextInputType.number,
-            hintText: 'رمز التحقق',
+            hintText: context.loc.verification_code,
             prefixIcon: const Icon(Icons.password_outlined),
             contentPaddingStart: AppPaddingWidth.p12,
             contentPaddingEnd: AppPaddingWidth.p12,
@@ -339,7 +340,7 @@ class _PhoneIdentifierBottomSheetState
   void _completeSuccessfully(String message) {
     showCustomSnackBar(
       context: context,
-      title: 'تم بنجاح',
+      title: context.loc.success_title,
       message: message,
       contentType: ContentType.success,
     );
@@ -350,7 +351,7 @@ class _PhoneIdentifierBottomSheetState
   void _showFailure(String message) {
     showCustomSnackBar(
       context: context,
-      title: 'خطأ',
+      title: context.loc.error_title,
       message: message,
       contentType: ContentType.failure,
     );
@@ -371,7 +372,7 @@ class _SubmitPhoneButton extends StatelessWidget {
     if (isChangingPhone) {
       return BlocBuilder<ChangePhoneBloc, IChangePhoneState>(
         builder: (context, state) => CustomSubmitButton(
-          title: 'تغيير رقم الهاتف',
+          title: context.loc.change_phone_number,
           isLoading: state is ChangePhoneLoading,
           verification: state is! ChangePhoneLoading,
           onPressed: onPressed,
@@ -381,7 +382,7 @@ class _SubmitPhoneButton extends StatelessWidget {
 
     return BlocBuilder<AddPhoneIdentifierBloc, IAddPhoneIdentifierState>(
       builder: (context, state) => CustomSubmitButton(
-        title: 'إضافة رقم الهاتف',
+        title: context.loc.add_phone_number,
         isLoading: state is AddPhoneIdentifierLoading,
         verification: state is! AddPhoneIdentifierLoading,
         onPressed: onPressed,

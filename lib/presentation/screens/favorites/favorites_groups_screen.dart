@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -21,7 +22,7 @@ class FavoritesGroupsScreen extends StatelessWidget {
       create: (_) => FavoriteGroupsBloc()..add(const LoadFavoriteGroupsEvent()),
       child: Scaffold(
         backgroundColor: AppColors.backGround,
-        appBar: const CustomAppBar(title: 'المفضلة', centerTitle: true),
+        appBar: CustomAppBar(title: context.loc.favorites, centerTitle: true),
         body: const _FavoriteGroupsBody(),
       ),
     );

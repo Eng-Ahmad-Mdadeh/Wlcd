@@ -37,7 +37,7 @@ class SaveButtonSection extends StatelessWidget {
       ),
       child: CustomSubmitButton(
         elevation: 0,
-        title: "حفظ",
+        title: context.loc.save,
         isLoading: isLoading,
         loadingColor: AppColors.white,
         onPressed: onPressed ?? () {},

@@ -1,5 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -82,13 +83,13 @@ class _RegisterEmailSheetState extends State<_RegisterEmailSheet> {
               Text(_challengeId == null ? 'أدخل بياناتك للانضمام إلى WLCD' : 'أدخل رمز التحقق الذي أرسلناه إلى ${_email.text}', style: TextStyle(color: Colors.grey.shade600)),
               SizedBox(height: AppHeight.h24),
               if (_challengeId == null) ...[
-                LoginTextField(controller: _name, icon: Icons.person_outline, hintText: 'الاسم', keyboardType: TextInputType.name, validator: _required),
+                LoginTextField(controller: _name, icon: Icons.person_outline, hintText: context.loc.name, keyboardType: TextInputType.name, validator: _required),
                 SizedBox(height: AppHeight.h14),
-                LoginTextField(controller: _email, icon: Icons.email_outlined, hintText: 'البريد الإلكتروني', keyboardType: TextInputType.emailAddress, validator: (value) => (value ?? '').isValidEmail ? null : 'أدخل بريداً إلكترونياً صحيحاً'),
+                LoginTextField(controller: _email, icon: Icons.email_outlined, hintText: context.loc.email, keyboardType: TextInputType.emailAddress, validator: (value) => (value ?? '').isValidEmail ? null : context.loc.invalid_email_validation),
                 SizedBox(height: AppHeight.h14),
-                LoginTextField(controller: _password, icon: Icons.lock_outline, hintText: 'كلمة المرور', keyboardType: TextInputType.visiblePassword, obscureText: true, validator: (value) => (value ?? '').length >= 6 ? null : 'كلمة المرور يجب ألا تقل عن 6 أحرف'),
+                LoginTextField(controller: _password, icon: Icons.lock_outline, hintText: context.loc.your_password, keyboardType: TextInputType.visiblePassword, obscureText: true, validator: (value) => (value ?? '').length >= 6 ? null : context.loc.short_password_validation),
               ] else
-                LoginTextField(controller: _code, icon: Icons.verified_outlined, hintText: 'رمز التحقق', keyboardType: TextInputType.number, validator: _required),
+                LoginTextField(controller: _code, icon: Icons.verified_outlined, hintText: context.loc.verification_code, keyboardType: TextInputType.number, validator: _required),
               BlocBuilder<RegisterWithEmailBloc, IRegisterWithEmailState>(
                 builder: (context, registerState) => BlocBuilder<VerifyEmailBloc, IVerifyEmailState>(
                   builder: (context, verifyState) {
@@ -134,5 +135,5 @@ class _RegisterEmailSheetState extends State<_RegisterEmailSheet> {
     }
   }
 
-  void _failure(String message) => showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
+  void _failure(String message) => showCustomSnackBar(context: context, title: context.loc.error_title, message: message, contentType: ContentType.failure);
 }

@@ -170,8 +170,8 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
     if (_currentView != _ForgotPasswordView.email) {
       showCustomSnackBar(
         context: context,
-        title: 'تنبيه',
-        message: 'استعادة كلمة المرور متاحة عبر البريد الإلكتروني حالياً',
+        title: context.loc.alert,
+        message: context.loc.password_recovery_email_only,
         contentType: ContentType.warning,
       );
       return;
@@ -198,7 +198,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
     } else if (state is RequestPasswordResetFailed) {
       showCustomSnackBar(
         context: context,
-        title: 'خطأ',
+        title: context.loc.error_title,
         message: state.message,
         contentType: ContentType.failure,
       );
@@ -450,7 +450,7 @@ class _PasswordResetView extends StatelessWidget {
           LoginTextField(
             controller: tokenController,
             icon: Icons.key_outlined,
-            hintText: 'رمز إعادة التعيين',
+            hintText: context.loc.reset_code,
             keyboardType: TextInputType.text,
             validator: tokenValidator,
           ),
@@ -484,7 +484,7 @@ class _PasswordResetView extends StatelessWidget {
           ),
           BlocBuilder<ResetPasswordBloc, IResetPasswordState>(
             builder: (context, state) => CustomSubmitButton(
-              title: 'Reset Password',
+              title: context.loc.reset_password,
               marginTop: AppMarginHeight.m20,
               height: AppHeight.h55,
               borderRadius: AppRadius.r28,

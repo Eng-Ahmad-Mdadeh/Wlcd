@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
@@ -361,7 +362,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
               _showMessage(state.message);
             } else if (state is AddFavoriteMembershipSucceeded) {
               Navigator.of(context).pop();
-              widget.messenger.showSnackBar(const SnackBar(content: Text('تمت إضافة الكورس إلى المفضلة')));
+              widget.messenger.showSnackBar(SnackBar(content: Text(context.loc.course_added_to_favorites)));
             }
           },
         ),
@@ -407,7 +408,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
                 _createGroupName = null;
               },
               decoration: InputDecoration(
-                hintText: 'اسم مجموعة جديدة',
+                hintText: context.loc.new_group_name,
                 filled: true,
                 fillColor: AppColors.backGround,
                 border: OutlineInputBorder(
