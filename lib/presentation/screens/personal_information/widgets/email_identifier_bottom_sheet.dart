@@ -1,5 +1,6 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wlcd/core/extension/validation_extension.dart';
@@ -118,7 +119,7 @@ class _EmailIdentifierBottomSheetState extends State<EmailIdentifierBottomSheet>
                   CustomTextFromField(
                     controller: _emailController,
                     textInputType: TextInputType.emailAddress,
-                    hintText: 'البريد الإلكتروني',
+                    hintText: context.loc.email,
                     prefixIcon: const Icon(Icons.email_outlined),
                     contentPaddingStart: AppPaddingWidth.p12,
                     contentPaddingEnd: AppPaddingWidth.p12,
@@ -186,13 +187,13 @@ class _EmailIdentifierBottomSheetState extends State<EmailIdentifierBottomSheet>
   }
 
   void _completeSuccessfully(String message) {
-    showCustomSnackBar(context: context, title: 'تم بنجاح', message: message, contentType: ContentType.success);
+    showCustomSnackBar(context: context, title: context.loc.success_title, message: message, contentType: ContentType.success);
     widget.onSuccess?.call();
     context.pop();
   }
 
   void _showFailure(String message) {
-    showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
+    showCustomSnackBar(context: context, title: context.loc.error_title, message: message, contentType: ContentType.failure);
   }
 }
 
@@ -207,7 +208,7 @@ class _SubmitEmailButton extends StatelessWidget {
     if (isChangingEmail) {
       return BlocBuilder<ChangeEmailBloc, IChangeEmailState>(
         builder: (context, state) => CustomSubmitButton(
-          title: 'تغيير البريد الإلكتروني',
+          title: context.loc.change_email,
           isLoading: state is ChangeEmailLoading,
           verification: state is! ChangeEmailLoading,
           onPressed: onPressed,
@@ -217,7 +218,7 @@ class _SubmitEmailButton extends StatelessWidget {
 
     return BlocBuilder<AddEmailIdentifierBloc, IAddEmailIdentifierState>(
       builder: (context, state) => CustomSubmitButton(
-        title: 'إضافة البريد الإلكتروني',
+        title: context.loc.add_email,
         isLoading: state is AddEmailIdentifierLoading,
         verification: state is! AddEmailIdentifierLoading,
         onPressed: onPressed,

@@ -7,6 +7,7 @@ import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
 import 'package:wlcd/presentation/bloc/profile/get_profile/get_profile_bloc.dart';
+import 'package:wlcd/presentation/cubit/language/language_cubit.dart';
 import 'package:wlcd/presentation/widgets/custom_text_from_field.dart';
 import 'package:wlcd/presentation/widgets/text/body_title.dart';
 
@@ -102,15 +103,163 @@ class HeaderActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const HeaderIconButton(icon: Icons.language_rounded, semanticLabel: 'search'),
+        HeaderIconButton(
+          icon: Icons.language_rounded,
+          semanticLabel: context.loc.language_button_label,
+          onTap: () => _showLanguageSelector(context),
+        ),
         SizedBox(width: AppWidth.w8),
         HeaderIconButton(
           icon: Icons.notifications_none_outlined,
-          semanticLabel: 'Notifications',
+          semanticLabel: context.loc.notifications,
           showDot: true,
           onTap: () => NotificationsRoute().push(context),
         ),
       ],
+    );
+  }
+
+  Future<void> _showLanguageSelector(BuildContext context) {
+    return showModalBottomSheet<void>(
+      context: context,
+      // Home lives inside the StatefulShellRoute's nested navigator. Presenting
+      // on the root navigator keeps the modal barrier and sheet above the shell
+      // scaffold, including its persistent bottom navigation bar.
+      useRootNavigator: true,
+      useSafeArea: true,
+      showDragHandle: true,
+      backgroundColor: AppColors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r20)),
+      ),
+      builder: (sheetContext) => const _LanguageSelectorSheet(),
+    );
+  }
+}
+
+class _LanguageSelectorSheet extends StatelessWidget {
+  const _LanguageSelectorSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    final currentCode = context.watch<LanguageCubit>().state.languageCode;
+    final options = <({String code, String label})>[
+      (code: 'ar', label: context.loc.language_arabic),
+      (code: 'en', label: context.loc.language_english),
+    ];
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        AppPaddingWidth.p23,
+        0,
+        AppPaddingWidth.p23,
+        AppPaddingHeight.p23,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.loc.language_selector_title,
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: AppFontSize.s20,
+              fontWeight: AppFontWeight.bold,
+            ),
+          ),
+          SizedBox(height: AppHeight.h6),
+          Text(
+            context.loc.language_selector_subtitle,
+            style: TextStyle(
+              color: AppColors.black.withOpacity(.6),
+              fontSize: AppFontSize.s13,
+            ),
+          ),
+          SizedBox(height: AppHeight.h18),
+          ...options.map(
+            (option) => Padding(
+              padding: EdgeInsets.only(bottom: AppPaddingHeight.p10),
+              child: _LanguageOption(
+                label: option.label,
+                languageCode: option.code,
+                selected: currentCode == option.code,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageOption extends StatelessWidget {
+  const _LanguageOption({
+    required this.label,
+    required this.languageCode,
+    required this.selected,
+  });
+
+  final String label;
+  final String languageCode;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadius.r15),
+        onTap: () async {
+          if (selected) return;
+          await context.read<LanguageCubit>().setLocale(Locale(languageCode));
+          if (context.mounted) Navigator.of(context).pop();
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppPaddingWidth.p15,
+            vertical: AppPaddingHeight.p15,
+          ),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.primary.withOpacity(.08) : AppColors.backGround,
+            borderRadius: BorderRadius.circular(AppRadius.r15),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.black.withOpacity(.08),
+            ),
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: AppSize.s18,
+                backgroundColor: AppColors.primary.withOpacity(.1),
+                child: Text(
+                  languageCode.toUpperCase(),
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: AppFontSize.s12,
+                    fontWeight: AppFontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(width: AppWidth.w12),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: AppFontSize.s16,
+                    fontWeight: AppFontWeight.semiBold,
+                  ),
+                ),
+              ),
+              if (selected)
+                Icon(Icons.check_circle_rounded, color: AppColors.primary, size: AppSize.s22),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

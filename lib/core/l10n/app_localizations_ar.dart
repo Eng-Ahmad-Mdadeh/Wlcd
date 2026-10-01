@@ -36,10 +36,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get download_catalog => 'تحميل الكتيب';
 
   @override
-  String get i_agree_to_the => 'I agree to the';
+  String get i_agree_to_the => 'أوافق على';
 
   @override
-  String get terms_and_conditions => 'terms and conditions';
+  String get terms_and_conditions => 'الشروط والأحكام';
 
   @override
   String get direct_electronic => 'إلكتروني مباشر';
@@ -381,4 +381,146 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get order_date_third => '10 يناير 2023 03:15 ص';
+  @override
+  String get language_selector_title => 'لغة التطبيق';
+
+  @override
+  String get language_selector_subtitle => 'اختر اللغة المستخدمة في جميع أنحاء التطبيق';
+
+  @override
+  String get language_current => 'الحالية';
+
+  @override
+  String get language_changed => 'تم تغيير اللغة بنجاح';
+
+  @override
+  String get language_button_label => 'تغيير اللغة';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get more => 'المزيد';
+
+  @override
+  String get personal_details => 'المعلومات الشخصية';
+
+  @override
+  String get progress_history => 'سجل التقدم';
+
+  @override
+  String get book_lesson => 'احجز درساً';
+
+  @override
+  String get investor_academy => 'أكاديمية المستثمر';
+
+  @override
+  String get faqs => 'الأسئلة الشائعة';
+
+  @override
+  String get help_center => 'مركز المساعدة';
+
+  @override
+  String get privacy => 'سياسة الخصوصية';
+
+  @override
+  String get terms_and_conditions_title => 'الشروط والأحكام';
+
+  @override
+  String get category_selection => 'اختيار التصنيف';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String categories_selected(int count) => 'تم اختيار $count تصنيفات بنجاح';
+
+  @override
+  String get teachers => 'المدرسون';
+
+  @override
+  String get all_courses => 'جميع الدورات';
+
+  @override
+  String get no_courses_found => 'لا توجد دورات';
+
+  @override
+  String get no_notifications => 'لا توجد إشعارات';
+
+  @override
+  String get favorites => 'المفضلة';
+
+  @override
+  String get no_favorite_courses => 'لا توجد دورات في هذه المجموعة';
+
+  @override
+  String get personal_information => 'المعلومات الشخصية';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get phone_number_hint => 'رقم الهاتف';
+
+  @override
+  String get send_verification_code => 'إرسال رمز التحقق';
+
+  @override
+  String get verification_code => 'رمز التحقق';
+
+  @override
+  String get change_phone_number => 'تغيير رقم الهاتف';
+
+  @override
+  String get add_phone_number => 'إضافة رقم الهاتف';
+
+  @override
+  String get change_email => 'تغيير البريد الإلكتروني';
+
+  @override
+  String get add_email => 'إضافة البريد الإلكتروني';
+
+  @override
+  String get success_title => 'تم بنجاح';
+
+  @override
+  String get error_title => 'خطأ';
+
+  @override
+  String get search_hint => 'ما الذي تبحث عنه؟';
+
+  @override
+  String get remember_me => 'تذكرني';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get reset_code => 'رمز إعادة التعيين';
+
+  @override
+  String get reset_password => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get alert => 'تنبيه';
+
+  @override
+  String get password_recovery_email_only => 'استعادة كلمة المرور متاحة عبر البريد الإلكتروني حالياً.';
+
+  @override
+  String get course_added_to_favorites => 'تمت إضافة الدورة إلى المفضلة';
+
+  @override
+  String get new_group_name => 'اسم مجموعة جديدة';
+
+  @override
+  String get privacy_policy => 'سياسة الخصوصية';
+
+  @override
+  String get app_academy_name => 'أكاديمية WLCD';
+
+
 }

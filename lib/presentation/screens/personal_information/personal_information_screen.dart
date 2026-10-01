@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_assets.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes_imports.dart';
 import 'package:wlcd/data/model/profile/profile/profile_model.dart';
@@ -55,7 +56,7 @@ class BodyPersonalInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "المعلومات الشخصية", showBackButton: true),
+      appBar: CustomAppBar(title: context.loc.personal_information, showBackButton: true),
       body: BlocBuilder<GetProfileBloc, IGetProfileState>(
         builder: (context, state) {
           if (state is GetProfileLoaded && state.profileModel?.data != null) {
@@ -191,13 +192,13 @@ class _PersonalInformationContent extends StatelessWidget {
     if (state is UpdateProfileLoaded) {
       showCustomSnackBar(
         context: context,
-        title: 'تم بنجاح',
+        title: context.loc.success_title,
         message: state.profileModel?.message ?? 'تم حفظ المعلومات الشخصية',
         contentType: ContentType.success,
       );
       context.read<GetProfileBloc>().add(const SubmitGetProfileEvent());
     } else if (state is UpdateProfileFailed) {
-      showCustomSnackBar(context: context, title: 'خطأ', message: state.message, contentType: ContentType.failure);
+      showCustomSnackBar(context: context, title: context.loc.error_title, message: state.message, contentType: ContentType.failure);
     }
   }
 
@@ -205,13 +206,13 @@ class _PersonalInformationContent extends StatelessWidget {
     if (state is UploadAvatarLoaded) {
       showCustomSnackBar(
         context: context,
-        title: 'تم بنجاح',
+        title: context.loc.success_title,
         message: state.profileModel?.message ?? 'تم تحديث الصورة الشخصية',
         contentType: ContentType.success,
       );
       context.read<GetProfileBloc>().add(const SubmitGetProfileEvent());
     } else if (state is UploadAvatarFailed) {
-      showCustomSnackBar(context: context, title: 'خطأ', message: state.message, contentType: ContentType.failure);
+      showCustomSnackBar(context: context, title: context.loc.error_title, message: state.message, contentType: ContentType.failure);
     }
   }
 }

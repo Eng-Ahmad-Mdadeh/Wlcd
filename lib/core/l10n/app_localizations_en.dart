@@ -102,6 +102,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get title => 'Server Error';
 
   @override
+  String get try_again => 'Try again';
+
+  @override
   String get stay_logged_in => 'Stay logged in';
 
   @override
@@ -381,4 +384,146 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_date_third => 'Jan 10, 2023 03:15 AM';
+  @override
+  String get language_selector_title => 'App language';
+
+  @override
+  String get language_selector_subtitle => 'Choose the language used across the app';
+
+  @override
+  String get language_current => 'Current';
+
+  @override
+  String get language_changed => 'Language changed successfully';
+
+  @override
+  String get language_button_label => 'Change language';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get personal_details => 'Personal details';
+
+  @override
+  String get progress_history => 'Progress history';
+
+  @override
+  String get book_lesson => 'Book a lesson';
+
+  @override
+  String get investor_academy => 'Investor Academy';
+
+  @override
+  String get faqs => 'FAQs';
+
+  @override
+  String get help_center => 'Help center';
+
+  @override
+  String get privacy => 'Privacy policy';
+
+  @override
+  String get terms_and_conditions_title => 'Terms and conditions';
+
+  @override
+  String get category_selection => 'Choose categories';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String categories_selected(int count) => '$count categories selected successfully';
+
+  @override
+  String get teachers => 'Teachers';
+
+  @override
+  String get all_courses => 'All courses';
+
+  @override
+  String get no_courses_found => 'No courses found';
+
+  @override
+  String get no_notifications => 'No notifications';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get no_favorite_courses => 'There are no courses in this group';
+
+  @override
+  String get personal_information => 'Personal information';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get phone_number_hint => 'Phone number';
+
+  @override
+  String get send_verification_code => 'Send verification code';
+
+  @override
+  String get verification_code => 'Verification code';
+
+  @override
+  String get change_phone_number => 'Change phone number';
+
+  @override
+  String get add_phone_number => 'Add phone number';
+
+  @override
+  String get change_email => 'Change email';
+
+  @override
+  String get add_email => 'Add email';
+
+  @override
+  String get success_title => 'Success';
+
+  @override
+  String get error_title => 'Error';
+
+  @override
+  String get search_hint => 'What are you looking for?';
+
+  @override
+  String get remember_me => 'Remember me';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get reset_code => 'Reset code';
+
+  @override
+  String get reset_password => 'Reset password';
+
+  @override
+  String get alert => 'Notice';
+
+  @override
+  String get password_recovery_email_only => 'Password recovery is currently available by email.';
+
+  @override
+  String get course_added_to_favorites => 'Course added to favorites';
+
+  @override
+  String get new_group_name => 'New group name';
+
+  @override
+  String get privacy_policy => 'Privacy policy';
+
+  @override
+  String get app_academy_name => 'WLCD Academy';
+
+
 }

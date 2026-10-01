@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/extension/date_time_extension.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/data/model/notifications/notification/notification_model.dart';
@@ -80,7 +81,7 @@ class _NotificationsBody extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'الإشعارات',
+          title: context.loc.notifications,
           centerTitle: true,
           customActions: [
             BlocBuilder<MarkAllNotificationsReadBloc, IMarkAllNotificationsReadState>(
@@ -122,7 +123,7 @@ class _NotificationsBody extends StatelessWidget {
         if (state is ListNotificationsLoaded) {
           final notifications = state.notifications?.data ?? const [];
           if (notifications.isEmpty) {
-            return const NoResultWidget(title: 'لا توجد إشعارات');
+            return NoResultWidget(title: context.loc.no_notifications);
           }
           return NotificationsList(
             notifications: notifications.map(_toItemData).toList(),

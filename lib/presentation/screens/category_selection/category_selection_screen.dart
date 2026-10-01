@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/core/routes/app_routes.dart';
@@ -21,7 +22,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'اختيار التصنيف', showBackButton: true),
+      appBar: CustomAppBar(title: context.loc.category_selection, showBackButton: true),
       body: Column(
         children: [
           Expanded(
@@ -68,7 +69,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
             marginEnd: AppMarginWidth.m10,
             marginStart: AppMarginWidth.m10,
             marginBottom: AppMarginHeight.m20,
-            title: "التالي",
+            title: context.loc.next,
             onPressed: () {
               TeachersRoute().push(context);
             },
@@ -91,6 +92,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   void _showSelectedMessage() {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text('تم اختيار ${_selectedCategories.length} تصنيفات بنجاح')));
+    ).showSnackBar(SnackBar(content: Text(context.loc.categories_selected(_selectedCategories.length))));
   }
 }

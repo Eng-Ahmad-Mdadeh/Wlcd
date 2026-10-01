@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
 import 'package:wlcd/presentation/screens/notifications/widgets/notifications_home_indicator.dart';
@@ -16,7 +17,7 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGround,
-      appBar: const CustomAppBar(title: 'المزيد', centerTitle: true),
+      appBar: CustomAppBar(title: context.loc.more, centerTitle: true),
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: AppWidth.w428),

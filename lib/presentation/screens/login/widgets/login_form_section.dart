@@ -90,7 +90,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
               builder: (context, rememberMe) => CheckboxListTile(
                 value: rememberMe,
                 onChanged: (value) => context.read<RememberMeCubit>().toggleRememberMe(value ?? false),
-                title: const Text('تذكرني'),
+                title: Text(context.loc.remember_me),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
                 activeColor: AppColors.loginPrimary,
@@ -189,7 +189,7 @@ class _LoginFormSectionState extends State<LoginFormSection> {
   }
 
   void _showFailure(BuildContext context, String message) {
-    showCustomSnackBar(context: context, title: 'خطأ', message: message, contentType: ContentType.failure);
+    showCustomSnackBar(context: context, title: context.loc.error_title, message: message, contentType: ContentType.failure);
   }
 
   String? _validateEmail(BuildContext context, String? value) {

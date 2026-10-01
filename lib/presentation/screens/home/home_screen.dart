@@ -88,7 +88,7 @@ class _HomeBody extends StatelessWidget {
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         backgroundColor: AppColors.primary,
-        title: 'WLCD Academy',
+        title: context.loc.app_academy_name,
         colorTitle: AppColors.white,
         centerTitle: true,
       ),

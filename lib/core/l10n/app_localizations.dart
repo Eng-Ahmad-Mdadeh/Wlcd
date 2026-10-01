@@ -284,6 +284,12 @@ abstract class AppLocalizations {
   /// **'Server Error'**
   String get title;
 
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get try_again;
+
   /// No description provided for @stay_logged_in.
   ///
   /// In en, this message translates to:
@@ -811,6 +817,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Jan 10, 2023 03:15 AM'**
   String get order_date_third;
+  String get language_selector_title;
+  String get language_selector_subtitle;
+  String get language_current;
+  String get language_changed;
+  String get language_button_label;
+  String get notifications;
+  String get profile;
+  String get more;
+  String get personal_details;
+  String get progress_history;
+  String get book_lesson;
+  String get investor_academy;
+  String get faqs;
+  String get help_center;
+  String get privacy;
+  String get terms_and_conditions_title;
+  String get category_selection;
+  String get next;
+  String categories_selected(int count);
+  String get teachers;
+  String get all_courses;
+  String get no_courses_found;
+  String get no_notifications;
+  String get favorites;
+  String get no_favorite_courses;
+  String get personal_information;
+  String get save;
+  String get phone_number_hint;
+  String get send_verification_code;
+  String get verification_code;
+  String get change_phone_number;
+  String get add_phone_number;
+  String get change_email;
+  String get add_email;
+  String get success_title;
+  String get error_title;
+  String get search_hint;
+  String get remember_me;
+  String get name;
+  String get reset_code;
+  String get reset_password;
+  String get alert;
+  String get password_recovery_email_only;
+  String get course_added_to_favorites;
+  String get new_group_name;
+  String get privacy_policy;
+  String get app_academy_name;
+
 }
 
 class _AppLocalizationsDelegate

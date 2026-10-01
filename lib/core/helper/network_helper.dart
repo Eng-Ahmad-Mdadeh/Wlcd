@@ -12,7 +12,6 @@ import 'package:wlcd/data/model/base/base_model.dart';
 import 'package:wlcd/data/model/pagination/pagination_model.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../constants/api_endpoints.dart';
 import '../exceptions/api_exception.dart';
@@ -42,18 +41,29 @@ class NetworkHelper {
 
   /// Configures headers whose values stay fixed for the lifetime of this app
   /// process. Calling this method again is intentionally a no-op.
-  Future<void> initializeApplicationHeaders() async {
+  Future<void> initializeApplicationHeaders({String languageCode = 'ar'}) async {
     if (_applicationHeadersInitialized) return;
 
-    final packageInfo = await PackageInfo.fromPlatform();
     _dio.options.headers.addAll({
       'Idempotency-Key': _generateIdempotencyKey(),
-      'Accept-Language' : 'ar',
-      'language' : 'ar',
-      'lang' : 'ar',
-      // 'If-Match': packageInfo.version,
+      ..._languageHeaders(languageCode),
     });
     _applicationHeadersInitialized = true;
+  }
+
+  /// Updates the locale used by the API without recreating Dio or the service.
+  /// Every subsequent request receives the same normalized language headers.
+  void setLanguage(String languageCode) {
+    _dio.options.headers.addAll(_languageHeaders(languageCode));
+  }
+
+  Map<String, String> _languageHeaders(String languageCode) {
+    final normalized = languageCode.toLowerCase() == 'en' ? 'en' : 'ar';
+    return {
+      'Accept-Language': normalized,
+      'language': normalized,
+      'lang': normalized,
+    };
   }
 
   void setOnUserArchived(void Function() handler) {
@@ -405,6 +415,7 @@ class NetworkHelper {
   Map<String, String> _buildHeaders(String? token, {bool isMultipart = false}) {
     final headers = {
       'Accept': 'application/json',
+      ..._languageHeaders(_dio.options.headers['lang']?.toString() ?? 'ar'),
       if (isMultipart) 'Content-Type': 'multipart/form-data',
       if ((token ?? '').isNotEmpty) 'Authorization': 'Bearer $token',
     };

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wlcd/core/extension/localization_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
@@ -48,7 +49,7 @@ class _FavoriteCoursesBody extends StatelessWidget {
         if (state is FavoriteMembershipsLoaded) {
           final memberships = state.memberships?.data ?? const [];
           if (memberships.isEmpty) {
-            return const NoResultWidget(title: 'لا توجد كورسات في هذه المجموعة');
+            return NoResultWidget(title: context.loc.no_favorite_courses);
           }
           return _FavoriteCoursesList(itemCount: memberships.length);
         }

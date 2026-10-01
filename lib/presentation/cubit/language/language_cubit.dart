@@ -1,16 +1,21 @@
-import 'package:wlcd/core/helper/local_storage_helper.dart';
-import 'package:wlcd/core/services/locator/locator.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wlcd/core/constants/app_storage_paths.dart';
+import 'package:wlcd/core/helper/network_helper.dart';
 
 class LanguageCubit extends Cubit<Locale> {
-  LanguageCubit({Locale initialLocale = const Locale('ar')}) : super(initialLocale);
+  LanguageCubit({
+    required FlutterSecureStorage storage,
+    Locale initialLocale = const Locale('ar'),
+  }) : _storage = storage,
+       super(initialLocale) {
+    NetworkHelper().setLanguage(initialLocale.languageCode);
+  }
 
-  static const String boxName = 'settings';
-  static const String localeKey = 'locale';
   static const List<String> supportedLocales = ['ar', 'en'];
 
-  // final LocalStorageHelper _storage = locator<LocalStorageHelper>();
+  final FlutterSecureStorage _storage;
 
   Future<void> setLocale(Locale locale) async {
     if (!supportedLocales.contains(locale.languageCode)) {
@@ -19,7 +24,16 @@ class LanguageCubit extends Cubit<Locale> {
     if (state.languageCode == locale.languageCode) {
       return;
     }
-    emit(locale);
-    // await _storage.saveValue(boxName, localeKey, locale.languageCode);
+    final normalizedLocale = Locale(locale.languageCode);
+    NetworkHelper().setLanguage(normalizedLocale.languageCode);
+    emit(normalizedLocale);
+    try {
+      await _storage.write(
+        key: AppStoragePaths.lang,
+        value: normalizedLocale.languageCode,
+      );
+    } catch (_) {
+      // Keep the in-memory locale usable when secure storage is unavailable.
+    }
   }
 }
