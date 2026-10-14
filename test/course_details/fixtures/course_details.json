@@ -1,0 +1,221 @@
+{
+    "courseId": "01HXYZABCDEFGHJKMNPQRSTVWA",
+    "title": "أساسيات التصميم المعتمد على المجال",
+    "subtitle": "مقدمة مجانية للمبتدئين",
+    "description": "دورة مجانية تمهيدية لاختبار التسجيل واكتشاف المحتوى الأساسي.",
+    "language": "ar",
+    "difficulty": "beginner",
+    "estimatedDurationSeconds": 3600,
+    "thumbnailMediaId": null,
+    "thumbnail": null,
+    "availableTabs": [
+        "overview",
+        "curriculum",
+        "reviews",
+        "forum",
+        "resources",
+        "downloads"
+    ],
+    "availableActions": [
+        "continueLearning",
+        "bookInstructor"
+    ],
+    "enrollmentState": "enrolled",
+    "commercialState": "free",
+    "forumCapability": {
+        "available": true,
+        "requiresAuthentication": true,
+        "requiresEnrollment": true
+    },
+    "resourcesCapability": {
+        "available": true,
+        "requiresAuthentication": true,
+        "requiresEnrollment": true,
+        "resourceCount": 2
+    },
+    "reviewsCapability": {
+        "available": true,
+        "requiresAuthentication": false,
+        "requiresEnrollment": false,
+        "reviewCount": 2
+    },
+    "bookingCapability": {
+        "available": true,
+        "requiresAuthentication": true,
+        "instructorId": "01HXYZABCDEFGHJKMNPQRSTVZ9"
+    },
+    "tabs": {
+        "overview": {
+            "description": "دورة مجانية تمهيدية لاختبار التسجيل واكتشاف المحتوى الأساسي.",
+            "subtitle": "مقدمة مجانية للمبتدئين",
+            "language": "ar",
+            "difficulty": "beginner",
+            "estimatedDurationSeconds": 3600,
+            "thumbnail": null,
+            "instructor": {
+                "instructorId": "01HXYZABCDEFGHJKMNPQRSTVZ9",
+                "displayName": "أحمد الخطيب",
+                "headline": "مهندس برمجيات أول",
+                "avatarMediaId": null,
+                "avatar": null
+            },
+            "price": {
+                "amount": "0.00",
+                "currency": "SAR",
+                "displayLabel": "مجاني"
+            }
+        },
+        "curriculum": {
+            "data": [
+                {
+                    "sectionId": "01HXYZABCDEFGHJKMNPQRSTVWD",
+                    "title": "مقدمة",
+                    "displayOrder": 0,
+                    "lessons": [
+                        {
+                            "lessonId": "01HXYZABCDEFGHJKMNPQRSTVWE",
+                            "title": "المجمّعات والحدود",
+                            "lessonType": "video",
+                            "displayOrder": 0,
+                            "durationEstimateSeconds": 1200,
+                            "isPreviewEligible": false
+                        }
+                    ]
+                },
+                {
+                    "sectionId": "01HXYZABCDEFGHJKMNPQRSTX0S",
+                    "title": "الأنماط المتقدمة",
+                    "displayOrder": 1,
+                    "lessons": [
+                        {
+                            "lessonId": "01HXYZABCDEFGHJKMNPQRSTX0L",
+                            "title": "التجميع بين السياقات",
+                            "lessonType": "text",
+                            "displayOrder": 0,
+                            "durationEstimateSeconds": 600,
+                            "isPreviewEligible": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "reviews": {
+            "accessible": true,
+            "reviewCount": 2,
+            "ratingAverage": 4.5,
+            "data": [
+                {
+                    "reviewId": "01HXYZABCDEFGHJKMNPQRSTVR1",
+                    "rating": 5,
+                    "reviewText": "دورة ممتازة للمبتدئين، الشرح واضح والأمثلة عملية.",
+                    "publishedAt": "2026-10-13T23:46:33.000Z"
+                },
+                {
+                    "reviewId": "01HXYZABCDEFGHJKMNPQRSTVR2",
+                    "rating": 4,
+                    "reviewText": "محتوى مرتب، استفدت من قسم المنهج.",
+                    "publishedAt": "2026-10-13T23:46:33.000Z"
+                }
+            ]
+        },
+        "forum": {
+            "accessible": true,
+            "requiresAuthentication": true,
+            "requiresEnrollment": true,
+            "data": [
+                {
+                    "forumThreadId": "01HXYZABCDEFGHJKMNPQRSTX0T",
+                    "courseId": "01HXYZABCDEFGHJKMNPQRSTVWA",
+                    "title": "فرق التجميع عن الكيان؟",
+                    "lockState": "Unlocked",
+                    "lifecycleState": "Open",
+                    "createdAt": "2026-10-13T23:46:33.000Z"
+                },
+                {
+                    "forumThreadId": "01HXYZABCDEFGHJKMNPQRSTVT1",
+                    "courseId": "01HXYZABCDEFGHJKMNPQRSTVWA",
+                    "title": "كيف أبدأ أول درس؟",
+                    "lockState": "Unlocked",
+                    "lifecycleState": "Open",
+                    "createdAt": "2026-10-13T23:36:17.000Z"
+                }
+            ]
+        },
+        "resources": {
+            "accessible": true,
+            "requiresAuthentication": true,
+            "requiresEnrollment": true,
+            "resourceCount": 2,
+            "data": [
+                {
+                    "resourceId": "01HXYZABCDEFGHJKMNPQRSTVWG",
+                    "title": "شرائح الدورة",
+                    "resourceType": "pdf",
+                    "fileSizeBytes": 2048576,
+                    "displayOrder": 0
+                },
+                {
+                    "resourceId": "01HXYZABCDEFGHJKMNPQRSTX0D",
+                    "title": "ملخص الأنماط",
+                    "resourceType": "archive",
+                    "fileSizeBytes": 512000,
+                    "displayOrder": 0
+                }
+            ]
+        },
+        "downloads": {
+            "accessible": true,
+            "requiresAuthentication": true,
+            "requiresEnrollment": true,
+            "resourceCount": 2,
+            "data": [
+                {
+                    "resourceId": "01HXYZABCDEFGHJKMNPQRSTVWG",
+                    "title": "شرائح الدورة",
+                    "resourceType": "pdf",
+                    "fileSizeBytes": 2048576,
+                    "displayOrder": 0
+                },
+                {
+                    "resourceId": "01HXYZABCDEFGHJKMNPQRSTX0D",
+                    "title": "ملخص الأنماط",
+                    "resourceType": "archive",
+                    "fileSizeBytes": 512000,
+                    "displayOrder": 0
+                }
+            ]
+        }
+    },
+    "curriculum": [
+        {
+            "sectionId": "01HXYZABCDEFGHJKMNPQRSTVWD",
+            "title": "مقدمة",
+            "displayOrder": 0,
+            "lessons": [
+                {
+                    "lessonId": "01HXYZABCDEFGHJKMNPQRSTVWE",
+                    "title": "المجمّعات والحدود",
+                    "lessonType": "video",
+                    "displayOrder": 0,
+                    "durationEstimateSeconds": 1200,
+                    "isPreviewEligible": false
+                }
+            ]
+        },
+        {
+            "sectionId": "01HXYZABCDEFGHJKMNPQRSTX0S",
+            "title": "الأنماط المتقدمة",
+            "displayOrder": 1,
+            "lessons": [
+                {
+                    "lessonId": "01HXYZABCDEFGHJKMNPQRSTX0L",
+                    "title": "التجميع بين السياقات",
+                    "lessonType": "text",
+                    "displayOrder": 0,
+                    "durationEstimateSeconds": 600,
+                    "isPreviewEligible": true
+                }
+            ]
+        }
+    ]
+}

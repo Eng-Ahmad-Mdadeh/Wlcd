@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wlcd/data/model/course_details/course_capability/course_capability_model.dart';
+import 'package:wlcd/data/model/course_details/course_curriculum_section/course_curriculum_section_model.dart';
+import 'package:wlcd/data/model/course_details/course_tabs/course_tabs_model.dart';
 
 part 'course_details_model.g.dart';
 
@@ -19,7 +22,25 @@ class CourseDetailsModel extends Equatable {
     this.thumbnail,
     this.price,
     this.raw = const {},
+    this.tabs,
+    this.enrollmentState,
+    this.commercialState,
+    this.forumCapability,
+    this.resourcesCapability,
+    this.reviewsCapability,
+    this.bookingCapability,
+    this.curriculum = const [],
   });
+
+  final CourseTabsModel? tabs;
+  final String? enrollmentState;
+  final String? commercialState;
+  final CourseCapabilityModel? forumCapability;
+  final CourseCapabilityModel? resourcesCapability;
+  final CourseCapabilityModel? reviewsCapability;
+  final CourseCapabilityModel? bookingCapability;
+  @JsonKey(defaultValue: <CourseCurriculumSectionModel>[])
+  final List<CourseCurriculumSectionModel> curriculum;
 
   final String courseId;
   final String title;
@@ -43,6 +64,14 @@ class CourseDetailsModel extends Equatable {
 
   @override
   List<Object?> get props => [
+    tabs,
+    enrollmentState,
+    commercialState,
+    forumCapability,
+    resourcesCapability,
+    reviewsCapability,
+    bookingCapability,
+    curriculum,
     courseId,
     title,
     subtitle,

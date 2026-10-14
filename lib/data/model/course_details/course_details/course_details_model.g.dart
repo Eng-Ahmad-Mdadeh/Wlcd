@@ -22,4 +22,38 @@ CourseDetailsModel _$CourseDetailsModelFromJson(Map<String, dynamic> json) =>
       thumbnail: json['thumbnail'] as Map<String, dynamic>?,
       price: json['price'] as Map<String, dynamic>?,
       raw: _readResponse(json, 'raw') as Map<String, dynamic>? ?? const {},
+      tabs: json['tabs'] == null
+          ? null
+          : CourseTabsModel.fromJson(json['tabs'] as Map<String, dynamic>),
+      enrollmentState: json['enrollmentState'] as String?,
+      commercialState: json['commercialState'] as String?,
+      forumCapability: json['forumCapability'] == null
+          ? null
+          : CourseCapabilityModel.fromJson(
+              json['forumCapability'] as Map<String, dynamic>,
+            ),
+      resourcesCapability: json['resourcesCapability'] == null
+          ? null
+          : CourseCapabilityModel.fromJson(
+              json['resourcesCapability'] as Map<String, dynamic>,
+            ),
+      reviewsCapability: json['reviewsCapability'] == null
+          ? null
+          : CourseCapabilityModel.fromJson(
+              json['reviewsCapability'] as Map<String, dynamic>,
+            ),
+      bookingCapability: json['bookingCapability'] == null
+          ? null
+          : CourseCapabilityModel.fromJson(
+              json['bookingCapability'] as Map<String, dynamic>,
+            ),
+      curriculum:
+          (json['curriculum'] as List<dynamic>?)
+              ?.map(
+                (e) => CourseCurriculumSectionModel.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
+              .toList() ??
+          [],
     );
