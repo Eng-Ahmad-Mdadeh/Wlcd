@@ -3,7 +3,16 @@ import 'package:injectable/injectable.dart';
 import 'package:wlcd/core/exceptions/app_exception.dart';
 import 'package:wlcd/data/data_sources/base/base_remote_data_source.dart';
 import 'package:wlcd/data/model/base/base_model.dart';
-import 'package:wlcd/data/model/course_details/course_details_model.dart';
+import 'package:wlcd/data/model/course_details/contract_json/contract_json_model.dart';
+import 'package:wlcd/data/model/course_details/course_details/course_details_model.dart';
+import 'package:wlcd/data/model/course_details/curriculum/curriculum_model.dart';
+import 'package:wlcd/data/model/course_details/download_grant/download_grant_model.dart';
+import 'package:wlcd/data/model/course_details/enrollment/enrollment_model.dart';
+import 'package:wlcd/data/model/course_details/learning_state/learning_state_model.dart';
+import 'package:wlcd/data/model/course_details/lesson/lesson_model.dart';
+import 'package:wlcd/data/model/course_details/playback/playback_model.dart';
+import 'package:wlcd/data/model/course_details/progress_event/progress_event_model.dart';
+import 'package:wlcd/data/model/course_details/resume_position/resume_position_model.dart';
 import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
 
 @injectable
@@ -12,7 +21,7 @@ class CourseDetailsRemoteDataSource extends BaseRemoteDataSource<Object> {
 
   Future<Either<AppException, BaseModel<T>?>> _get<T>(
     String path,
-    T Function(JsonMap) parser, {
+    T Function(Map<String, dynamic>) parser, {
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
     bool authenticated = true,
@@ -21,13 +30,13 @@ class CourseDetailsRemoteDataSource extends BaseRemoteDataSource<Object> {
     queryParams: query,
     headers: headers,
     includeAuthorization: authenticated,
-    fromJsonT: (json) => parser(json as JsonMap),
+    fromJsonT: (json) => parser(json as Map<String, dynamic>),
     wrappedResponse: false,
   );
 
   Future<Either<AppException, BaseModel<T>?>> _post<T>(
     String path,
-    T Function(JsonMap) parser, {
+    T Function(Map<String, dynamic>) parser, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) => postDataAs<T>(
@@ -35,7 +44,7 @@ class CourseDetailsRemoteDataSource extends BaseRemoteDataSource<Object> {
     data: data,
     headers: headers,
     isFormDate: false,
-    fromJsonT: (json) => parser(json as JsonMap),
+    fromJsonT: (json) => parser(json as Map<String, dynamic>),
     wrappedResponse: false,
   );
 
@@ -109,7 +118,7 @@ class CourseDetailsRemoteDataSource extends BaseRemoteDataSource<Object> {
     endpoint: '/enrollments/${e.enrollmentId}/lessons/${e.lessonId}/resume-position',
     data: e.resumeBody,
     isFormData: false,
-    fromJsonT: (json) => ResumePositionModel.fromJson(json as JsonMap),
+    fromJsonT: (json) => ResumePositionModel.fromJson(json as Map<String, dynamic>),
     wrappedResponse: false,
   );
 

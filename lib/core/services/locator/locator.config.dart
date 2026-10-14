@@ -46,7 +46,25 @@ import '../../../data/model/catalog/global_platforms/global_platforms_model.dart
     as _i1040;
 import '../../../data/model/catalog/recommendations/recommendations_model.dart'
     as _i874;
-import '../../../data/model/course_details/course_details_model.dart' as _i102;
+import '../../../data/model/course_details/contract_json/contract_json_model.dart'
+    as _i1055;
+import '../../../data/model/course_details/course_details/course_details_model.dart'
+    as _i976;
+import '../../../data/model/course_details/curriculum/curriculum_model.dart'
+    as _i183;
+import '../../../data/model/course_details/download_grant/download_grant_model.dart'
+    as _i507;
+import '../../../data/model/course_details/enrollment/enrollment_model.dart'
+    as _i472;
+import '../../../data/model/course_details/learning_state/learning_state_model.dart'
+    as _i516;
+import '../../../data/model/course_details/lesson/lesson_model.dart' as _i878;
+import '../../../data/model/course_details/playback/playback_model.dart'
+    as _i62;
+import '../../../data/model/course_details/progress_event/progress_event_model.dart'
+    as _i472;
+import '../../../data/model/course_details/resume_position/resume_position_model.dart'
+    as _i197;
 import '../../../data/model/favorites/favorite_group_model.dart' as _i388;
 import '../../../data/model/favorites/favorite_groups_model.dart' as _i214;
 import '../../../data/model/favorites/favorite_membership_model.dart' as _i955;
@@ -317,7 +335,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -326,7 +344,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -335,7 +353,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.CurriculumModel>?,
+        _i830.BaseModel<_i183.CurriculumModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -344,7 +362,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.CourseDetailsModel>?,
+        _i830.BaseModel<_i976.CourseDetailsModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -353,7 +371,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -362,7 +380,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ResumePositionModel>?,
+        _i830.BaseModel<_i197.ResumePositionModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -374,7 +392,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.EnrollmentModel>?,
+        _i830.BaseModel<_i472.EnrollmentModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -383,7 +401,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -392,7 +410,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.EnrollmentModel>?,
+        _i830.BaseModel<_i472.EnrollmentModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -401,7 +419,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ProgressEventModel>?,
+        _i830.BaseModel<_i472.ProgressEventModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -410,7 +428,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -431,7 +449,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.PlaybackModel>?,
+        _i830.BaseModel<_i62.PlaybackModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -440,7 +458,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.LearningStateModel>?,
+        _i830.BaseModel<_i516.LearningStateModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -462,7 +480,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -471,7 +489,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -480,7 +498,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -490,7 +508,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.LessonModel>?,
+        _i830.BaseModel<_i878.LessonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -508,7 +526,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -520,7 +538,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.ContractJsonModel>?,
+        _i830.BaseModel<_i1055.ContractJsonModel>?,
         _i707.CourseDetailsEntity
       >
     >(
@@ -538,7 +556,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i759.IUseCase<
-        _i830.BaseModel<_i102.DownloadGrantModel>?,
+        _i830.BaseModel<_i507.DownloadGrantModel>?,
         _i707.CourseDetailsEntity
       >
     >(

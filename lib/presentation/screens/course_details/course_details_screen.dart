@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wlcd/core/resources/app_colors.dart';
 import 'package:wlcd/core/resources/app_values.dart';
-import 'package:wlcd/data/model/course_details/course_details_model.dart';
+import 'package:wlcd/data/model/course_details/course_details/course_details_model.dart';
 import 'package:wlcd/domain/entity/course_details/course_details_entity.dart';
 import 'package:wlcd/domain/entity/favorites/favorites_entity.dart';
 import 'package:wlcd/presentation/bloc/course_details/get_course_details/get_course_details_bloc.dart';

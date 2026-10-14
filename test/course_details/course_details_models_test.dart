@@ -1,5 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wlcd/data/model/course_details/course_details_model.dart';
+import 'package:wlcd/data/model/course_details/contract_json/contract_json_model.dart';
+import 'package:wlcd/data/model/course_details/course_details/course_details_model.dart';
+import 'package:wlcd/data/model/course_details/curriculum/curriculum_model.dart';
+import 'package:wlcd/data/model/course_details/download_grant/download_grant_model.dart';
+import 'package:wlcd/data/model/course_details/enrollment/enrollment_model.dart';
+import 'package:wlcd/data/model/course_details/learning_state/learning_state_model.dart';
+import 'package:wlcd/data/model/course_details/lesson/lesson_model.dart';
+import 'package:wlcd/data/model/course_details/playback/playback_model.dart';
+import 'package:wlcd/data/model/course_details/progress_event/progress_event_model.dart';
+import 'package:wlcd/data/model/course_details/resume_position/resume_position_model.dart';
 
 void main() {
   test(
