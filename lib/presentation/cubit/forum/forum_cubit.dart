@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'forum_state.dart';
 
 class ForumCubit extends Cubit<ForumState> {
-  ForumCubit() : super(const ForumState());
+  ForumCubit({List<ForumQuestion> questions = const []})
+    : super(ForumState(questions: questions));
 
   void updateSearchQuery(String query) {
     emit(state.copyWith(searchQuery: query));
@@ -68,5 +69,4 @@ class ForumCubit extends Cubit<ForumState> {
     );
     return true;
   }
-
 }

@@ -22,14 +22,6 @@ class AboutTab extends StatelessWidget {
         AppPaddingHeight.p90,
       ),
       children: [
-        if (overview?.subtitle != null)
-          SectionTitle(text: overview!.subtitle!, fontSize: 16),
-        if (overview?.instructor != null) ...[
-          SectionTitle(text: overview!.instructor!.displayName, fontSize: 16),
-          if (overview!.instructor!.headline != null)
-            Text(overview!.instructor!.headline!),
-        ],
-        if (overview?.price != null) Text(overview!.price!.displayLabel),
         const SectionTitle(
           text: 'Descriptions',
           fontSize: 18,

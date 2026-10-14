@@ -33,8 +33,7 @@ class CourseDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final entity = CourseDetailsEntity(courseId: courseId);
     return BlocProvider(
-      create: (_) =>
-          GetCourseDetailsBloc()..add(LoadGetCourseDetailsEvent(entity)),
+      create: (_) => GetCourseDetailsBloc()..add(LoadGetCourseDetailsEvent(entity)),
       child: _CourseDetailsBody(entity: entity),
     );
   }
@@ -53,18 +52,12 @@ class _CourseDetailsBody extends StatelessWidget {
           return Scaffold(
             backgroundColor: AppColors.white,
             body: RetryWidget(
-              onReload: () => context.read<GetCourseDetailsBloc>().add(
-                LoadGetCourseDetailsEvent(entity),
-              ),
+              onReload: () => context.read<GetCourseDetailsBloc>().add(LoadGetCourseDetailsEvent(entity)),
             ),
           );
         }
-        if (state is! GetCourseDetailsLoaded ||
-            state.getCourseDetails == null) {
-          return const Scaffold(
-            backgroundColor: AppColors.white,
-            body: LoadingWidget(0),
-          );
+        if (state is! GetCourseDetailsLoaded || state.getCourseDetails == null) {
+          return const Scaffold(backgroundColor: AppColors.white, body: LoadingWidget(0));
         }
         return _buildDetails(context, state.getCourseDetails!);
       },
@@ -97,14 +90,8 @@ class _CourseDetailsBody extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.r14),
                 ),
                 child: IconButton(
-                  onPressed: () => _showFavoriteGroupsSheet(
-                    context,
-                    courseId: course.courseId,
-                  ),
-                  icon: const Icon(
-                    Icons.favorite_border,
-                    color: AppColors.primary,
-                  ),
+                  onPressed: () => _showFavoriteGroupsSheet(context, courseId: course.courseId),
+                  icon: const Icon(Icons.favorite_border, color: AppColors.primary),
                 ),
               ),
             ),
@@ -124,11 +111,7 @@ class _CourseDetailsBody extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back, color: AppColors.black),
                   ),
                   actions: const [
-                    Icon(
-                      Icons.ios_share_outlined,
-                      color: AppColors.black,
-                      size: 20,
-                    ),
+                    Icon(Icons.ios_share_outlined, color: AppColors.black, size: 20),
                     SizedBox(width: 12),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
@@ -153,9 +136,7 @@ class _CourseDetailsBody extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppPaddingWidth.p18,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
                     child: Column(
                       children: [
                         SizedBox(height: AppHeight.h14),
@@ -168,9 +149,7 @@ class _CourseDetailsBody extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.searchTagBackground,
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.r8,
-                                ),
+                                borderRadius: BorderRadius.circular(AppRadius.r8),
                               ),
                               child: BodyTitle(
                                 text: course.language ?? '',
@@ -180,18 +159,12 @@ class _CourseDetailsBody extends StatelessWidget {
                             ),
                             const Spacer(),
                             BodyTitle(
-                              text: _formatDuration(
-                                course.estimatedDurationSeconds,
-                              ),
+                              text: _formatDuration(course.estimatedDurationSeconds),
                               fontSize: 12,
                               color: AppColors.searchRatingText,
                             ),
                             SizedBox(width: AppWidth.w8),
-                            BodyTitle(
-                              text: course.difficulty,
-                              fontSize: 12,
-                              color: AppColors.searchCardTitle,
-                            ),
+                            BodyTitle(text: course.difficulty, fontSize: 12, color: AppColors.searchCardTitle),
                           ],
                         ),
                         SizedBox(height: AppHeight.h10),
@@ -215,12 +188,7 @@ class _CourseDetailsBody extends StatelessWidget {
                     preferredSize: const Size.fromHeight(65),
                     child: Container(
                       color: AppColors.white,
-                      padding: EdgeInsets.fromLTRB(
-                        AppPaddingWidth.p18,
-                        0,
-                        AppPaddingWidth.p18,
-                        AppPaddingHeight.p12,
-                      ),
+                      padding: EdgeInsets.fromLTRB(AppPaddingWidth.p18, 0, AppPaddingWidth.p18, AppPaddingHeight.p12),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: AppColors.lightGrey,
@@ -238,18 +206,10 @@ class _CourseDetailsBody extends StatelessWidget {
                           ),
                           labelColor: AppColors.white,
                           unselectedLabelColor: AppColors.searchRatingText,
-                          labelStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          unselectedLabelStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                           padding: EdgeInsets.all(AppPaddingWidth.p4),
-                          labelPadding: EdgeInsets.symmetric(
-                            horizontal: AppPaddingWidth.p12,
-                          ),
+                          labelPadding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12),
                         ),
                       ),
                     ),
@@ -313,11 +273,7 @@ class _CourseDetailsBody extends StatelessWidget {
 }
 
 class _CourseDetailsTab {
-  const _CourseDetailsTab({
-    required this.type,
-    required this.tab,
-    required this.page,
-  });
+  const _CourseDetailsTab({required this.type, required this.tab, required this.page});
 
   final String type;
   final Tab tab;
@@ -327,30 +283,21 @@ class _CourseDetailsTab {
 String _formatDuration(int? totalSeconds) {
   if (totalSeconds == null || totalSeconds <= 0) return '—';
   final hours = totalSeconds ~/ Duration.secondsPerHour;
-  final minutes =
-      (totalSeconds % Duration.secondsPerHour) ~/ Duration.secondsPerMinute;
+  final minutes = (totalSeconds % Duration.secondsPerHour) ~/ Duration.secondsPerMinute;
   if (hours == 0) return '${minutes}m';
   return '${hours}h ${minutes.toString().padLeft(2, '0')}m';
 }
 
-void _showFavoriteGroupsSheet(
-  BuildContext context, {
-  required String courseId,
-}) {
+void _showFavoriteGroupsSheet(BuildContext context, {required String courseId}) {
   final messenger = ScaffoldMessenger.of(context);
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: AppColors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24)),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r24))),
     builder: (_) => MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) =>
-              FavoriteGroupsBloc()..add(const LoadFavoriteGroupsEvent()),
-        ),
+        BlocProvider(create: (_) => FavoriteGroupsBloc()..add(const LoadFavoriteGroupsEvent())),
         BlocProvider(create: (_) => CreateFavoriteGroupBloc()),
         BlocProvider(create: (_) => AddFavoriteMembershipBloc()),
       ],
@@ -389,8 +336,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
           listener: (context, state) {
             if (state is CreateFavoriteGroupFailed) {
               _showMessage(state.message);
-            } else if (state is CreateFavoriteGroupSucceeded &&
-                state.group != null) {
+            } else if (state is CreateFavoriteGroupSucceeded && state.group != null) {
               _addCourseToGroup(context, state.group!.favoriteGroupId);
             }
           },
@@ -401,9 +347,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
               _showMessage(state.message);
             } else if (state is AddFavoriteMembershipSucceeded) {
               Navigator.of(context).pop();
-              widget.messenger.showSnackBar(
-                const SnackBar(content: Text('تمت إضافة الكورس إلى المفضلة')),
-              );
+              widget.messenger.showSnackBar(const SnackBar(content: Text('تمت إضافة الكورس إلى المفضلة')));
             }
           },
         ),
@@ -437,11 +381,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
               fontWeight: FontWeight.w700,
             ),
             SizedBox(height: AppHeight.h8),
-            const BodyTitle(
-              text: 'اختر مجموعة موجودة أو أنشئ مجموعة جديدة.',
-              color: AppColors.muted,
-              fontSize: 13,
-            ),
+            const BodyTitle(text: 'اختر مجموعة موجودة أو أنشئ مجموعة جديدة.', color: AppColors.muted, fontSize: 13),
             SizedBox(height: AppHeight.h18),
             Flexible(child: _buildGroups(context)),
             SizedBox(height: AppHeight.h14),
@@ -458,15 +398,11 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
                 fillColor: AppColors.backGround,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppRadius.r14),
-                  borderSide: const BorderSide(
-                    color: AppColors.searchCardBorder,
-                  ),
+                  borderSide: const BorderSide(color: AppColors.searchCardBorder),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppRadius.r14),
-                  borderSide: const BorderSide(
-                    color: AppColors.searchCardBorder,
-                  ),
+                  borderSide: const BorderSide(color: AppColors.searchCardBorder),
                 ),
               ),
             ),
@@ -482,11 +418,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
     return BlocBuilder<FavoriteGroupsBloc, IFavoriteGroupsState>(
       builder: (context, state) {
         if (state is FavoriteGroupsFailed) {
-          return RetryWidget(
-            onReload: () => context.read<FavoriteGroupsBloc>().add(
-              const LoadFavoriteGroupsEvent(),
-            ),
-          );
+          return RetryWidget(onReload: () => context.read<FavoriteGroupsBloc>().add(const LoadFavoriteGroupsEvent()));
         }
         if (state is! FavoriteGroupsLoaded) {
           return const SizedBox(height: 120, child: LoadingWidget(0));
@@ -510,8 +442,7 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
         return ListView.separated(
           shrinkWrap: true,
           itemCount: groups.length,
-          separatorBuilder: (_, __) =>
-              Divider(color: AppColors.searchCardBorder, height: AppHeight.h18),
+          separatorBuilder: (_, __) => Divider(color: AppColors.searchCardBorder, height: AppHeight.h18),
           itemBuilder: (context, index) {
             final group = groups[index];
             final groupId = group['favoriteGroupId'];
@@ -522,22 +453,15 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
               enabled: canSelect,
               leading: CircleAvatar(
                 backgroundColor: AppColors.lightPrim,
-                child: const Icon(
-                  Icons.folder_rounded,
-                  color: AppColors.primary,
-                ),
+                child: const Icon(Icons.folder_rounded, color: AppColors.primary),
               ),
               title: SectionTitle(
-                text: name is String && name.isNotEmpty
-                    ? name
-                    : 'مجموعة مفضلة ${index + 1}',
+                text: name is String && name.isNotEmpty ? name : 'مجموعة مفضلة ${index + 1}',
                 color: AppColors.text,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
-              onTap: canSelect
-                  ? () => _addCourseToGroup(context, groupId)
-                  : null,
+              onTap: canSelect ? () => _addCourseToGroup(context, groupId) : null,
             );
           },
         );
@@ -548,39 +472,26 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
   Widget _buildCreateButton(BuildContext context) {
     return BlocBuilder<CreateFavoriteGroupBloc, ICreateFavoriteGroupState>(
       builder: (context, createState) {
-        return BlocBuilder<
-          AddFavoriteMembershipBloc,
-          IAddFavoriteMembershipState
-        >(
+        return BlocBuilder<AddFavoriteMembershipBloc, IAddFavoriteMembershipState>(
           builder: (context, membershipState) {
             final isLoading =
-                createState is CreateFavoriteGroupLoading ||
-                membershipState is AddFavoriteMembershipLoading;
+                createState is CreateFavoriteGroupLoading || membershipState is AddFavoriteMembershipLoading;
             return SizedBox(
               width: double.infinity,
               height: AppHeight.h52,
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppRadius.r28),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.r28)),
                 ),
                 onPressed: isLoading ? null : () => _createGroup(context),
                 icon: isLoading
                     ? const SizedBox.square(
                         dimension: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppColors.white,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.white),
                       )
                     : const Icon(Icons.add_rounded, color: AppColors.white),
-                label: const BodyTitle(
-                  text: 'إنشاء وإضافة الكورس',
-                  color: AppColors.white,
-                  fontSize: 15,
-                ),
+                label: const BodyTitle(text: 'إنشاء وإضافة الكورس', color: AppColors.white, fontSize: 15),
               ),
             );
           },
@@ -600,24 +511,15 @@ class _FavoriteGroupsSheetState extends State<_FavoriteGroupsSheet> {
       _createGroupKey = _newIdempotencyKey();
     }
     context.read<CreateFavoriteGroupBloc>().add(
-      SubmitCreateFavoriteGroupEvent(
-        FavoritesEntity(name: name, idempotencyKey: _createGroupKey),
-      ),
+      SubmitCreateFavoriteGroupEvent(FavoritesEntity(name: name, idempotencyKey: _createGroupKey)),
     );
   }
 
   void _addCourseToGroup(BuildContext context, String favoriteGroupId) {
-    final key = _membershipKeys.putIfAbsent(
-      favoriteGroupId,
-      _newIdempotencyKey,
-    );
+    final key = _membershipKeys.putIfAbsent(favoriteGroupId, _newIdempotencyKey);
     context.read<AddFavoriteMembershipBloc>().add(
       SubmitAddFavoriteMembershipEvent(
-        FavoritesEntity(
-          favoriteGroupId: favoriteGroupId,
-          courseId: widget.courseId,
-          idempotencyKey: key,
-        ),
+        FavoritesEntity(favoriteGroupId: favoriteGroupId, courseId: widget.courseId, idempotencyKey: key),
       ),
     );
   }
@@ -632,9 +534,7 @@ String _newIdempotencyKey() {
   final bytes = List<int>.generate(16, (_) => random.nextInt(256));
   bytes[6] = (bytes[6] & 0x0f) | 0x40;
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
-  final hex = bytes
-      .map((byte) => byte.toRadixString(16).padLeft(2, '0'))
-      .join();
+  final hex = bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
   return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-'
       '${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}';
 }

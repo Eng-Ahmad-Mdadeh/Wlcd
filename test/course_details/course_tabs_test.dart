@@ -106,7 +106,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.text('أحمد الخطيب'), findsOneWidget);
+      expect(find.text(course.description), findsOneWidget);
       final controller = DefaultTabController.of(
         tester.element(find.byType(TabBar)),
       );
