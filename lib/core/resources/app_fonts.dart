@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppFontFamily {
   static const String tajawal = "Tajawal";
   static const String rubik = "Rubik";
+  static const String sansAr = "sans_ar";
+  static const String sansEn = "sans_en";
   static const String poppins = "Poppins";
   static const String cairo = "Cairo";
   static const String sansAr = "sans_ar";
